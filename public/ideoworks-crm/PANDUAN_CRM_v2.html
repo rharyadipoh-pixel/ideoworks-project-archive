@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Ideoworks CRM v2</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; background: #fff; font-size: 11pt; line-height: 1.55; }
+
+  /* PAGE LAYOUT */
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto 0; padding: 14mm 16mm 14mm; background: #fff; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  /* BRAND */
+  :root { --red: #CC0000; --red-dark: #990000; --red-light: #FFE5E5; --grey: #f5f5f5; --border: #e0e0e0; }
+
+  /* COVER */
+  .cover { display: flex; flex-direction: column; justify-content: space-between; min-height: 297mm; padding: 0; }
+  .cover-top { background: var(--red); padding: 32mm 16mm 20mm; }
+  .cover-top h1 { color: #fff; font-size: 30pt; font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; }
+  .cover-top .sub { color: #ffbbbb; font-size: 13pt; margin-top: 8px; font-weight: 400; }
+  .cover-top .version { display: inline-block; background: rgba(255,255,255,0.18); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 9pt; margin-top: 18px; letter-spacing: 1px; font-weight: 600; }
+  .cover-mid { padding: 20mm 16mm 0; }
+  .cover-mid h2 { font-size: 11pt; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 18px; font-weight: 600; }
+  .cover-toc { display: flex; flex-direction: column; gap: 0; }
+  .cover-toc-item { display: flex; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); gap: 14px; }
+  .cover-toc-item:first-child { border-top: 1px solid var(--border); }
+  .cover-toc-num { background: var(--red); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9pt; font-weight: 700; flex-shrink: 0; }
+  .cover-toc-text { font-size: 11pt; color: #333; }
+  .cover-bot { padding: 12mm 16mm; border-top: 3px solid var(--red); display: flex; justify-content: space-between; align-items: center; }
+  .cover-bot .logo { font-size: 14pt; font-weight: 800; color: var(--red); letter-spacing: -0.5px; }
+  .cover-bot .meta { font-size: 9pt; color: #999; text-align: right; }
+
+  /* SECTION HEADINGS */
+  .section-header { background: var(--red); color: #fff; padding: 8px 14px; margin-bottom: 16px; border-radius: 3px; }
+  .section-header h2 { font-size: 13pt; font-weight: 700; }
+  .section-header p { font-size: 9pt; color: #ffbbbb; margin-top: 2px; }
+  .sub-header { border-left: 3px solid var(--red); padding-left: 10px; margin: 16px 0 10px; }
+  .sub-header h3 { font-size: 11pt; font-weight: 700; color: #222; }
+  .sub-header p { font-size: 9pt; color: #666; margin-top: 2px; }
+
+  /* PAGE HEADER (non-cover) */
+  .page-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 2px solid var(--red); margin-bottom: 16px; }
+  .page-header .chapter { font-size: 8pt; color: var(--red); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+  .page-header .brand { font-size: 8pt; color: #bbb; }
+
+  /* CALLOUT BOXES */
+  .callout { border-radius: 4px; padding: 10px 13px; margin: 10px 0; font-size: 10pt; }
+  .callout-red { background: var(--red-light); border-left: 3px solid var(--red); }
+  .callout-grey { background: var(--grey); border-left: 3px solid #bbb; }
+  .callout-green { background: #e8f5e9; border-left: 3px solid #4caf50; }
+  .callout strong { font-weight: 700; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 10px 0; }
+  th { background: var(--red); color: #fff; padding: 7px 10px; text-align: left; font-weight: 600; font-size: 9pt; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--grey); }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 8pt; font-weight: 600; white-space: nowrap; }
+  .tag-red { background: #FFEBEE; color: var(--red); }
+  .tag-green { background: #E8F5E9; color: #2e7d32; }
+  .tag-blue { background: #E3F2FD; color: #1565c0; }
+  .tag-grey { background: #eeeeee; color: #555; }
+
+  /* FLOW DIAGRAMS */
+  .flow { display: flex; align-items: flex-start; gap: 0; margin: 12px 0; flex-wrap: nowrap; }
+  .flow-step { background: var(--grey); border: 1.5px solid var(--border); border-radius: 6px; padding: 8px 10px; text-align: center; flex: 1; min-width: 0; }
+  .flow-step.red { background: var(--red); border-color: var(--red); color: #fff; }
+  .flow-step.red .fs-label { color: #ffcccc; }
+  .flow-step .fs-icon { font-size: 14pt; display: block; margin-bottom: 3px; }
+  .flow-step .fs-title { font-size: 8.5pt; font-weight: 700; display: block; }
+  .flow-step .fs-label { font-size: 7.5pt; color: #888; display: block; margin-top: 2px; line-height: 1.3; }
+  .flow-arrow { display: flex; align-items: center; padding: 0 4px; color: var(--red); font-size: 14pt; flex-shrink: 0; align-self: center; }
+
+  /* BRANCH FLOW */
+  .branch-container { margin: 12px 0; }
+  .branch-trigger { background: var(--red); color: #fff; padding: 9px 14px; border-radius: 5px; font-size: 10pt; font-weight: 700; text-align: center; margin-bottom: 0; position: relative; }
+  .branch-trigger::after { content: ''; display: block; width: 2px; height: 12px; background: var(--border); margin: 0 auto; }
+  .branch-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 0; }
+  .branch-item { border: 1.5px solid var(--border); border-radius: 5px; padding: 8px 6px; text-align: center; position: relative; }
+  .branch-item::before { content: ''; display: block; width: 2px; height: 10px; background: var(--border); margin: 0 auto 6px; }
+  .branch-item .bi-title { font-size: 8pt; font-weight: 700; color: #222; display: block; }
+  .branch-item .bi-fields { font-size: 7.5pt; color: #888; margin-top: 4px; line-height: 1.4; }
+  .branch-item.act { border-color: #1565c0; background: #E3F2FD; }
+  .branch-item.upd { border-color: #e65100; background: #FFF3E0; }
+  .branch-item.won { border-color: #2e7d32; background: #E8F5E9; }
+  .branch-item.lost { border-color: #888; background: #eeeeee; }
+  .branch-item.idle { border-color: #9e9e9e; background: #fafafa; }
+
+  /* STAGE PIPELINE */
+  .pipeline { display: flex; gap: 0; margin: 12px 0; flex-wrap: nowrap; }
+  .stage { flex: 1; text-align: center; padding: 8px 4px; border: 1.5px solid var(--border); border-right: none; font-size: 7.5pt; position: relative; }
+  .stage:last-child { border-right: 1.5px solid var(--border); }
+  .stage .s-prob { font-size: 10pt; font-weight: 800; color: var(--red); display: block; }
+  .stage .s-name { font-size: 7pt; color: #555; display: block; margin-top: 2px; line-height: 1.2; }
+  .stage.s-won { background: #E8F5E9; border-color: #4caf50; }
+  .stage.s-lost { background: #eeeeee; border-color: #bbb; }
+
+  /* TWO COLUMNS */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0; }
+  .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 10px 0; }
+
+  /* FORM CARD */
+  .form-card { border: 1.5px solid var(--border); border-radius: 6px; overflow: hidden; margin: 10px 0; }
+  .form-card-head { background: var(--red); color: #fff; padding: 9px 14px; display: flex; align-items: center; gap: 10px; }
+  .form-card-head .fc-num { background: rgba(255,255,255,0.2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9pt; font-weight: 800; flex-shrink: 0; }
+  .form-card-head .fc-title { font-size: 11pt; font-weight: 700; }
+  .form-card-head .fc-when { font-size: 8.5pt; color: #ffbbbb; margin-left: auto; }
+  .form-card-body { padding: 12px 14px; }
+
+  /* FIELD LIST */
+  .field-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .field-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 9.5pt; }
+  .field-list li .fl-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; margin-top: 5px; }
+  .field-list li .fl-req { font-size: 7.5pt; color: var(--red); font-weight: 700; margin-left: 3px; }
+
+  /* AUTOMATION CARDS */
+  .auto-card { display: flex; gap: 10px; background: var(--grey); border-radius: 5px; padding: 9px 12px; margin: 7px 0; align-items: flex-start; }
+  .auto-card .ac-icon { font-size: 16pt; flex-shrink: 0; line-height: 1; }
+  .auto-card .ac-title { font-size: 9.5pt; font-weight: 700; color: #222; }
+  .auto-card .ac-desc { font-size: 8.5pt; color: #666; margin-top: 2px; line-height: 1.4; }
+
+  /* QUICK REF */
+  .qr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0; }
+  .qr-box { border: 1.5px solid var(--border); border-radius: 5px; padding: 10px 12px; }
+  .qr-box h4 { font-size: 9pt; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+  .qr-row { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px dotted var(--border); font-size: 8.5pt; }
+  .qr-row:last-child { border-bottom: none; }
+  .qr-row .qr-key { color: #555; }
+  .qr-row .qr-val { font-weight: 600; color: #222; text-align: right; }
+
+  /* PRINT */
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { margin: 0; padding: 12mm 14mm; page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: COVER ==================== -->
+<div class="page cover">
+  <div class="cover-top">
+    <h1>Panduan<br>Ideoworks CRM</h1>
+    <div class="sub">Sistem manajemen pipeline sales & aktivitas tim</div>
+    <div class="version">VERSION 2.2</div>
+  </div>
+
+  <div class="cover-mid">
+    <h2>Isi Panduan</h2>
+    <div class="cover-toc">
+      <div class="cover-toc-item">
+        <div class="cover-toc-num">1</div>
+        <div class="cover-toc-text">Konsep Dasar - Account, Deal, Aktivitas</div>
+      </div>
+      <div class="cover-toc-item">
+        <div class="cover-toc-num">2</div>
+        <div class="cover-toc-text">Pipeline Stage & Probabilitas</div>
+      </div>
+      <div class="cover-toc-item">
+        <div class="cover-toc-num">3</div>
+        <div class="cover-toc-text">3 Jalur Input - Catat Aktivitas · Daftar Lead · Buat Deal (semua via Web App)</div>
+      </div>
+      <div class="cover-toc-item">
+        <div class="cover-toc-num">4</div>
+        <div class="cover-toc-text">Catat Aktivitas - Web App: alur kondisional (fitur Reimburse IRF - coming soon)</div>
+      </div>
+      <div class="cover-toc-item">
+        <div class="cover-toc-num">5</div>
+        <div class="cover-toc-text">Otomasi Setelah Submit - email, dashboard, IRF finance</div>
+      </div>
+      <div class="cover-toc-item">
+        <div class="cover-toc-num">6</div>
+        <div class="cover-toc-text">Quick Reference, Skenario Sehari-hari & Tips</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bot">
+    <div class="logo">Ideoworks</div>
+    <div class="meta">CRM v2.2 · Internal Use Only<br>Mei 2026</div>
+  </div>
+</div>
+
+
+<!-- ==================== PAGE 2: KONSEP DASAR ==================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="chapter">Bab 1 - Konsep Dasar</div>
+    <div class="brand">Ideoworks CRM v2</div>
+  </div>
+
+  <div class="section-header">
+    <h2>Struktur Data: Account → Deal → Aktivitas</h2>
+    <p>Semua data di CRM mengikuti hierarki ini. Penting untuk dipahami sebelum menggunakan form.</p>
+  </div>
+
+  <!-- Hierarchy flow -->
+  <div class="flow" style="margin: 14px 0 18px;">
+    <div class="flow-step red">
+      <span class="fs-icon">🏢</span>
+      <span class="fs-title">Account</span>
+      <span class="fs-label">Perusahaan / klien</span>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step red">
+      <span class="fs-icon">🤝</span>
+      <span class="fs-title">Deal</span>
+      <span class="fs-label">Proyek / peluang bisnis</span>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step red">
+      <span class="fs-icon">📋</span>
+      <span class="fs-title">Aktivitas</span>
+      <span class="fs-label">Log setiap interaksi</span>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div>
+      <div class="sub-header"><h3>Account</h3><p>Satu entri per perusahaan</p></div>
+      <div class="callout callout-grey" style="margin-bottom:8px;">
+        Account adalah <strong>entitas perusahaan</strong>. Satu Account bisa punya banyak Deal. Contoh: <em>Tokopedia</em> adalah Account, bukan Deal.
+      </div>
+      <table>
+        <tr><th>Field</th><th>Keterangan</th></tr>
+        <tr><td>Account ID</td><td>Auto-generated (ACC-0001)</td></tr>
+        <tr><td>Account Name</td><td>Nama perusahaan klien</td></tr>
+        <tr><td>PIC Name/Contact</td><td>Kontak utama di klien</td></tr>
+        <tr><td>Account Type</td><td>Lead / Active / Past / Lost</td></tr>
+        <tr><td>Assigned AM</td><td>AM yang handle account ini</td></tr>
+      </table>
+      <div class="callout callout-red" style="margin-top:8px;">
+        <strong>Penting:</strong> Daftarkan Account dulu via <strong>Daftar Lead</strong> sebelum membuat Deal.
+      </div>
+    </div>
+    <div>
+      <div class="sub-header"><h3>Deal <span style="font-size:9pt;color:#888;font-weight:400;">(proyek yang sedang dikejar)</span></h3><p>Satu proyek konkret di bawah Account</p></div>
+      <div class="callout callout-grey" style="margin-bottom:8px;">
+        Deal adalah <strong>proyek spesifik yang sedang dinegosiasi</strong>. Satu Account bisa punya beberapa Deal aktif sekaligus. Contoh: <em>Tokopedia – SMM Q3</em> dan <em>Tokopedia – SEO 2026</em> adalah dua Deal berbeda dari Account yang sama.
+      </div>
+      <table>
+        <tr><th>Field</th><th>Keterangan</th></tr>
+        <tr><td>Deal ID</td><td>Auto-generated (DEAL-0001)</td></tr>
+        <tr><td>Deal Name</td><td>Nama proyek - contoh: Tokopedia SMM Q3</td></tr>
+        <tr><td>Stage</td><td>Tahapan proses deal saat ini</td></tr>
+        <tr><td>Deal Value IDR</td><td>Estimasi nilai kontrak</td></tr>
+        <tr><td>Weighted IDR</td><td>Nilai × peluang close (untuk forecast)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub-header" style="margin-top:18px;"><h3>Aktivitas</h3><p>Setiap interaksi dengan klien dicatat di sini</p></div>
+  <div class="callout callout-grey" style="margin-bottom:10px;">
+    Aktivitas terhubung ke <strong>Account</strong> dan (jika ada) ke <strong>Deal</strong>. Log aktivitas penting bukan hanya untuk tracking - data ini jadi bahan <strong>CEO Weekly Summary</strong> dan deteksi deal yang <em>stale</em>.
+  </div>
+
+  <table>
+    <tr>
+      <th>Tipe Aktivitas</th>
+      <th>Contoh</th>
+      <th>Field Tambahan</th>
+    </tr>
+    <tr>
+      <td><span class="tag tag-blue">Aktivitas</span></td>
+      <td>Call, WhatsApp, meeting, pitch</td>
+      <td>Catatan, Pengeluaran (opsional)</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-blue">Update Deal</span></td>
+      <td>Stage naik, nilai berubah, jadwal follow-up</td>
+      <td>Stage, Nilai, Next Action Date</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-green">Won</span></td>
+      <td>Deal berhasil di-close</td>
+      <td>Nilai Final</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-grey">Lost</span></td>
+      <td>Deal tidak berhasil</td>
+      <td>Alasan Lost (wajib)</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-grey">Idle / Hold</span></td>
+      <td>Deal ditahan, tunggu keputusan klien</td>
+      <td>Catatan alasan</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-grey">Not Qualified</span></td>
+      <td>Setelah dikaji ulang, tidak layak dilanjutkan</td>
+      <td>Catatan alasan</td>
+    </tr>
+  </table>
+</div>
+
+
+<!-- ==================== PAGE 3: PIPELINE STAGES + 3 FORMS ==================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="chapter">Bab 2 - Pipeline & Form Overview</div>
+    <div class="brand">Ideoworks CRM v2</div>
+  </div>
+
+  <div class="section-header">
+    <h2>Pipeline Stage & Probabilitas</h2>
+    <p>Setiap deal punya stage. Stage menentukan probabilitas close yang digunakan untuk menghitung Weighted Pipeline.</p>
+  </div>
+
+  <div class="pipeline" style="margin: 14px 0 8px;">
+    <div class="stage"><span class="s-prob">5%</span><span class="s-name">Lead</span></div>
+    <div class="stage"><span class="s-prob">15%</span><span class="s-name">Qualified</span></div>
+    <div class="stage"><span class="s-prob">20%</span><span class="s-name">Credentials Sent</span></div>
+    <div class="stage"><span class="s-prob">35%</span><span class="s-name">Rate Card / Proposal Sent</span></div>
+    <div class="stage"><span class="s-prob">50%</span><span class="s-name">Meeting Done</span></div>
+    <div class="stage"><span class="s-prob">65%</span><span class="s-name">Hot Leads</span></div>
+    <div class="stage"><span class="s-prob">80%</span><span class="s-name">Negotiation</span></div>
+    <div class="stage s-won"><span class="s-prob" style="color:#2e7d32;">100%</span><span class="s-name">Won ✓</span></div>
+    <div class="stage s-lost"><span class="s-prob" style="color:#888;">0%</span><span class="s-name">Lost</span></div>
+  </div>
+
+  <div class="callout callout-grey" style="margin-bottom:10px; font-size:9pt;">
+    <strong>Weighted IDR</strong> = Nilai Deal × Probabilitas stage. Contoh: deal senilai Rp 100jt di stage <em>Hot Leads</em> (65%) dihitung sebagai Rp 65jt. Angka ini lebih realistis untuk forecast karena tidak semua deal pasti close.
+  </div>
+
+  <div class="callout callout-grey" style="margin-bottom:18px; font-size:9pt;">
+    Deal di stage <em>Idle/Hold</em>, <em>Not Qualified</em>, <em>Lost</em> tidak masuk hitungan pipeline aktif - probabilitasnya 0%.
+  </div>
+
+  <!-- Stale Deal info -->
+  <div class="callout callout-red" style="margin-bottom:18px; font-size:9pt;">
+    <strong>Deal Stale (basi):</strong> Deal yang tidak ada aktivitas apapun selama lebih dari <strong>14 hari</strong> akan di-tandai otomatis. Muncul di Dashboard sebagai sinyal "AM ini perlu follow-up deal-nya."
+  </div>
+
+  <div class="section-header">
+    <h2>3 Jalur Input - Kapan Menggunakannya</h2>
+    <p>Semua input dilakukan melalui satu <strong>Web App</strong> yang sama. Navigasi antar form pakai tombol di bawah layar.</p>
+  </div>
+
+  <!-- Analogy box -->
+  <div style="background:#fff8e1; border:1.5px solid #f9a825; border-radius:6px; padding:10px 14px; margin-bottom:14px; display:flex; gap:12px; align-items:flex-start;">
+    <div style="font-size:18pt; line-height:1; flex-shrink:0;">💡</div>
+    <div>
+      <div style="font-size:9.5pt; font-weight:700; color:#5d4037; margin-bottom:4px;">Analogi biar lebih gampang kebayang:</div>
+      <div style="font-size:9.5pt; color:#5d4037; line-height:1.5;">
+        <strong>Daftar Lead</strong> = Daftarkan <u>toko baru</u> ke sistem &nbsp;→&nbsp; hasilnya: satu <strong>Account</strong> (nama perusahaan)<br>
+        <strong>Buat Deal</strong> = Catat <u>barang yang lagi dinegosiasi</u> di toko itu &nbsp;→&nbsp; hasilnya: satu <strong>Deal</strong> (proyek spesifik)<br>
+        <strong>Catat Aktivitas</strong> = Catat <u>setiap interaksi harian</u> dengan toko &nbsp;→&nbsp; hasilnya: satu <strong>Aktivitas</strong>
+      </div>
+      <div style="font-size:8.5pt; color:#888; margin-top:5px;">Satu toko (Account) bisa punya banyak barang yang dinegosiasi (Deal) sekaligus.</div>
+    </div>
+  </div>
+
+  <!-- Form Card 1 - Daily -->
+  <div style="font-size:8pt; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:1.5px; margin:4px 0 4px;">Dipakai setiap hari</div>
+  <div class="form-card" style="border-color:var(--red); margin-bottom:12px;">
+    <div class="form-card-head">
+      <div class="fc-num">1</div>
+      <div>
+        <div class="fc-title">Catat Aktivitas</div>
+        <div style="font-size:8pt;color:#ffbbbb;">Web App - buka link, login Google, langsung isi. Nama AM otomatis terdeteksi.</div>
+      </div>
+      <div class="fc-when">Kapan saja ada interaksi</div>
+    </div>
+    <div class="form-card-body">
+      <div style="font-size:9.5pt; color:#444; margin-bottom:8px;">Setelah call, meeting, kirim proposal - langsung buka link dan isi. Sistem otomatis kenali siapa kamu dari login Google. Juga dipakai untuk naikkan stage deal, atau menutup deal sebagai Won/Lost.</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+        <span class="tag tag-blue">Catat aktivitas</span>
+        <span class="tag tag-blue">Naikkan stage</span>
+        <span class="tag tag-green">Close Won</span>
+        <span class="tag tag-grey">Close Lost</span>
+        <span class="tag tag-grey">Idle / Hold</span>
+      </div>
+      <div style="background:#fff8e1; border-radius:4px; padding:6px 10px; font-size:8.5pt; color:#5d4037; margin-bottom:6px;">
+        <strong>Link Web App (semua form):</strong> <span style="font-family:monospace; font-size:7.5pt; color:#c62828; word-break:break-all;">https://script.google.com/macros/s/AKfycbwzy-94VKDyK4T3ZWHETUXU1snI5KI4sG9Zl2N-ZXxPIjvInO40V9SFB1PNQQgwjT6Mrg/exec</span>
+      </div>
+      <div style="background:#e8f5e9; border:1px solid #c8e6c9; border-radius:4px; padding:7px 10px; font-size:8pt; color:#1b5e20;">
+        <strong>⚠ Pertama kali buka:</strong> Google akan tampilkan peringatan "app belum diverifikasi" — ini normal untuk tool internal. Klik <strong>"Advanced"</strong> → <strong>"Go to [nama app] (unsafe)"</strong> → <strong>Allow</strong>. Cukup sekali, tidak akan muncul lagi setelahnya.
+      </div>
+    </div>
+  </div>
+
+  <!-- Setup forms - label -->
+  <div style="font-size:8pt; font-weight:700; color:#666; text-transform:uppercase; letter-spacing:1.5px; margin:4px 0 4px;">Dipakai saat setup (Daftar Lead dulu, baru Buat Deal)</div>
+
+  <!-- Form Card 2 + 3 connected -->
+  <div style="display:flex; align-items:stretch; gap:0;">
+
+    <!-- Form Card 2 -->
+    <div class="form-card" style="flex:1; margin:0; border-radius:6px 0 0 6px; border-right:none;">
+      <div class="form-card-head" style="background:#1565c0;">
+        <div class="fc-num" style="background:rgba(255,255,255,0.2);">2</div>
+        <div>
+          <div class="fc-title">Daftar Lead</div>
+          <div style="font-size:8pt;color:#bbdefb;">Membuat entri <strong style="color:#fff;">perusahaan</strong> baru di sistem</div>
+        </div>
+      </div>
+      <div class="form-card-body" style="background:#e3f2fd;">
+        <div style="font-size:9pt; color:#1a237e; font-weight:700; margin-bottom:5px;">Yang dibuat: Account (perusahaan)</div>
+        <div style="font-size:8.5pt; color:#333; margin-bottom:7px;">Isi saat pertama kali ketemu lead baru. Siapapun bisa isi - AM, Leader, CEO/COO. Satu form = satu perusahaan.</div>
+        <div style="display:flex; gap:5px; flex-wrap:wrap;">
+          <span class="tag tag-blue">Nama perusahaan</span>
+          <span class="tag tag-blue">Data PIC</span>
+          <span class="tag tag-blue">Sumber lead</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow connector -->
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#fff3e0; border-top:1.5px solid var(--border); border-bottom:1.5px solid var(--border); padding:8px 10px; flex-shrink:0;">
+      <div style="font-size:16pt; color:var(--red); line-height:1;">→</div>
+      <div style="font-size:7pt; font-weight:700; color:var(--red); text-align:center; margin-top:4px; line-height:1.3;">LANGKAH<br>1 DULU</div>
+    </div>
+
+    <!-- Form Card 3 -->
+    <div class="form-card" style="flex:1; margin:0; border-radius:0 6px 6px 0; border-left:none;">
+      <div class="form-card-head" style="background:#e65100;">
+        <div class="fc-num" style="background:rgba(255,255,255,0.2);">3</div>
+        <div>
+          <div class="fc-title">Buat Deal</div>
+          <div style="font-size:8pt;color:#ffe0b2;">Membuat <strong style="color:#fff;">proyek / peluang</strong> di bawah perusahaan</div>
+        </div>
+      </div>
+      <div class="form-card-body" style="background:#fff3e0;">
+        <div style="font-size:9pt; color:#bf360c; font-weight:700; margin-bottom:5px;">Yang dibuat: Deal (proyek konkret)</div>
+        <div style="font-size:8.5pt; color:#333; margin-bottom:7px;">Isi setelah Account terdaftar dan ada proyek nyata yang mau dikejar. Satu form = satu proyek.</div>
+        <div style="display:flex; gap:5px; flex-wrap:wrap;">
+          <span class="tag" style="background:#ffe0b2;color:#bf360c;">Pilih Account</span>
+          <span class="tag" style="background:#ffe0b2;color:#bf360c;">Nama proyek</span>
+          <span class="tag" style="background:#ffe0b2;color:#bf360c;">Estimasi nilai</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="callout callout-red" style="margin-top:6px; font-size:8.5pt; padding:7px 12px;">
+    <strong>⚠ Urutan wajib:</strong> Perusahaan belum terdaftar? Isi <strong>Daftar Lead dulu</strong>, baru buat Deal-nya di <strong>Buat Deal</strong>. Kalau langsung Buat Deal, deal tidak bisa ter-link ke perusahaan manapun.
+  </div>
+</div>
+
+
+<!-- ==================== PAGE 4: FORM 1 DETAIL ==================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="chapter">Bab 3 - Catat Aktivitas: Alur Kondisional</div>
+    <div class="brand">Ideoworks CRM v2</div>
+  </div>
+
+  <div class="section-header">
+    <h2>Catat Aktivitas (Web App)</h2>
+    <p>Buka link, login Google - nama AM otomatis terisi. Field yang muncul tergantung pilihan "Jenis Update".</p>
+  </div>
+
+  <!-- Section 1 box -->
+  <div style="background:#fff; border: 2px solid var(--red); border-radius:6px; padding:10px 14px; margin-bottom:10px;">
+    <div style="font-size:9pt; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Langkah 1-3 (selalu muncul untuk semua)</div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <div style="background:#e8f5e9; border:1.5px solid #4caf50; border-radius:4px; padding:6px 10px; font-size:9pt;"><strong>Nama AM</strong> <span style="color:#2e7d32; font-size:8pt;">· otomatis dari login Google</span></div>
+      <div style="background:var(--grey); border-radius:4px; padding:6px 10px; font-size:9pt;"><strong>Nama Akun</strong> <span style="color:#999; font-size:8pt;">· ketik untuk cari · wajib</span></div>
+      <div style="background:var(--grey); border-radius:4px; padding:6px 10px; font-size:9pt;"><strong>Deal</strong> <span style="color:#999; font-size:8pt;">· muncul setelah pilih akun · auto-pilih jika hanya 1</span></div>
+      <div style="background:var(--red); color:#fff; border-radius:4px; padding:6px 10px; font-size:9pt;"><strong>Jenis Update</strong> <span style="color:#ffbbbb; font-size:8pt;">· pilih satu → menentukan bagian berikutnya</span></div>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="text-align:center; color:var(--red); font-size:12pt; margin:-2px 0 4px;">↓ &nbsp; Pilih Jenis Update untuk lanjut ke bagian yang sesuai</div>
+
+  <!-- Branch rows -->
+  <div class="branch-row" style="margin: 6px 0 14px;">
+    <div class="branch-item act">
+      <span class="bi-title">Aktivitas</span>
+      <div class="bi-fields">
+        📝 Catatan<br>
+        💰 Pengeluaran<br>
+        <span style="color:#1565c0; font-size:7pt; margin-top:3px; display:block;">→ Submit</span>
+      </div>
+    </div>
+    <div class="branch-item upd">
+      <span class="bi-title">Update Deal</span>
+      <div class="bi-fields">
+        🔗 Pilih Deal<br>
+        📊 Stage baru<br>
+        💵 Nilai<br>
+        📅 Follow-up<br>
+        📝 Catatan<br>
+        💰 Pengeluaran<br>
+        <span style="color:#e65100; font-size:7pt; margin-top:3px; display:block;">→ Submit</span>
+      </div>
+    </div>
+    <div class="branch-item won">
+      <span class="bi-title">Won 🎉</span>
+      <div class="bi-fields">
+        💵 Nilai Final<br>
+        📝 Catatan<br>
+        <span style="color:#2e7d32; font-size:7pt; margin-top:3px; display:block;">→ Submit</span>
+      </div>
+    </div>
+    <div class="branch-item lost">
+      <span class="bi-title">Lost</span>
+      <div class="bi-fields">
+        ❓ Alasan Lost<br>
+        📝 Catatan<br>
+        <span style="color:#555; font-size:7pt; margin-top:3px; display:block;">→ Submit</span>
+      </div>
+    </div>
+    <div class="branch-item idle">
+      <span class="bi-title">Idle / Hold</span>
+      <div class="bi-fields">
+        📝 Catatan<br>
+        <span style="color:#777; font-size:7pt; margin-top:3px; display:block;">→ Submit</span>
+      </div>
+    </div>
+    <div class="branch-item idle">
+      <span class="bi-title">Not Qualified</span>
+      <div class="bi-fields">
+        📝 Catatan<br>
+        <span style="color:#777; font-size:7pt; margin-top:3px; display:block;">→ Submit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reimburse toggle section -->
+  <div style="background:#f5f5f5; border:2px solid #bbb; border-radius:6px; padding:10px 14px; margin:10px 0 14px; opacity:0.7;">
+    <div style="font-size:9pt; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:7px;">🧾 Fitur Reimburse IRF — <span style="background:#e0e0e0; color:#555; border-radius:3px; padding:1px 6px; font-size:8pt;">COMING SOON</span></div>
+    <div style="font-size:9pt; color:#888; margin-bottom:8px;">Fitur ini sudah dibangun tapi sedang nonaktif sementara. Ketika aktif: AM bisa aktifkan toggle <strong>"Ada Reimburse?"</strong> di form Catat Aktivitas dan sistem akan generate IRF otomatis ke spreadsheet keuangan.</div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+      <div style="background:#fff; border:1px solid #eee; border-radius:4px; padding:5px 9px; font-size:8.5pt;"><strong>Item bon</strong> &amp; harga satuan (max 4 baris)</div>
+      <div style="background:#fff; border:1px solid #eee; border-radius:4px; padding:5px 9px; font-size:8.5pt;"><strong>Foto bon</strong> (upload dari HP)</div>
+      <div style="background:#fff; border:1px solid #eee; border-radius:4px; padding:5px 9px; font-size:8.5pt;"><strong>Metode bayar:</strong> Transfer Bank / E-Wallet / Kartu Kredit</div>
+    </div>
+    <div style="display:flex; gap:8px; font-size:8.5pt; color:#555;">
+      <div style="flex:1; background:#fff; border-radius:4px; padding:6px 9px; border:1px solid #ddd;">
+        <strong style="color:var(--red);">Yang terjadi otomatis:</strong><br>
+        1. Tab IRF baru dibuat di spreadsheet finance<br>
+        2. Foto bon diupload ke Google Drive<br>
+        3. PDF IRF digenerate<br>
+        4. Email ke finance (+ CC ke AM)
+      </div>
+      <div style="flex:1; background:#e8f5e9; border-radius:4px; padding:6px 9px; border:1px solid #c8e6c9;">
+        <strong style="color:#2e7d32;">Format IRF:</strong><br>
+        Nomor: <code>IRF-2026/001</code><br>
+        File: tab di spreadsheet "Ideoworks CRM - IRF"<br>
+        Folder Drive: "Reimburse Bon - Ideoworks"
+      </div>
+    </div>
+  </div>
+
+  <!-- What happens behind the scenes -->
+  <div class="section-header">
+    <h2>Yang Terjadi di Sistem Setelah Submit</h2>
+    <p>Setiap submit Catat Aktivitas memicu serangkaian proses otomatis.</p>
+  </div>
+
+  <div class="flow" style="margin:12px 0 16px; align-items:stretch;">
+    <div class="flow-step red" style="flex:1.2;">
+      <span class="fs-icon">📱</span>
+      <span class="fs-title">Submit Web App</span>
+      <span class="fs-label">Klik Submit di browser/HP</span>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step" style="flex:1.3;">
+      <span class="fs-icon">📋</span>
+      <span class="fs-title">Log ke Activities</span>
+      <span class="fs-label">Baris baru dengan Activity ID</span>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step" style="flex:1.3;">
+      <span class="fs-icon">🔄</span>
+      <span class="fs-title">Update Deal</span>
+      <span class="fs-label">Stage, nilai, tanggal diperbarui (jika bukan Aktivitas)</span>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step" style="flex:1;">
+      <span class="fs-icon">📊</span>
+      <span class="fs-title">Dashboard</span>
+      <span class="fs-label">Rebuild otomatis</span>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step" style="flex:1;">
+      <span class="fs-icon">📧</span>
+      <span class="fs-title">Email AM</span>
+      <span class="fs-label">Konfirmasi + snapshot pipeline</span>
+    </div>
+  </div>
+
+  <!-- Deal Resolution Logic -->
+  <div class="sub-header"><h3>Cara Web App Menampilkan Deal Kamu</h3><p>Setelah pilih akun, web app langsung tampilkan deal yang relevan</p></div>
+  <table>
+    <tr><th>Situasi</th><th>Yang Ditampilkan Web App</th></tr>
+    <tr>
+      <td>Account punya <strong>1 deal aktif</strong></td>
+      <td><span class="tag tag-green">Auto-pilih</span> - deal langsung terpilih otomatis, nama + stage + nilai langsung terlihat</td>
+    </tr>
+    <tr>
+      <td>Account punya <strong>2+ deal aktif</strong></td>
+      <td><span class="tag tag-blue">Pilih dari list</span> - semua open deals muncul, pilih yang relevan sebelum isi Jenis Update</td>
+    </tr>
+    <tr>
+      <td>Kamu <strong>tidak pilih deal</strong> padahal ada 2+</td>
+      <td><span class="tag tag-red">⚠ Tidak masuk ke deal manapun</span> - aktivitas tercatat tanpa Deal ID. Data "menggantung."</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-green" style="margin-top:10px; font-size:9pt;">
+    <strong>Keuntungan web app vs Google Form:</strong> Kamu bisa lihat stage dan nilai deal sebelum submit - jadi lebih yakin datanya benar sebelum klik Submit.
+  </div>
+</div>
+
+
+<!-- ==================== PAGE 5: FORM 2, 3 & AUTOMATIONS ==================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="chapter">Bab 4 - Daftar Lead, Buat Deal & Otomasi</div>
+    <div class="brand">Ideoworks CRM v2</div>
+  </div>
+
+  <div class="cols" style="margin-bottom:14px;">
+    <!-- Form 2 -->
+    <div>
+      <div class="section-header"><h2>Daftar Lead</h2><p>Tambah perusahaan baru ke sistem</p></div>
+      <ul class="field-list">
+        <li><div class="fl-dot"></div><div><strong>Nama AM</strong><span class="fl-req">*</span> - siapa yang submit</div></li>
+        <li><div class="fl-dot"></div><div><strong>Nama Perusahaan</strong><span class="fl-req">*</span> - nama account baru</div></li>
+        <li><div class="fl-dot"></div><div><strong>Nama PIC</strong><span class="fl-req">*</span> - kontak utama di klien</div></li>
+        <li><div class="fl-dot"></div><div><strong>No. HP / Email PIC</strong> - detail kontak</div></li>
+        <li><div class="fl-dot"></div><div><strong>Sumber Lead</strong><span class="fl-req">*</span> - referral, event, cold outreach, dll</div></li>
+        <li><div class="fl-dot"></div><div><strong>Catatan Awal</strong> - konteks singkat</div></li>
+      </ul>
+      <div class="callout callout-grey" style="margin-top:10px; font-size:9pt;">
+        Setelah submit: Account baru masuk ke tab <strong>Accounts</strong> dengan status <em>Lead</em>. Langsung bisa dipilih di Catat Aktivitas dan Buat Deal — data live, tidak perlu tunggu refresh.
+      </div>
+    </div>
+
+    <!-- Form 3 -->
+    <div>
+      <div class="section-header"><h2>Buat Deal</h2><p>Buat peluang bisnis di bawah account yang ada</p></div>
+      <ul class="field-list">
+        <li><div class="fl-dot"></div><div><strong>Nama AM</strong><span class="fl-req">*</span></div></li>
+        <li><div class="fl-dot"></div><div><strong>Account</strong><span class="fl-req">*</span> - pilih dari dropdown (harus sudah ada)</div></li>
+        <li><div class="fl-dot"></div><div><strong>Nama Deal</strong><span class="fl-req">*</span> - contoh: Tokopedia – SMM Q3 2026</div></li>
+        <li><div class="fl-dot"></div><div><strong>Service Type</strong><span class="fl-req">*</span> - SMM, Ads, KOL, dll</div></li>
+        <li><div class="fl-dot"></div><div><strong>Estimasi Nilai (Rp)</strong> - boleh kosong jika belum tahu</div></li>
+        <li><div class="fl-dot"></div><div><strong>Stage Awal</strong><span class="fl-req">*</span> - biasanya Lead atau Qualified</div></li>
+        <li><div class="fl-dot"></div><div><strong>Target Close Date</strong> - estimasi kapan close</div></li>
+        <li><div class="fl-dot"></div><div><strong>Catatan</strong> - konteks, kebutuhan klien, dll</div></li>
+      </ul>
+      <div class="callout callout-red" style="margin-top:10px; font-size:9pt;">
+        <strong>Account harus sudah ada</strong> sebelum buat Deal. Belum ada? Isi <strong>Daftar Lead</strong> dulu.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Otomasi - Yang Berjalan Otomatis di Background</h2>
+    <p>CRM ini bukan sekedar spreadsheet - ada proses otomatis yang berjalan setiap submit dan terjadwal.</p>
+  </div>
+
+  <div class="auto-card">
+    <div class="ac-icon">📧</div>
+    <div>
+      <div class="ac-title">Email Konfirmasi ke AM (setiap submit Catat Aktivitas, Daftar Lead, atau Buat Deal)</div>
+      <div class="ac-desc">Setelah setiap submit, AM yang bersangkutan menerima email konfirmasi berisi: ringkasan aksi yang tercatat + snapshot pipeline (jumlah open deals, total pipeline, weighted IDR, hot deals). Berguna sebagai "receipt" sekaligus update pipeline real-time.</div>
+    </div>
+  </div>
+
+  <div class="auto-card">
+    <div class="ac-icon">📊</div>
+    <div>
+      <div class="ac-title">Dashboard Rebuild Otomatis (setiap submit)</div>
+      <div class="ac-desc">Tab Dashboard diperbarui setiap ada form yang masuk - tanpa perlu manual refresh. Data pipeline, per-AM breakdown, dan won/lost minggu ini selalu up-to-date.</div>
+    </div>
+  </div>
+
+  <div class="auto-card">
+    <div class="ac-icon">🔔</div>
+    <div>
+      <div class="ac-title">Email Won/Lost ke Leader (saat deal close)</div>
+      <div class="ac-desc">Ketika AM submit Won atau Lost, notifikasi langsung dikirim ke semua Leader dan COO - berisi nama deal, nilai, dan nama AM. Tidak perlu update manual ke atasan.</div>
+    </div>
+  </div>
+
+  <div class="auto-card">
+    <div class="ac-icon">📅</div>
+    <div>
+      <div class="ac-title">CEO/Leader Weekly Summary (setiap Senin pukul 08.00)</div>
+      <div class="ac-desc">Email mingguan otomatis ke Pak Ari, Vienesia, Amel, dan Yuvita - berisi: total open deals, total pipeline, weighted IDR vs target, breakdown per AM (deals, stale, hot), dan won minggu ini. Basis untuk Monday Review meeting.</div>
+    </div>
+  </div>
+
+  <div class="auto-card">
+    <div class="ac-icon">📬</div>
+    <div>
+      <div class="ac-title">AM Weekly Summary (setiap Senin pukul 09.00)</div>
+      <div class="ac-desc">Email personal ke setiap AM berisi snapshot pipeline pribadi: jumlah deal aktif, total pipeline, stale count, won bulan ini, tabel 5 stale deals teratas, dan deal di stage Hot/Negotiation. Berguna sebagai briefing sebelum meeting Senin.</div>
+    </div>
+  </div>
+
+  <div class="auto-card">
+    <div class="ac-icon">🔄</div>
+    <div>
+      <div class="ac-title">Refresh Dropdown (legacy - tidak diperlukan lagi)</div>
+      <div class="ac-desc">Semua form sekarang web app dengan live search - data Account diambil langsung saat form dibuka. Trigger harian 07.00 masih aktif sebagai backup tapi tidak lagi kritis.</div>
+    </div>
+  </div>
+
+  <div class="auto-card">
+    <div class="ac-icon">🧾</div>
+    <div>
+      <div class="ac-title">IRF Reimburse Otomatis — <span style="background:#e0e0e0; color:#555; border-radius:3px; padding:1px 5px; font-size:7.5pt; font-weight:700;">COMING SOON</span></div>
+      <div class="ac-desc">Fitur sudah dibangun, sedang nonaktif sementara. Ketika aktif: AM submit reimburse → sistem generate tab IRF di spreadsheet finance, upload foto bon ke Drive, export PDF, kirim email ke finance + CC AM.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== PAGE 6: QUICK REFERENCE ==================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="chapter">Bab 5 - Quick Reference</div>
+    <div class="brand">Ideoworks CRM v2</div>
+  </div>
+
+  <div class="section-header">
+    <h2>Skenario Sehari-hari → Gunakan Form Mana?</h2>
+    <p>Panduan cepat untuk situasi yang paling sering terjadi.</p>
+  </div>
+
+  <table style="margin-bottom:16px;">
+    <tr>
+      <th>Situasi</th>
+      <th>Form</th>
+      <th>Jenis Update</th>
+    </tr>
+    <tr>
+      <td>Baru ketemu lead baru di event / referral</td>
+      <td><span class="tag tag-blue">Daftar Lead</span></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Mau buat deal setelah Account terdaftar</td>
+      <td><span class="tag tag-blue">Buat Deal</span></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Selesai call / WhatsApp / meeting dengan klien</td>
+      <td><span class="tag tag-blue">Catat Aktivitas</span></td>
+      <td>Aktivitas</td>
+    </tr>
+    <tr>
+      <td>Kirim proposal / rate card / credentials</td>
+      <td><span class="tag tag-blue">Catat Aktivitas</span></td>
+      <td>Update Deal (stage baru)</td>
+    </tr>
+    <tr>
+      <td>Dinner dengan klien (ada pengeluaran)</td>
+      <td><span class="tag tag-blue">Catat Aktivitas</span></td>
+      <td>Aktivitas + isi Pengeluaran</td>
+    </tr>
+    <tr style="color:#aaa;">
+      <td>Ada pengeluaran yang perlu di-reimburse</td>
+      <td><span class="tag" style="background:#e0e0e0;color:#888;">Coming Soon</span></td>
+      <td>Fitur Reimburse IRF sedang nonaktif sementara</td>
+    </tr>
+    <tr>
+      <td>Klien setuju, deal close</td>
+      <td><span class="tag tag-blue">Catat Aktivitas</span></td>
+      <td>Won</td>
+    </tr>
+    <tr>
+      <td>Klien tidak jadi, kalah pitching</td>
+      <td><span class="tag tag-blue">Catat Aktivitas</span></td>
+      <td>Lost + isi Alasan Lost</td>
+    </tr>
+    <tr>
+      <td>Klien minta hold dulu (tunggu budget approval)</td>
+      <td><span class="tag tag-blue">Catat Aktivitas</span></td>
+      <td>Idle / Hold</td>
+    </tr>
+    <tr>
+      <td>Setelah dikaji ulang, lead tidak layak</td>
+      <td><span class="tag tag-blue">Catat Aktivitas</span></td>
+      <td>Not Qualified</td>
+    </tr>
+  </table>
+
+  <div class="qr-grid">
+    <div>
+      <div class="qr-box">
+        <h4>Pipeline Stages & Prob.</h4>
+        <div class="qr-row"><span class="qr-key">Lead</span><span class="qr-val">5%</span></div>
+        <div class="qr-row"><span class="qr-key">Qualified</span><span class="qr-val">15%</span></div>
+        <div class="qr-row"><span class="qr-key">Credentials Sent</span><span class="qr-val">20%</span></div>
+        <div class="qr-row"><span class="qr-key">Rate Card / Proposal Sent</span><span class="qr-val">35%</span></div>
+        <div class="qr-row"><span class="qr-key">Meeting Done</span><span class="qr-val">50%</span></div>
+        <div class="qr-row"><span class="qr-key">Hot Leads</span><span class="qr-val">65%</span></div>
+        <div class="qr-row"><span class="qr-key">Negotiation</span><span class="qr-val">80%</span></div>
+        <div class="qr-row"><span class="qr-key">Won</span><span class="qr-val" style="color:#2e7d32;">100%</span></div>
+        <div class="qr-row"><span class="qr-key">Lost / Idle / Not Qualified</span><span class="qr-val" style="color:#888;">0%</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="qr-box" style="margin-bottom:10px;">
+        <h4>Aturan Penting</h4>
+        <div class="qr-row"><span class="qr-key">Pertama kali buka</span><span class="qr-val" style="color:#2e7d32;">Advanced → Go to app → Allow</span></div>
+        <div class="qr-row"><span class="qr-key">Daftarkan Account dulu</span><span class="qr-val" style="color:var(--red);">Daftar Lead → Buat Deal</span></div>
+        <div class="qr-row"><span class="qr-key">Stale threshold</span><span class="qr-val">14 hari tanpa aktivitas</span></div>
+        <div class="qr-row"><span class="qr-key">Alasan Lost</span><span class="qr-val" style="color:var(--red);">Wajib diisi</span></div>
+        <div class="qr-row"><span class="qr-key">2+ open deals?</span><span class="qr-val">Pilih Deal di form</span></div>
+        <div class="qr-row"><span class="qr-key">Semua form</span><span class="qr-val">Live search (real-time)</span></div>
+        <div class="qr-row"><span class="qr-key">CEO/Leader weekly email</span><span class="qr-val">Senin 08.00</span></div>
+        <div class="qr-row"><span class="qr-key">AM weekly email</span><span class="qr-val">Senin 09.00</span></div>
+      </div>
+      <div class="qr-box">
+        <h4>ID Format</h4>
+        <div class="qr-row"><span class="qr-key">Account</span><span class="qr-val">ACC-0001</span></div>
+        <div class="qr-row"><span class="qr-key">Deal</span><span class="qr-val">DEAL-0001</span></div>
+        <div class="qr-row"><span class="qr-key">Activity</span><span class="qr-val">ACT-0001</span></div>
+        <div class="qr-row"><span class="qr-key">IRF (Reimburse)</span><span class="qr-val">IRF-2026/001</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Common mistakes -->
+  <div class="sub-header" style="margin-top:14px;"><h3>Kesalahan yang Sering Terjadi</h3></div>
+  <table>
+    <tr><th>Kesalahan</th><th>Akibat</th><th>Solusi</th></tr>
+    <tr>
+      <td>Pakai Catat Aktivitas untuk daftarkan lead baru</td>
+      <td>Lead tidak masuk ke Accounts</td>
+      <td>Gunakan Daftar Lead untuk lead baru</td>
+    </tr>
+    <tr>
+      <td>Buat Deal padahal Account belum ada</td>
+      <td>Deal tidak ter-link ke Account</td>
+      <td>Daftar Lead dulu, baru Buat Deal</td>
+    </tr>
+    <tr>
+      <td>Tidak pilih Deal di dropdown saat account punya 2+ deals</td>
+      <td>Aktivitas tercatat tanpa Deal ID</td>
+      <td>Selalu pilih Deal dari dropdown</td>
+    </tr>
+    <tr>
+      <td>Close Lost tanpa mengisi Alasan Lost</td>
+      <td>Data evaluasi tidak lengkap</td>
+      <td>Alasan Lost wajib diisi di bagian Lost</td>
+    </tr>
+  </table>
+
+  <!-- Footer note -->
+  <div style="margin-top:20px; padding-top:10px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:8.5pt; color:#666;">Pertanyaan atau masalah? Hubungi <strong>Ryan</strong> di ryan@ideoworks.co.id</div>
+    <div style="font-size:8.5pt; color:#bbb;">Ideoworks CRM v2.1 · Mei 2026</div>
+  </div>
+</div>
+
+</body>
+</html>

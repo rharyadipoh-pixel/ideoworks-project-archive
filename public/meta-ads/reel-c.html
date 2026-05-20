@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reel C · Ideoworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8192C;--navy:#0D1B2A;--white:#FFFFFF;--bg:#F7F5F0;--muted:rgba(13,27,42,.5);--muted2:rgba(13,27,42,.3);--lp-bg:#0A0D14;--lp-rule:#2D2A3A;--fd:'Space Grotesk',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060608;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:14px;padding:40px 20px}
+  .fmt{font-family:var(--fm);font-size:10px;color:#5C5867;letter-spacing:.2em;text-transform:uppercase}
+  .ad{width:405px;height:720px;background:#F7F5F0;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.07)}
+  .strip{position:absolute;bottom:0;left:0;right:0;height:40px;background:var(--navy);display:flex;align-items:center;padding:0 24px;z-index:15}
+  .strip-cta{font-family:var(--fm);font-size:8px;color:rgba(232,25,44,.7);letter-spacing:.12em;text-transform:uppercase}
+  .ghost{position:absolute;bottom:-10px;right:-8px;font-family:var(--fm);font-size:200px;color:rgba(13,27,42,.03);line-height:1;pointer-events:none;letter-spacing:-.04em}
+  .red-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);z-index:20}
+  .logo{position:absolute;top:20px;left:24px;z-index:20;font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--navy)}
+  .logo b{color:var(--red)}
+  .progress{position:absolute;bottom:40px;left:0;height:2px;background:var(--red);z-index:20;width:0}
+  .scene{position:absolute;inset:0;bottom:40px;z-index:10;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:52px 32px 28px;opacity:0;pointer-events:none;transition:opacity .5s ease}
+  .scene.active{opacity:1;pointer-events:auto}
+
+  /* S1 */
+  .s1-kicker{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.22em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:8px}
+  .s1-kicker::before{content:'';width:18px;height:2px;background:var(--red)}
+  .s1-hl{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--navy);line-height:.98;letter-spacing:-.03em;margin-bottom:20px}
+  .s1-hl .red{color:var(--red)}
+  .s1-w{display:inline-block;overflow:hidden;margin-right:.06em}
+  .s1-w span{display:block;animation:su .5s cubic-bezier(.16,1,.3,1) both}
+  @keyframes su{from{transform:translateY(105%);opacity:0}to{transform:translateY(0);opacity:1}}
+  .s1-sub{font-family:var(--fb);font-size:13px;color:var(--muted);line-height:1.65;max-width:26ch;opacity:0;animation:fu .6s ease 1s forwards}
+  @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  /* S2 mistakes */
+  .s2{justify-content:center}
+  .s2-hdr{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:8px}
+  .s2-hdr::before{content:'';width:18px;height:2px;background:var(--red)}
+  .mistakes{display:flex;flex-direction:column;gap:22px;width:100%}
+  .m{display:flex;gap:14px;align-items:flex-start;opacity:0;transform:translateX(-12px)}
+  .m.show{animation:min .4s cubic-bezier(.16,1,.3,1) forwards}
+  @keyframes min{to{opacity:1;transform:translateX(0)}}
+  .m-num{font-family:var(--fd);font-size:32px;font-weight:800;color:var(--red);opacity:.3;line-height:1;flex-shrink:0;min-width:32px}
+  .m-body{}
+  .m-title{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:5px}
+  .m-desc{font-family:var(--fb);font-size:12px;color:var(--muted);line-height:1.6}
+  .m-desc b{color:var(--navy)}
+  .s2-close{font-family:var(--fd);font-size:14px;font-weight:700;color:var(--navy);margin-top:26px;padding-top:18px;border-top:2px solid var(--red);line-height:1.3}
+  .s2-close span{color:var(--red)}
+
+  /* S3 — LP bridge */
+  .s3-label{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .s3-label::before{content:'';width:18px;height:2px;background:var(--red)}
+  .lp-device{width:100%;background:var(--lp-bg);border-radius:8px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15);padding:18px 20px}
+  .lp-device::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.022;pointer-events:none}
+  .lp-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .lp-results-hd{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.3);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .lp-rows{display:flex;flex-direction:column;gap:8px}
+  .lp-row{display:flex;align-items:center;justify-content:space-between}
+  .lp-key{font-family:var(--fm);font-size:8.5px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em}
+  .lp-val{font-family:var(--fd);font-size:13px;font-weight:600;color:#F2F0EC}
+  .lp-val.ok{color:#4ADE80}
+  .lp-val.lk{color:rgba(255,255,255,.25);font-size:10px;letter-spacing:.1em}
+  .s3-caption{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--navy);margin-top:16px;line-height:1.25}
+  .s3-caption span{color:var(--red)}
+
+  /* S4 CTA (red) */
+  .s4{background:var(--red)}
+  .s4-bg{position:absolute;bottom:-30px;right:-20px;font-family:var(--fd);font-size:150px;font-weight:800;color:rgba(255,255,255,.06);line-height:1;letter-spacing:-.05em;pointer-events:none}
+  .s4>*:not(.s4-bg){position:relative;z-index:1}
+  .s4-kicker{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
+  .s4-hl{font-family:var(--fd);font-size:38px;font-weight:800;color:var(--white);line-height:1;letter-spacing:-.03em;margin-bottom:16px}
+  .s4-proof{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+  .s4-pr{font-family:var(--fb);font-size:13px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:8px;line-height:1.4}
+  .s4-pr::before{content:'';width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.7);flex-shrink:0}
+  .s4-btn{padding:14px 28px;background:var(--white);color:var(--red);font-family:var(--fd);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+  .s4-url{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.45);margin-top:12px;letter-spacing:.1em}
+  .s4-note{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.14em;text-transform:uppercase;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="fmt">REELS · STORIES · 9:16 · ANGLE C · IDEOWORKS BRAND</div>
+<div class="ad" id="ad">
+  <div class="red-bar"></div>
+  <div class="logo">IDEO<b>WORKS</b></div>
+
+  <div class="scene active" id="s1">
+    <div class="s1-kicker">Indonesia Market Entry</div>
+    <h1 class="s1-hl">
+      <div class="s1-w"><span style="animation-delay:.05s">MOST</span></div>
+      <div class="s1-w"><span style="animation-delay:.18s">BRANDS</span></div>
+      <div class="s1-w"><span style="animation-delay:.31s">ENTER</span></div>
+      <div class="s1-w red"><span style="animation-delay:.44s">INDONESIA</span></div>
+      <div class="s1-w"><span style="animation-delay:.57s">PREPARED</span></div>
+      <div class="s1-w"><span style="animation-delay:.7s">FOR THE</span></div>
+      <div class="s1-w red"><span style="animation-delay:.83s">WRONG MARKET.</span></div>
+    </h1>
+    <p class="s1-sub">Not because they didn't prepare. Because they prepared for the wrong things.</p>
+  </div>
+
+  <div class="scene s2" id="s2">
+    <div class="s2-hdr">Where the playbook breaks</div>
+    <div class="mistakes">
+      <div class="m" id="m1"><div class="m-num">01</div><div class="m-body"><div class="m-title">Jakarta is not Indonesia</div><div class="m-desc">60% of your buyers are in <b>Tier 2 and 3 cities</b> with completely different triggers and behavior.</div></div></div>
+      <div class="m" id="m2"><div class="m-num">02</div><div class="m-body"><div class="m-title">Global benchmarks don't apply</div><div class="m-desc"><b>TikTok Shop, KOL rates, CPMs</b> follow their own logic here. Using global numbers means you mis-budget every time.</div></div></div>
+      <div class="m" id="m3"><div class="m-num">03</div><div class="m-body"><div class="m-title">Premium doesn't translate directly</div><div class="m-desc">What reads as <b>aspirational abroad</b> can read as cold or distant here. Brand tone needs local calibration.</div></div></div>
+    </div>
+    <div class="s2-close">Sound familiar? Your Indonesia brief is <span>free.</span></div>
+  </div>
+
+  <div class="scene" id="s3">
+    <div class="s3-label">See where your brand stands</div>
+    <div class="lp-device">
+      <div class="lp-bar"></div>
+      <div class="lp-results-hd">Indonesia Readiness Report · yourbrand.com</div>
+      <div class="lp-rows">
+        <div class="lp-row"><span class="lp-key">Brand Fit</span><span class="lp-val ok">78. Strong.</span></div>
+        <div class="lp-row"><span class="lp-key">Opportunity</span><span class="lp-val ok">85. High.</span></div>
+        <div class="lp-row"><span class="lp-key">Persona Mapping</span><span class="lp-val lk">🔒 Locked</span></div>
+        <div class="lp-row"><span class="lp-key">GTM Strategy</span><span class="lp-val lk">🔒 Locked</span></div>
+        <div class="lp-row"><span class="lp-key">Budget Framework</span><span class="lp-val lk">🔒 Locked</span></div>
+      </div>
+    </div>
+    <div class="s3-caption">The full picture<br>is yours. <span>Free.</span></div>
+  </div>
+
+  <div class="scene s4" id="s4">
+    <div class="s4-bg">IDW</div>
+    <div class="s4-kicker">Active in Indonesia since 2010</div>
+    <h2 class="s4-hl">YOUR INDONESIA CAMPAIGN BRIEF.</h2>
+    <div class="s4-proof">
+      <div class="s4-pr">Built on 15 years of campaigns run here</div>
+      <div class="s4-pr">Calvin Klein. HSBC. GoPro. Park Hyatt.</div>
+      <div class="s4-pr">Free. Delivered in 90 seconds.</div>
+    </div>
+    <div class="s4-btn">Get My Brief Free</div>
+    <div class="s4-note">IDEOWORKS · Indonesia market experts since 2010</div>
+  </div>
+
+  <div class="strip"><span class="strip-cta">Free · No Signup</span></div>
+  <div class="progress" id="progress"></div>
+</div>
+<script>
+const SC=['s1','s2','s3','s4'],DUR=[3000,5500,4000,4500],TOT=DUR.reduce((a,b)=>a+b,0);
+let cur=0,ls=performance.now();
+function show(i){SC.forEach((id,x)=>document.getElementById(id).classList.toggle('active',x===i));if(i===1)mistakes();}
+function mistakes(){['m1','m2','m3'].forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('show'),i*1200));}
+function next(){setTimeout(()=>{cur=(cur+1)%SC.length;if(!cur)ls=performance.now();show(cur);next();},DUR[cur]);}
+(function tick(){document.getElementById('progress').style.width=Math.min(((performance.now()-ls)/TOT)*100,100)+'%';requestAnimationFrame(tick);})();
+show(0);next();
+</script>
+</body>
+</html>

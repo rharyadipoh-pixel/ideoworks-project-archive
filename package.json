@@ -1,0 +1,15 @@
+{
+  "name": "ideoworks-project-archive",
+  "version": "1.0.0",
+  "description": "Ideoworks project archive — Claude Code sessions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

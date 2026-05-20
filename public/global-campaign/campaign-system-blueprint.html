@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IDEOWORKS — Global Campaign System Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #1C1B19;
+    --ink-soft:  #3A3935;
+    --body:      #55534D;
+    --muted:     #87847C;
+    --line:      #E8E4DC;
+    --bg:        #FFFFFF;
+    --bg-alt:    #FAF6EF;
+    --bg-warm:   #F4ECDD;
+    --bg-dark:   #1C1B19;
+    --accent:    #EE4823;
+    --accent-d:  #C8351A;
+    --accent-s:  #FBE5DE;
+    --green:     #1A7A4A;
+    --green-s:   #E0F5EC;
+    --blue:      #1A4FA0;
+    --blue-s:    #E0EAFF;
+    --purple:    #6B35A0;
+    --purple-s:  #EEE5FF;
+    --gold:      #B07A10;
+    --gold-s:    #FFF4D6;
+    --r: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-md: 0 6px 24px rgba(0,0,0,0.10);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-alt);
+    color: var(--body);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  /* ── TOP HEADER ── */
+  .header {
+    background: var(--bg-dark);
+    padding: 32px 40px 28px;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .logo-row { display: flex; align-items: center; gap: 12px; }
+  .logo-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: #fff; letter-spacing: -0.5px;
+  }
+  .logo-text { font-weight: 700; font-size: 18px; color: #fff; letter-spacing: -0.3px; }
+  .logo-text span { color: var(--accent); }
+  .header h1 {
+    margin: 20px 0 6px;
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+  .header p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #A09D97;
+    max-width: 600px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(238,72,35,0.18);
+    border: 1px solid rgba(238,72,35,0.35);
+    color: #FF8A6E;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .badge::before { content:'●'; font-size: 8px; }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .nav-tabs-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; padding: 0 40px;
+    overflow-x: auto; gap: 0;
+    scrollbar-width: none;
+  }
+  .nav-tabs-inner::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    user-select: none;
+    letter-spacing: 0.1px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  .section { display: none; }
+  .section.active { display: block; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border-radius: var(--r);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-head {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .card-head h2 { font-size: 1rem; font-weight: 700; color: var(--ink); margin: 0; }
+  .card-head p { font-size: 0.8rem; color: var(--muted); margin: 2px 0 0; }
+  .card-body { padding: 24px; }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+  @media(max-width:900px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+  /* ── FLOWCHART ── */
+  .flow-container {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 32px;
+    box-shadow: var(--shadow);
+  }
+  .flow-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  /* Main flow columns */
+  .flow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .flow-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    min-width: 148px;
+  }
+  .flow-node {
+    width: 136px;
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .flow-node .node-icon { font-size: 20px; margin-bottom: 6px; }
+  .flow-node .node-label { font-size: 0.72rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; line-height: 1.3; }
+  .flow-node .node-desc { font-size: 0.65rem; color: var(--muted); line-height: 1.35; }
+
+  .fn-orange { background: var(--accent-s); border: 1.5px solid #F4A08A; }
+  .fn-green  { background: var(--green-s);  border: 1.5px solid #85D4AE; }
+  .fn-blue   { background: var(--blue-s);   border: 1.5px solid #85A8E0; }
+  .fn-purple { background: var(--purple-s); border: 1.5px solid #B899DC; }
+  .fn-gold   { background: var(--gold-s);   border: 1.5px solid #D4A83A; }
+  .fn-dark   { background: var(--bg-dark);  border: 1.5px solid #3A3935; }
+  .fn-dark .node-label, .fn-dark .node-desc { color: #A09D97; }
+  .fn-dark .node-label { color: #fff; }
+
+  /* arrows between columns */
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    color: var(--muted);
+    font-size: 18px;
+    padding-top: 32px; /* align with top of first node */
+    flex-shrink: 0;
+  }
+
+  /* vertical arrow within column */
+  .v-arrow {
+    width: 2px;
+    height: 20px;
+    background: var(--line);
+    position: relative;
+    margin: 0 auto;
+  }
+  .v-arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--line);
+  }
+
+  /* ── STAGE PIPELINE ── */
+  .pipeline {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .pipeline-stage {
+    flex: 1;
+    min-width: 130px;
+    text-align: center;
+    position: relative;
+  }
+  .stage-box {
+    padding: 14px 10px 12px;
+    border-radius: 0;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-right: none;
+    height: 100%;
+  }
+  .pipeline-stage:first-child .stage-box { border-radius: var(--r) 0 0 var(--r); }
+  .pipeline-stage:last-child .stage-box  { border-radius: 0 var(--r) var(--r) 0; border-right: 1px solid var(--line); }
+  .stage-num {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--muted); margin-bottom: 4px;
+  }
+  .stage-name {
+    font-size: 0.82rem; font-weight: 700; color: var(--ink);
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .stage-icon { font-size: 20px; margin-bottom: 8px; }
+  .stage-conv {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 50px;
+    display: inline-block; margin-bottom: 4px;
+  }
+  .stage-action {
+    font-size: 0.67rem; color: var(--muted); line-height: 1.4;
+    margin-top: 6px;
+  }
+  .conv-green { background: var(--green-s); color: var(--green); }
+  .conv-orange { background: var(--accent-s); color: var(--accent-d); }
+  .conv-gold { background: var(--gold-s); color: var(--gold); }
+
+  /* ── TOOL CARDS ── */
+  .tool-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .tool-card:hover { box-shadow: var(--shadow-md); }
+  .tool-header { display: flex; align-items: center; gap: 10px; }
+  .tool-emoji { font-size: 24px; }
+  .tool-name { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+  .tool-role { font-size: 0.72rem; color: var(--muted); margin: 0; }
+  .tool-use { font-size: 0.78rem; color: var(--body); line-height: 1.5; }
+  .tool-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+  .tag {
+    font-size: 0.65rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 50px;
+    background: var(--bg-warm); color: var(--ink-soft);
+    border: 1px solid var(--line);
+  }
+  .tag-free { background: var(--green-s); color: var(--green); border-color: #85D4AE; }
+  .tag-paid { background: var(--gold-s); color: var(--gold); border-color: #D4A83A; }
+  .tag-core { background: var(--accent-s); color: var(--accent-d); border-color: #F4A08A; }
+
+  /* ── INTEGRATION MAP ── */
+  .int-map {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .int-col { display: flex; flex-direction: column; gap: 10px; }
+  .int-arrow-col {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 6px; padding-top: 24px;
+  }
+  .int-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow);
+  }
+  .int-item-label { font-size: 0.78rem; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .int-item-desc { font-size: 0.7rem; color: var(--muted); }
+  .int-center {
+    text-align: center; padding: 14px;
+    background: var(--bg-dark); color: #fff;
+    border-radius: 10px; font-size: 0.8rem; font-weight: 700;
+    box-shadow: var(--shadow-md);
+    min-width: 110px;
+  }
+  .int-center small { display: block; font-size: 0.65rem; color: #A09D97; margin-top: 2px; }
+
+  /* ── KPI METRICS ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+  @media(max-width:700px) { .kpi-grid { grid-template-columns: 1fr 1fr; } }
+  .kpi {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: var(--r); padding: 16px;
+    box-shadow: var(--shadow);
+  }
+  .kpi-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--muted); margin-bottom: 6px; }
+  .kpi-val { font-size: 1.5rem; font-weight: 800; color: var(--ink); letter-spacing: -0.5px; }
+  .kpi-sub { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+  .kpi-trend { font-size: 0.75rem; font-weight: 600; margin-top: 4px; }
+  .up { color: var(--green); } .down { color: var(--accent); }
+
+  /* ── PROCESS STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff; font-weight: 800; font-size: 0.8rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-content { flex: 1; }
+  .step-title { font-size: 0.92rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .step-desc { font-size: 0.8rem; color: var(--body); line-height: 1.55; }
+  .step-tools { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .step-tool-chip {
+    font-size: 0.68rem; font-weight: 600;
+    padding: 2px 10px; border-radius: 50px;
+    background: var(--bg-warm); color: var(--ink-soft);
+    border: 1px solid var(--line);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--bg-dark); color: #A09D97;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 20px;
+    margin-top: 0;
+  }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { margin-bottom: 24px; }
+  .sec-header h2 { font-size: 1.3rem; font-weight: 800; color: var(--ink); margin-bottom: 4px; letter-spacing: -0.3px; }
+  .sec-header p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+  .sec-divider { height: 1px; background: var(--line); margin: 28px 0; }
+
+  /* connectors legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 600; color: var(--body); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  .fn-orange .node-label { color: #7A2010; }
+  .fn-green  .node-label { color: #0A4A28; }
+  .fn-blue   .node-label { color: #0A2A60; }
+  .fn-purple .node-label { color: #3A1060; }
+  .fn-gold   .node-label { color: #704A05; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo-row">
+        <div class="logo-dot">IW</div>
+        <div class="logo-text">IDEO<span>WORKS</span></div>
+      </div>
+      <div class="badge">Global Campaign System</div>
+      <h1>Campaign Intelligence<br>&amp; CRM Blueprint</h1>
+      <p>Integrated system to track campaign performance, manage pipeline, and close B2B clients — from first click to signed contract.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <div class="tab active" onclick="showTab('flowchart',this)">① System Flowchart</div>
+    <div class="tab" onclick="showTab('pipeline',this)">② CRM Pipeline</div>
+    <div class="tab" onclick="showTab('tools',this)">③ Tools Stack</div>
+    <div class="tab" onclick="showTab('integration',this)">④ Integration Map</div>
+    <div class="tab" onclick="showTab('process',this)">⑤ Process Guide</div>
+    <div class="tab" onclick="showTab('dashboard',this)">⑥ KPI Dashboard</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- TAB 1: FLOWCHART -->
+<!-- ═══════════════════════════════════ -->
+<div id="tab-flowchart" class="section active">
+<div class="main">
+  <div class="sec-header">
+    <h2>End-to-End System Architecture</h2>
+    <p>How traffic flows from first impression to closed deal — and how each layer feeds the next.</p>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">GLOBAL CAMPAIGN INTELLIGENCE SYSTEM — DATA FLOW</div>
+
+    <div class="flow">
+
+      <!-- COL 1: TRAFFIC SOURCES -->
+      <div class="flow-col">
+        <div class="flow-node fn-blue">
+          <div class="node-icon">📣</div>
+          <div class="node-label">LinkedIn Ads</div>
+          <div class="node-desc">Sponsored posts & InMail to target ICPs</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-blue">
+          <div class="node-icon">🔍</div>
+          <div class="node-label">Google Ads</div>
+          <div class="node-desc">Intent-based search campaigns</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-blue">
+          <div class="node-icon">✉️</div>
+          <div class="node-label">Cold Email</div>
+          <div class="node-desc">Outbound sequences to prospect list</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-blue">
+          <div class="node-icon">📝</div>
+          <div class="node-label">Content / SEO</div>
+          <div class="node-desc">Case studies, articles, organic reach</div>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; color: #1A4FA0; text-transform: uppercase; letter-spacing: 0.8px;">Traffic Sources</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <!-- COL 2: WEBSITE -->
+      <div class="flow-col">
+        <div class="flow-node fn-orange">
+          <div class="node-icon">🌐</div>
+          <div class="node-label">Website / Landing Page</div>
+          <div class="node-desc">UTM parameters captured on arrival</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-orange">
+          <div class="node-icon">📊</div>
+          <div class="node-label">GA4 Analytics</div>
+          <div class="node-desc">Behavior, session, source tracking</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-orange">
+          <div class="node-icon">📋</div>
+          <div class="node-label">Lead Capture Form</div>
+          <div class="node-desc">Contact info + service interest + budget</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-orange">
+          <div class="node-icon">📅</div>
+          <div class="node-label">Calendly / Booking</div>
+          <div class="node-desc">High-intent prospects book a call directly</div>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; color: #C8351A; text-transform: uppercase; letter-spacing: 0.8px;">Website Layer</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <!-- COL 3: CRM -->
+      <div class="flow-col">
+        <div class="flow-node fn-green">
+          <div class="node-icon">👤</div>
+          <div class="node-label">Contact Created</div>
+          <div class="node-desc">CRM auto-creates contact with source tag</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-green">
+          <div class="node-icon">🏷️</div>
+          <div class="node-label">Lead Scoring</div>
+          <div class="node-desc">Company size, budget, urgency signal</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-green">
+          <div class="node-icon">💼</div>
+          <div class="node-label">Deal Created</div>
+          <div class="node-desc">Revenue value + close date estimated</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-green">
+          <div class="node-icon">🔔</div>
+          <div class="node-label">Follow-up Task</div>
+          <div class="node-desc">Assigned to rep with deadline & script</div>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; color: #1A7A4A; text-transform: uppercase; letter-spacing: 0.8px;">CRM Layer</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <!-- COL 4: PIPELINE -->
+      <div class="flow-col">
+        <div class="flow-node fn-purple">
+          <div class="node-icon">🔵</div>
+          <div class="node-label">New Lead</div>
+          <div class="node-desc">Entered pipeline, unqualified</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-purple">
+          <div class="node-icon">🔎</div>
+          <div class="node-label">Qualified</div>
+          <div class="node-desc">Discovery call done, budget confirmed</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-purple">
+          <div class="node-icon">📄</div>
+          <div class="node-label">Proposal Sent</div>
+          <div class="node-desc">Deck + quote delivered</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-purple">
+          <div class="node-icon">🤝</div>
+          <div class="node-label">Negotiation</div>
+          <div class="node-desc">Scope / pricing aligned</div>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; color: #6B35A0; text-transform: uppercase; letter-spacing: 0.8px;">Sales Pipeline</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <!-- COL 5: OUTCOMES -->
+      <div class="flow-col">
+        <div class="flow-node fn-gold">
+          <div class="node-icon">✅</div>
+          <div class="node-label">Closed Won</div>
+          <div class="node-desc">Contract signed, revenue logged</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-gold">
+          <div class="node-icon">📈</div>
+          <div class="node-label">Revenue Logged</div>
+          <div class="node-desc">Deal value added to forecast</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-gold">
+          <div class="node-icon">🔁</div>
+          <div class="node-label">Attribution Closed</div>
+          <div class="node-desc">Source → Win path recorded</div>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="flow-node fn-dark">
+          <div class="node-icon">📊</div>
+          <div class="node-label">Dashboard Updated</div>
+          <div class="node-desc">All KPIs refresh in Looker Studio</div>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; color: #B07A10; text-transform: uppercase; letter-spacing: 0.8px;">Outcomes</div>
+      </div>
+
+    </div><!-- /flow -->
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#85A8E0"></div> Traffic Sources</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F4A08A"></div> Website Layer</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#85D4AE"></div> CRM Layer</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#B899DC"></div> Sales Pipeline</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#D4A83A"></div> Revenue &amp; Attribution</div>
+    </div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- FEEDBACK LOOP -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:var(--accent-s)">🔁</div>
+      <div>
+        <h2>The Optimization Feedback Loop</h2>
+        <p>How the system learns and improves over time</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid-3" style="gap:16px">
+        <div style="background:var(--bg-alt);border-radius:8px;padding:16px">
+          <div style="font-size:1.3rem;margin-bottom:8px">📉</div>
+          <div style="font-size:0.82rem;font-weight:700;color:var(--ink);margin-bottom:4px">Identify Weak Points</div>
+          <div style="font-size:0.75rem;color:var(--muted)">Dashboard shows which campaigns have high CPL or low conversion. Drop underperformers, scale winners.</div>
+        </div>
+        <div style="background:var(--bg-alt);border-radius:8px;padding:16px">
+          <div style="font-size:1.3rem;margin-bottom:8px">🎯</div>
+          <div style="font-size:0.82rem;font-weight:700;color:var(--ink);margin-bottom:4px">Reallocate Budget</div>
+          <div style="font-size:0.75rem;color:var(--muted)">Move spend to the channel that closes deals — not just generates leads. Attribution tells you which source actually won.</div>
+        </div>
+        <div style="background:var(--bg-alt);border-radius:8px;padding:16px">
+          <div style="font-size:1.3rem;margin-bottom:8px">🚀</div>
+          <div style="font-size:0.82rem;font-weight:700;color:var(--ink);margin-bottom:4px">Pipeline Velocity</div>
+          <div style="font-size:0.75rem;color:var(--muted)">Track days-in-stage. If deals stall at Proposal, your deck needs work. If they stall at Negotiation, pricing needs revisiting.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- TAB 2: CRM PIPELINE -->
+<!-- ═══════════════════════════════════ -->
+<div id="tab-pipeline" class="section">
+<div class="main">
+  <div class="sec-header">
+    <h2>CRM Pipeline Stages</h2>
+    <p>7-stage B2B pipeline from first contact to signed client — with revenue tracking at every step.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-body" style="padding:16px 12px">
+      <div class="pipeline">
+        <div class="pipeline-stage">
+          <div class="stage-box">
+            <div class="stage-icon">📥</div>
+            <div class="stage-num">Stage 1</div>
+            <div class="stage-name">New Lead</div>
+            <div class="stage-conv conv-orange">100%</div>
+            <div class="stage-action">Source captured, contact created. No qualification yet.</div>
+          </div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="stage-box">
+            <div class="stage-icon">📞</div>
+            <div class="stage-num">Stage 2</div>
+            <div class="stage-name">Contacted</div>
+            <div class="stage-conv conv-orange">~60%</div>
+            <div class="stage-action">Intro email or call sent. Waiting for response.</div>
+          </div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="stage-box">
+            <div class="stage-icon">🔎</div>
+            <div class="stage-num">Stage 3</div>
+            <div class="stage-name">Qualified</div>
+            <div class="stage-conv conv-gold">~35%</div>
+            <div class="stage-action">Discovery call done. Budget, authority &amp; timeline confirmed.</div>
+          </div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="stage-box">
+            <div class="stage-icon">📄</div>
+            <div class="stage-num">Stage 4</div>
+            <div class="stage-name">Proposal</div>
+            <div class="stage-conv conv-gold">~25%</div>
+            <div class="stage-action">Deck, scope, &amp; pricing sent. Revenue value set in CRM.</div>
+          </div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="stage-box">
+            <div class="stage-icon">💬</div>
+            <div class="stage-num">Stage 5</div>
+            <div class="stage-name">Negotiation</div>
+            <div class="stage-conv conv-gold">~18%</div>
+            <div class="stage-action">Objections handled. Scope refined. Contract drafted.</div>
+          </div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="stage-box">
+            <div class="stage-icon">✅</div>
+            <div class="stage-num">Stage 6</div>
+            <div class="stage-name">Closed Won</div>
+            <div class="stage-conv conv-green">✓ Win</div>
+            <div class="stage-action">Contract signed. Revenue booked. Onboarding starts.</div>
+          </div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="stage-box" style="background:#FFF0EE">
+            <div class="stage-icon">❌</div>
+            <div class="stage-num">Stage 7</div>
+            <div class="stage-name">Closed Lost</div>
+            <div class="stage-conv" style="background:#FEE2E2;color:#C00">✗ Lost</div>
+            <div class="stage-action">Reason logged. Nurture sequence triggered for 90-day re-engage.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="gap:20px">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--green-s)">💰</div>
+        <div>
+          <h2>Revenue Tracking Per Deal</h2>
+          <p>What to capture in CRM for each deal</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Deal Value (Expected Revenue)</div>
+              <div class="step-desc">Total contract value in USD. E.g. $48,000/year retainer. Set as soon as qualified.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Probability %</div>
+              <div class="step-desc">Weighted by stage. Stage 3 = 35%, Stage 5 = 70%. Drives forecast accuracy.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Expected Close Date</div>
+              <div class="step-desc">Used for pipeline forecasting. Flag if overdue — triggers manager alert.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Source Attribution</div>
+              <div class="step-desc">Which campaign / channel originated this deal. Calculates true ROI per campaign.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <div class="step-title">Service Type</div>
+              <div class="step-desc">Strategy, Creative, Media, Analytics — for capacity planning.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--purple-s)">📋</div>
+        <div>
+          <h2>Follow-Up System</h2>
+          <p>How each deal stays warm and moves forward</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Day 0 — Auto Welcome Email</div>
+              <div class="step-desc">Triggered immediately on form submit. Confirms receipt, sets expectation for response in 24h.</div>
+              <div class="step-tools"><span class="step-tool-chip">HubSpot Sequence</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Day 1 — Personal Outreach</div>
+              <div class="step-desc">Rep receives task alert. Sends personalized email or books call via Calendly link.</div>
+              <div class="step-tools"><span class="step-tool-chip">HubSpot Task</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Day 3 — LinkedIn Touch</div>
+              <div class="step-desc">Connect on LinkedIn with short note. Multi-channel warming.</div>
+              <div class="step-tools"><span class="step-tool-chip">Apollo / Manual</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Day 7 — Value Drop</div>
+              <div class="step-desc">Send relevant case study or insight relevant to their market. No ask.</div>
+              <div class="step-tools"><span class="step-tool-chip">HubSpot Sequence</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <div class="step-title">Day 14+ — Re-engage or Nurture</div>
+              <div class="step-desc">If no response, move to long-term nurture. Monthly touchpoint until ready to buy.</div>
+              <div class="step-tools"><span class="step-tool-chip">HubSpot Workflow</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- TAB 3: TOOLS STACK -->
+<!-- ═══════════════════════════════════ -->
+<div id="tab-tools" class="section">
+<div class="main">
+  <div class="sec-header">
+    <h2>Recommended Tool Stack</h2>
+    <p>Lean, integrated stack optimized for a boutique B2B marketing agency doing outbound globally.</p>
+  </div>
+
+  <div style="background:var(--accent-s);border:1px solid #F4A08A;border-radius:var(--r);padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start">
+    <div style="font-size:1.2rem">💡</div>
+    <div style="font-size:0.82rem;color:var(--ink-soft)"><strong>Core Principle:</strong> All tools must push data into one central CRM (HubSpot). Every lead, every campaign, every deal — one source of truth. Avoid fragmented spreadsheet tracking.</div>
+  </div>
+
+  <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px;">🧠 CRM & Pipeline Hub</div>
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">🟠</div><div><div class="tool-name">HubSpot CRM</div><div class="tool-role">Core CRM, Pipeline & Automation</div></div></div>
+      <div class="tool-use">Contacts, deal pipeline, sequences, follow-up tasks, and revenue forecasting. The heartbeat of the entire system.</div>
+      <div class="tool-tags"><span class="tag tag-core">Core</span><span class="tag tag-free">Free Tier Available</span><span class="tag">hubspot.com</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">📅</div><div><div class="tool-name">Calendly</div><div class="tool-role">Booking & Meeting Scheduling</div></div></div>
+      <div class="tool-use">High-intent leads book discovery calls directly. Integrates with HubSpot to create contact + deal automatically when a call is booked.</div>
+      <div class="tool-tags"><span class="tag tag-free">Free Tier</span><span class="tag">calendly.com</span></div>
+    </div>
+  </div>
+
+  <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px;">📣 Outbound & Prospecting</div>
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">🚀</div><div><div class="tool-name">Apollo.io</div><div class="tool-role">Prospecting + Cold Email Sequences</div></div></div>
+      <div class="tool-use">Find verified email + LinkedIn of ICPs globally. Build targeted prospect lists by industry, company size, revenue. Run automated cold email sequences with personalization. Syncs with HubSpot.</div>
+      <div class="tool-tags"><span class="tag tag-core">Core</span><span class="tag tag-paid">Paid</span><span class="tag">apollo.io</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">💼</div><div><div class="tool-name">LinkedIn Sales Navigator</div><div class="tool-role">B2B Targeting & Social Selling</div></div></div>
+      <div class="tool-use">Advanced search to find decision makers at target companies. Track job changes, company news. InMail to warm prospects. Integrates with HubSpot via sync.</div>
+      <div class="tool-tags"><span class="tag tag-paid">Paid</span><span class="tag">linkedin.com/sales</span></div>
+    </div>
+  </div>
+
+  <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px;">🌐 Website & Analytics</div>
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">📊</div><div><div class="tool-name">Google Analytics 4</div><div class="tool-role">Website & Campaign Analytics</div></div></div>
+      <div class="tool-use">Track sessions, traffic sources, UTM performance, conversion events (form submits, call bookings). Free and essential. Connects to Looker Studio for reporting.</div>
+      <div class="tool-tags"><span class="tag tag-free">Free</span><span class="tag">analytics.google.com</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">🎯</div><div><div class="tool-name">HubSpot Tracking Pixel</div><div class="tool-role">Visitor ID & Form Capture</div></div></div>
+      <div class="tool-use">Add HubSpot JS snippet to website. Identifies returning visitors, tracks page views per contact, and auto-captures form submissions directly into CRM.</div>
+      <div class="tool-tags"><span class="tag tag-free">Free</span><span class="tag">Built into HubSpot</span></div>
+    </div>
+  </div>
+
+  <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px;">⚙️ Automation & Reporting</div>
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">🔗</div><div><div class="tool-name">Make.com (formerly Integromat)</div><div class="tool-role">No-Code Automation & Integration</div></div></div>
+      <div class="tool-use">The glue of the system. Connects Apollo → HubSpot, Calendly → HubSpot, form → Slack alert, GA4 data → Sheets. Build automations visually without code.</div>
+      <div class="tool-tags"><span class="tag tag-core">Core</span><span class="tag tag-free">Free Tier</span><span class="tag">make.com</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header"><div class="tool-emoji">📈</div><div><div class="tool-name">Google Looker Studio</div><div class="tool-role">Unified Campaign Dashboard</div></div></div>
+      <div class="tool-use">Pull data from GA4, HubSpot, LinkedIn Ads, Google Ads into one live dashboard. Track CPL by channel, pipeline value, conversion rates, and revenue forecast. Share with client or team.</div>
+      <div class="tool-tags"><span class="tag tag-free">Free</span><span class="tag">lookerstudio.google.com</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:var(--gold-s)">💵</div>
+      <div>
+        <h2>Estimated Monthly Cost</h2>
+        <p>Lean stack for an early-stage B2B outbound campaign</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
+        <thead>
+          <tr style="border-bottom:2px solid var(--line)">
+            <th style="text-align:left;padding:8px 0;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.7rem;letter-spacing:0.8px">Tool</th>
+            <th style="text-align:left;padding:8px 0;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.7rem;letter-spacing:0.8px">Plan</th>
+            <th style="text-align:right;padding:8px 0;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.7rem;letter-spacing:0.8px">Cost / mo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:10px 0;font-weight:600;color:var(--ink)">HubSpot CRM</td><td style="padding:10px 0;color:var(--muted)">Starter (2 seats)</td><td style="text-align:right;padding:10px 0;font-weight:700;color:var(--green)">$20</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:10px 0;font-weight:600;color:var(--ink)">Apollo.io</td><td style="padding:10px 0;color:var(--muted)">Basic (1 seat)</td><td style="text-align:right;padding:10px 0;font-weight:700;color:var(--ink)">$59</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:10px 0;font-weight:600;color:var(--ink)">LinkedIn Sales Nav</td><td style="padding:10px 0;color:var(--muted)">Core (1 seat)</td><td style="text-align:right;padding:10px 0;font-weight:700;color:var(--ink)">$100</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:10px 0;font-weight:600;color:var(--ink)">Make.com</td><td style="padding:10px 0;color:var(--muted)">Core</td><td style="text-align:right;padding:10px 0;font-weight:700;color:var(--ink)">$10</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:10px 0;font-weight:600;color:var(--ink)">GA4 + Looker Studio</td><td style="padding:10px 0;color:var(--muted)">Free</td><td style="text-align:right;padding:10px 0;font-weight:700;color:var(--green)">$0</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:10px 0;font-weight:600;color:var(--ink)">Calendly</td><td style="padding:10px 0;color:var(--muted)">Standard (1 seat)</td><td style="text-align:right;padding:10px 0;font-weight:700;color:var(--ink)">$12</td></tr>
+          <tr><td style="padding:12px 0;font-weight:800;color:var(--ink);font-size:0.9rem">Total</td><td></td><td style="text-align:right;padding:12px 0;font-weight:800;color:var(--accent);font-size:1rem">~$201/mo</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:8px">*Prices approximate as of 2026. LinkedIn Ads &amp; Google Ads budget is separate — recommend $1,000–3,000/mo to start.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- TAB 4: INTEGRATION MAP -->
+<!-- ═══════════════════════════════════ -->
+<div id="tab-integration" class="section">
+<div class="main">
+  <div class="sec-header">
+    <h2>Integration Architecture</h2>
+    <p>How every tool connects — and what data flows where.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-body">
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="display:inline-block;background:var(--bg-dark);color:#fff;padding:14px 28px;border-radius:10px;font-weight:800;font-size:1rem;box-shadow:var(--shadow-md)">
+          🟠 HubSpot CRM
+          <div style="font-size:0.72rem;color:#A09D97;font-weight:400;margin-top:2px">Central Data Hub — all data converges here</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <!-- LEFT: DATA IN -->
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;text-align:center">→ DATA INTO HUBSPOT</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="background:var(--blue-s);border:1px solid #85A8E0;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A2A60;margin-bottom:3px">📋 Website Forms</div>
+              <div style="font-size:0.72rem;color:var(--muted)">HubSpot Embed Form → Contact auto-created with source UTM</div>
+            </div>
+            <div style="background:var(--blue-s);border:1px solid #85A8E0;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A2A60;margin-bottom:3px">📅 Calendly Booking</div>
+              <div style="font-size:0.72rem;color:var(--muted)">Make.com: New booking → HubSpot contact + deal at "Qualified" stage</div>
+            </div>
+            <div style="background:var(--blue-s);border:1px solid #85A8E0;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A2A60;margin-bottom:3px">🚀 Apollo.io Prospects</div>
+              <div style="font-size:0.72rem;color:var(--muted)">Apollo native HubSpot sync: push contacted prospects + email activity</div>
+            </div>
+            <div style="background:var(--blue-s);border:1px solid #85A8E0;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A2A60;margin-bottom:3px">💼 LinkedIn Ads</div>
+              <div style="font-size:0.72rem;color:var(--muted)">LinkedIn Lead Gen Forms → HubSpot native connector (lead sync)</div>
+            </div>
+            <div style="background:var(--blue-s);border:1px solid #85A8E0;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A2A60;margin-bottom:3px">🔍 Google Ads</div>
+              <div style="font-size:0.72rem;color:var(--muted)">HubSpot Google Ads integration: track clicks, conversions, cost per lead</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: DATA OUT -->
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;text-align:center">← DATA FROM HUBSPOT</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="background:var(--green-s);border:1px solid #85D4AE;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A4A28;margin-bottom:3px">📊 GA4 → Looker Studio</div>
+              <div style="font-size:0.72rem;color:var(--muted)">HubSpot data connector exports deals + revenue to Looker Studio dashboard</div>
+            </div>
+            <div style="background:var(--green-s);border:1px solid #85D4AE;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A4A28;margin-bottom:3px">💬 Slack Alerts</div>
+              <div style="font-size:0.72rem;color:var(--muted)">Make.com: New lead or stage change → Slack notification to sales channel</div>
+            </div>
+            <div style="background:var(--green-s);border:1px solid #85D4AE;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A4A28;margin-bottom:3px">📧 Email Sequences</div>
+              <div style="font-size:0.72rem;color:var(--muted)">HubSpot Workflows auto-trigger email sequences based on deal stage</div>
+            </div>
+            <div style="background:var(--green-s);border:1px solid #85D4AE;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A4A28;margin-bottom:3px">📋 Google Sheets</div>
+              <div style="font-size:0.72rem;color:var(--muted)">Make.com: Weekly pipeline export to Sheets for exec review or client reporting</div>
+            </div>
+            <div style="background:var(--green-s);border:1px solid #85D4AE;border-radius:8px;padding:12px">
+              <div style="font-size:0.8rem;font-weight:700;color:#0A4A28;margin-bottom:3px">🔔 Task Reminders</div>
+              <div style="font-size:0.72rem;color:var(--muted)">HubSpot Tasks: auto-assign follow-up to rep when deal enters new stage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAKE.COM AUTOMATION TABLE -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:var(--purple-s)">🔗</div>
+      <div>
+        <h2>Key Make.com Automation Scenarios</h2>
+        <p>Build these automations first — highest ROI for the time invested</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <table style="width:100%;border-collapse:collapse;font-size:0.8rem">
+        <thead>
+          <tr style="border-bottom:2px solid var(--line)">
+            <th style="text-align:left;padding:8px 0;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.68rem;letter-spacing:0.8px">Trigger</th>
+            <th style="text-align:left;padding:8px 0;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.68rem;letter-spacing:0.8px">Action</th>
+            <th style="text-align:left;padding:8px 0;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.68rem;letter-spacing:0.8px">Tool</th>
+            <th style="text-align:left;padding:8px 0;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.68rem;letter-spacing:0.8px">Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line)">
+            <td style="padding:10px 0;font-weight:600;color:var(--ink)">New Calendly booking</td>
+            <td style="padding:10px 0;color:var(--body)">Create HubSpot contact + deal at Stage 3 (Qualified)</td>
+            <td style="padding:10px 0;color:var(--muted)">Calendly → HubSpot</td>
+            <td><span style="background:var(--accent-s);color:var(--accent-d);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:50px">🔴 High</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line)">
+            <td style="padding:10px 0;font-weight:600;color:var(--ink)">Form submitted on website</td>
+            <td style="padding:10px 0;color:var(--body)">Send Slack alert to #leads channel with contact details</td>
+            <td style="padding:10px 0;color:var(--muted)">HubSpot → Slack</td>
+            <td><span style="background:var(--accent-s);color:var(--accent-d);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:50px">🔴 High</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line)">
+            <td style="padding:10px 0;font-weight:600;color:var(--ink)">Deal moves to Proposal stage</td>
+            <td style="padding:10px 0;color:var(--body)">Create task: "Send proposal within 24h", assign to rep</td>
+            <td style="padding:10px 0;color:var(--muted)">HubSpot Workflow</td>
+            <td><span style="background:var(--accent-s);color:var(--accent-d);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:50px">🔴 High</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line)">
+            <td style="padding:10px 0;font-weight:600;color:var(--ink)">Deal Closed Won</td>
+            <td style="padding:10px 0;color:var(--body)">Log revenue in Google Sheet + notify team in Slack</td>
+            <td style="padding:10px 0;color:var(--muted)">HubSpot → Sheets + Slack</td>
+            <td><span style="background:var(--gold-s);color:var(--gold);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:50px">🟡 Med</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line)">
+            <td style="padding:10px 0;font-weight:600;color:var(--ink)">Apollo sequence completed, no reply</td>
+            <td style="padding:10px 0;color:var(--body)">Add contact to HubSpot nurture list for monthly email</td>
+            <td style="padding:10px 0;color:var(--muted)">Apollo → HubSpot</td>
+            <td><span style="background:var(--gold-s);color:var(--gold);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:50px">🟡 Med</span></td>
+          </tr>
+          <tr>
+            <td style="padding:10px 0;font-weight:600;color:var(--ink)">Every Monday 9am</td>
+            <td style="padding:10px 0;color:var(--body)">Export pipeline summary to Sheets + email to leadership</td>
+            <td style="padding:10px 0;color:var(--muted)">HubSpot → Sheets</td>
+            <td><span style="background:var(--green-s);color:var(--green);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:50px">🟢 Low</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- TAB 5: PROCESS GUIDE -->
+<!-- ═══════════════════════════════════ -->
+<div id="tab-process" class="section">
+<div class="main">
+  <div class="sec-header">
+    <h2>Implementation Process</h2>
+    <p>Step-by-step roadmap to get the system live in 4 weeks.</p>
+  </div>
+
+  <div class="grid-2" style="gap:20px">
+
+    <div class="card">
+      <div class="card-head">
+        <div style="background:var(--accent);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0">W1</div>
+        <div>
+          <h2>Week 1 — Foundation</h2>
+          <p>Set up core tools and tracking</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Set up HubSpot CRM</div>
+              <div class="step-desc">Create account, define pipeline stages with probabilities, customize deal properties (revenue, service type, source).</div>
+              <div class="step-tools"><span class="step-tool-chip">HubSpot</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Add tracking to website</div>
+              <div class="step-desc">Install HubSpot tracking pixel and GA4 snippet on website. Set up GA4 conversion events for form submits and Calendly clicks.</div>
+              <div class="step-tools"><span class="step-tool-chip">GA4</span><span class="step-tool-chip">HubSpot Pixel</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Replace forms with HubSpot forms</div>
+              <div class="step-desc">Embed HubSpot forms on website contact/CTA pages. Ensure UTM parameters are passed through to contact record.</div>
+              <div class="step-tools"><span class="step-tool-chip">HubSpot Forms</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Connect Calendly → HubSpot</div>
+              <div class="step-desc">Use Make.com to create HubSpot contact + deal automatically when a discovery call is booked.</div>
+              <div class="step-tools"><span class="step-tool-chip">Make.com</span><span class="step-tool-chip">Calendly</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div style="background:var(--blue);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0">W2</div>
+        <div>
+          <h2>Week 2 — Outbound Machine</h2>
+          <p>Launch prospecting and sequences</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Define ICP and build prospect list</div>
+              <div class="step-desc">Use Apollo.io to build list of 200–500 contacts. Filter by industry, HQ country, company size ($10M+ revenue), and title (CMO, VP Marketing, Head of Growth).</div>
+              <div class="step-tools"><span class="step-tool-chip">Apollo.io</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Write 5-touch email sequence</div>
+              <div class="step-desc">Write emails: intro → value → case study → direct ask → breakup. Personalize with company name, market, pain point.</div>
+              <div class="step-tools"><span class="step-tool-chip">Apollo Sequences</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Set up LinkedIn campaign</div>
+              <div class="step-desc">Create Sponsored Content + Lead Gen Form campaign targeting CMOs in target markets. Set $500 test budget.</div>
+              <div class="step-tools"><span class="step-tool-chip">LinkedIn Campaign Manager</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Sync Apollo → HubSpot</div>
+              <div class="step-desc">Enable Apollo's native HubSpot integration. All contacted prospects auto-appear in CRM with sequence status.</div>
+              <div class="step-tools"><span class="step-tool-chip">Apollo</span><span class="step-tool-chip">HubSpot</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div style="background:var(--green);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0">W3</div>
+        <div>
+          <h2>Week 3 — Automation & Reporting</h2>
+          <p>Connect everything and build the dashboard</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Build Make.com automations</div>
+              <div class="step-desc">Build the 3 priority automations: Calendly→HubSpot, Form→Slack, Deal Stage→Task Assignment.</div>
+              <div class="step-tools"><span class="step-tool-chip">Make.com</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Create Looker Studio dashboard</div>
+              <div class="step-desc">Connect GA4 + HubSpot + LinkedIn Ads + Google Ads. Build pages: Overview, Channel Performance, Pipeline Health, Revenue Forecast.</div>
+              <div class="step-tools"><span class="step-tool-chip">Looker Studio</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Set up HubSpot email sequences</div>
+              <div class="step-desc">Create automated nurture sequences for: new leads (intro series), stalled deals (re-engage), and closed-lost (90-day follow-up).</div>
+              <div class="step-tools"><span class="step-tool-chip">HubSpot Workflows</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div style="background:var(--gold);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0">W4</div>
+        <div>
+          <h2>Week 4 — Launch & Optimize</h2>
+          <p>Go live, test, and tune</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Launch outbound sequences</div>
+              <div class="step-desc">Start Apollo sequences. Cap at 30–50 emails/day to warm up sending domain. Monitor open rates (target: 40%+) and reply rates (target: 5%+).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Test all integrations end-to-end</div>
+              <div class="step-desc">Submit a test form. Book a test Calendly. Verify HubSpot contact appears, deal created, Slack fires, task assigned.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Weekly pipeline review ritual</div>
+              <div class="step-desc">Every Monday: review dashboard. Update deal stages. Flag stuck deals. Adjust budget allocation based on CPL by channel.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Establish 30/60/90 targets</div>
+              <div class="step-desc">30 days: 10 qualified leads. 60 days: 3 proposals sent. 90 days: 1 closed deal. Adjust monthly based on conversion data.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- TAB 6: KPI DASHBOARD -->
+<!-- ═══════════════════════════════════ -->
+<div id="tab-dashboard" class="section">
+<div class="main">
+  <div class="sec-header">
+    <h2>KPI Dashboard Template</h2>
+    <p>The 16 metrics that tell you if your B2B campaign is working — and where to fix it.</p>
+  </div>
+
+  <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px">📣 Campaign Metrics</div>
+  <div class="kpi-grid" style="margin-bottom:24px">
+    <div class="kpi">
+      <div class="kpi-label">Impressions</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Total ad & content views</div>
+      <div class="kpi-trend">Source: LinkedIn + GA4</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Click-Through Rate</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Target: 0.5%+ (LinkedIn)</div>
+      <div class="kpi-trend">Source: LinkedIn Ads</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Cost Per Lead</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Target: &lt;$150/lead B2B</div>
+      <div class="kpi-trend">Source: LinkedIn + HubSpot</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Email Reply Rate</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Target: 5%+ (cold email)</div>
+      <div class="kpi-trend">Source: Apollo.io</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px">🌐 Website Metrics</div>
+  <div class="kpi-grid" style="margin-bottom:24px">
+    <div class="kpi">
+      <div class="kpi-label">Sessions</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Weekly unique visitors</div>
+      <div class="kpi-trend">Source: GA4</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Form Conversion Rate</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Target: 3–8% of visitors</div>
+      <div class="kpi-trend">Source: GA4 + HubSpot</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Bounce Rate</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Target: &lt;60%</div>
+      <div class="kpi-trend">Source: GA4</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg. Session Duration</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Target: 2:30+ min</div>
+      <div class="kpi-trend">Source: GA4</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px">💼 Pipeline Metrics</div>
+  <div class="kpi-grid" style="margin-bottom:24px">
+    <div class="kpi">
+      <div class="kpi-label">Pipeline Value</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Total open deal value (USD)</div>
+      <div class="kpi-trend">Source: HubSpot</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Weighted Forecast</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Pipeline × stage probability</div>
+      <div class="kpi-trend">Source: HubSpot</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">New Deals This Month</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Leads entering pipeline</div>
+      <div class="kpi-trend">Source: HubSpot</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Pipeline Velocity</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Avg days from lead → close</div>
+      <div class="kpi-trend">Source: HubSpot</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px">💰 Revenue Metrics</div>
+  <div class="kpi-grid" style="margin-bottom:32px">
+    <div class="kpi" style="border-color:#85D4AE">
+      <div class="kpi-label">Closed Won Revenue</div>
+      <div class="kpi-val" style="color:var(--green)">—</div>
+      <div class="kpi-sub">Signed contract value MTD</div>
+      <div class="kpi-trend up">Source: HubSpot</div>
+    </div>
+    <div class="kpi" style="border-color:#85D4AE">
+      <div class="kpi-label">Win Rate</div>
+      <div class="kpi-val" style="color:var(--green)">—</div>
+      <div class="kpi-sub">Target: 20–30% B2B</div>
+      <div class="kpi-trend up">Source: HubSpot</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">CAC (Customer Acq Cost)</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Total spend ÷ clients won</div>
+      <div class="kpi-trend">Source: HubSpot + Ads</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg. Deal Size</div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Revenue per closed client</div>
+      <div class="kpi-trend">Source: HubSpot</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:var(--accent-s)">🎯</div>
+      <div>
+        <h2>The "Campaign Health" Quick Check</h2>
+        <p>Ask these 3 questions every Monday to diagnose problems fast</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid-3" style="gap:16px">
+        <div style="background:var(--blue-s);border-radius:8px;padding:16px;border:1px solid #85A8E0">
+          <div style="font-size:1rem;margin-bottom:8px">❓</div>
+          <div style="font-size:0.82rem;font-weight:700;color:#0A2A60;margin-bottom:4px">"Are enough leads entering the pipeline?"</div>
+          <div style="font-size:0.72rem;color:var(--muted)">If no → fix the top of funnel (ad spend, outbound volume, website conversion rate)</div>
+        </div>
+        <div style="background:var(--purple-s);border-radius:8px;padding:16px;border:1px solid #B899DC">
+          <div style="font-size:1rem;margin-bottom:8px">❓</div>
+          <div style="font-size:0.82rem;font-weight:700;color:#3A1060;margin-bottom:4px">"Where are deals getting stuck?"</div>
+          <div style="font-size:0.72rem;color:var(--muted)">Check stage-by-stage conversion. Stalled at Proposal → improve deck. Stalled at Negotiation → pricing issue.</div>
+        </div>
+        <div style="background:var(--green-s);border-radius:8px;padding:16px;border:1px solid #85D4AE">
+          <div style="font-size:1rem;margin-bottom:8px">❓</div>
+          <div style="font-size:0.82rem;font-weight:700;color:#0A4A28;margin-bottom:4px">"Which channel has the best ROI?"</div>
+          <div style="font-size:0.72rem;color:var(--muted)">Compare CAC by source. Double down on the channel that closes deals, not just generates leads.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  IDEOWORKS Global Campaign System Blueprint — Built for B2B Client Acquisition · April 2026
+</div>
+
+<script>
+function showTab(name, el) {
+  // Hide all sections
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  // Show target
+  document.getElementById('tab-' + name).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

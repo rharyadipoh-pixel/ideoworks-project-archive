@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agency Pitch Intelligence</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      padding: 28px 40px 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 20px;
+    }
+    .header-left h1 { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+    .header-left p  { font-size: 13px; color: #8892b0; margin-top: 4px; }
+    .header-badge {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: #ccd6f6;
+    }
+
+    /* ── Tabs ── */
+    .tab-nav { display: flex; gap: 4px; align-items: flex-end; }
+    .tab-btn {
+      padding: 10px 24px;
+      font-size: 13px; font-weight: 600;
+      color: #8892b0;
+      background: transparent;
+      border: none; border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab-btn:hover { color: #ccd6f6; background: rgba(255,255,255,0.06); }
+    .tab-btn.active { color: #1a1a2e; background: #f0f2f5; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── KPI Row ── */
+    .kpi-row { display: flex; gap: 20px; padding: 28px 40px 0; flex-wrap: wrap; }
+    .kpi-card {
+      background: #fff; border-radius: 12px;
+      padding: 22px 28px; flex: 1; min-width: 150px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border-top: 3px solid transparent;
+    }
+    .kpi-card.total   { border-color: #0f3460; }
+    .kpi-card.compete { border-color: #28a745; }
+    .kpi-card.month   { border-color: #e6a817; }
+    .kpi-card.avg     { border-color: #6c63ff; }
+    .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #8892b0; margin-bottom: 10px; }
+    .kpi-value { font-size: 36px; font-weight: 700; color: #1a1a2e; line-height: 1; }
+    .kpi-sub   { font-size: 12px; color: #b0b8cc; margin-top: 6px; }
+
+    /* ── Board pipeline ── */
+    .board-section { padding: 28px 40px 0; }
+    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #8892b0; margin-bottom: 16px; }
+
+    .pipeline-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+    .pipeline-card {
+      background: #fff; border-radius: 12px;
+      padding: 20px 28px; flex: 1; min-width: 160px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      display: flex; flex-direction: column; gap: 8px;
+      border-left: 5px solid transparent;
+    }
+    .pipeline-card.compete { border-color: #28a745; }
+    .pipeline-card.review  { border-color: #e6a817; }
+    .pipeline-card.pass    { border-color: #dc3545; }
+    .pipeline-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
+    .pipeline-card.compete .pipeline-label { color: #28a745; }
+    .pipeline-card.review  .pipeline-label { color: #b07d0e; }
+    .pipeline-card.pass    .pipeline-label { color: #dc3545; }
+    .pipeline-count { font-size: 40px; font-weight: 800; color: #1a1a2e; line-height: 1; }
+    .pipeline-desc  { font-size: 12px; color: #8892b0; }
+
+    /* ── Board table ── */
+    .opp-table-wrap {
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      overflow: hidden; margin-bottom: 32px;
+    }
+    .opp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .opp-table thead tr { background: #1a1a2e; color: #fff; }
+    .opp-table thead th { padding: 12px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; text-align: left; }
+    .opp-table tbody tr { border-bottom: 1px solid #f0f2f5; transition: background 0.1s; }
+    .opp-table tbody tr:last-child { border-bottom: none; }
+    .opp-table tbody tr:hover { background: #f8f9fc; }
+    .opp-table td { padding: 14px 16px; vertical-align: middle; }
+    .opp-rank { font-size: 15px; font-weight: 800; color: #b0b8cc; width: 36px; }
+    .opp-company { font-weight: 700; color: #1a1a2e; }
+    .opp-date    { color: #8892b0; white-space: nowrap; }
+    .opp-desc    { color: #555e73; max-width: 340px; }
+    .opp-action a {
+      display: inline-block; background: #0f3460; color: #fff;
+      text-decoration: none; border-radius: 6px; padding: 6px 14px;
+      font-size: 11px; font-weight: 600; white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .opp-action a:hover { background: #16213e; }
+
+    /* ── Filter bar ── */
+    .filter-bar { display: flex; align-items: center; gap: 12px; padding: 24px 40px 16px; flex-wrap: wrap; }
+    .filter-bar label { font-size: 13px; font-weight: 600; color: #555; }
+    .filter-bar select, .filter-bar input {
+      padding: 7px 12px; border: 1px solid #dde2ec; border-radius: 8px;
+      font-size: 13px; background: #fff; color: #1a1a2e; outline: none;
+    }
+    .filter-bar select:focus, .filter-bar input:focus { border-color: #0f3460; }
+    #refreshBtn {
+      margin-left: auto; background: #0f3460; color: #fff;
+      border: none; border-radius: 8px; padding: 8px 20px;
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.15s;
+    }
+    #refreshBtn:hover { background: #16213e; }
+
+    /* ── Cards ── */
+    .cards-area { padding: 8px 40px 40px; }
+    .cards-section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #8892b0; margin-bottom: 16px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
+
+    .lead-card {
+      background: #fff; border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border-left: 4px solid transparent;
+      transition: box-shadow 0.15s, transform 0.15s;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .lead-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-2px); }
+    .lead-card.hot  { border-color: #28a745; }
+    .lead-card.warm { border-color: #e6a817; }
+    .lead-card.cool { border-color: #dc3545; }
+    .lead-card.pending { border-color: #adb5bd; }
+
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .company-name { font-size: 15px; font-weight: 700; color: #1a1a2e; flex: 1; line-height: 1.3; }
+
+    .score-badge {
+      flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 800; color: #fff;
+      position: relative; cursor: default;
+    }
+    .score-badge.hot     { background: #28a745; }
+    .score-badge.warm    { background: #e6a817; }
+    .score-badge.cool    { background: #dc3545; }
+    .score-badge.pending { background: #adb5bd; }
+    .score-badge .deep-icon {
+      position: absolute; bottom: -2px; right: -2px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #0f3460; color: #fff;
+      font-size: 9px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: 2px solid #fff;
+    }
+    .score-badge .deep-icon:hover { background: #16213e; }
+    .score-badge .deep-icon.spinning { animation: spin 0.8s linear infinite; cursor: default; }
+
+    .card-desc { font-size: 13px; color: #555e73; line-height: 1.6; }
+
+    .deep-text {
+      font-size: 12px; color: #0f3460;
+      background: #e8f0fe; border-radius: 6px;
+      padding: 8px 10px; line-height: 1.5;
+      display: none;
+    }
+
+    .card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600;
+    }
+    .badge-linkedin   { background: #e8f0fe; color: #1558d6; }
+    .badge-threads    { background: #f3e8fe; color: #7c3aed; }
+    .badge-date       { background: #f0f4f8; color: #6c7a8d; }
+    .badge-compete    { background: #d4edda; color: #155724; }
+    .badge-no-compete { background: #f8d7da; color: #721c24; }
+    .badge-closed     { background: #e2e3e5; color: #6c757d; }
+    .badge-offtopic   { background: #fff3cd; color: #856404; }
+
+    .card-footer { display: flex; justify-content: space-between; align-items: center; }
+    .deep-btn {
+      font-size: 11px; font-weight: 600; color: #0f3460;
+      background: none; border: 1px solid #dde2ec;
+      border-radius: 6px; padding: 5px 12px;
+      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+    }
+    .deep-btn:hover { background: #e8f0fe; border-color: #0f3460; }
+    .deep-btn:disabled { color: #adb5bd; border-color: #dde2ec; cursor: default; }
+    .view-btn {
+      display: inline-block; background: #0f3460; color: #fff;
+      text-decoration: none; border-radius: 8px;
+      padding: 7px 18px; font-size: 12px; font-weight: 600;
+      transition: background 0.15s;
+    }
+    .view-btn:hover { background: #16213e; }
+
+    /* ── Score pill in table ── */
+    .score-pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      font-size: 14px; font-weight: 800; color: #fff;
+    }
+    .score-pill.hot  { background: #28a745; }
+    .score-pill.warm { background: #e6a817; }
+    .score-pill.cool { background: #dc3545; }
+
+    /* ── Loading / empty ── */
+    #loading, #empty { text-align: center; padding: 60px 20px; color: #8892b0; font-size: 15px; }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid #dde2ec; border-top-color: #0f3460;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 600px) {
+      .header, .kpi-row, .filter-bar, .cards-area, .board-section { padding-left: 16px; padding-right: 16px; }
+      .kpi-card { min-width: 130px; }
+      .opp-desc { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-left">
+      <h1>Agency Pitch Intelligence</h1>
+      <p>Live monitoring · propensity scored in real-time from post content</p>
+    </div>
+    <div class="header-badge">Indonesia Market</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" id="btnBoard" onclick="switchTab('board', this)">Board View</button>
+    <button class="tab-btn" id="btnLeads" onclick="switchTab('leads', this)">All Leads</button>
+  </div>
+</div>
+
+<!-- ── BOARD TAB ───────────────────────────────────────────────── -->
+<div id="tab-board" class="tab-panel active">
+  <div class="kpi-row">
+    <div class="kpi-card total">
+      <div class="kpi-label">Total Leads</div>
+      <div class="kpi-value" id="bKpiTotal">—</div>
+      <div class="kpi-sub">all time</div>
+    </div>
+    <div class="kpi-card compete">
+      <div class="kpi-label">Worth Competing</div>
+      <div class="kpi-value" id="bKpiCompete">—</div>
+      <div class="kpi-sub">propensity score ≥ 6</div>
+    </div>
+    <div class="kpi-card month">
+      <div class="kpi-label">This Month</div>
+      <div class="kpi-value" id="bKpiMonth">—</div>
+      <div class="kpi-sub">new signals</div>
+    </div>
+    <div class="kpi-card avg">
+      <div class="kpi-label">Avg Score</div>
+      <div class="kpi-value" id="bKpiAvg">—</div>
+      <div class="kpi-sub">worth competing</div>
+    </div>
+  </div>
+
+  <div class="board-section">
+    <div class="section-title">Pitch Pipeline</div>
+    <div class="pipeline-row">
+      <div class="pipeline-card compete">
+        <div class="pipeline-label">Compete</div>
+        <div class="pipeline-count" id="pipeCompete">—</div>
+        <div class="pipeline-desc">Score ≥ 6 — pursue these</div>
+      </div>
+      <div class="pipeline-card review">
+        <div class="pipeline-label">Review</div>
+        <div class="pipeline-count" id="pipeReview">—</div>
+        <div class="pipeline-desc">Score 4–5 — worth monitoring</div>
+      </div>
+      <div class="pipeline-card pass">
+        <div class="pipeline-label">Pass</div>
+        <div class="pipeline-count" id="pipePass">—</div>
+        <div class="pipeline-desc">Score &lt; 4 — low priority</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-section">
+    <div class="section-title">Top Opportunities to Compete</div>
+    <div class="opp-table-wrap">
+      <div id="boardLoading" style="text-align:center;padding:40px;color:#8892b0;">
+        <div class="spinner"></div>Loading…
+      </div>
+      <table class="opp-table" id="oppTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company</th>
+            <th>Score</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Source</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="oppTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── LEADS TAB ──────────────────────────────────────────────── -->
+<div id="tab-leads" class="tab-panel">
+  <div class="kpi-row">
+    <div class="kpi-card total">
+      <div class="kpi-label">Total Leads</div>
+      <div class="kpi-value" id="kpiTotal">—</div>
+      <div class="kpi-sub">all time</div>
+    </div>
+    <div class="kpi-card compete">
+      <div class="kpi-label">Worth Competing</div>
+      <div class="kpi-value" id="kpiCompete">—</div>
+      <div class="kpi-sub">score ≥ 6</div>
+    </div>
+    <div class="kpi-card month">
+      <div class="kpi-label">This Month</div>
+      <div class="kpi-value" id="kpiMonth">—</div>
+      <div class="kpi-sub">new signals</div>
+    </div>
+    <div class="kpi-card avg">
+      <div class="kpi-label">Avg Score</div>
+      <div class="kpi-value" id="kpiAvg">—</div>
+      <div class="kpi-sub">out of 10</div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <label for="filterSource">Source:</label>
+    <select id="filterSource">
+      <option value="all">All</option>
+      <option value="LinkedIn">LinkedIn</option>
+      <option value="Threads">Threads</option>
+    </select>
+    <label for="filterScore">Min Score:</label>
+    <select id="filterScore">
+      <option value="0">Any</option>
+      <option value="4">4+</option>
+      <option value="6">6+</option>
+      <option value="8">8+</option>
+    </select>
+    <label for="filterStatus">Status:</label>
+    <select id="filterStatus">
+      <option value="active" selected>Active only</option>
+      <option value="all">Show all</option>
+      <option value="closed">Closed</option>
+      <option value="offtopic">Off-topic</option>
+    </select>
+    <label for="filterWC">Decision:</label>
+    <select id="filterWC">
+      <option value="all">All</option>
+      <option value="yes">Worth Competing</option>
+      <option value="no">Pass</option>
+    </select>
+    <input type="text" id="filterSearch" placeholder="Search company / keyword…" style="width:200px;">
+    <button id="refreshBtn" onclick="loadLeads()">&#8635; Refresh</button>
+  </div>
+
+  <div class="cards-area">
+    <div class="cards-section-title" id="resultsLabel">Loading…</div>
+    <div id="loading"><div class="spinner"></div>Fetching leads…</div>
+    <div id="empty" style="display:none;">No leads match your filters.</div>
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+</div>
+
+<script>
+// ── Closed pitch detection ────────────────────────────────────────────────────
+var CLOSED_SIGNALS = [
+  // Indonesian — pitch already closed / winner selected
+  "sudah terpilih","telah terpilih","sudah selesai pitching","telah selesai pitching",
+  "pemenang pitching","selamat kepada agency","kami telah memilih","kami memilih agency",
+  "agency terpilih","selected agency","pitching ditutup","pitching sudah ditutup",
+  "sudah berakhir","telah berakhir","sudah close","closed pitching",
+  "kami tutup","sudah tutup","telah tutup","proses pitching tutup","pitching kami tutup",
+  "seleksi internal","tahap seleksi","agency yang terpilih akan","akan menghubungi agency",
+  "melanjutkan ke tahap seleksi","proses seleksi",
+  // English — pitch already closed / winner selected
+  "pitch has closed","pitch is closed","thank you for pitching",
+  "congratulations to","the winner is","we have selected","we have chosen",
+  "thank you to all agencies","congrats!!","we're thrilled to announce"
+];
+
+// Off-topic: not an open agency pitch
+var OFFTOPIC_SIGNALS = [
+  // VC / startup / investor pitching
+  "seed funding","series a","series b","series c","venture capital",
+  "investor pitch","pitch to investor","pitch ke investor","demo day",
+  "startup competition","pitch competition","funding round","elevator pitch",
+  "mencari investor","cari investor","angel investor",
+  // LinkedIn UI artifacts — snippet captured interface text, not post content
+  "report this post","report this comment","close menu","hide this post",
+  // Thought leadership / educational about pitching — not an open pitch
+  "how to pitch","tips pitching","cara pitching","pitching tips","secret to pitching",
+  "what it takes to","the sales team was pitching","sales pitch","sales pitching",
+  "win more pitches","why agencies lose","how agencies","agency life",
+  "agency growth","agency revenue","scaled digital agency","$30m","$37m",
+  "how to get clients","cara dapat klien","tips mencari klien",
+  "as an agency","our agency","my agency","i run an agency","kami agency"
+];
+
+function detectClosed(text) {
+  var t = text.toLowerCase();
+  for (var i = 0; i < CLOSED_SIGNALS.length; i++) {
+    if (t.indexOf(CLOSED_SIGNALS[i]) > -1) return true;
+  }
+  return false;
+}
+
+function detectOffTopic(text) {
+  var t = text.toLowerCase();
+  var hits = 0;
+  OFFTOPIC_SIGNALS.forEach(function(k){ if (t.indexOf(k) > -1) hits++; });
+  return hits >= 1;
+}
+
+// ── Propensity scoring (client-side) ─────────────────────────────────────────
+function slugToText(url) {
+  try {
+    var path = url.split("?")[0].split("/").pop();
+    return decodeURIComponent(path).replace(/[-_]/g, " ");
+  } catch(e) { return ""; }
+}
+
+function scorePost(title, snippet, url) {
+  var score       = 0;
+  var slug        = url ? slugToText(url) : "";
+  var text        = (title + " " + snippet + " " + slug).toLowerCase();
+  var criticalHit = 0;
+  var strongHit   = 0;
+
+  // Critical signals (+3) — explicit open pitch for agency
+  ["open pitching","pitching opportunity","mencari agency","butuh agency",
+   "open tender","kami mencari agency","sedang mencari agency","membuka pitching",
+   "beauty contest","shortlist agency","undangan pitching","multi pitch","open for pitching",
+   "looking for a digital agency","looking for agency","currently looking for",
+   "looking for a creative agency","looking for an agency","my company is looking",
+   "we are looking for","our company is looking","cari agency","find an agency",
+   "seeking a digital agency","seeking agency","need an agency","need a digital agency",
+   "butuh jasa agency","ingin bekerja sama dengan agency","mencari partner agency",
+   "rekomendasi agency","rekomendasikan agency","open brief","seleksi agency","tender agency"
+  ].forEach(function(k){ if (text.indexOf(k) > -1){ score += 3; criticalHit++; } });
+
+  // Strong signals (+2) — clearly agency-related pitch context
+  ["agency partner","creative agency","digital agency","marketing agency",
+   "social media agency","digital marketing agency","branding agency",
+   "advertising agency","content agency","iklan digital","jasa agency",
+   "pitching agency","kolaborasi agency","kerja sama agency",
+   "vendor agency","cari vendor"
+  ].forEach(function(k){ if (text.indexOf(k) > -1){ score += 2; strongHit++; } });
+
+  // "pitching" alone is weak — only +1, only if no stronger signal already found
+  if (criticalHit === 0 && strongHit === 0 && text.indexOf("pitching") > -1) score += 1;
+
+  // Budget / urgency signals (+2) — only meaningful if pitch signal already present
+  if (criticalHit + strongHit > 0) {
+    ["budget campaign","anggaran iklan","rencana campaign","planning campaign",
+     "annual campaign","brand activation","integrated campaign","media plan","campaign brief",
+     "q1 campaign","q2 campaign","q3 campaign","q4 campaign"
+    ].forEach(function(k){ if (text.indexOf(k) > -1) score += 2; });
+
+    // Supporting signals (+1) — only counted when pitch context is confirmed
+    ["campaign","brief","proposal","kolaborasi","kerja sama",
+     "digital marketing","social media","media sosial","iklan","promosi","branding","activation"
+    ].forEach(function(k){ if (text.indexOf(k) > -1) score += 1; });
+
+    // Industry bonus (+1)
+    ["fmcg","retail","e-commerce","ecommerce","fintech","properti","property",
+     "otomotif","automotive","bank","asuransi","telekomunikasi","healthcare",
+     "fashion","food and beverage","fnb","tbk","marketplace"
+    ].forEach(function(k){ if (text.indexOf(k) > -1) score += 1; });
+
+    // Senior authority signal (+1)
+    if (text.match(/\b(director|head of|vp|cmo|ceo|chief)\b/)) score += 1;
+  }
+
+  // Penalty: off-topic signals (VC/investor/startup pitch)
+  var offHits = 0;
+  OFFTOPIC_SIGNALS.forEach(function(k){ if (text.indexOf(k) > -1) offHits++; });
+  if (offHits > 0) score = Math.max(1, score - (offHits * 3));
+
+  return Math.min(10, Math.max(1, score));
+}
+
+function tier(score) { return score >= 8 ? "hot" : score >= 5 ? "warm" : "cool"; }
+function isWorthCompeting(score) { return score >= 6; }
+
+// ── State ────────────────────────────────────────────────────────────────────
+var allLeads   = [];   // { company, desc, url, date, source, score, deepText }
+var dataLoaded = false;
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+  document.querySelectorAll(".tab-panel").forEach(function(p){ p.classList.remove("active"); });
+  document.getElementById("tab-" + tab).classList.add("active");
+  btn.classList.add("active");
+  if (!dataLoaded) loadLeads();
+}
+
+// ── Load leads ────────────────────────────────────────────────────────────────
+function loadLeads() {
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("empty").style.display   = "none";
+  document.getElementById("cardsGrid").innerHTML   = "";
+  document.getElementById("resultsLabel").textContent = "Loading…";
+  document.getElementById("boardLoading").style.display = "block";
+  document.getElementById("oppTable").style.display    = "none";
+  google.script.run.withSuccessHandler(onLeads).withFailureHandler(onError).getLeads();
+}
+
+function onLeads(raw) {
+  allLeads = (raw || []).map(function(r) {
+    var combined = r.company + " " + r.desc;
+    var score    = scorePost(r.company, r.desc, r.url);
+    var closed   = detectClosed(combined);
+    var offTopic = !closed && detectOffTopic(combined);
+    var status   = closed ? "closed" : offTopic ? "offtopic" : "active";
+    return {
+      company  : r.company,
+      desc     : r.desc,
+      url      : r.url,
+      date     : r.date,
+      source   : r.source,
+      score    : score,
+      status   : status,
+      deepText : null
+    };
+  }).sort(function(a,b){ return b.score - a.score; });
+
+  dataLoaded = true;
+
+  document.getElementById("loading").style.display      = "none";
+  document.getElementById("boardLoading").style.display = "none";
+
+  updateBoardKPIs();
+  updateLeadsKPIs();
+  renderBoard();
+  renderFiltered();
+
+  document.getElementById("filterSource").onchange = renderFiltered;
+  document.getElementById("filterScore").onchange  = renderFiltered;
+  document.getElementById("filterStatus").onchange = renderFiltered;
+  document.getElementById("filterWC").onchange     = renderFiltered;
+  document.getElementById("filterSearch").oninput  = renderFiltered;
+}
+
+function onError(err) {
+  var msg = "Could not load leads. " + (err.message || err);
+  document.getElementById("loading").innerHTML      = msg;
+  document.getElementById("boardLoading").innerHTML = msg;
+}
+
+// ── KPIs ──────────────────────────────────────────────────────────────────────
+function updateBoardKPIs() {
+  var now    = new Date();
+  var month  = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0");
+  var active = allLeads.filter(function(l){ return l.status === "active"; });
+  var comp   = active.filter(function(l){ return isWorthCompeting(l.score); });
+  var avg    = comp.length ? (comp.reduce(function(s,l){ return s+l.score; },0)/comp.length).toFixed(1) : "—";
+  document.getElementById("bKpiTotal").textContent   = active.length;
+  document.getElementById("bKpiCompete").textContent = comp.length;
+  document.getElementById("bKpiMonth").textContent   = active.filter(function(l){ return String(l.date).startsWith(month); }).length;
+  document.getElementById("bKpiAvg").textContent     = avg;
+  document.getElementById("pipeCompete").textContent = active.filter(function(l){ return l.score >= 6; }).length;
+  document.getElementById("pipeReview").textContent  = active.filter(function(l){ return l.score >= 4 && l.score < 6; }).length;
+  document.getElementById("pipePass").textContent    = active.filter(function(l){ return l.score < 4; }).length;
+}
+
+function updateLeadsKPIs() {
+  var now   = new Date();
+  var month = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0");
+  var avg   = allLeads.length ? (allLeads.reduce(function(s,l){ return s+l.score; },0)/allLeads.length).toFixed(1) : "—";
+  document.getElementById("kpiTotal").textContent   = allLeads.length;
+  document.getElementById("kpiCompete").textContent = allLeads.filter(function(l){ return isWorthCompeting(l.score); }).length;
+  document.getElementById("kpiMonth").textContent   = allLeads.filter(function(l){ return String(l.date).startsWith(month); }).length;
+  document.getElementById("kpiAvg").textContent     = avg;
+}
+
+// ── Board table ───────────────────────────────────────────────────────────────
+function renderBoard() {
+  var top   = allLeads.filter(function(l){ return l.status === "active" && isWorthCompeting(l.score); }).slice(0, 15);
+  var tbody = document.getElementById("oppTableBody");
+  tbody.innerHTML = "";
+
+  if (top.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#8892b0;">No worth-competing pitches found yet.</td></tr>';
+    document.getElementById("oppTable").style.display = "table";
+    return;
+  }
+
+  top.forEach(function(lead, idx) {
+    var t      = tier(lead.score);
+    var srcCls = lead.source === "Threads" ? "badge-threads" : "badge-linkedin";
+    var desc   = (lead.desc||"").length > 120 ? (lead.desc||"").substring(0,120)+"…" : (lead.desc||"");
+    var tr     = document.createElement("tr");
+    tr.innerHTML =
+      '<td class="opp-rank">' + (idx+1) + '</td>' +
+      '<td class="opp-company">' + esc(lead.company) + '</td>' +
+      '<td><span class="score-pill ' + t + '">' + lead.score + '</span></td>' +
+      '<td class="opp-desc">' + esc(desc) + '</td>' +
+      '<td class="opp-date">' + esc(lead.date) + '</td>' +
+      '<td><span class="badge ' + srcCls + '">' + esc(lead.source) + '</span></td>' +
+      '<td class="opp-action"><a href="' + esc(lead.url) + '" target="_blank">View &#8599;</a></td>';
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById("oppTable").style.display = "table";
+}
+
+// ── Leads filter + render ─────────────────────────────────────────────────────
+function renderFiltered() {
+  var src    = document.getElementById("filterSource").value;
+  var minSc  = parseInt(document.getElementById("filterScore").value, 10);
+  var status = document.getElementById("filterStatus").value;
+  var wc     = document.getElementById("filterWC").value;
+  var q      = document.getElementById("filterSearch").value.toLowerCase().trim();
+
+  var filtered = allLeads.filter(function(l) {
+    if (src !== "all" && l.source !== src) return false;
+    if (l.score < minSc) return false;
+    if (status !== "all" && l.status !== status) return false;
+    if (wc === "yes" && !isWorthCompeting(l.score)) return false;
+    if (wc === "no"  &&  isWorthCompeting(l.score)) return false;
+    if (q && (l.company||"").toLowerCase().indexOf(q) === -1 &&
+             (l.desc||"").toLowerCase().indexOf(q) === -1) return false;
+    return true;
+  });
+
+  var grid  = document.getElementById("cardsGrid");
+  var empty = document.getElementById("empty");
+  var label = document.getElementById("resultsLabel");
+  grid.innerHTML = "";
+
+  if (filtered.length === 0) {
+    empty.style.display = "block";
+    label.textContent   = "0 leads";
+    return;
+  }
+  empty.style.display = "none";
+  label.textContent   = filtered.length + " lead" + (filtered.length === 1 ? "" : "s");
+
+  filtered.forEach(function(lead) { grid.appendChild(buildCard(lead)); });
+}
+
+// ── Build lead card ───────────────────────────────────────────────────────────
+function buildCard(lead) {
+  var t      = lead.status === "closed" ? "cool" : lead.status === "offtopic" ? "cool" : tier(lead.score);
+  var srcCls = lead.source === "Threads" ? "badge-threads" : "badge-linkedin";
+  var wc     = lead.status === "active" && isWorthCompeting(lead.score);
+  var id     = encodeId(lead.url);
+
+  var statusBadge = "";
+  if (lead.status === "closed")   statusBadge = '<span class="badge badge-closed">&#10006; Closed</span>';
+  if (lead.status === "offtopic") statusBadge = '<span class="badge badge-offtopic">&#9888; Off-topic</span>';
+  var decisionBadge = lead.status === "active"
+    ? '<span class="badge ' + (wc ? 'badge-compete' : 'badge-no-compete') + '" id="wc-' + id + '">' + (wc ? '&#10003; Worth Competing' : '&#10005; Pass') + '</span>'
+    : '';
+
+  var card = document.createElement("div");
+  card.className = "lead-card " + t;
+  card.dataset.url = lead.url;
+
+  card.innerHTML =
+    '<div class="card-top">' +
+      '<div class="company-name">' + esc(lead.company) + '</div>' +
+      '<div class="score-badge ' + t + '" id="badge-' + id + '">' +
+        lead.score +
+        '<span class="deep-icon" title="Deep score from post content" onclick="deepScore(this, \'' + esc(lead.url) + '\')">&#9650;</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="card-desc">' + esc(lead.desc) + '</div>' +
+    (lead.deepText
+      ? '<div class="deep-text" style="display:block">&#128269; <strong>From post:</strong> ' + esc(lead.deepText.substring(0,300)) + '</div>'
+      : '<div class="deep-text" id="deep-' + id + '"></div>') +
+    '<div class="card-meta">' +
+      '<span class="badge ' + srcCls + '">' + esc(lead.source) + '</span>' +
+      '<span class="badge badge-date">&#128197; ' + esc(lead.date) + '</span>' +
+      statusBadge + decisionBadge +
+    '</div>' +
+    '<div class="card-footer">' +
+      '<button class="deep-btn" id="deepbtn-' + id + '" onclick="deepScore(this, \'' + esc(lead.url) + '\')">&#9650; Deep Score</button>' +
+      '<a class="view-btn" href="' + esc(lead.url) + '" target="_blank">View Post &#8599;</a>' +
+    '</div>';
+
+  return card;
+}
+
+// ── Deep score: fetch URL content via GAS, rescore ───────────────────────────
+function deepScore(el, url) {
+  var id   = encodeId(url);
+  var btn  = document.getElementById("deepbtn-" + id);
+  var icon = el.classList.contains("deep-icon") ? el : null;
+
+  if (btn) { btn.disabled = true; btn.textContent = "Fetching…"; }
+  if (icon) { icon.classList.add("spinning"); icon.textContent = "↻"; }
+
+  google.script.run
+    .withSuccessHandler(function(content) {
+      var lead = allLeads.find(function(l){ return l.url === url; });
+      if (!lead) return;
+
+      var newText = content || "";
+      var newScore = newText
+        ? scorePost(lead.company, lead.desc + " " + newText, lead.url)
+        : lead.score;
+
+      lead.score    = newScore;
+      lead.deepText = newText || "(no additional content retrieved)";
+
+      // Update badge
+      var badge = document.getElementById("badge-" + id);
+      if (badge) {
+        var t = tier(newScore);
+        badge.className = "score-badge " + t;
+        badge.childNodes[0].textContent = newScore;
+      }
+
+      // Update Worth Competing badge
+      var wcEl = document.getElementById("wc-" + id);
+      if (wcEl) {
+        var wc = isWorthCompeting(newScore);
+        wcEl.className   = "badge " + (wc ? "badge-compete" : "badge-no-compete");
+        wcEl.textContent = wc ? "✓ Worth Competing" : "✕ Pass";
+      }
+
+      // Show deep content excerpt
+      var deepEl = document.getElementById("deep-" + id);
+      if (deepEl) {
+        deepEl.style.display = "block";
+        deepEl.innerHTML = "&#128269; <strong>From post:</strong> " + esc(lead.deepText.substring(0,300));
+      }
+
+      if (btn)  { btn.textContent = "&#10003; Scored"; btn.disabled = true; }
+      if (icon) { icon.classList.remove("spinning"); icon.textContent = "▲"; }
+
+      // Refresh KPIs and board with updated scores
+      updateBoardKPIs();
+      updateLeadsKPIs();
+    })
+    .withFailureHandler(function(err) {
+      if (btn)  { btn.disabled = false; btn.textContent = "Retry"; }
+      if (icon) { icon.classList.remove("spinning"); icon.textContent = "▲"; }
+    })
+    .fetchPostContent(url);
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function encodeId(url) {
+  return btoa(url).replace(/[^a-zA-Z0-9]/g, "").substring(0, 20);
+}
+
+function esc(s) {
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+loadLeads();
+</script>
+</body>
+</html>

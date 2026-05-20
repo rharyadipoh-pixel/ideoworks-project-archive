@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDEOWORKS CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --accent:#EE4823;--accent-d:#C8351A;--accent-s:#FBE5DE;
+  --dark:#1C1B19;--dark2:#2A2926;
+  --ink:#1C1B19;--ink-soft:#3A3935;--body:#55534D;--muted:#87847C;
+  --line:#E8E4DC;--bg:#FFFFFF;--bg-alt:#FAF6EF;--bg-warm:#F4ECDD;
+  --green:#1A7A4A;--gs:#E0F5EC;--gold:#B07A10;--golds:#FFF4D6;
+  --blue:#1A4FA0;--bs:#E0EAFF;
+  --meta:#1877F2;--metas:#E7F0FE;
+  --purple:#6B35A0;--purples:#EEE5FF;
+  --stage-new:#85A8E0;--stage-disc:#D4A83A;--stage-prop:#B899DC;
+  --stage-neg:#F4A08A;--stage-won:#85D4AE;--stage-lost:#CCC;
+  --r:10px;--sh:0 2px 10px rgba(0,0,0,0.07);--sh2:0 8px 28px rgba(0,0,0,0.12);
+  --sidebar-w:220px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg-alt);color:var(--body);-webkit-font-smoothing:antialiased;display:flex;font-size:14px}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:var(--dark);height:100vh;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;border-right:1px solid rgba(255,255,255,0.04)}
+.sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.logo-row{display:flex;align-items:center;gap:9px}
+.logo-dot{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-name{font-weight:700;font-size:14px;color:#fff;letter-spacing:-0.3px}
+.logo-name span{color:var(--accent)}
+.sidebar-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.25);padding:18px 18px 6px}
+.nav-btn{width:100%;background:none;border:none;display:flex;align-items:center;gap:10px;padding:10px 18px;color:rgba(255,255,255,0.55);cursor:pointer;font-size:0.82rem;font-weight:500;font-family:inherit;transition:all .15s;text-align:left}
+.nav-btn:hover{color:#fff;background:rgba(255,255,255,0.05)}
+.nav-btn.active{color:#fff;background:rgba(238,72,35,0.2);border-right:2px solid var(--accent)}
+.nav-btn .ni{font-size:13px;width:20px;text-align:center;flex-shrink:0;opacity:0.7}
+.sidebar-footer{margin-top:auto;padding:16px 18px;border-top:1px solid rgba(255,255,255,0.07)}
+.sf-label{font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
+.sf-val{font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.sf-sub{font-size:0.68rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.sf-btn{width:100%;margin-top:12px;background:var(--accent);border:none;color:#fff;padding:9px 12px;border-radius:7px;font-size:0.8rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s}
+.sf-btn:hover{background:var(--accent-d)}
+
+/* MAIN */
+.main{flex:1;min-width:0;height:100vh;overflow-y:auto;background:var(--bg-alt)}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:0.95rem;font-weight:800;color:var(--ink);letter-spacing:-0.3px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.content{padding:24px 28px 60px}
+
+/* SYNC STATUS */
+.sync-pill{display:flex;align-items:center;gap:6px;font-size:0.72rem;font-weight:600;padding:4px 12px;border-radius:50px;border:1px solid var(--line);background:var(--bg-alt);color:var(--muted);transition:all .2s;cursor:default}
+.sync-pill.ok{background:var(--gs);border-color:#85D4AE;color:var(--green)}
+.sync-pill.syncing{background:var(--golds);border-color:#D4A83A;color:var(--gold)}
+.sync-pill.error{background:var(--accent-s);border-color:#F4A08A;color:var(--accent-d)}
+.sync-pill.offline{background:var(--bg-alt);border-color:var(--line);color:var(--muted)}
+.sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sync-dot.ok{background:var(--green)}
+.sync-dot.syncing{background:var(--gold);animation:pulse 1s infinite}
+.sync-dot.error{background:var(--accent)}
+.sync-dot.offline{background:var(--muted)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* LOADING OVERLAY */
+.load-overlay{position:fixed;inset:0;background:rgba(28,27,25,0.7);z-index:999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.load-overlay.hidden{display:none}
+.load-spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.load-text{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.8)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* VIEWS */
+.view{display:none}.view.active{display:block}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px 20px 16px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.kpi-accent-blue::after{background:var(--accent)}
+.kpi-accent-gold::after{background:var(--gold)}
+.kpi-accent-green::after{background:var(--green)}
+.kpi-accent-purple::after{background:var(--purple)}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.kpi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;margin-top:2px}
+.kpi-label{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
+.kpi-val{font-size:1.55rem;font-weight:800;color:var(--ink);letter-spacing:-1px;line-height:1}
+.kpi-sub{font-size:0.67rem;color:var(--muted);margin-top:6px}
+.up{color:var(--green)}.dn{color:var(--accent)}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+.card-hd{padding:15px 20px 13px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.card-hd h2{font-size:0.85rem;font-weight:700;color:var(--ink);letter-spacing:-0.1px}
+.card-bd{padding:18px 20px}
+/* DASH LAYOUT */
+.dash-block{margin-bottom:16px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+/* KANBAN */
+.kanban{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;align-items:flex-start}
+.kancol{min-width:200px;flex:1;background:var(--bg-alt);border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.kancol-hd{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.kancol-hd-left{display:flex;align-items:center;gap:7px}
+.stage-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.kancol-name{font-size:0.75rem;font-weight:700;color:var(--ink)}
+.kancol-count{font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:50px;background:#fff;border:1px solid var(--line);color:var(--muted)}
+.kancol-val{font-size:0.67rem;color:var(--muted);font-weight:600}
+.kancol-body{padding:10px;display:flex;flex-direction:column;gap:8px;min-height:80px}
+
+/* LEAD CARDS */
+.lead-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 12px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.lead-card:hover{box-shadow:var(--sh);border-color:#D0CCC4}
+.lc-company{font-size:0.78rem;font-weight:700;color:var(--ink);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lc-name{font-size:0.68rem;color:var(--muted);margin-bottom:8px}
+.lc-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.lc-val{font-size:0.8rem;font-weight:700;color:var(--green)}
+.lc-followup{font-size:0.63rem;color:var(--muted);margin-top:5px}
+.lc-followup.overdue{color:var(--accent);font-weight:600}
+.lc-actions{display:flex;gap:4px;margin-top:8px}
+.lc-btn{flex:1;background:var(--bg-alt);border:1px solid var(--line);border-radius:5px;padding:4px 0;font-size:0.62rem;font-weight:600;color:var(--body);cursor:pointer;font-family:inherit;transition:all .15s}
+.lc-btn:hover{background:var(--bg-warm);color:var(--ink)}
+.lc-btn.advance{background:var(--green);color:#fff;border-color:var(--green)}
+.lc-btn.advance:hover{background:#156037}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:0 0 var(--r) var(--r)}
+table{width:100%;border-collapse:collapse;font-size:0.8rem}
+thead tr{border-bottom:2px solid var(--line)}
+th{text-align:left;padding:9px 10px;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:0.65rem;letter-spacing:0.7px;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--line);transition:background .1s;cursor:pointer}
+tbody tr:hover{background:var(--bg-alt)}
+tbody tr:last-child{border-bottom:none}
+td{padding:10px 10px;color:var(--body);vertical-align:middle}
+td strong{color:var(--ink);font-weight:600}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:0.62rem;font-weight:700;padding:2px 8px;border-radius:50px;white-space:nowrap}
+.b-new{background:var(--bs);color:var(--blue)}
+.b-disc{background:var(--golds);color:var(--gold)}
+.b-prop{background:var(--purples);color:var(--purple)}
+.b-neg{background:var(--accent-s);color:var(--accent-d)}
+.b-won{background:var(--gs);color:var(--green)}
+.b-lost{background:#F3F4F6;color:#9CA3AF}
+.b-meta{background:var(--metas);color:var(--meta)}
+.b-email{background:var(--gs);color:var(--green)}
+.b-linkedin{background:#E7F0FA;color:#0A66C2}
+.b-referral{background:var(--golds);color:var(--gold)}
+.b-inbound{background:var(--purples);color:var(--purple)}
+.b-other{background:#F3F4F6;color:#6B7280}
+
+/* FILTERS */
+.filter-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.filter-btn{background:#fff;border:1px solid var(--line);border-radius:50px;padding:5px 14px;font-size:0.75rem;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s}
+.filter-btn:hover{border-color:#C0BCB5;color:var(--ink)}
+.filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.search-input{flex:1;max-width:260px;background:#fff;border:1px solid var(--line);border-radius:7px;padding:6px 12px;font-size:0.8rem;font-family:inherit;color:var(--ink);outline:none}
+.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-s)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:var(--sh2)}
+.modal-hd{padding:20px 22px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1}
+.modal-hd h2{font-size:1rem;font-weight:800;color:var(--ink)}
+.modal-close{background:var(--bg-alt);border:1px solid var(--line);border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--muted);font-weight:700}
+.modal-close:hover{background:var(--bg-warm);color:var(--ink)}
+.modal-bd{padding:20px 22px}
+.modal-ft{padding:14px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:#fff}
+
+/* FORM */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row.full{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:0.72rem;font-weight:600;color:var(--ink-soft);letter-spacing:0.2px}
+.form-input,.form-select,.form-textarea{background:var(--bg-alt);border:1px solid var(--line);border-radius:7px;padding:8px 11px;font-size:0.82rem;font-family:inherit;color:var(--ink);outline:none;transition:border-color .15s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 2px var(--accent-s)}
+.form-textarea{resize:vertical;min-height:70px}
+.form-select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2387847C' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+
+/* BUTTONS */
+.btn{padding:9px 18px;border-radius:7px;font-size:0.82rem;font-weight:700;font-family:inherit;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-d)}
+.btn-secondary{background:var(--bg-alt);color:var(--ink);border:1px solid var(--line)}.btn-secondary:hover{background:var(--bg-warm)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#156037}
+.btn-danger{background:#FEE2E2;color:#C00;border:1px solid #FECACA}.btn-danger:hover{background:#FCA5A5}
+.btn-small{padding:5px 12px;font-size:0.75rem;border-radius:6px}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+
+/* SETTINGS — CODE BLOCK */
+.code-block{background:var(--dark);border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:0.72rem;color:#A9DC76;line-height:1.6;max-height:220px;overflow-y:auto;white-space:pre;margin:8px 0}
+.copy-wrap{position:relative}
+.copy-btn{position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:5px;padding:3px 10px;font-size:0.67rem;font-weight:700;font-family:inherit;cursor:pointer}
+.copy-btn:hover{background:rgba(255,255,255,0.2)}
+
+/* SETUP STEPS */
+.setup-step{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.setup-step:last-child{border-bottom:none;padding-bottom:0}
+.snum{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:0.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.stitle{font-size:0.85rem;font-weight:700;color:var(--ink);margin-bottom:3px}
+.sdesc{font-size:0.77rem;color:var(--body);line-height:1.5}
+
+/* URL INPUT ROW */
+.url-row{display:flex;gap:8px;align-items:stretch;margin-top:10px}
+.url-input{flex:1;background:var(--bg-alt);border:1px solid var(--line);border-radius:7px;padding:8px 11px;font-size:0.8rem;font-family:inherit;color:var(--ink);outline:none}
+.url-input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 2px var(--accent-s)}
+
+/* SETTING ITEM */
+.setting-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line)}
+.setting-item:last-child{border-bottom:none}
+.si-label{font-size:0.85rem;font-weight:600;color:var(--ink)}
+.si-desc{font-size:0.75rem;color:var(--muted);margin-top:2px}
+
+/* FUNNEL */
+.funnel{display:flex;flex-direction:column;gap:8px}
+.funnel-item{display:flex;align-items:center;gap:10px}
+.funnel-label{font-size:0.72rem;font-weight:600;color:var(--body);width:90px;flex-shrink:0;text-align:right}
+.funnel-bar-wrap{flex:1;height:18px;background:var(--bg-alt);border-radius:50px;overflow:hidden}
+.funnel-bar{height:100%;border-radius:50px;transition:width .4s ease}
+.funnel-count{font-size:0.7rem;font-weight:700;color:var(--muted);width:30px;text-align:right;flex-shrink:0}
+.funnel-val{font-size:0.68rem;color:var(--muted);width:70px;text-align:right;flex-shrink:0}
+
+/* CHART */
+.chart-wrap{position:relative;height:200px}
+
+/* ALERTS */
+.alert{border-radius:var(--r);padding:12px 16px;display:flex;gap:10px;align-items:flex-start;font-size:0.78rem;margin-bottom:16px;line-height:1.55}
+.alert-o{background:var(--accent-s);border:1px solid #F4A08A;color:#7A2010}
+.alert-g{background:var(--gs);border:1px solid #85D4AE;color:#0A4A28}
+.alert-b{background:var(--bs);border:1px solid #85A8E0;color:#0A2A60}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--dark);color:#fff;padding:11px 18px;border-radius:8px;font-size:0.8rem;font-weight:600;box-shadow:var(--sh2);z-index:999;transform:translateY(20px);opacity:0;transition:all .25s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* CHANNEL GRID */
+.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.ch-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.ch-card-icon{font-size:1.4rem;margin-bottom:3px}
+.ch-card-name{font-size:0.78rem;font-weight:700;color:var(--ink);margin-bottom:1px}
+.ch-card-budget{font-size:0.67rem;color:var(--muted);margin-bottom:8px}
+.ch-kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:8px}
+.ch-kpi{background:var(--bg-alt);border-radius:6px;padding:6px 4px;text-align:center}
+.ch-kpi-l{font-size:0.54rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:2px}
+.ch-kpi-v{font-size:0.88rem;font-weight:800;color:var(--ink)}
+/* CHANNEL ROW (settings) */
+.ch-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ch-row:last-child{border-bottom:none}
+.ch-icon{font-size:1.1rem;width:26px;text-align:center;flex-shrink:0}
+.ch-info{flex:1}
+.ch-name{font-size:0.83rem;font-weight:700;color:var(--ink)}
+.ch-leads-count{font-size:0.68rem;color:var(--muted)}
+.ch-budget-input{width:120px;background:var(--bg-alt);border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-size:0.78rem;font-family:inherit;color:var(--ink);outline:none;text-align:right}
+.ch-budget-input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 2px var(--accent-s)}
+/* INLINE SPEND INPUT */
+.spend-input{width:100px;background:transparent;border:none;border-bottom:1px dashed var(--line);padding:3px 6px;font-size:0.78rem;font-family:inherit;color:var(--body);text-align:right;outline:none;transition:border-color .15s}
+.spend-input:hover{border-bottom-color:var(--accent)}
+.spend-input:focus{border-bottom:2px solid var(--accent);color:var(--ink)}
+.spend-input::placeholder{color:var(--accent);opacity:0.7;font-weight:500}
+/* MODAL SMALL */
+.modal-sm{max-width:380px}
+/* ICON PREVIEW */
+.icon-preview{width:40px;height:40px;border-radius:8px;background:var(--bg-alt);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+
+/* EMPTY */
+.empty{padding:40px 20px;text-align:center;color:var(--muted)}
+.empty-icon{font-size:2.5rem;margin-bottom:10px}
+.empty h3{font-size:0.9rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.empty p{font-size:0.78rem}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .g2,.g3{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-220px;z-index:100;transition:left .25s}
+  .sidebar.open{left:0}
+  .content{padding:16px 16px 40px}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .g2,.g3,.ch-grid,.dash-grid2{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .kanban{flex-direction:column}
+  .kancol{min-width:unset;width:100%}
+  .sync-pill span{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING OVERLAY -->
+<div class="load-overlay hidden" id="load-overlay">
+  <div class="load-spinner"></div>
+  <div class="load-text" id="load-text">Loading from Google Sheets…</div>
+</div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-row">
+      <div class="logo-dot">IW</div>
+      <div class="logo-name">IDEO<span>WORKS</span></div>
+    </div>
+  </div>
+  <div class="sidebar-label">Overview</div>
+  <button class="nav-btn active" onclick="switchView('dashboard',this)"><span class="ni">▦</span>Dashboard</button>
+  <button class="nav-btn" onclick="switchView('pipeline',this)"><span class="ni">◈</span>Pipeline</button>
+  <button class="nav-btn" onclick="switchView('leads',this)"><span class="ni">≡</span>All Leads</button>
+  <div class="sidebar-label">Reporting</div>
+  <button class="nav-btn" onclick="switchView('campaign',this)"><span class="ni">◎</span>Campaign</button>
+  <div class="sidebar-label">System</div>
+  <button class="nav-btn" onclick="switchView('settings',this)"><span class="ni">⊙</span>Settings</button>
+  <div class="sidebar-footer">
+    <div class="sf-label">Open Pipeline</div>
+    <div class="sf-val" id="sb-pipeline-val">—</div>
+    <div class="sf-sub" id="sb-pipeline-count">— active deals</div>
+    <button class="sf-btn" onclick="openModal()">+ Add Lead</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button onclick="document.getElementById('sidebar').classList.toggle('open')" style="display:none;background:none;border:none;font-size:18px;cursor:pointer" id="hamburger">☰</button>
+      <div>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div id="topbar-date" style="font-size:0.65rem;color:var(--muted);font-weight:500;margin-top:1px"></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <!-- SYNC STATUS -->
+      <div class="sync-pill offline" id="sync-pill" onclick="manualSync()" title="Click to sync now" style="cursor:pointer">
+        <div class="sync-dot offline" id="sync-dot"></div>
+        <span id="sync-label">Not connected</span>
+      </div>
+      <button class="btn btn-secondary btn-small" onclick="exportCSV()">↓ CSV</button>
+      <button class="btn btn-primary btn-small" onclick="openModal()">+ Add Lead</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view active">
+
+      <!-- KPIs -->
+      <div class="kpi-row" id="kpi-row"></div>
+
+      <!-- Growth Chart -->
+      <div class="card dash-block">
+        <div class="card-hd">
+          <h2>Month-over-Month Growth</h2>
+          <div id="growth-legend" style="display:flex;gap:14px;align-items:center;font-size:0.71rem;font-weight:600;color:var(--muted)"></div>
+        </div>
+        <div class="card-bd"><div style="position:relative;height:200px"><canvas id="growth-chart"></canvas></div></div>
+      </div>
+
+      <!-- Funnel + Source: two side-by-side cards -->
+      <div class="g2 dash-block">
+        <div class="card">
+          <div class="card-hd"><h2>Pipeline Funnel</h2></div>
+          <div class="card-bd"><div class="funnel" id="funnel-chart"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><h2>Leads by Source</h2></div>
+          <div class="card-bd"><div style="position:relative;height:180px"><canvas id="source-chart"></canvas></div></div>
+        </div>
+      </div>
+
+      <!-- Recent Leads -->
+      <div class="card dash-block">
+        <div class="card-hd">
+          <h2>Recent Leads</h2>
+          <button onclick="switchView('leads',document.querySelectorAll('.nav-btn')[2])" style="background:none;border:none;font-size:0.73rem;font-weight:700;color:var(--accent);cursor:pointer;font-family:inherit;padding:2px 0">View all →</button>
+        </div>
+        <div class="tbl-wrap"><table id="recent-table"></table></div>
+      </div>
+
+      <!-- Monthly Trend -->
+      <div class="card">
+        <div class="card-hd"><h2>Monthly Trend</h2></div>
+        <div id="monthly-table-dash"></div>
+      </div>
+
+    </div>
+
+    <!-- PIPELINE -->
+    <div id="view-pipeline" class="view">
+      <div class="kanban" id="kanban"></div>
+    </div>
+
+    <!-- LEADS -->
+    <div id="view-leads" class="view">
+      <div class="filter-row">
+        <input type="text" class="search-input" placeholder="🔍  Search leads…" id="search-input" oninput="renderLeads()">
+        <button class="filter-btn active" onclick="setFilter(this,'all')">All</button>
+        <button class="filter-btn" onclick="setFilter(this,'new')">New</button>
+        <button class="filter-btn" onclick="setFilter(this,'discovery')">Discovery</button>
+        <button class="filter-btn" onclick="setFilter(this,'proposal')">Proposal</button>
+        <button class="filter-btn" onclick="setFilter(this,'negotiation')">Negotiating</button>
+        <button class="filter-btn" onclick="setFilter(this,'won')">Won ✓</button>
+      </div>
+      <div class="filter-row" style="margin-top:-6px;gap:6px">
+        <select class="form-select" id="filter-month" onchange="applyAdvancedFilters()" style="width:auto;font-size:0.75rem;padding:5px 26px 5px 10px;height:32px">
+          <option value="all">All Months</option>
+        </select>
+        <select class="form-select" id="filter-country" onchange="applyAdvancedFilters()" style="width:auto;font-size:0.75rem;padding:5px 26px 5px 10px;height:32px">
+          <option value="all">All Countries</option>
+        </select>
+        <select class="form-select" id="filter-channel" onchange="applyAdvancedFilters()" style="width:auto;font-size:0.75rem;padding:5px 26px 5px 10px;height:32px">
+          <option value="all">All Channels</option>
+        </select>
+        <select class="form-select" id="filter-service" onchange="applyAdvancedFilters()" style="width:auto;font-size:0.75rem;padding:5px 26px 5px 10px;height:32px">
+          <option value="all">All Services</option>
+        </select>
+        <button class="btn btn-secondary btn-small" onclick="clearAdvancedFilters()" style="height:32px">✕ Clear</button>
+      </div>
+      <div class="card">
+        <div class="card-bd" style="padding:0">
+          <div class="tbl-wrap"><table id="leads-table"></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAMPAIGN -->
+    <div id="view-campaign" class="view">
+      <div id="campaign-content"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="view-settings" class="view">
+      <div class="g2">
+
+        <!-- GOOGLE SHEETS SETUP -->
+        <div class="card" style="grid-column:1/-1">
+          <div class="card-hd">
+            <h2>🔗 Google Sheets Sync</h2>
+            <div id="sheets-status-badge" class="sync-pill offline"><div class="sync-dot offline"></div><span>Not connected</span></div>
+          </div>
+          <div class="card-bd">
+
+            <div id="setup-guide">
+              <div style="font-size:0.8rem;color:var(--body);line-height:1.6;margin-bottom:18px">Follow these steps once. After setup, every team member who opens this file sees the same live data — no exports needed.</div>
+
+              <div class="setup-step">
+                <div class="snum">1</div>
+                <div>
+                  <div class="stitle">Create a new Google Sheet</div>
+                  <div class="sdesc">Go to <strong>sheets.google.com</strong> and create a blank spreadsheet. Name it anything — e.g. "IDEOWORKS CRM Data". You only need one Sheet tab, leave it as "Sheet1".</div>
+                </div>
+              </div>
+
+              <div class="setup-step">
+                <div class="snum">2</div>
+                <div>
+                  <div class="stitle">Open Apps Script</div>
+                  <div class="sdesc">Inside your Google Sheet, click <strong>Extensions → Apps Script</strong>. Delete any default code in the editor. Paste the code below exactly as-is.</div>
+                  <div class="copy-wrap" style="margin-top:10px">
+                    <div class="code-block" id="apps-script-code">const SHEET_NAME = 'Sheet1';
+const HEADERS = ['id','firstName','lastName','company','email','phone','country',
+  'source','stage','value','notes','nextFollowUp','campaign',
+  'serviceInterest','budgetRange','metaId','createdAt','updatedAt'];
+
+// ── WhatsApp intake form HTML ─────────────
+function getIntakeFormHtml_() {
+  const url = ScriptApp.getService().getUrl();
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>IDEOWORKS — Contact Us</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,sans-serif;background:#FAF6EF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .card{background:#fff;border-radius:14px;padding:28px 24px;max-width:420px;width:100%;box-shadow:0 8px 28px rgba(0,0,0,0.1)}
+    .logo{font-size:1rem;font-weight:800;letter-spacing:-0.3px;margin-bottom:4px}.logo span{color:#EE4823}
+    h1{font-size:1.1rem;font-weight:700;margin:14px 0 4px}
+    p{font-size:0.82rem;color:#666;margin-bottom:20px}
+    label{font-size:0.75rem;font-weight:600;color:#444;display:block;margin-bottom:4px}
+    input,select,textarea{width:100%;background:#FAF6EF;border:1px solid #E8E4DC;border-radius:7px;padding:9px 11px;font-size:0.85rem;font-family:inherit;outline:none;margin-bottom:12px;color:#1C1B19}
+    input:focus,select:focus,textarea:focus{border-color:#EE4823;background:#fff}
+    textarea{resize:vertical;min-height:60px}
+    .btn{width:100%;background:#EE4823;color:#fff;border:none;border-radius:8px;padding:12px;font-size:0.9rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:4px}
+    .btn:hover{background:#C8351A}
+    .success{text-align:center;padding:20px 0}
+    .success h2{font-size:1.2rem;margin-bottom:8px}.success p{font-size:0.85rem}
+    .req{color:#EE4823}
+  </style></head>
+  <body><div class="card">
+  <div class="logo">IDEO<span>WORKS</span></div>
+  <h1>Tell us about your project</h1>
+  <p>Fill in your details and our team will reach out within 24 hours.</p>
+  <form id="f" onsubmit="submit(event)">
+    <label>Full Name <span class="req">*</span></label><input id="name" required placeholder="John Smith">
+    <label>Company <span class="req">*</span></label><input id="company" required placeholder="Your Company">
+    <label>Email <span class="req">*</span></label><input id="email" type="email" required placeholder="you@company.com">
+    <label>Phone / WhatsApp</label><input id="phone" placeholder="+60123456789">
+    <label>Country</label><input id="country" placeholder="Singapore">
+    <label>Services Interested In</label>
+    <select id="service">
+      <option value="">Select...</option>
+      <option>Digital Marketing</option><option>Social Media Management</option>
+      <option>Performance Ads</option><option>Branding & Creative</option>
+      <option>Content Production</option><option>360 Marketing</option><option>Other</option>
+    </select>
+    <label>Monthly Budget Range</label>
+    <select id="budget">
+      <option value="">Select...</option>
+      <option>Below IDR 30M / mo</option><option>IDR 30M – 100M / mo</option>
+      <option>IDR 100M – 300M / mo</option><option>IDR 300M+ / mo</option>
+    </select>
+    <label>Tell us more</label><textarea id="notes" placeholder="Project goals, timeline, any questions…"></textarea>
+    <button class="btn" type="submit" id="sbtn">Send Message 💬</button>
+  </form>
+  <div class="success" id="ok" style="display:none">
+    <div style="font-size:2.5rem">✅</div>
+    <h2>We received your message!</h2>
+    <p>Our team will contact you within 24 hours.</p>
+  </div>
+  </div>
+  <script>
+  async function submit(e){
+    e.preventDefault();
+    const btn=document.getElementById('sbtn');
+    btn.disabled=true;btn.textContent='Sending…';
+    const d={action:'addLead',lead:{
+      id:'waf'+Date.now().toString(36),
+      firstName:document.getElementById('name').value.split(' ').slice(0,-1).join(' ')||document.getElementById('name').value,
+      lastName:document.getElementById('name').value.split(' ').slice(-1)[0]||'',
+      company:document.getElementById('company').value,
+      email:document.getElementById('email').value,
+      phone:document.getElementById('phone').value,
+      country:document.getElementById('country').value,
+      source:'inbound',stage:'new',value:'0',campaign:'WhatsApp Form',
+      serviceInterest:document.getElementById('service').value,
+      budgetRange:document.getElementById('budget').value,
+      notes:document.getElementById('notes').value,
+      createdAt:new Date().toISOString().split('T')[0],
+      updatedAt:new Date().toISOString().split('T')[0],
+    }};
+    try{
+      await fetch('${url}',{method:'POST',body:JSON.stringify(d)});
+      document.getElementById('f').style.display='none';
+      document.getElementById('ok').style.display='block';
+    }catch(err){btn.disabled=false;btn.textContent='Try again';}
+  }
+  </script></body></html>`;
+}
+
+function setupSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
+  if (!sheet.getLastColumn() || sheet.getRange(1,1).getValue() !== 'id') {
+    sheet.getRange(1,1,1,HEADERS.length).setValues([HEADERS]);
+    sheet.setFrozenRows(1);
+    sheet.getRange(1,1,1,HEADERS.length).setFontWeight('bold')
+      .setBackground('#1C1B19').setFontColor('#ffffff');
+  }
+  return sheet;
+}
+
+function doGet(e) {
+  // Serve intake form when ?form=1
+  if (e && e.parameter && e.parameter.form === '1') {
+    return HtmlService.createHtmlOutput(getIntakeFormHtml_())
+      .setTitle('IDEOWORKS — Contact Us')
+      .addMetaTag('viewport','width=device-width,initial-scale=1');
+  }
+  const sheet = setupSheet_();
+  const last = sheet.getLastRow();
+  let leads = [];
+  if (last > 1) {
+    const data = sheet.getRange(2,1,last-1,HEADERS.length).getValues();
+    leads = data
+      .map(row => { const o={}; HEADERS.forEach((h,i)=>o[h]=String(row[i]||'')); return o; })
+      .filter(l => l.id);
+  }
+  return ContentService
+    .createTextOutput(JSON.stringify({ok:true, leads}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  try {
+    const body = JSON.parse(e.postData.contents);
+    const sheet = setupSheet_();
+    // Single lead from intake form
+    if (body.action === 'addLead' && body.lead) {
+      const row = HEADERS.map(h => String(body.lead[h]||''));
+      sheet.appendRow(row);
+      return ContentService
+        .createTextOutput(JSON.stringify({ok:true}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    if (body.action === 'saveAll') {
+      const last = sheet.getLastRow();
+      if (last > 1) sheet.deleteRows(2, last - 1);
+      if (body.leads && body.leads.length) {
+        const rows = body.leads.map(l => HEADERS.map(h => String(l[h]||'')));
+        sheet.getRange(2,1,rows.length,HEADERS.length).setValues(rows);
+      }
+      return ContentService
+        .createTextOutput(JSON.stringify({ok:true}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ok:false,error:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</div>
+                    <button class="copy-btn" onclick="copyCode()">Copy</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="setup-step">
+                <div class="snum">3</div>
+                <div>
+                  <div class="stitle">Deploy as a Web App</div>
+                  <div class="sdesc">In Apps Script, click <strong>Deploy → New deployment</strong>. Set type to <strong>Web app</strong>. Set <em>Execute as</em>: <strong>Me</strong>. Set <em>Who has access</em>: <strong>Anyone</strong>. Click <strong>Deploy</strong> and <strong>Authorize</strong> when prompted. Copy the deployment URL.</div>
+                </div>
+              </div>
+
+              <div class="setup-step">
+                <div class="snum">4</div>
+                <div>
+                  <div class="stitle">Paste the URL below and connect</div>
+                  <div class="sdesc">The URL looks like: <code style="background:var(--bg-warm);padding:1px 6px;border-radius:4px;font-size:0.75rem">https://script.google.com/macros/s/…/exec</code></div>
+                  <div class="url-row">
+                    <input type="url" class="url-input" id="sheets-url-input" placeholder="https://script.google.com/macros/s/…/exec">
+                    <button class="btn btn-green btn-small" onclick="connectSheets()">Connect</button>
+                    <button class="btn btn-secondary btn-small" id="test-btn" onclick="testConnection()" style="display:none">Test</button>
+                  </div>
+                  <div id="connection-msg" style="font-size:0.75rem;margin-top:8px;color:var(--muted)"></div>
+                </div>
+              </div>
+            </div><!-- /setup-guide -->
+
+            <!-- CONNECTED STATE -->
+            <div id="connected-panel" style="display:none">
+              <div class="alert alert-g" style="margin-bottom:16px">
+                <span>✅</span>
+                <div><strong>Connected to Google Sheets.</strong> All leads sync automatically. Your team can open this same file and see live data.</div>
+              </div>
+              <div class="setting-item">
+                <div><div class="si-label">Sync URL</div><div class="si-desc" id="connected-url-display" style="word-break:break-all"></div></div>
+                <button class="btn btn-secondary btn-small" onclick="disconnectSheets()">Disconnect</button>
+              </div>
+              <div class="setting-item">
+                <div><div class="si-label">Manual Sync</div><div class="si-desc">Force a fresh pull from Google Sheets</div></div>
+                <button class="btn btn-secondary btn-small" onclick="manualSync()">↻ Sync Now</button>
+              </div>
+              <div class="setting-item">
+                <div><div class="si-label">Share with team</div><div class="si-desc">Send them this HTML file. They paste the same URL in their Settings and connect.</div></div>
+                <button class="btn btn-secondary btn-small" onclick="exportHTMLFile()">↓ Save App File</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CHANNELS -->
+        <div class="card" style="grid-column:1/-1">
+          <div class="card-hd">
+            <h2>📡 Channels</h2>
+            <button class="btn btn-primary btn-small" onclick="openChannelModal()">+ Add Channel</button>
+          </div>
+          <div class="card-bd">
+            <div style="font-size:0.78rem;color:var(--body);margin-bottom:14px">Define your lead sources. Set a monthly budget to track Cost Per Lead in Campaign Analytics.</div>
+            <div id="channels-list"></div>
+          </div>
+        </div>
+
+        <!-- DATA TOOLS -->
+        <div class="card">
+          <div class="card-hd"><h2>💾 Data Tools</h2></div>
+          <div class="card-bd">
+            <div class="setting-item">
+              <div><div class="si-label">Export Leads (CSV)</div><div class="si-desc">Open in Excel or Google Sheets</div></div>
+              <button class="btn btn-secondary btn-small" onclick="exportCSV()">↓ CSV</button>
+            </div>
+            <div class="setting-item">
+              <div><div class="si-label">Export Backup (JSON)</div><div class="si-desc">Full data backup</div></div>
+              <button class="btn btn-secondary btn-small" onclick="exportJSON()">↓ JSON</button>
+            </div>
+            <div class="setting-item">
+              <div><div class="si-label">Import JSON</div><div class="si-desc">Restore from backup</div></div>
+              <div><input type="file" id="import-file" accept=".json" onchange="importJSON(this)" style="display:none"><button class="btn btn-secondary btn-small" onclick="document.getElementById('import-file').click()">↑ Import</button></div>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="si-label">📥 Import Meta Leads CSV</div>
+                <div class="si-desc">Upload the CSV export from your Meta Lead Gen Forms. Auto-maps all fields, skips duplicates.</div>
+              </div>
+              <div><input type="file" id="meta-import-file" accept=".csv" onchange="handleMetaCSV(this)" style="display:none"><button class="btn btn-primary btn-small" onclick="document.getElementById('meta-import-file').click()">↑ Meta CSV</button></div>
+            </div>
+            <div class="setting-item">
+              <div><div class="si-label">Load Sample Data</div><div class="si-desc">Reset with 8 demo leads</div></div>
+              <button class="btn btn-danger btn-small" onclick="loadSampleData()">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHATSAPP INTAKE FORM -->
+        <div class="card">
+          <div class="card-hd"><h2>💬 WhatsApp Intake Form</h2></div>
+          <div class="card-bd">
+            <div style="font-size:0.78rem;color:var(--body);line-height:1.6;margin-bottom:14px">Share a lead intake form link on WhatsApp. Prospects fill it out → leads land directly in your CRM. Requires Google Sheets connection above.</div>
+            <div id="wa-form-section">
+              <div class="alert alert-b" style="margin-bottom:12px"><span>ℹ️</span><div>Connect Google Sheets first (Step 4 above), then come back here to get your intake form link.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd"><h2>ℹ️ About</h2></div>
+          <div class="card-bd">
+            <div style="font-size:0.78rem;color:var(--body);line-height:1.7">
+              <div style="margin-bottom:10px"><strong style="color:var(--ink)">IDEOWORKS CRM</strong> — self-contained web app.</div>
+              <div style="margin-bottom:6px">✅ No server · No fee · Works offline</div>
+              <div style="margin-bottom:6px">✅ Google Sheets = shared team data</div>
+              <div style="margin-bottom:6px">✅ Each save syncs to the Sheet live</div>
+              <div style="margin-bottom:6px">✅ Team opens same file, pastes same URL</div>
+              <div style="margin-bottom:6px">✅ Sheet is also a readable backup</div>
+              <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:0.7rem;color:var(--muted)">Press <kbd style="background:var(--bg-warm);padding:1px 5px;border-radius:3px;font-size:0.65rem">N</kbd> to add a lead · <kbd style="background:var(--bg-warm);padding:1px 5px;border-radius:3px;font-size:0.65rem">Esc</kbd> to close modal</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LEAD MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2 id="modal-title">Add New Lead</h2>
+      <div class="modal-close" onclick="closeModal()">✕</div>
+    </div>
+    <div class="modal-bd">
+      <input type="hidden" id="f-id">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name *</label><input class="form-input" id="f-first" placeholder="Sarah"></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="f-last" placeholder="Mitchell"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Company *</label><input class="form-input" id="f-company" placeholder="Brightcore Media"></div>
+        <div class="form-group"><label class="form-label">Country</label><input class="form-input" id="f-country" placeholder="Australia"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="f-email" type="email" placeholder="sarah@company.com"></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="f-phone" type="tel" placeholder="+60123456789"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Deal Value (IDR)</label><input class="form-input" id="f-value" type="number" placeholder="500000000"></div>
+        <div class="form-group"><label class="form-label">Service Interest</label><input class="form-input" id="f-service" placeholder="e.g. Digital Marketing"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Lead Source</label>
+          <select class="form-select" id="f-source"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pipeline Stage</label>
+          <select class="form-select" id="f-stage">
+            <option value="new">🔵 New Lead</option>
+            <option value="discovery">🔍 Discovery Done</option>
+            <option value="proposal">📄 Proposal Sent</option>
+            <option value="negotiation">💬 Negotiating</option>
+            <option value="won">✅ Closed Won</option>
+            <option value="lost">❌ Closed Lost</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Campaign Name</label><input class="form-input" id="f-campaign" placeholder="Q2 Australia Campaign"></div>
+        <div class="form-group"><label class="form-label">Next Follow-Up</label><input class="form-input" id="f-followup" type="date"></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f-notes" placeholder="Key info, objections, next steps…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn btn-danger btn-small" id="delete-btn" onclick="deleteLead()" style="display:none;margin-right:auto">Delete Lead</button>
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLead()">Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANNEL MODAL -->
+<div class="modal-overlay" id="channel-modal">
+  <div class="modal modal-sm">
+    <div class="modal-hd">
+      <h2 id="ch-modal-title">Add Channel</h2>
+      <div class="modal-close" onclick="closeChannelModal()">✕</div>
+    </div>
+    <div class="modal-bd">
+      <input type="hidden" id="ch-id">
+      <div class="form-row full" style="margin-bottom:12px">
+        <div class="form-group">
+          <label class="form-label">Icon (emoji)</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="icon-preview" id="ch-icon-preview">📣</div>
+            <input class="form-input" id="ch-icon" placeholder="📣" maxlength="4" style="flex:1;font-size:1.2rem" oninput="document.getElementById('ch-icon-preview').textContent=this.value||'?'">
+          </div>
+        </div>
+      </div>
+      <div class="form-row full" style="margin-bottom:12px">
+        <div class="form-group">
+          <label class="form-label">Channel Name *</label>
+          <input class="form-input" id="ch-name" placeholder="e.g. TikTok Ads">
+        </div>
+      </div>
+      <div class="form-row full" style="margin-bottom:0">
+        <div class="form-group">
+          <label class="form-label">Monthly Budget (Rp)</label>
+          <input class="form-input" id="ch-budget" type="number" placeholder="e.g. 5000000">
+        </div>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn btn-danger btn-small" id="ch-delete-btn" onclick="deleteChannel()" style="display:none;margin-right:auto">Delete</button>
+      <button class="btn btn-secondary" onclick="closeChannelModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveChannel()">Save Channel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════
+const STAGES      = ['new','discovery','proposal','negotiation','won','lost'];
+const STAGE_LABELS= {new:'New Lead',discovery:'Discovery Done',proposal:'Proposal Sent',negotiation:'Negotiating',won:'Closed Won',lost:'Closed Lost'};
+const STAGE_PROBS = {new:10,discovery:30,proposal:50,negotiation:70,won:100,lost:0};
+const STAGE_COLORS= {new:'#85A8E0',discovery:'#D4A83A',proposal:'#B899DC',negotiation:'#F4A08A',won:'#85D4AE',lost:'#CCC'};
+const STAGE_BADGE = {new:'b-new',discovery:'b-disc',proposal:'b-prop',negotiation:'b-neg',won:'b-won',lost:'b-lost'};
+const STORAGE_KEY = 'ideoworks_crm_v1';
+const SHEETS_KEY  = 'ideoworks_sheets_url';
+
+// ── DYNAMIC CHANNELS ──────────────────────
+const CHANNELS_KEY  = 'ideoworks_channels_v1';
+const SPEND_LOG_KEY = 'ideoworks_spend_v1';
+const CH_COLORS = ['#1877F2','#1A7A4A','#EE4823','#B07A10','#6B35A0','#0A66C2','#C8351A','#1A4FA0','#0891B2','#7C3AED'];
+const CH_BG     = ['#E7F0FE','#E0F5EC','#FBE5DE','#FFF4D6','#EEE5FF','#E7F0FA','#FEE2E2','#E0EAFF','#E0F7FA','#EDE9FE'];
+const DEFAULT_CHANNELS = [
+  {id:'meta',     name:'Meta Ads',   icon:'📣', budget:5000000},
+  {id:'google',   name:'Google Ads', icon:'🔍', budget:0},
+  {id:'linkedin', name:'LinkedIn',   icon:'💼', budget:0},
+  {id:'email',    name:'Cold Email', icon:'✉️',  budget:0},
+  {id:'referral', name:'Referral',   icon:'🤝', budget:0},
+  {id:'inbound',  name:'Inbound',    icon:'🌐', budget:0},
+];
+let channels  = [];
+let spendLog  = {};  // { 'YYYY-MM': totalAmountIDR }
+function loadChannels() {
+  try { const d=localStorage.getItem(CHANNELS_KEY); channels=d?JSON.parse(d):JSON.parse(JSON.stringify(DEFAULT_CHANNELS)); }
+  catch { channels=JSON.parse(JSON.stringify(DEFAULT_CHANNELS)); }
+}
+function saveChannels() { localStorage.setItem(CHANNELS_KEY, JSON.stringify(channels)); }
+function getChannel(id) { return channels.find(c=>c.id===id)||null; }
+function chColor(chId) { const i=channels.findIndex(c=>c.id===chId); return i>=0?CH_COLORS[i%CH_COLORS.length]:'#87847C'; }
+function chBg(chId)    { const i=channels.findIndex(c=>c.id===chId); return i>=0?CH_BG[i%CH_BG.length]:'#F3F4F6'; }
+function chBadge(chId) {
+  const ch=getChannel(chId);
+  const name=ch?ch.name:(chId||'Unknown');
+  const icon=ch?ch.icon:'🔗';
+  return `<span class="badge" style="background:${chBg(chId)};color:${chColor(chId)}">${icon} ${name}</span>`;
+}
+// ── SPEND LOG ────────────────────────────
+// spendLog structure: { 'YYYY-MM': totalAmountIDR }
+function loadSpendLog() {
+  try { spendLog=JSON.parse(localStorage.getItem(SPEND_LOG_KEY)||'{}'); }
+  catch { spendLog={}; }
+}
+function saveSpendLog() { localStorage.setItem(SPEND_LOG_KEY,JSON.stringify(spendLog)); }
+function getMonthSpend(ym)   { return Number(spendLog[ym]||0); }
+function setMonthSpend(ym,v) { spendLog[ym]=Number(v)||0; saveSpendLog(); }
+function curYM()             { return new Date().toISOString().slice(0,7); }
+
+function populateSourceSelect(selectId, selectedVal) {
+  const sel=document.getElementById(selectId); if(!sel) return;
+  sel.innerHTML=channels.map(c=>`<option value="${c.id}"${c.id===selectedVal?' selected':''}>${c.icon} ${c.name}</option>`).join('');
+}
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let state = { leads:[], filter:'all', currentView:'dashboard', fMonth:'all', fCountry:'all', fChannel:'all', fService:'all' };
+let charts = {};
+let syncStatus = 'offline'; // 'offline' | 'ok' | 'syncing' | 'error'
+
+// ══════════════════════════════════════════
+// SYNC STATUS UI
+// ══════════════════════════════════════════
+const SYNC_LABELS = {offline:'Not connected', ok:'Synced', syncing:'Syncing…', error:'Sync error'};
+function setSyncStatus(s) {
+  syncStatus = s;
+  ['sync-pill','sheets-status-badge'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'sync-pill ' + s;
+    el.querySelector('.sync-dot').className = 'sync-dot ' + s;
+    const span = el.querySelector('span');
+    if (span) span.textContent = SYNC_LABELS[s] || s;
+  });
+}
+
+// ══════════════════════════════════════════
+// GOOGLE SHEETS INTEGRATION
+// ══════════════════════════════════════════
+function getSheetsURL() { return localStorage.getItem(SHEETS_KEY) || ''; }
+
+async function fetchFromSheets(url) {
+  const res = await fetch(url, { redirect: 'follow' });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || 'Unknown error');
+  return data.leads || [];
+}
+
+async function pushToSheets(url, leads) {
+  const res = await fetch(url, {
+    method: 'POST',
+    redirect: 'follow',
+    body: JSON.stringify({ action: 'saveAll', leads })
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || 'Save failed');
+}
+
+// ══════════════════════════════════════════
+// DATA LOAD / SAVE
+// ══════════════════════════════════════════
+async function loadData(showOverlay) {
+  const url = getSheetsURL();
+  if (url) {
+    if (showOverlay) showLoading('Loading from Google Sheets…');
+    setSyncStatus('syncing');
+    try {
+      const leads = await fetchFromSheets(url);
+      state.leads = leads;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+      setSyncStatus('ok');
+    } catch(e) {
+      console.warn('Sheets load failed, using cache:', e);
+      setSyncStatus('error');
+      loadFromCache();
+    } finally {
+      hideLoading();
+    }
+  } else {
+    loadFromCache();
+  }
+}
+
+function loadFromCache() {
+  try {
+    const d = localStorage.getItem(STORAGE_KEY);
+    state.leads = d ? JSON.parse(d) : [];
+  } catch { state.leads = []; }
+  if (!state.leads.length) loadSampleData(true);
+}
+
+async function saveData() {
+  // Always write to local cache first (instant)
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.leads));
+  const url = getSheetsURL();
+  if (!url) return;
+  setSyncStatus('syncing');
+  try {
+    await pushToSheets(url, state.leads);
+    setSyncStatus('ok');
+  } catch(e) {
+    setSyncStatus('error');
+    toast('⚠ Sync failed — saved locally. Try syncing manually.', 4000);
+  }
+}
+
+async function manualSync() {
+  const url = getSheetsURL();
+  if (!url) { switchView('settings', document.querySelectorAll('.nav-btn')[4]); return; }
+  setSyncStatus('syncing');
+  showLoading('Syncing with Google Sheets…');
+  try {
+    const leads = await fetchFromSheets(url);
+    state.leads = leads;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    setSyncStatus('ok');
+    refreshAll();
+    toast('✓ Synced from Google Sheets');
+  } catch(e) {
+    setSyncStatus('error');
+    toast('⚠ Sync failed. Check your connection URL in Settings.');
+  } finally {
+    hideLoading();
+  }
+}
+
+// ══════════════════════════════════════════
+// SHEETS SETTINGS UI
+// ══════════════════════════════════════════
+function connectSheets() {
+  const url = document.getElementById('sheets-url-input').value.trim();
+  if (!url || !url.includes('script.google.com')) {
+    setConnectionMsg('Please enter a valid Apps Script URL.', 'error');
+    return;
+  }
+  localStorage.setItem(SHEETS_KEY, url);
+  testConnection();
+}
+
+async function testConnection() {
+  const url = getSheetsURL() || document.getElementById('sheets-url-input')?.value?.trim();
+  if (!url) return;
+  const btn = document.getElementById('test-btn');
+  if (btn) btn.disabled = true;
+  setConnectionMsg('Testing connection…', 'muted');
+  setSyncStatus('syncing');
+  try {
+    const leads = await fetchFromSheets(url);
+    setSyncStatus('ok');
+    localStorage.setItem(SHEETS_KEY, url);
+    state.leads = leads.length ? leads : state.leads;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.leads));
+    setConnectionMsg('✓ Connected! ' + leads.length + ' lead(s) found.', 'green');
+    updateSettingsConnectedState(true);
+    refreshAll();
+    toast('✓ Google Sheets connected!');
+  } catch(e) {
+    setSyncStatus('error');
+    setConnectionMsg('✗ Could not connect. Check the URL and try again. Make sure you set access to "Anyone".', 'error');
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function disconnectSheets() {
+  if (!confirm('Disconnect Google Sheets? Data stays in this browser but will no longer sync.')) return;
+  localStorage.removeItem(SHEETS_KEY);
+  setSyncStatus('offline');
+  updateSettingsConnectedState(false);
+  toast('Disconnected from Google Sheets');
+}
+
+function setConnectionMsg(msg, type) {
+  const el = document.getElementById('connection-msg');
+  if (!el) return;
+  const colors = { green:'var(--green)', error:'var(--accent-d)', muted:'var(--muted)' };
+  el.style.color = colors[type] || 'var(--muted)';
+  el.textContent = msg;
+}
+
+function updateSettingsConnectedState(connected) {
+  const guide = document.getElementById('setup-guide');
+  const panel = document.getElementById('connected-panel');
+  const urlDisplay = document.getElementById('connected-url-display');
+  if (!guide || !panel) return;
+  if (connected) {
+    guide.style.display = 'none';
+    panel.style.display = 'block';
+    const url = getSheetsURL();
+    if (urlDisplay) urlDisplay.textContent = url;
+  } else {
+    guide.style.display = 'block';
+    panel.style.display = 'none';
+    const input = document.getElementById('sheets-url-input');
+    if (input) input.value = '';
+    setConnectionMsg('', '');
+  }
+}
+
+// ══════════════════════════════════════════
+// LOADING OVERLAY
+// ══════════════════════════════════════════
+function showLoading(msg) {
+  document.getElementById('load-text').textContent = msg || 'Loading…';
+  document.getElementById('load-overlay').classList.remove('hidden');
+}
+function hideLoading() {
+  document.getElementById('load-overlay').classList.add('hidden');
+}
+
+// ══════════════════════════════════════════
+// SAMPLE DATA
+// ══════════════════════════════════════════
+function loadSampleData(silent) {
+  const today = new Date();
+  const d = n => { const dt = new Date(today); dt.setDate(dt.getDate()+n); return dt.toISOString().split('T')[0]; };
+  state.leads = [
+    {id:'s1',firstName:'Sarah',lastName:'Mitchell',company:'Brightcore Media',email:'sarah@brightcore.com.au',country:'Australia',source:'meta',stage:'proposal',value:720000000,notes:'Strategy + creative bundle. Decision maker confirmed.',nextFollowUp:d(3),campaign:'Q2 AU Brand Awareness',createdAt:d(-20),updatedAt:d(-3)},
+    {id:'s2',firstName:'James',lastName:'Thornton',company:'Vero Commerce',email:'james@verocommerce.sg',country:'Singapore',source:'meta',stage:'discovery',value:540000000,notes:'Budget Rp 45Jt/mo confirmed. Shopping 2 other agencies.',nextFollowUp:d(1),campaign:'Q2 SEA Lead Gen',createdAt:d(-10),updatedAt:d(-2)},
+    {id:'s3',firstName:'Emma',lastName:'Clarke',company:'Apex Digital UK',email:'emma@apexdigital.co.uk',country:'United Kingdom',source:'email',stage:'new',value:900000000,notes:'Replied to cold email. Interested in Indonesia market entry.',nextFollowUp:d(2),campaign:'',createdAt:d(-3),updatedAt:d(-3)},
+    {id:'s4',firstName:'David',lastName:'Nguyen',company:'Pacific Brands',email:'david@pacificbrands.us',country:'United States',source:'meta',stage:'negotiation',value:1080000000,notes:'Reviewing contract. Wants 10% discount. Hold firm.',nextFollowUp:d(0),campaign:'Q1 US Campaign',createdAt:d(-45),updatedAt:d(-1)},
+    {id:'s5',firstName:'Lena',lastName:'Weber',company:'Nordhaus GmbH',email:'lena@nordhaus.de',country:'Germany',source:'linkedin',stage:'won',value:825000000,notes:'SIGNED! Retainer contract. Starting next month.',nextFollowUp:'',campaign:'',createdAt:d(-60),updatedAt:d(-5)},
+    {id:'s6',firstName:'Carlos',lastName:'Rivera',company:'Solmar Group',email:'carlos@solmar.mx',country:'Mexico',source:'referral',stage:'new',value:600000000,notes:'Referred by Lena at Nordhaus. Very warm lead.',nextFollowUp:d(5),campaign:'',createdAt:d(-2),updatedAt:d(-2)},
+    {id:'s7',firstName:'Priya',lastName:'Sharma',company:'Zenta Health',email:'priya@zentahealth.in',country:'India',source:'meta',stage:'discovery',value:420000000,notes:'India health brand expanding to Indonesia.',nextFollowUp:d(4),campaign:'Q2 SEA Lead Gen',createdAt:d(-8),updatedAt:d(-4)},
+    {id:'s8',firstName:'Tom',lastName:'Bradley',company:'Kestrel Foods',email:'tom@kestrelfoods.co.nz',country:'New Zealand',source:'inbound',stage:'proposal',value:480000000,notes:'Inbound from website. Food & beverage. Full service.',nextFollowUp:d(6),campaign:'',createdAt:d(-15),updatedAt:d(-6)},
+  ];
+  saveData();
+  if (!silent) { refreshAll(); toast('Sample data loaded!'); }
+}
+
+// ══════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════
+function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function fmtIDR(n) {
+  if (!n||isNaN(n)||Number(n)===0) return '—';
+  return 'Rp\u00A0'+Math.round(Number(n)).toLocaleString('id-ID');
+}
+function fmtIDRShort(n) {
+  if (!n||isNaN(n)||Number(n)===0) return '—';
+  const num=Math.round(Number(n));
+  if (num>=1e9)  return 'Rp\u00A0'+(num/1e9).toFixed(1).replace(/\.0$/,'')+'M';
+  if (num>=1e6)  return 'Rp\u00A0'+(num/1e6).toFixed(1).replace(/\.0$/,'')+'Jt';
+  if (num>=1e3)  return 'Rp\u00A0'+(num/1e3).toFixed(0)+'K';
+  return 'Rp\u00A0'+num.toLocaleString('id-ID');
+}
+function fmtDate(s) { if (!s) return '—'; return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'2-digit'}); }
+function isOverdue(s) { return s && new Date(s+'T00:00:00') < new Date(new Date().toDateString()); }
+// Normalize any date string → 'YYYY-MM' (handles ISO, Sheets locale formats, etc.)
+function toYM(dateStr) {
+  if (!dateStr) return '';
+  const s = String(dateStr);
+  // Already YYYY-MM
+  if (/^\d{4}-\d{2}$/.test(s)) return s;
+  // ISO or ISO-ish: starts with YYYY-MM-DD
+  if (/^\d{4}-\d{2}/.test(s)) return s.slice(0,7);
+  // Try JS date parse (handles M/D/YYYY, D/M/YYYY ambiguously but better than nothing)
+  try { const d=new Date(s); if(!isNaN(d)) return d.toISOString().slice(0,7); } catch{}
+  return '';
+}
+function monthLabel(ym) {
+  if (!ym) return '?';
+  const [y,m] = ym.split('-');
+  if (!y||!m) return ym;
+  const d = new Date(Number(y), Number(m)-1, 1);
+  return isNaN(d.getTime()) ? ym : d.toLocaleDateString('en-GB',{month:'short',year:'2-digit'});
+}
+function stageBadge(s) { return `<span class="badge ${STAGE_BADGE[s]||''}">${STAGE_LABELS[s]||s}</span>`; }
+function sourceBadge(s) { return chBadge(s); }
+function toast(msg, dur=2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+
+// ══════════════════════════════════════════
+// KPIs
+// ══════════════════════════════════════════
+function getKPIs() {
+  const open = state.leads.filter(l=>l.stage!=='won'&&l.stage!=='lost');
+  const won  = state.leads.filter(l=>l.stage==='won');
+  const pipelineVal  = open.reduce((s,l)=>s+(Number(l.value)||0),0);
+  const weightedVal  = open.reduce((s,l)=>s+((Number(l.value)||0)*(STAGE_PROBS[l.stage]||0)/100),0);
+  const wonVal  = won.reduce((s,l)=>s+(Number(l.value)||0),0);
+  const avgDeal = won.length ? wonVal/won.length : (open.length ? pipelineVal/open.length : 0);
+  const overdue = state.leads.filter(l=>l.nextFollowUp&&isOverdue(l.nextFollowUp)&&l.stage!=='won'&&l.stage!=='lost').length;
+  return { total:state.leads.length, openDeals:open.length, pipelineVal, weightedVal, wonVal, avgDeal, overdue };
+}
+
+// ══════════════════════════════════════════
+// RENDER: DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard() {
+  const k = getKPIs();
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi kpi-accent-blue">
+      <div class="kpi-top"><div><div class="kpi-label">Total Leads</div><div class="kpi-val">${state.leads.length}</div></div><div class="kpi-icon" style="background:var(--accent-s);color:var(--accent)">👥</div></div>
+      <div class="kpi-sub">${k.openDeals} active deal${k.openDeals!==1?'s':''}</div>
+    </div>
+    <div class="kpi kpi-accent-gold">
+      <div class="kpi-top"><div><div class="kpi-label">Pipeline Value</div><div class="kpi-val">${fmtIDRShort(k.pipelineVal)}</div></div><div class="kpi-icon" style="background:var(--golds);color:var(--gold)">💼</div></div>
+      <div class="kpi-sub">Weighted: ${fmtIDRShort(Math.round(k.weightedVal))}</div>
+    </div>
+    <div class="kpi kpi-accent-green">
+      <div class="kpi-top"><div><div class="kpi-label">Won Revenue</div><div class="kpi-val up">${fmtIDRShort(k.wonVal)}</div></div><div class="kpi-icon" style="background:var(--gs);color:var(--green)">✓</div></div>
+      <div class="kpi-sub">${state.leads.filter(l=>l.stage==='won').length} deal${state.leads.filter(l=>l.stage==='won').length!==1?'s':''} closed</div>
+    </div>
+    <div class="kpi kpi-accent-purple">
+      <div class="kpi-top"><div><div class="kpi-label">Avg Deal Size</div><div class="kpi-val">${fmtIDRShort(Math.round(k.avgDeal))}</div></div><div class="kpi-icon" style="background:var(--purples);color:var(--purple)">◈</div></div>
+      <div class="kpi-sub ${k.overdue?'dn':''}">${k.overdue?`⚠ ${k.overdue} overdue follow-up${k.overdue>1?'s':''}`: '✓ Follow-ups on track'}</div>
+    </div>`;
+  document.getElementById('sb-pipeline-val').textContent = fmtIDRShort(k.pipelineVal);
+  document.getElementById('sb-pipeline-count').textContent = k.openDeals+' active deal'+(k.openDeals!==1?'s':'');
+
+  // Funnel
+  const funnelStages = ['new','discovery','proposal','negotiation','won'];
+  const maxC = Math.max(...funnelStages.map(s=>state.leads.filter(l=>l.stage===s).length),1);
+  document.getElementById('funnel-chart').innerHTML = funnelStages.map(s=>{
+    const cnt = state.leads.filter(l=>l.stage===s).length;
+    const val = state.leads.filter(l=>l.stage===s).reduce((a,l)=>a+(Number(l.value)||0),0);
+    return `<div class="funnel-item">
+      <div class="funnel-label">${STAGE_LABELS[s]}</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${Math.round(cnt/maxC*100)}%;background:${STAGE_COLORS[s]}"></div></div>
+      <div class="funnel-count">${cnt}</div><div class="funnel-val">${val>0?fmtIDRShort(val):''}</div>
+    </div>`;
+  }).join('');
+
+  // Chart — dynamic channels
+  const srcData = channels.filter(c=>state.leads.filter(l=>l.source===c.id).length>0);
+  if (charts.source) charts.source.destroy();
+  charts.source = new Chart(document.getElementById('source-chart').getContext('2d'),{
+    type:'doughnut',
+    data:{
+      labels:srcData.map(c=>c.name),
+      datasets:[{data:srcData.map(c=>state.leads.filter(l=>l.source===c.id).length),backgroundColor:srcData.map(c=>chColor(c.id)),borderWidth:0,hoverOffset:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'Inter',size:11},color:'#55534D',padding:12,boxWidth:12}}}}
+  });
+
+  // ── Growth chart ──
+  const growthMonths = [...new Set(state.leads.map(l=>toYM(l.createdAt)).filter(Boolean))].sort();
+  if (growthMonths.length) {
+    const newLeads = growthMonths.map(ym=>state.leads.filter(l=>toYM(l.createdAt)===ym).length);
+    const wonDeals = growthMonths.map(ym=>state.leads.filter(l=>toYM(l.createdAt)===ym&&l.stage==='won').length);
+    const momGrowth = newLeads.map((v,i)=>i===0?0:(newLeads[i-1]===0?0:Math.round((v-newLeads[i-1])/newLeads[i-1]*100)));
+    // Legend
+    document.getElementById('growth-legend').innerHTML =
+      `<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(238,72,35,0.8);display:inline-block"></span>New Leads</span>`+
+      `<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:#1A7A4A;display:inline-block"></span>Won Deals</span>`;
+    if (charts.growth) charts.growth.destroy();
+    charts.growth = new Chart(document.getElementById('growth-chart').getContext('2d'),{
+      data:{
+        labels:growthMonths.map(monthLabel),
+        datasets:[
+          {type:'bar',label:'New Leads',data:newLeads,backgroundColor:'rgba(238,72,35,0.75)',borderRadius:5,yAxisID:'y'},
+          {type:'line',label:'Won Deals',data:wonDeals,borderColor:'#1A7A4A',backgroundColor:'rgba(26,122,74,0.1)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#1A7A4A',tension:0.3,fill:true,yAxisID:'y1'},
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:false},tooltip:{callbacks:{afterBody:items=>{const i=items[0]?.dataIndex;return i>0&&momGrowth[i]!==0?[`MoM: ${momGrowth[i]>0?'+':''}${momGrowth[i]}%`]:[];}}}},
+        scales:{
+          y:{beginAtZero:true,position:'left',ticks:{font:{family:'Inter',size:11},color:'#87847C'},grid:{color:'rgba(0,0,0,0.05)'}},
+          y1:{beginAtZero:true,position:'right',max:Math.max(...wonDeals,1)+1,ticks:{font:{family:'Inter',size:11},color:'#1A7A4A',stepSize:1},grid:{display:false}},
+          x:{ticks:{font:{family:'Inter',size:11},color:'#87847C'},grid:{display:false}}
+        }
+      }
+    });
+  }
+
+  // Monthly trend
+  const mtEl = document.getElementById('monthly-table-dash');
+  if (mtEl) mtEl.innerHTML = renderMonthlyTable();
+
+  // Recent table
+  const recent = [...state.leads].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,8);
+  document.getElementById('recent-table').innerHTML = `
+    <thead><tr>
+      <th>Company</th><th>Contact</th><th>Country</th><th>Channel</th><th>Stage</th><th style="text-align:right">Value</th><th>Added</th>
+    </tr></thead>
+    <tbody>${recent.map(l=>`<tr onclick="openModal('${l.id}')">
+      <td><strong>${l.company||'—'}</strong></td>
+      <td style="color:var(--muted)">${l.firstName} ${l.lastName||''}</td>
+      <td style="color:var(--muted)">${l.country||'—'}</td>
+      <td>${chBadge(l.source)}</td>
+      <td>${stageBadge(l.stage)}</td>
+      <td style="text-align:right;font-weight:700;color:var(--green)">${l.value>0?fmtIDRShort(l.value):'—'}</td>
+      <td style="color:var(--muted)">${fmtDate(l.createdAt)}</td>
+    </tr>`).join('')}</tbody>`;
+}
+
+// ══════════════════════════════════════════
+// RENDER: PIPELINE
+// ══════════════════════════════════════════
+function renderPipeline() {
+  document.getElementById('kanban').innerHTML = ['new','discovery','proposal','negotiation','won'].map(stage=>{
+    const leads = state.leads.filter(l=>l.stage===stage);
+    const total = leads.reduce((s,l)=>s+(Number(l.value)||0),0);
+    const nextStage = STAGES[STAGES.indexOf(stage)+1];
+    return `<div class="kancol">
+      <div class="kancol-hd">
+        <div class="kancol-hd-left"><div class="stage-dot" style="background:${STAGE_COLORS[stage]}"></div><div class="kancol-name">${STAGE_LABELS[stage]}</div><div class="kancol-count">${leads.length}</div></div>
+        <div class="kancol-val">${total>0?fmtIDRShort(total):''}</div>
+      </div>
+      <div class="kancol-body">
+        ${leads.length===0?`<div style="font-size:0.72rem;color:var(--muted);text-align:center;padding:12px">Empty</div>`:
+          leads.map(l=>`<div class="lead-card" onclick="openModal('${l.id}')">
+            <div class="lc-company">${l.company}</div>
+            <div class="lc-name">${l.firstName} ${l.lastName||''} · ${l.country||'—'}</div>
+            <div class="lc-row"><div class="lc-val">${fmtIDRShort(l.value)}</div>${chBadge(l.source)}</div>
+            ${l.nextFollowUp?`<div class="lc-followup ${isOverdue(l.nextFollowUp)&&stage!=='won'?'overdue':''}">${isOverdue(l.nextFollowUp)&&stage!=='won'?'⚠ Overdue: ':'Follow-up: '}${fmtDate(l.nextFollowUp)}</div>`:''}
+            <div class="lc-actions">
+              <button class="lc-btn" onclick="event.stopPropagation();openModal('${l.id}')">Edit</button>
+              ${nextStage&&stage!=='won'?`<button class="lc-btn advance" onclick="event.stopPropagation();advanceStage('${l.id}','${nextStage}')">→ ${STAGE_LABELS[nextStage].split(' ')[0]}</button>`:''}
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// RENDER: LEADS TABLE
+// ══════════════════════════════════════════
+function populateLeadFilters() {
+  const months   = [...new Set(state.leads.map(l=>toYM(l.createdAt)).filter(Boolean))].sort().reverse();
+  const countries= [...new Set(state.leads.map(l=>(l.country||'').toUpperCase()).filter(Boolean))].sort();
+  const services = [...new Set(state.leads.map(l=>l.serviceInterest||'').filter(Boolean))].sort();
+
+  const rebuild = (id, cur, extra) => {
+    const sel = document.getElementById(id); if (!sel) return;
+    const val = sel.value || cur;
+    sel.innerHTML = extra + sel.innerHTML.replace(/<option[^>]*>[^<]*<\/option>/g,'');
+    // Simpler: just rebuild
+  };
+
+  const sel = id => document.getElementById(id);
+
+  const mSel = sel('filter-month');
+  if (mSel) { const c=mSel.value; mSel.innerHTML='<option value="all">All Months</option>'+months.map(m=>{return`<option value="${m}"${c===m?' selected':''}>${monthLabel(m)}</option>`;}).join(''); }
+
+  const cSel = sel('filter-country');
+  if (cSel) { const c=cSel.value; cSel.innerHTML='<option value="all">All Countries</option>'+countries.map(ct=>`<option value="${ct}"${c===ct?' selected':''}>${ct}</option>`).join(''); }
+
+  const chSel = sel('filter-channel');
+  if (chSel) { const c=chSel.value; chSel.innerHTML='<option value="all">All Channels</option>'+channels.map(ch=>`<option value="${ch.id}"${c===ch.id?' selected':''}>${ch.icon} ${ch.name}</option>`).join(''); }
+
+  const svSel = sel('filter-service');
+  if (svSel) { const c=svSel.value; svSel.innerHTML='<option value="all">All Services</option>'+services.map(s=>`<option value="${s}"${c===s?' selected':''}>${s}</option>`).join(''); }
+}
+
+function applyAdvancedFilters() {
+  state.fMonth   = document.getElementById('filter-month')?.value||'all';
+  state.fCountry = document.getElementById('filter-country')?.value||'all';
+  state.fChannel = document.getElementById('filter-channel')?.value||'all';
+  state.fService = document.getElementById('filter-service')?.value||'all';
+  renderLeads();
+}
+
+function clearAdvancedFilters() {
+  state.fMonth=state.fCountry=state.fChannel=state.fService='all';
+  ['filter-month','filter-country','filter-channel','filter-service'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='all';});
+  renderLeads();
+}
+
+function renderLeads() {
+  populateLeadFilters();
+  const q = (document.getElementById('search-input')?.value||'').toLowerCase();
+  let leads = state.filter==='all' ? [...state.leads] : state.leads.filter(l=>l.stage===state.filter);
+  if (q)                       leads = leads.filter(l=>[l.company,l.firstName,l.lastName,l.email,l.country].some(v=>(v||'').toLowerCase().includes(q)));
+  if (state.fMonth!=='all')    leads = leads.filter(l=>toYM(l.createdAt)===state.fMonth);
+  if (state.fCountry!=='all')  leads = leads.filter(l=>(l.country||'').toUpperCase()===state.fCountry);
+  if (state.fChannel!=='all')  leads = leads.filter(l=>l.source===state.fChannel);
+  if (state.fService!=='all')  leads = leads.filter(l=>(l.serviceInterest||'').toLowerCase().includes(state.fService.toLowerCase()));
+  leads.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+  // Active filter chips
+  const activeFilters = [state.fMonth,state.fCountry,state.fChannel,state.fService].filter(f=>f!=='all').length;
+  const countLabel = activeFilters>0 ? `<span style="font-size:0.72rem;color:var(--accent);font-weight:700;margin-left:4px">(${activeFilters} filter${activeFilters>1?'s':''} active · ${leads.length} result${leads.length!==1?'s':''})</span>` : '';
+
+  document.getElementById('leads-table').innerHTML = leads.length===0
+    ? `<tbody><tr><td colspan="8"><div class="empty"><div class="empty-icon">🔍</div><h3>No leads match</h3><p>Try adjusting your filters.</p></div></td></tr></tbody>`
+    : `<thead><tr><th>Company</th><th>Contact</th><th>Country</th><th>Source</th><th>Stage</th><th>Service</th><th>Value</th><th>Follow-Up</th></tr></thead>
+      <tbody>${leads.map(l=>`<tr onclick="openModal('${l.id}')">
+        <td><strong>${l.company}</strong></td>
+        <td><div>${l.firstName} ${l.lastName||''}</div><div style="font-size:0.65rem;color:var(--muted)">${l.email||''}${l.phone?'<br>📞 '+l.phone:''}</div></td>
+        <td>${l.country||'—'}</td><td>${chBadge(l.source)}</td><td>${stageBadge(l.stage)}</td>
+        <td style="font-size:0.72rem;color:var(--muted);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.serviceInterest||'—'}</td>
+        <td style="font-weight:700;color:${l.stage==='won'?'var(--green)':'var(--ink)'}">${fmtIDRShort(l.value)}</td>
+        <td class="${isOverdue(l.nextFollowUp)&&l.stage!=='won'&&l.stage!=='lost'?'dn':''}">${fmtDate(l.nextFollowUp)}</td>
+      </tr>`).join('')}</tbody>`;
+}
+
+function setFilter(btn, f) {
+  state.filter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLeads();
+}
+
+// ══════════════════════════════════════════
+// RENDER: CAMPAIGN (per-channel)
+// ══════════════════════════════════════════
+function renderCampaign() {
+  const el = document.getElementById('campaign-content');
+  if (!el) return;
+
+  const nowYM = curYM();
+  const nowSpend = getMonthSpend(nowYM);
+  // Build channel cards
+  const chCards = channels.map(ch=>{
+    const leads      = state.leads.filter(l=>l.source===ch.id);
+    const curMonthL  = leads.filter(l=>toYM(l.createdAt)===nowYM).length;
+    const wonRev     = leads.filter(l=>l.stage==='won').reduce((s,l)=>s+(Number(l.value)||0),0);
+    const cplCurMonth= nowSpend>0&&curMonthL>0 ? Math.round(nowSpend/curMonthL) : null;
+    const col = chColor(ch.id);
+    return `<div class="ch-card" style="border-top:3px solid ${col}">
+      <div class="ch-card-icon">${ch.icon}</div>
+      <div class="ch-card-name">${ch.name}</div>
+      <div class="ch-kpis">
+        <div class="ch-kpi"><div class="ch-kpi-l">Leads</div><div class="ch-kpi-v" style="color:${col}">${leads.length}</div></div>
+        <div class="ch-kpi"><div class="ch-kpi-l">This month</div><div class="ch-kpi-v">${curMonthL}</div></div>
+        <div class="ch-kpi"><div class="ch-kpi-l">CPL</div><div class="ch-kpi-v" style="color:var(--gold)">${cplCurMonth?fmtIDRShort(cplCurMonth):'—'}</div></div>
+        <div class="ch-kpi"><div class="ch-kpi-l">Won</div><div class="ch-kpi-v" style="color:var(--green)">${fmtIDRShort(wonRev)}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Leads by channel bar chart data
+  const activeChannels = channels.filter(c=>state.leads.filter(l=>l.source===c.id).length>0);
+
+  // CPL summary table (uses total monthly spend)
+  const allMonths = [...new Set(state.leads.map(l=>toYM(l.createdAt)).filter(Boolean))].sort();
+  const totalAllSpend = allMonths.reduce((s,ym)=>s+getMonthSpend(ym),0);
+  const cplRows = channels.map(ch=>{
+    const leads  = state.leads.filter(l=>l.source===ch.id);
+    const won    = leads.filter(l=>l.stage==='won');
+    const wonRev = won.reduce((s,l)=>s+(Number(l.value)||0),0);
+    // Pro-rate total spend by this channel's share of leads
+    const chShare= state.leads.length>0 ? leads.length/state.leads.length : 0;
+    const estSpend= Math.round(totalAllSpend*chShare);
+    const cpl    = estSpend>0&&leads.length ? Math.round(estSpend/leads.length) : null;
+    const roi    = estSpend>0&&wonRev>0 ? Math.round(wonRev/estSpend*100) : null;
+    return `<tr>
+      <td>${chBadge(ch.id)}</td>
+      <td style="text-align:center;font-weight:700">${leads.length}</td>
+      <td style="text-align:right;color:var(--gold);font-weight:700">${cpl?fmtIDRShort(cpl):'—'}</td>
+      <td style="text-align:right;color:var(--green);font-weight:700">${fmtIDRShort(wonRev)}</td>
+      <td style="text-align:right;font-weight:700;color:${roi&&roi>=100?'var(--green)':roi?'var(--gold)':'var(--muted)'}">${roi?roi+'%':'—'}</td>
+    </tr>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="ch-grid">${chCards}</div>
+    <div class="g2" style="margin-bottom:16px">
+      <div class="card">
+        <div class="card-hd"><h2>Leads by Channel</h2></div>
+        <div class="card-bd"><div class="chart-wrap"><canvas id="ch-bar-chart"></canvas></div></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><h2>CPL Summary</h2></div>
+        <div class="card-bd" style="padding:0">
+          <div class="tbl-wrap"><table class="cpl-table">
+            <thead><tr><th>Channel</th><th style="text-align:center">Leads</th><th style="text-align:right">CPL (est.)</th><th style="text-align:right">Revenue</th><th style="text-align:right">ROI (est.)</th></tr></thead>
+            <tbody>${cplRows}</tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>`;
+
+  // Draw bar chart
+  if (charts.chBar) charts.chBar.destroy();
+  if (document.getElementById('ch-bar-chart')) {
+    charts.chBar = new Chart(document.getElementById('ch-bar-chart').getContext('2d'),{
+      type:'bar',
+      data:{
+        labels:activeChannels.map(c=>c.name),
+        datasets:[{data:activeChannels.map(c=>state.leads.filter(l=>l.source===c.id).length),backgroundColor:activeChannels.map(c=>chColor(c.id)+'CC'),borderRadius:6}]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{family:'Inter',size:11},color:'#87847C'}},x:{ticks:{font:{family:'Inter',size:11},color:'#87847C'},grid:{display:false}}}}
+    });
+  }
+
+  // Monthly breakdown
+  el.innerHTML += `
+    <div class="card" style="margin-top:0">
+      <div class="card-hd"><h2>📅 Monthly Breakdown</h2></div>
+      <div class="card-bd" style="padding:0">${renderMonthlyTable()}</div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+// MONTHLY TABLE (shared — dashboard + campaign)
+// ══════════════════════════════════════════
+function renderMonthlyTable() {
+  const monthMap = {};
+  state.leads.forEach(l => {
+    const key = toYM(l.createdAt||l.updatedAt);
+    if (!key) return;
+    if (!monthMap[key]) monthMap[key] = { total:0, byChannel:{}, won:0, revenue:0 };
+    monthMap[key].total++;
+    const ch = l.source||'';
+    monthMap[key].byChannel[ch] = (monthMap[key].byChannel[ch]||0)+1;
+    if (l.stage==='won') { monthMap[key].won++; monthMap[key].revenue+=(Number(l.value)||0); }
+  });
+  const months = Object.keys(monthMap).sort().reverse();
+  if (!months.length) return '<div class="empty" style="padding:20px"><div class="empty-icon">📅</div><h3>No data yet</h3></div>';
+
+  const label = ym => { const[y,m]=(ym||'').split('-'); if(!y||!m)return ym||'?'; const d=new Date(Number(y),Number(m)-1,1); return isNaN(d.getTime())?ym:d.toLocaleDateString('en-GB',{month:'long',year:'numeric'}); };
+  const activeCh = channels.filter(c=>months.some(m=>monthMap[m].byChannel[c.id]));
+
+  return `<div class="tbl-wrap"><table>
+    <thead><tr>
+      <th>Month</th>
+      ${activeCh.map(c=>`<th style="text-align:center">${c.icon}</th>`).join('')}
+      <th style="text-align:center">Total</th>
+      <th style="text-align:right">Spend (IDR)</th>
+      <th style="text-align:right">CPL</th>
+      <th style="text-align:center">Won</th>
+      <th style="text-align:right">Revenue</th>
+    </tr></thead>
+    <tbody>${months.map(ym=>{
+      const m=monthMap[ym];
+      const mSpend = getMonthSpend(ym);
+      const mCPL   = mSpend>0&&m.total>0 ? Math.round(mSpend/m.total) : null;
+      const isNow  = ym===curYM();
+      return `<tr${isNow?' style="background:var(--bg-alt)"':''}>
+        <td><strong>${label(ym)}</strong>${isNow?' <span style="font-size:0.6rem;background:var(--accent);color:#fff;padding:1px 5px;border-radius:50px;font-weight:700">NOW</span>':''}</td>
+        ${activeCh.map(c=>`<td style="text-align:center;font-weight:700;color:${m.byChannel[c.id]?chColor(c.id):'var(--line)'}">${m.byChannel[c.id]||'—'}</td>`).join('')}
+        <td style="text-align:center;font-weight:800;color:var(--ink)">${m.total}</td>
+        <td style="text-align:right;padding:4px 8px">
+          <input type="number" class="spend-input" value="${mSpend||''}" placeholder="+ spend"
+            onchange="setMonthSpend('${ym}',this.value);renderCampaign();renderDashboard()"
+            onfocus="this.select()"
+            title="Total ad spend for ${label(ym)}">
+        </td>
+        <td style="text-align:right;font-weight:700;color:var(--gold)">${mCPL?fmtIDRShort(mCPL):'—'}</td>
+        <td style="text-align:center;font-weight:700;color:var(--green)">${m.won||'—'}</td>
+        <td style="text-align:right;font-weight:700;color:var(--green)">${m.revenue>0?fmtIDRShort(m.revenue):'—'}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+// ══════════════════════════════════════════
+// META CSV IMPORT
+// ══════════════════════════════════════════
+function handleMetaCSV(input) {
+  const file = input.files[0]; if (!file) return;
+  showLoading('Parsing Meta CSV…');
+  const reader = new FileReader();
+  reader.onload = e => {
+    hideLoading();
+    try { parseAndImportMeta(e.target.result); }
+    catch(err) { toast('Could not parse file: ' + err.message); console.error(err); }
+  };
+  reader.onerror = () => { hideLoading(); toast('Could not read file.'); };
+  reader.readAsText(file, 'UTF-16');
+  input.value = '';
+}
+
+function parseAndImportMeta(text) {
+  // Parse TSV (tab-delimited, may have quoted fields)
+  const parseRow = row => {
+    const fields=[]; let cur='', inQ=false;
+    for (let i=0;i<row.length;i++) {
+      const c=row[i];
+      if (c==='"'&&!inQ){inQ=true;continue;}
+      if (c==='"'&&inQ){if(row[i+1]==='"'){cur+='"';i++;}else{inQ=false;}continue;}
+      if (c==='\t'&&!inQ){fields.push(cur.trim());cur='';continue;}
+      cur+=c;
+    }
+    fields.push(cur.trim());
+    return fields;
+  };
+
+  const lines = text.split('\n').filter(l=>l.trim());
+  if (!lines.length) { toast('Empty file.'); return; }
+
+  const headers = parseRow(lines[0]);
+  const idx = h => headers.indexOf(h);
+  const I = {
+    id:       idx('id'),
+    time:     idx('created_time'),
+    adName:   idx('ad_name'),
+    campaign: idx('campaign_name'),
+    platform: idx('platform'),
+    services: idx('which_services_are_you_interested_in?'),
+    budget:   idx('what_budget_range_are_you_considering?'),
+    notes:    idx('_notes:_please_provide_any_additional_details'),
+    name:     idx('full_name'),
+    company:  idx('company_name'),
+    country:  idx('country'),
+    phone:    idx('phone'),
+    email:    idx('work_email'),
+  };
+
+  const clean    = v => (v||'').replace(/_/g,' ').replace(/\s+/g,' ').trim();
+  const clPhone  = v => (v||'').replace(/^p:/i,'').trim();
+  const parseD   = v => { try { return new Date(v).toISOString().split('T')[0]; } catch { return new Date().toISOString().split('T')[0]; }};
+  const splitName= v => { const s=(v||'').trim().split(' '); return s.length>1?[s.slice(0,-1).join(' '),s[s.length-1]]:[v,'']; };
+
+  const existingMetaIds = new Set(state.leads.map(l=>l.metaId).filter(Boolean));
+  let newCount=0, dupCount=0;
+  const toAdd=[];
+
+  for (let i=1;i<lines.length;i++) {
+    const row = parseRow(lines[i]);
+    if (row.length < 3) continue;
+    const g = j => j>=0&&j<row.length ? row[j] : '';
+
+    const metaId = g(I.id);
+    if (!metaId) continue;
+    if (existingMetaIds.has(metaId)) { dupCount++; continue; }
+
+    const [firstName, lastName] = splitName(g(I.name));
+    const created       = parseD(g(I.time));
+    const serviceVal    = clean(g(I.services));
+    const budgetVal     = clean(g(I.budget));
+    const rawNotes      = (g(I.notes)||'').split('\n').slice(0,4).join(' ').trim().slice(0,400);
+    const srcChannel    = channels.find(c=>c.id==='meta')?.id || channels[0]?.id || 'meta';
+    const notesArr      = [serviceVal&&`Service: ${serviceVal}`, budgetVal&&`Budget: ${budgetVal}`, rawNotes].filter(Boolean);
+
+    toAdd.push({
+      id: uid(), metaId,
+      firstName, lastName,
+      company:         g(I.company)||'',
+      country:         g(I.country)||'',
+      email:           g(I.email)||'',
+      phone:           clPhone(g(I.phone)),
+      source:          srcChannel,
+      stage:           'new',
+      value:           0,
+      campaign:        g(I.campaign)||g(I.adName)||'',
+      serviceInterest: serviceVal,
+      budgetRange:     budgetVal,
+      notes:           notesArr.join('\n'),
+      createdAt:       created,
+      updatedAt:       created,
+    });
+    newCount++;
+    existingMetaIds.add(metaId);
+  }
+
+  if (toAdd.length===0) {
+    toast(dupCount>0 ? `All ${dupCount} leads already in CRM.` : 'No leads found in file.');
+    return;
+  }
+  state.leads = [...toAdd, ...state.leads];
+  saveData();
+  refreshAll();
+  toast(`✓ Imported ${newCount} lead${newCount!==1?'s':''}${dupCount?` · ${dupCount} duplicate${dupCount>1?'s':''} skipped`:''} from Meta`);
+}
+
+// ══════════════════════════════════════════
+// WHATSAPP INTAKE FORM
+// ══════════════════════════════════════════
+function renderWAFormSection() {
+  const el = document.getElementById('wa-form-section'); if (!el) return;
+  const url = getSheetsURL();
+  if (!url) {
+    el.innerHTML = `<div class="alert alert-b"><span>ℹ️</span><div>Connect Google Sheets first (Setup section above), then return here to get your intake form link.</div></div>`;
+    return;
+  }
+  const formUrl = url + '?form=1';
+  const qrUrl   = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(formUrl)}&color=1C1B19&bgcolor=FFFFFF`;
+  const waLink  = `https://wa.me/?text=${encodeURIComponent('Hi! Fill out this quick form so we can get back to you: '+formUrl)}`;
+  el.innerHTML = `
+    <div class="alert alert-g" style="margin-bottom:14px"><span>✅</span><div>Your intake form is ready. Share the link or QR code on WhatsApp — leads go straight into your CRM on next sync.</div></div>
+    <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+      <img src="${qrUrl}" alt="Form QR" style="width:120px;height:120px;border-radius:8px;border:1px solid var(--line);flex-shrink:0">
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:0.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:6px">Intake Form URL</div>
+        <div style="background:var(--bg-alt);border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-size:0.72rem;font-family:monospace;word-break:break-all;color:var(--ink);margin-bottom:10px">${formUrl}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-small" onclick="navigator.clipboard.writeText('${formUrl}').then(()=>toast('✓ Link copied!'))">📋 Copy Link</button>
+          <a href="${waLink}" target="_blank" class="btn btn-green btn-small" style="text-decoration:none">💬 Share on WhatsApp</a>
+        </div>
+        <div style="margin-top:10px;font-size:0.72rem;color:var(--muted)">⚠️ Make sure your Google Apps Script is deployed with the <strong>updated code</strong> from the Sheets Setup section — it now includes the form handler.</div>
+      </div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+// CHANNEL MANAGEMENT
+// ══════════════════════════════════════════
+function renderChannelsList() {
+  const el = document.getElementById('channels-list'); if (!el) return;
+  if (!channels.length) { el.innerHTML='<div style="font-size:0.78rem;color:var(--muted)">No channels yet. Add one above.</div>'; return; }
+  el.innerHTML = channels.map(ch=>{
+    const cnt = state.leads.filter(l=>l.source===ch.id).length;
+    return `<div class="ch-row">
+      <div class="ch-icon">${ch.icon}</div>
+      <div class="ch-info">
+        <div class="ch-name">${ch.name}</div>
+        <div class="ch-leads-count">${cnt} lead${cnt!==1?'s':''}</div>
+      </div>
+      <input type="number" class="ch-budget-input" value="${ch.budget||''}" placeholder="Budget/bln" title="Monthly Budget (Rp)" onchange="saveBudgetInline('${ch.id}',this.value)" onblur="saveBudgetInline('${ch.id}',this.value)">
+      <button class="btn btn-secondary btn-small" onclick="openChannelModal('${ch.id}')">Edit</button>
+    </div>`;
+  }).join('');
+}
+function openChannelModal(id) {
+  const dBtn = document.getElementById('ch-delete-btn');
+  if (id) {
+    const ch = getChannel(id); if (!ch) return;
+    document.getElementById('ch-modal-title').textContent = 'Edit Channel';
+    document.getElementById('ch-id').value = ch.id;
+    document.getElementById('ch-icon').value = ch.icon||'🔗';
+    document.getElementById('ch-icon-preview').textContent = ch.icon||'🔗';
+    document.getElementById('ch-name').value = ch.name||'';
+    document.getElementById('ch-budget').value = ch.budget||'';
+    dBtn.style.display = 'block';
+  } else {
+    document.getElementById('ch-modal-title').textContent = 'Add Channel';
+    document.getElementById('ch-id').value = '';
+    document.getElementById('ch-icon').value = '';
+    document.getElementById('ch-icon-preview').textContent = '?';
+    document.getElementById('ch-name').value = '';
+    document.getElementById('ch-budget').value = '';
+    dBtn.style.display = 'none';
+  }
+  document.getElementById('channel-modal').classList.add('open');
+}
+function closeChannelModal() { document.getElementById('channel-modal').classList.remove('open'); }
+document.getElementById('channel-modal').addEventListener('click', e=>{ if(e.target===document.getElementById('channel-modal')) closeChannelModal(); });
+function saveChannel() {
+  const name = document.getElementById('ch-name').value.trim();
+  if (!name) { toast('Channel name is required.'); return; }
+  const id   = document.getElementById('ch-id').value;
+  const icon = document.getElementById('ch-icon').value.trim()||'🔗';
+  const budget = parseFloat(document.getElementById('ch-budget').value)||0;
+  if (id) {
+    const ch = getChannel(id); if (ch) { ch.name=name; ch.icon=icon; ch.budget=budget; }
+  } else {
+    const newId = name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')+'-'+Date.now().toString(36).slice(-3);
+    channels.push({id:newId, name, icon, budget});
+  }
+  saveChannels();
+  closeChannelModal();
+  renderChannelsList();
+  toast(id?'✓ Channel updated':'✓ Channel added');
+}
+function deleteChannel() {
+  const id = document.getElementById('ch-id').value; if (!id) return;
+  const cnt = state.leads.filter(l=>l.source===id).length;
+  const msg = cnt>0 ? `Delete this channel? ${cnt} lead(s) using it will show "Unknown" as source.` : 'Delete this channel?';
+  if (!confirm(msg)) return;
+  channels = channels.filter(c=>c.id!==id);
+  saveChannels();
+  closeChannelModal();
+  renderChannelsList();
+  toast('Channel deleted');
+}
+function saveBudgetInline(chId, val) {
+  const ch = getChannel(chId); if (!ch) return;
+  ch.budget = parseFloat(val)||0;
+  saveChannels();
+  toast('Budget saved');
+}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal(id) {
+  populateSourceSelect('f-source', null);
+  const dBtn = document.getElementById('delete-btn');
+  if (id) {
+    const l = state.leads.find(x=>x.id===id); if (!l) return;
+    document.getElementById('modal-title').textContent = 'Edit Lead';
+    document.getElementById('f-id').value = l.id;
+    document.getElementById('f-first').value = l.firstName||'';
+    document.getElementById('f-last').value = l.lastName||'';
+    document.getElementById('f-company').value = l.company||'';
+    document.getElementById('f-country').value = l.country||'';
+    document.getElementById('f-email').value = l.email||'';
+    document.getElementById('f-phone').value = l.phone||'';
+    document.getElementById('f-value').value = l.value||'';
+    document.getElementById('f-service').value = l.serviceInterest||'';
+    populateSourceSelect('f-source', l.source||'');
+    document.getElementById('f-stage').value = l.stage||'new';
+    document.getElementById('f-campaign').value = l.campaign||'';
+    document.getElementById('f-followup').value = l.nextFollowUp||'';
+    document.getElementById('f-notes').value = l.notes||'';
+    dBtn.style.display = 'block';
+  } else {
+    document.getElementById('modal-title').textContent = 'Add New Lead';
+    document.getElementById('f-id').value = '';
+    ['f-first','f-last','f-company','f-country','f-email','f-phone','f-campaign','f-notes','f-service'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('f-value').value='';
+    populateSourceSelect('f-source', channels[0]?.id||'');
+    document.getElementById('f-stage').value='new'; document.getElementById('f-followup').value='';
+    dBtn.style.display = 'none';
+  }
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', e => { if (e.target===document.getElementById('modal')) closeModal(); });
+
+async function saveLead() {
+  const company = document.getElementById('f-company').value.trim();
+  const firstName = document.getElementById('f-first').value.trim();
+  if (!company||!firstName) { toast('Company and First Name are required.'); return; }
+  const id = document.getElementById('f-id').value;
+  const now = new Date().toISOString().split('T')[0];
+  const existing = id ? state.leads.find(l=>l.id===id) : null;
+  const lead = {
+    id: id||uid(), firstName, lastName:document.getElementById('f-last').value.trim(),
+    company, country:document.getElementById('f-country').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    value:parseFloat(document.getElementById('f-value').value)||0,
+    source:document.getElementById('f-source').value,
+    stage:document.getElementById('f-stage').value,
+    campaign:document.getElementById('f-campaign').value.trim(),
+    nextFollowUp:document.getElementById('f-followup').value,
+    notes:document.getElementById('f-notes').value.trim(),
+    serviceInterest:document.getElementById('f-service').value.trim(),
+    budgetRange: existing?.budgetRange||'',
+    metaId:      existing?.metaId||'',
+    updatedAt:now,
+    createdAt: id ? (existing?.createdAt||now) : now,
+  };
+  if (id) { const i=state.leads.findIndex(l=>l.id===id); if(i>=0) state.leads[i]=lead; }
+  else state.leads.unshift(lead);
+  closeModal();
+  refreshAll();
+  await saveData();
+  toast(id?'✓ Lead updated':'✓ Lead added');
+}
+
+async function deleteLead() {
+  const id = document.getElementById('f-id').value;
+  if (!id||!confirm('Delete this lead?')) return;
+  state.leads = state.leads.filter(l=>l.id!==id);
+  closeModal(); refreshAll();
+  await saveData();
+  toast('Lead deleted');
+}
+
+async function advanceStage(id, nextStage) {
+  const lead = state.leads.find(l=>l.id===id); if (!lead) return;
+  lead.stage = nextStage; lead.updatedAt = new Date().toISOString().split('T')[0];
+  refreshAll();
+  await saveData();
+  toast(`→ Moved to ${STAGE_LABELS[nextStage]}`);
+}
+
+// ══════════════════════════════════════════
+// EXPORT / IMPORT
+// ══════════════════════════════════════════
+function exportJSON() {
+  const blob = new Blob([JSON.stringify({leads:state.leads,channels,sheetsURL:getSheetsURL(),exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='ideoworks-crm-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click(); toast('✓ Exported!');
+}
+function importJSON(input) {
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    try {
+      const data=JSON.parse(e.target.result);
+      if(Array.isArray(data.leads)){
+        state.leads=data.leads;
+        if(data.channels) { channels=data.channels; saveChannels(); }
+        if(data.sheetsURL) localStorage.setItem(SHEETS_KEY,data.sheetsURL);
+        await saveData(); refreshAll(); toast('✓ Data imported!');
+      } else toast('Invalid file.');
+    } catch { toast('Could not read file.'); }
+  };
+  reader.readAsText(file); input.value='';
+}
+function exportCSV() {
+  const hdrs=['Company','First Name','Last Name','Email','Phone','Country','Source','Stage','Service Interest','Budget Range','Value (IDR)','Campaign','Next Follow-Up','Notes','Created'];
+  const rows=state.leads.map(l=>[l.company,l.firstName,l.lastName,l.email,l.phone||'',l.country,(getChannel(l.source)?.name||l.source),STAGE_LABELS[l.stage]||l.stage,l.serviceInterest||'',l.budgetRange||'',l.value,l.campaign,(l.notes||'').replace(/\n/g,' '),l.nextFollowUp,l.createdAt].map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
+  const blob=new Blob([[hdrs.join(','),...rows].join('\n')],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='ideoworks-leads-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click(); toast('✓ CSV exported!');
+}
+function exportHTMLFile() {
+  toast('To share: send the ideoworks-crm.html file to your team. They open it and paste the same Apps Script URL in Settings.');
+}
+function copyCode() {
+  const code = document.getElementById('apps-script-code').textContent;
+  navigator.clipboard.writeText(code).then(()=>toast('✓ Code copied!')).catch(()=>toast('Select and copy the code manually.'));
+}
+
+// ══════════════════════════════════════════
+// VIEW SWITCHING
+// ══════════════════════════════════════════
+const VIEW_TITLES={dashboard:'Dashboard',pipeline:'Pipeline',leads:'All Leads',campaign:'Campaign Analytics',settings:'Settings'};
+function switchView(name, btn) {
+  state.currentView=name;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name)?.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{ if(b.getAttribute('onclick')?.includes(`'${name}'`)) b.classList.add('active'); });
+  document.getElementById('topbar-title').textContent=VIEW_TITLES[name]||name;
+  if(name==='dashboard') renderDashboard();
+  else if(name==='pipeline') renderPipeline();
+  else if(name==='leads') renderLeads();
+  else if(name==='campaign') renderCampaign();
+  else if(name==='settings') {
+    const url=getSheetsURL();
+    if(url) { document.getElementById('sheets-url-input').value=url; updateSettingsConnectedState(true); }
+    else updateSettingsConnectedState(false);
+    renderChannelsList();
+    renderWAFormSection();
+  }
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function refreshAll() {
+  const v=state.currentView;
+  if(v==='dashboard') renderDashboard();
+  else if(v==='pipeline') renderPipeline();
+  else if(v==='leads') renderLeads();
+  else if(v==='campaign') renderCampaign();
+  const k=getKPIs();
+  document.getElementById('sb-pipeline-val').textContent=fmtIDRShort(k.pipelineVal);
+  document.getElementById('sb-pipeline-count').textContent=k.openDeals+' active deal'+(k.openDeals!==1?'s':'');
+}
+
+// ══════════════════════════════════════════
+// KEYBOARD
+// ══════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeModal();
+  const active=document.activeElement;
+  if(e.key==='n'&&!document.getElementById('modal').classList.contains('open')&&active.tagName!=='INPUT'&&active.tagName!=='TEXTAREA') openModal();
+});
+
+// ══════════════════════════════════════════
+// RESPONSIVE
+// ══════════════════════════════════════════
+function checkMobile(){
+  const h=document.getElementById('hamburger');
+  if(window.innerWidth<=768) h.style.display='block';
+  else { h.style.display='none'; document.getElementById('sidebar').classList.remove('open'); }
+}
+window.addEventListener('resize',checkMobile);
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+async function init() {
+  checkMobile();
+  loadChannels();
+  loadSpendLog();
+  const dateEl = document.getElementById('topbar-date');
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const url = getSheetsURL();
+  if (url) {
+    setSyncStatus('syncing');
+    await loadData(true);
+  } else {
+    loadFromCache();
+  }
+  renderDashboard();
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GamifyLP — Mid-Funnel Assessment Builder</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="js/generator.js"></script>
+<style>
+* { font-family:'Inter',-apple-system,sans-serif; }
+:root { --brand:#E63329; --brand-rgb:230,51,41; }
+body { background:#f8f8f8; }
+.card { background:#fff; border-radius:14px; padding:22px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,.05); }
+.inp { width:100%; padding:10px 13px; border:1.5px solid #e0e0e0; border-radius:9px; font-size:14px; outline:none; transition:border-color .2s; background:#fafafa; resize:vertical; }
+.inp:focus { border-color:var(--brand); background:#fff; }
+.inp-label { font-size:11px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:.8px; margin-bottom:5px; display:block; }
+.step-pill { transition:all .2s; cursor:default; }
+.step-pill.active { background:var(--brand); color:#fff; }
+.step-pill.done { background:#1a1a1a; color:#fff; cursor:pointer; }
+.step-pill.inactive { background:#e8e8e8; color:#aaa; }
+.step-panel { display:none; } .step-panel.active { display:block; }
+.lang-btn { display:flex; align-items:center; gap:8px; padding:10px 18px; border:2px solid #e0e0e0; border-radius:10px; cursor:pointer; font-size:13px; font-weight:700; transition:all .18s; background:#fff; }
+.lang-btn.active { border-color:var(--brand); background:#fff5f4; color:var(--brand); }
+.feeling-card { border:2px solid #e8e8e8; border-radius:14px; padding:16px; cursor:pointer; transition:all .2s; background:#fff; position:relative; }
+.feeling-card:hover { border-color:#f5a9a5; transform:translateY(-2px); box-shadow:0 4px 16px rgba(var(--brand-rgb),.08); }
+.feeling-card.active { border-color:var(--brand); background:#fff8f7; box-shadow:0 4px 20px rgba(var(--brand-rgb),.12); }
+.feeling-card.active::after { content:'✓'; position:absolute; top:10px; right:12px; color:var(--brand); font-size:13px; font-weight:900; }
+.feeling-emoji-wrap { width:40px; height:40px; border-radius:10px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:8px; transition:background .18s; }
+.feeling-card.active .feeling-emoji-wrap { background:#ffd9d7; }
+.feeling-name { font-size:13px; font-weight:800; color:#1a1a1a; margin-bottom:2px; }
+.feeling-tagline { font-size:11px; color:#999; line-height:1.4; margin-bottom:7px; }
+.feeling-mechanic-badge { display:inline-block; padding:2px 7px; background:#f0f0f0; border-radius:4px; font-size:10px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:.5px; }
+.feeling-card.active .feeling-mechanic-badge { background:#ffd9d7; color:var(--brand); }
+.style-card { border:2px solid #e8e8e8; border-radius:12px; padding:14px; cursor:pointer; transition:all .18s; background:#fff; text-align:center; }
+.style-card:hover { border-color:#f5a9a5; }
+.style-card.active { border-color:var(--brand); background:#fff8f7; }
+.style-card .s-emoji { font-size:22px; margin-bottom:6px; }
+.style-card .s-name { font-size:12px; font-weight:800; color:#1a1a1a; margin-bottom:3px; }
+.style-card .s-desc { font-size:10px; color:#999; line-height:1.4; }
+.offer-tier-section { border-radius:12px; padding:14px; margin-bottom:10px; }
+.ot-low { border:1.5px solid #fee2e2; background:#fff8f8; }
+.ot-mid { border:1.5px solid #fef3c7; background:#fffdf0; }
+.ot-high { border:1.5px solid #dcfce7; background:#f0fff4; }
+.ot-label { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.ot-low .ot-label { color:#ef4444; }
+.ot-mid .ot-label { color:#d97706; }
+.ot-high .ot-label { color:#16a34a; }
+.offer-type-sel { width:100%; padding:9px 12px; border:1.5px solid #e0e0e0; border-radius:8px; font-size:13px; font-weight:600; background:#fff; cursor:pointer; margin-bottom:8px; }
+.toggle-chip { display:flex; align-items:center; gap:6px; padding:7px 12px; border:1.5px solid #e0e0e0; border-radius:8px; cursor:pointer; font-size:12px; font-weight:600; transition:all .18s; user-select:none; }
+.toggle-chip.active { border-color:var(--brand); background:#fff5f4; color:var(--brand); }
+.toggle-chip input { display:none; }
+.q-block { background:#fafafa; border:1.5px solid #e8e8e8; border-radius:12px; padding:14px; margin-bottom:10px; }
+.q-block-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.phone-frame { width:300px; height:580px; border:8px solid #1a1a1a; border-radius:38px; overflow:hidden; position:relative; box-shadow:0 24px 60px rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,255,255,.06); flex-shrink:0; }
+.phone-frame::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:80px; height:20px; background:#1a1a1a; border-radius:0 0 12px 12px; z-index:10; pointer-events:none; }
+.phone-frame iframe { width:100%; height:100%; border:none; display:block; }
+.btn-primary { padding:11px 22px; background:var(--brand); color:#fff; border:none; border-radius:9px; font-size:13px; font-weight:700; cursor:pointer; transition:opacity .2s; }
+.btn-primary:hover { opacity:.88; }
+.btn-ghost { padding:11px 18px; background:transparent; color:#888; border:1.5px solid #e0e0e0; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; transition:all .18s; }
+.btn-ghost:hover { border-color:#bbb; color:#444; }
+.btn-black { padding:12px 24px; background:#1a1a1a; color:#fff; border:none; border-radius:9px; font-size:13px; font-weight:800; cursor:pointer; transition:background .2s,transform .2s; }
+.btn-black:hover { background:#000; transform:translateY(-1px); }
+.btn-ai { padding:12px 22px; background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border:none; border-radius:9px; font-size:13px; font-weight:700; cursor:pointer; transition:opacity .2s,transform .2s; display:flex; align-items:center; gap:8px; }
+.btn-ai:hover { opacity:.9; transform:translateY(-1px); }
+.btn-ai:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.section-divider { display:flex; align-items:center; gap:10px; margin:18px 0 14px; }
+.section-divider::before,.section-divider::after { content:''; flex:1; height:1px; background:#f0f0f0; }
+.section-divider span { font-size:10px; font-weight:700; color:#bbb; text-transform:uppercase; letter-spacing:1px; white-space:nowrap; }
+.color-wrap { display:flex; align-items:center; gap:8px; }
+.color-preview { width:34px; height:34px; border-radius:7px; border:1.5px solid #e0e0e0; flex-shrink:0; }
+input[type="color"] { width:34px; height:34px; border:none; background:none; cursor:pointer; padding:0; }
+.autogen-banner { background:#fff8f7; border:1.5px solid #ffd0cd; border-radius:10px; padding:10px 14px; margin-bottom:14px; display:flex; align-items:flex-start; gap:10px; font-size:12px; }
+.ps-q-item { background:#fff; border:1.5px solid #e8e8e8; border-radius:12px; padding:14px; margin-bottom:10px; }
+.ps-q-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.ps-opt-row { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.ps-dq-check { display:flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:#888; cursor:pointer; white-space:nowrap; flex-shrink:0; }
+.ps-dq-check input { width:14px; height:14px; accent-color:#ef4444; }
+.adv-section { border:1.5px solid #f0f0f0; border-radius:10px; overflow:hidden; margin-top:12px; }
+.adv-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; cursor:pointer; font-size:12px; font-weight:700; color:#888; background:#fafafa; }
+.adv-header:hover { background:#f5f5f5; }
+.adv-body { padding:14px; display:none; }
+.adv-body.open { display:block; }
+.ai-status { font-size:11px; color:#888; margin-top:8px; min-height:16px; }
+.ai-status.loading { color:#6366f1; }
+.ai-status.ok { color:#16a34a; }
+.ai-status.err { color:#ef4444; }
+.tier-res-block { border:1.5px solid #e8e8e8; border-radius:12px; padding:14px; margin-bottom:10px; }
+.palette-card { border:2px solid #e8e8e8; border-radius:11px; padding:8px; cursor:pointer; transition:all .18s; background:#fff; }
+.palette-card:hover { border-color:#ccc; transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,.07); }
+.palette-card.active { border-color:var(--brand); box-shadow:0 0 0 3px rgba(var(--brand-rgb),.15); }
+.palette-swatch { width:100%; height:32px; border-radius:6px; margin-bottom:5px; }
+.palette-name { font-size:10px; font-weight:800; color:#1a1a1a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.palette-mood { font-size:9px; color:#aaa; line-height:1.3; }
+.grad-card { border:2px solid #e8e8e8; border-radius:11px; padding:10px; cursor:pointer; transition:all .18s; background:#fff; text-align:center; }
+.grad-card:hover { border-color:#ccc; }
+.grad-card.active { border-color:var(--brand); box-shadow:0 0 0 3px rgba(var(--brand-rgb),.12); }
+.grad-preview { width:100%; height:44px; border-radius:7px; margin-bottom:6px; }
+.grad-name { font-size:11px; font-weight:800; color:#1a1a1a; margin-bottom:2px; }
+.grad-desc { font-size:10px; color:#999; }
+::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:#ddd; border-radius:3px; }
+</style>
+</head>
+<body class="min-h-screen">
+
+
+<!-- TOP BAR -->
+<div class="bg-white border-b border-gray-100 sticky top-0 z-50" style="box-shadow:0 1px 8px rgba(0,0,0,.06)">
+  <div class="max-w-screen-xl mx-auto px-5 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div id="topbar-logo" style="width:28px;height:28px;background:var(--brand);border-radius:7px;display:flex;align-items:center;justify-content:center">
+        <span style="color:#fff;font-size:14px">⚡</span>
+      </div>
+      <span style="font-size:15px;font-weight:800;color:#1a1a1a">GamifyLP</span>
+      <span style="font-size:11px;background:#f0f0f0;color:#888;padding:2px 8px;border-radius:5px;font-weight:700">v3</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="autosave-status" style="font-size:11px;color:#aaa;margin-right:2px"></span>
+      <button onclick="triggerImport()" class="btn-ghost" style="padding:8px 14px;font-size:12px">↑ Import</button>
+      <button onclick="exportConfig()" class="btn-ghost" style="padding:8px 14px;font-size:12px">↓ Export</button>
+      <button onclick="downloadHtml()" class="btn-ghost" style="padding:8px 14px;font-size:12px">⬇ Download</button>
+      <button onclick="copyHtml()" class="btn-ghost" style="padding:8px 14px;font-size:12px">⎘ Copy HTML</button>
+      <button onclick="openGenerated()" class="btn-black" style="padding:9px 18px;font-size:13px">🚀 Open Page</button>
+    </div>
+  </div>
+</div>
+<input type="file" id="cfg-file-input" accept=".json" style="display:none" onchange="handleImportFile(this)">
+
+<!-- MAIN LAYOUT -->
+<div class="max-w-screen-xl mx-auto flex" style="min-height:calc(100vh - 55px)">
+
+  <!-- LEFT PANEL -->
+  <div style="width:520px;flex-shrink:0;padding:20px;overflow-y:auto;max-height:calc(100vh - 55px);border-right:1px solid #f0f0f0">
+
+    <!-- STEP PILLS -->
+    <div class="flex gap-2 mb-5">
+      <button onclick="goToStep(1)" id="pill-1" class="step-pill active px-4 py-1.5 rounded-full text-xs font-bold">1 Brand</button>
+      <button onclick="goToStep(2)" id="pill-2" class="step-pill inactive px-4 py-1.5 rounded-full text-xs font-bold">2 Audience</button>
+      <button onclick="goToStep(3)" id="pill-3" class="step-pill inactive px-4 py-1.5 rounded-full text-xs font-bold">3 Questions</button>
+      <button onclick="goToStep(4)" id="pill-4" class="step-pill inactive px-4 py-1.5 rounded-full text-xs font-bold">4 Convert</button>
+    </div>
+
+    <!-- ═══ STEP 1 ═══ -->
+    <div id="step-1" class="step-panel active">
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:14px">Brand Identity</div>
+        <div class="grid grid-cols-2 gap-3 mb-3">
+          <div>
+            <span class="inp-label">Brand Name *</span>
+            <input type="text" id="b-name" class="inp" placeholder="e.g. LearnPad" oninput="updatePreview()">
+          </div>
+          <div>
+            <span class="inp-label">Logo URL</span>
+            <input type="text" id="b-logo" class="inp" placeholder="https://..." oninput="updatePreview()">
+          </div>
+        </div>
+        <!-- PALETTE PRESETS -->
+        <div style="margin-bottom:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span class="inp-label" style="margin-bottom:0">Brand Palette</span>
+            <span style="font-size:10px;color:#bbb">click to apply</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px" id="palette-grid">
+            <div class="palette-card active" data-primary="#E63329" data-secondary="#1a1a2e" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#b3271f,#E63329)"></div>
+              <div class="palette-name">Bold Authority</div>
+              <div class="palette-mood">Confident · Direct</div>
+            </div>
+            <div class="palette-card" data-primary="#F97316" data-secondary="#1C1917" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#c45c0d,#F97316)"></div>
+              <div class="palette-name">Warm Trust</div>
+              <div class="palette-mood">Approachable · Human</div>
+            </div>
+            <div class="palette-card" data-primary="#2563EB" data-secondary="#1E3A5F" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#1a4db8,#2563EB)"></div>
+              <div class="palette-name">Electric Blue</div>
+              <div class="palette-mood">Modern · Reliable</div>
+            </div>
+            <div class="palette-card" data-primary="#06B6D4" data-secondary="#0F172A" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#0589a0,#06B6D4)"></div>
+              <div class="palette-name">Digital Teal</div>
+              <div class="palette-mood">Fresh · Tech-forward</div>
+            </div>
+            <div class="palette-card" data-primary="#7C3AED" data-secondary="#1E1B4B" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#5b2cb8,#7C3AED)"></div>
+              <div class="palette-name">Luxury Purple</div>
+              <div class="palette-mood">Premium · Aspirational</div>
+            </div>
+            <div class="palette-card" data-primary="#16A34A" data-secondary="#052e16" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#0f7a38,#16A34A)"></div>
+              <div class="palette-name">Growth Green</div>
+              <div class="palette-mood">Positive · Progressive</div>
+            </div>
+            <div class="palette-card" data-primary="#D97706" data-secondary="#1C1917" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#a55b05,#D97706)"></div>
+              <div class="palette-name">Earthy Gold</div>
+              <div class="palette-mood">Rich · Grounded</div>
+            </div>
+            <div class="palette-card" data-primary="#EC4899" data-secondary="#1a1a1a" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#b53574,#EC4899)"></div>
+              <div class="palette-name">Bold Pink</div>
+              <div class="palette-mood">Energetic · Bold</div>
+            </div>
+            <div class="palette-card" data-primary="#1D4ED8" data-secondary="#1E3A5F" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#153ba4,#1D4ED8)"></div>
+              <div class="palette-name">Deep Ocean</div>
+              <div class="palette-mood">Corporate · Trustworthy</div>
+            </div>
+            <div class="palette-card" data-primary="#18181B" data-secondary="#3F3F46" onclick="applyPalette(this)">
+              <div class="palette-swatch" style="background:linear-gradient(135deg,#09090b,#18181B,#3F3F46)"></div>
+              <div class="palette-name">Sharp Mono</div>
+              <div class="palette-mood">Minimal · Sophisticated</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CUSTOM COLOR OVERRIDE -->
+        <div class="grid grid-cols-2 gap-3 mb-3">
+          <div>
+            <span class="inp-label">Primary Color</span>
+            <div class="color-wrap">
+              <input type="color" id="b-primary" value="#E63329" oninput="syncColor('b-primary','b-primary-preview');updatePreview()">
+              <div class="color-preview" id="b-primary-preview" style="background:#E63329"></div>
+              <input type="text" id="b-primary-txt" class="inp" value="#E63329" style="flex:1" oninput="syncColorFromText('b-primary','b-primary-txt','b-primary-preview')">
+            </div>
+          </div>
+          <div>
+            <span class="inp-label">Accent Color</span>
+            <div class="color-wrap">
+              <input type="color" id="b-secondary" value="#1a1a2e" oninput="syncColor('b-secondary','b-secondary-preview');updatePreview()">
+              <div class="color-preview" id="b-secondary-preview" style="background:#1a1a2e"></div>
+              <input type="text" id="b-secondary-txt" class="inp" value="#1a1a2e" style="flex:1" oninput="syncColorFromText('b-secondary','b-secondary-txt','b-secondary-preview')">
+            </div>
+          </div>
+        </div>
+
+        <!-- GRADIENT MODE PICKER -->
+        <div style="margin-bottom:14px">
+          <span class="inp-label" style="margin-bottom:8px">Hero Gradient Mode</span>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
+            <div class="grad-card active" data-grad="diagonal" onclick="setGradient(this)">
+              <div class="grad-preview" id="gp-diagonal"></div>
+              <div class="grad-name">Diagonal</div>
+              <div class="grad-desc">Bold depth</div>
+            </div>
+            <div class="grad-card" data-grad="spotlight" onclick="setGradient(this)">
+              <div class="grad-preview" id="gp-spotlight"></div>
+              <div class="grad-name">Spotlight</div>
+              <div class="grad-desc">Dramatic focus</div>
+            </div>
+            <div class="grad-card" data-grad="solid" onclick="setGradient(this)">
+              <div class="grad-preview" id="gp-solid"></div>
+              <div class="grad-name">Solid</div>
+              <div class="grad-desc">Clean &amp; flat</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <span class="inp-label">Language</span>
+          <div class="flex gap-2 mt-1">
+            <button id="lang-id" class="lang-btn active" onclick="setLanguage('id')"><span style="font-size:18px">🇮🇩</span> Bahasa Indonesia</button>
+            <button id="lang-en" class="lang-btn" onclick="setLanguage('en')"><span style="font-size:18px">🇬🇧</span> English</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:14px">Social Proof</div>
+        <div>
+          <span class="inp-label">Participant Count (shown on hero)</span>
+          <input type="text" id="sp-count" class="inp" placeholder="e.g. 2,847" oninput="updatePreview()">
+          <div style="font-size:11px;color:#aaa;margin-top:5px">Leave blank to hide. Shown as "X orang sudah mengambil assessment ini"</div>
+        </div>
+      </div>
+
+      <!-- Advanced: Tracking -->
+      <div class="adv-section">
+        <div class="adv-header" onclick="toggleAdv(this)">
+          <span>📡 Tracking Pixels</span>
+          <span style="font-size:10px">▸ Show</span>
+        </div>
+        <div class="adv-body">
+          <div style="font-size:11px;color:#aaa;margin-bottom:12px;line-height:1.6">Pixels fire on page load. Meta &amp; TikTok also fire a <strong>Lead</strong> event when the form is submitted.</div>
+          <div class="grid grid-cols-1 gap-3">
+            <div>
+              <span class="inp-label">Meta Pixel ID</span>
+              <input type="text" id="t-meta" class="inp" placeholder="123456789012345" oninput="updatePreview()">
+            </div>
+            <div>
+              <span class="inp-label">Google Tag Manager ID</span>
+              <input type="text" id="t-gtm" class="inp" placeholder="GTM-XXXXXXX" oninput="updatePreview()">
+            </div>
+            <div>
+              <span class="inp-label">TikTok Pixel ID</span>
+              <input type="text" id="t-tiktok" class="inp" placeholder="CXXXXXXXXXXXXXXXX" oninput="updatePreview()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end mt-4">
+        <button onclick="goToStep(2)" class="btn-primary">Next: Audience →</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 2 ═══ -->
+    <div id="step-2" class="step-panel">
+
+      <!-- AI Context -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div>
+            <div style="font-size:13px;font-weight:800">Brand Context</div>
+            <div style="font-size:11px;color:#999;margin-top:2px">These 3 fields unlock AI-generated assessments</div>
+          </div>
+          <button class="btn-ai" id="btn-ai-gen" onclick="copyAIPrompt()">
+            <span>✦</span> Copy AI Prompt
+          </button>
+        </div>
+        <div class="mb-3">
+          <span class="inp-label">What is your brand and who is it for?</span>
+          <textarea id="ai-brief" class="inp" rows="2" placeholder="e.g. LearnPad is a premium educational tablet for kids 6-12, priced at IDR 5M + monthly subscription. For parents who take learning seriously." oninput="updatePreview()"></textarea>
+        </div>
+        <div class="mb-3">
+          <span class="inp-label">What tension does your audience live with?</span>
+          <textarea id="ai-tension" class="inp" rows="2" placeholder="e.g. Worried their child is falling behind but unsure if screen time is the answer. Want learning, not entertainment." oninput="updatePreview()"></textarea>
+        </div>
+        <div class="mb-3">
+          <span class="inp-label">How should they see themselves after the result?</span>
+          <textarea id="ai-identity" class="inp" rows="2" placeholder="e.g. Like a forward-thinking parent who already understood what their child needed — the brand just confirmed it." oninput="updatePreview()"></textarea>
+        </div>
+        <div>
+          <span class="inp-label">Assessment Style</span>
+          <div class="grid grid-cols-5 gap-2 mt-1" id="style-cards">
+            <div class="style-card active" data-style="diagnostic" onclick="setStyle(this)">
+              <div class="s-emoji">🔍</div>
+              <div class="s-name">Diagnostic</div>
+              <div class="s-desc">Map current state</div>
+            </div>
+            <div class="style-card" data-style="profiler" onclick="setStyle(this)">
+              <div class="s-emoji">🪞</div>
+              <div class="s-name">Profiler</div>
+              <div class="s-desc">Name who they are</div>
+            </div>
+            <div class="style-card" data-style="readiness" onclick="setStyle(this)">
+              <div class="s-emoji">✅</div>
+              <div class="s-name">Readiness</div>
+              <div class="s-desc">Are they ready?</div>
+            </div>
+            <div class="style-card" data-style="fittest" onclick="setStyle(this)">
+              <div class="s-emoji">🔑</div>
+              <div class="s-name">Fit Test</div>
+              <div class="s-desc">Is this right for me?</div>
+            </div>
+            <div class="style-card" data-style="gapfinder" onclick="setStyle(this)">
+              <div class="s-emoji">📊</div>
+              <div class="s-name">Gap Finder</div>
+              <div class="s-desc">Surface what's missing</div>
+            </div>
+          </div>
+          <div class="ai-status" id="ai-status"></div>
+        </div>
+      </div>
+
+      <!-- Quick-start Feelings -->
+      <div class="section-divider"><span>or use quick-start templates</span></div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:12px">Desired Feeling Output</div>
+        <div class="grid grid-cols-2 gap-2" id="feeling-cards">
+          <div class="feeling-card" data-feeling="curious" onclick="selectFeeling(this)">
+            <div class="feeling-emoji-wrap">🤔</div>
+            <div class="feeling-name">Curious</div>
+            <div class="feeling-tagline">Make them want to know more about themselves</div>
+            <span class="feeling-mechanic-badge">Personality</span>
+          </div>
+          <div class="feeling-card" data-feeling="challenged" onclick="selectFeeling(this)">
+            <div class="feeling-emoji-wrap">💪</div>
+            <div class="feeling-name">Challenged</div>
+            <div class="feeling-tagline">Test their knowledge or skill level</div>
+            <span class="feeling-mechanic-badge">Benchmark</span>
+          </div>
+          <div class="feeling-card" data-feeling="worried" onclick="selectFeeling(this)">
+            <div class="feeling-emoji-wrap">😟</div>
+            <div class="feeling-name">Worried</div>
+            <div class="feeling-tagline">Surface a risk they haven't named yet</div>
+            <span class="feeling-mechanic-badge">Diagnostic</span>
+          </div>
+          <div class="feeling-card" data-feeling="excited" onclick="selectFeeling(this)">
+            <div class="feeling-emoji-wrap">🚀</div>
+            <div class="feeling-name">Excited</div>
+            <div class="feeling-tagline">Build anticipation for what's possible</div>
+            <span class="feeling-mechanic-badge">Calculator</span>
+          </div>
+          <div class="feeling-card" data-feeling="proud" onclick="selectFeeling(this)">
+            <div class="feeling-emoji-wrap">🏆</div>
+            <div class="feeling-name">Proud</div>
+            <div class="feeling-tagline">Validate choices they've already made</div>
+            <span class="feeling-mechanic-badge">Score Test</span>
+          </div>
+          <div class="feeling-card" data-feeling="competitive" onclick="selectFeeling(this)">
+            <div class="feeling-emoji-wrap">🎯</div>
+            <div class="feeling-name">Competitive</div>
+            <div class="feeling-tagline">Rank them against others</div>
+            <span class="feeling-mechanic-badge">Ranking</span>
+          </div>
+        </div>
+        <div id="autogen-banner" class="autogen-banner mt-3" style="display:none">
+          <span style="font-size:16px;flex-shrink:0">✨</span>
+          <div>
+            <div style="font-weight:700;color:#c0392b;font-size:12px;margin-bottom:2px">Template Applied</div>
+            <div id="autogen-desc" style="color:#888;font-size:11px;line-height:1.5"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pre-screening -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div>
+            <div style="font-size:13px;font-weight:800">Pre-Screening Gate</div>
+            <div style="font-size:11px;color:#999;margin-top:2px">Filter leads before they start — shown after hero, before quiz</div>
+          </div>
+          <label class="toggle-chip" id="ps-toggle-chip" onclick="togglePrescreen()">
+            <input type="checkbox" id="ps-enabled"> Pre-screen
+          </label>
+        </div>
+        <div id="ps-section" style="display:none;margin-top:14px">
+          <div id="ps-questions-list"></div>
+          <button onclick="addPsQuestion()" class="btn-ghost" style="width:100%;margin-bottom:12px;font-size:12px">+ Add Qualifier Question</button>
+          <div>
+            <span class="inp-label">Redirect URL (for disqualified leads)</span>
+            <input type="text" id="ps-redirect" class="inp" placeholder="https://..." oninput="updatePreview()">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <button onclick="goToStep(1)" class="btn-ghost">← Back</button>
+        <button onclick="goToStep(3)" class="btn-primary">Next: Questions →</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 3 ═══ -->
+    <div id="step-3" class="step-panel">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-size:13px;font-weight:800">Hook Copy</div>
+          <span style="font-size:10px;color:#aaa;background:#f5f5f5;padding:3px 8px;border-radius:5px">[BRAND] auto-replaced</span>
+        </div>
+        <div class="grid grid-cols-1 gap-3">
+          <div>
+            <span class="inp-label">Headline</span>
+            <input type="text" id="h-headline" class="inp" placeholder="Kamu Tipe [BRAND] yang Mana?" oninput="syncHook();updatePreview()">
+          </div>
+          <div>
+            <span class="inp-label">Subheadline</span>
+            <textarea id="h-sub" class="inp" rows="2" placeholder="Ikuti tes singkat dan temukan profilmu dalam 2 menit." oninput="syncHook();updatePreview()"></textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <span class="inp-label">Social Proof Text</span>
+              <input type="text" id="h-proof" class="inp" placeholder='"2,800+ sudah coba"' oninput="syncHook();updatePreview()">
+            </div>
+            <div>
+              <span class="inp-label">Start Button</span>
+              <input type="text" id="h-btn" class="inp" placeholder="Mulai Sekarang →" oninput="syncHook();updatePreview()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:800">Assessment Questions</div>
+          <button onclick="addQuestion()" class="btn-ghost" style="font-size:12px;padding:7px 14px">+ Add Question</button>
+        </div>
+        <div id="questions-list"></div>
+        <div id="q-banner" class="autogen-banner" style="display:none">
+          <span style="font-size:14px;flex-shrink:0">✨</span>
+          <div id="q-banner-label" style="font-size:11px;color:#888"></div>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <button onclick="goToStep(2)" class="btn-ghost">← Back</button>
+        <button onclick="goToStep(4)" class="btn-primary">Next: Convert →</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 4 ═══ -->
+    <div id="step-4" class="step-panel">
+
+      <!-- Offer per Tier -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:5px">Offer & Reward</div>
+        <div style="font-size:11px;color:#999;margin-bottom:14px">Configure what each tier receives. Leave type empty for no offer on that tier.</div>
+
+        <div class="offer-tier-section ot-low">
+          <div class="ot-label">🔴 Low Tier (0–40%)</div>
+          <select id="ot-low-type" class="offer-type-sel" onchange="updatePreview()">
+            <option value="">No offer</option>
+            <option value="guide">📄 Free Guide / E-book</option>
+            <option value="recommend">💡 Personal Recommendation</option>
+            <option value="voucher">🎫 Voucher / Coupon</option>
+            <option value="trial">🆓 Free Trial</option>
+            <option value="consult">📞 Free Consultation</option>
+            <option value="exclusive">🔑 Exclusive Access</option>
+          </select>
+          <input type="text" id="ot-low-label" class="inp" placeholder="Offer label (e.g. Panduan Gratis Belajar Anak)" style="margin-bottom:6px" oninput="updatePreview()">
+          <textarea id="ot-low-detail" class="inp" rows="2" placeholder="Offer detail / description" oninput="updatePreview()"></textarea>
+        </div>
+
+        <div class="offer-tier-section ot-mid">
+          <div class="ot-label">🟡 Mid Tier (41–75%)</div>
+          <select id="ot-mid-type" class="offer-type-sel" onchange="updatePreview()">
+            <option value="">No offer</option>
+            <option value="trial">🆓 Free Trial</option>
+            <option value="voucher">🎫 Voucher / Coupon</option>
+            <option value="consult">📞 Free Consultation</option>
+            <option value="guide">📄 Free Guide / E-book</option>
+            <option value="recommend">💡 Personal Recommendation</option>
+            <option value="exclusive">🔑 Exclusive Access</option>
+          </select>
+          <input type="text" id="ot-mid-label" class="inp" placeholder="Offer label (e.g. Coba Gratis 14 Hari)" style="margin-bottom:6px" oninput="updatePreview()">
+          <textarea id="ot-mid-detail" class="inp" rows="2" placeholder="Offer detail / description" oninput="updatePreview()"></textarea>
+        </div>
+
+        <div class="offer-tier-section ot-high">
+          <div class="ot-label">🟢 High Tier (76–100%)</div>
+          <select id="ot-high-type" class="offer-type-sel" onchange="updatePreview()">
+            <option value="">No offer</option>
+            <option value="consult">📞 Free Consultation</option>
+            <option value="exclusive">🔑 Exclusive Access</option>
+            <option value="voucher">🎫 Voucher / Coupon</option>
+            <option value="trial">🆓 Free Trial</option>
+            <option value="recommend">💡 Personal Recommendation</option>
+            <option value="guide">📄 Free Guide / E-book</option>
+          </select>
+          <input type="text" id="ot-high-label" class="inp" placeholder="Offer label (e.g. Konsultasi Gratis dengan Konsultan Kami)" style="margin-bottom:6px" oninput="updatePreview()">
+          <textarea id="ot-high-detail" class="inp" rows="2" placeholder="Offer detail / description" oninput="updatePreview()"></textarea>
+        </div>
+      </div>
+
+      <!-- Score Thresholds -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:4px">Score Routing Thresholds</div>
+        <div style="font-size:11px;color:#999;margin-bottom:12px;line-height:1.6">Control where Low ends and Mid/High begins. Default: Low ≤ 40 · Mid ≤ 75 · High above.</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <span class="inp-label">Low → Mid boundary (%)</span>
+            <input type="number" id="r-th-low" class="inp" value="40" min="1" max="98" style="max-width:100px" oninput="updatePreview()">
+            <div style="font-size:10px;color:#bbb;margin-top:4px">Score ≤ this = Low tier</div>
+          </div>
+          <div>
+            <span class="inp-label">Mid → High boundary (%)</span>
+            <input type="number" id="r-th-high" class="inp" value="75" min="2" max="99" style="max-width:100px" oninput="updatePreview()">
+            <div style="font-size:10px;color:#bbb;margin-top:4px">Score ≤ this = Mid · above = High</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Urgency -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div>
+            <div style="font-size:13px;font-weight:800">Countdown Timer</div>
+            <div style="font-size:11px;color:#999;margin-top:2px">Shows on result screen, persists across refreshes via localStorage</div>
+          </div>
+          <label class="toggle-chip" id="urg-chip" onclick="toggleUrgency()">
+            <input type="checkbox" id="urg-enabled"> Enable
+          </label>
+        </div>
+        <div id="urg-section" style="display:none;margin-top:12px">
+          <span class="inp-label">Countdown Duration (hours)</span>
+          <input type="number" id="urg-hours" class="inp" value="24" min="1" max="168" style="max-width:120px" oninput="updatePreview()">
+        </div>
+      </div>
+
+      <!-- Lead Fields -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:12px">Lead Capture Fields</div>
+        <div class="flex flex-wrap gap-2" id="lead-field-chips">
+          <label class="toggle-chip active" id="chip-name"><input type="checkbox" checked onchange="updatePreview()"> 👤 Name</label>
+          <label class="toggle-chip active" id="chip-email"><input type="checkbox" checked onchange="updatePreview()"> ✉️ Email</label>
+          <label class="toggle-chip" id="chip-phone"><input type="checkbox" onchange="updatePreview()"> 📞 Phone</label>
+          <label class="toggle-chip" id="chip-whatsapp"><input type="checkbox" onchange="updatePreview()"> 💬 WhatsApp</label>
+          <label class="toggle-chip" id="chip-company"><input type="checkbox" onchange="updatePreview()"> 🏢 Company</label>
+        </div>
+      </div>
+
+      <!-- Result Tiers -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:14px">Result Tier Copy & Routing</div>
+
+        <div class="tier-res-block" style="border-color:#fecaca;background:#fff8f8">
+          <div style="font-size:11px;font-weight:800;color:#ef4444;margin-bottom:10px">🔴 LOW (0–40%)</div>
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <div><span class="inp-label">Badge</span><input type="text" id="r-low-badge" class="inp" placeholder="Mulai Perjalanan" oninput="updatePreview()"></div>
+            <div><span class="inp-label">Title</span><input type="text" id="r-low-title" class="inp" placeholder="Kamu Baru Mulai" oninput="updatePreview()"></div>
+          </div>
+          <div class="mb-2"><span class="inp-label">Description</span><textarea id="r-low-msg" class="inp" rows="2" oninput="updatePreview()"></textarea></div>
+          <div class="grid grid-cols-2 gap-2">
+            <div><span class="inp-label">CTA Text</span><input type="text" id="r-low-cta" class="inp" placeholder="Pelajari Lebih Lanjut" oninput="updatePreview()"></div>
+            <div><span class="inp-label">CTA URL</span><input type="text" id="r-low-url" class="inp" placeholder="https://..." oninput="updatePreview()"></div>
+          </div>
+        </div>
+
+        <div class="tier-res-block" style="border-color:#fde68a;background:#fffdf0">
+          <div style="font-size:11px;font-weight:800;color:#d97706;margin-bottom:10px">🟡 MID (41–75%)</div>
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <div><span class="inp-label">Badge</span><input type="text" id="r-mid-badge" class="inp" placeholder="Sedang Berkembang" oninput="updatePreview()"></div>
+            <div><span class="inp-label">Title</span><input type="text" id="r-mid-title" class="inp" placeholder="Kamu di Jalur yang Tepat" oninput="updatePreview()"></div>
+          </div>
+          <div class="mb-2"><span class="inp-label">Description</span><textarea id="r-mid-msg" class="inp" rows="2" oninput="updatePreview()"></textarea></div>
+          <div class="grid grid-cols-2 gap-2">
+            <div><span class="inp-label">CTA Text</span><input type="text" id="r-mid-cta" class="inp" placeholder="Coba Gratis" oninput="updatePreview()"></div>
+            <div><span class="inp-label">CTA URL</span><input type="text" id="r-mid-url" class="inp" placeholder="https://..." oninput="updatePreview()"></div>
+          </div>
+        </div>
+
+        <div class="tier-res-block" style="border-color:#bbf7d0;background:#f0fff4">
+          <div style="font-size:11px;font-weight:800;color:#16a34a;margin-bottom:10px">🟢 HIGH (76–100%)</div>
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <div><span class="inp-label">Badge</span><input type="text" id="r-high-badge" class="inp" placeholder="Learning Champion" oninput="updatePreview()"></div>
+            <div><span class="inp-label">Title</span><input type="text" id="r-high-title" class="inp" placeholder="Kamu Tipe Terdepan" oninput="updatePreview()"></div>
+          </div>
+          <div class="mb-2"><span class="inp-label">Description</span><textarea id="r-high-msg" class="inp" rows="2" oninput="updatePreview()"></textarea></div>
+          <div class="grid grid-cols-2 gap-2">
+            <div><span class="inp-label">CTA Text</span><input type="text" id="r-high-cta" class="inp" placeholder="Konsultasi Gratis" oninput="updatePreview()"></div>
+            <div><span class="inp-label">CTA URL</span><input type="text" id="r-high-url" class="inp" placeholder="https://..." oninput="updatePreview()"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp + Webhook + Attribution -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:800;margin-bottom:14px">Distribution & Attribution</div>
+        <div class="grid grid-cols-1 gap-3">
+          <div>
+            <span class="inp-label">WhatsApp Number (for CTA button)</span>
+            <input type="text" id="r-whatsapp" class="inp" placeholder="+62 812 3456 7890" oninput="updatePreview()">
+          </div>
+          <div>
+            <span class="inp-label">Webhook URL (lead delivery)</span>
+            <input type="text" id="wh-url" class="inp" placeholder="https://your-crm.com/webhook or Make/Zapier URL" oninput="updatePreview()">
+            <div style="font-size:11px;color:#aaa;margin-top:4px">Receives: score, tier, identity, lead data, every answer, prescreen answers</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 mt-3">
+          <label class="toggle-chip active" id="chip-attribution" onclick="toggleAttr()">
+            <input type="checkbox" id="r-attribution" checked onchange="updatePreview()"> 🔗 GamifyLP Attribution Footer
+          </label>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <button onclick="goToStep(3)" class="btn-ghost">← Back</button>
+        <div class="flex gap-2">
+          <button onclick="downloadHtml()" class="btn-ghost" style="font-size:12px">⬇ Download</button>
+          <button onclick="openGenerated()" class="btn-black">🚀 Open Page</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end left panel -->
+
+  <!-- RIGHT PANEL: PREVIEW -->
+  <div class="flex-1 flex flex-col items-center justify-center p-8 bg-gray-50 sticky top-14" style="height:calc(100vh - 55px);overflow:hidden">
+    <div style="font-size:10px;font-weight:700;color:#bbb;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px">Live Preview</div>
+    <div class="phone-frame">
+      <iframe id="preview-frame" srcdoc=""></iframe>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button onclick="previewScreen('hero')" class="btn-ghost" style="font-size:11px;padding:6px 12px">Hero</button>
+      <button onclick="previewScreen('quiz')" class="btn-ghost" style="font-size:11px;padding:6px 12px">Quiz</button>
+      <button onclick="previewScreen('gate')" class="btn-ghost" style="font-size:11px;padding:6px 12px">Gate</button>
+      <button onclick="previewScreen('result')" class="btn-ghost" style="font-size:11px;padding:6px 12px">Result</button>
+    </div>
+  </div>
+
+</div><!-- end main layout -->
+
+<script>
+// ─── STATE ──────────────────────────────────────────────────
+var selectedLanguage  = 'id';
+var selectedFeelingKey = null;
+var selectedStyle     = 'diagnostic';
+var selectedGradient  = 'diagonal';
+var appliedHook       = {};
+var questions         = [];
+var prescreenQuestions = [];
+var previewTimer      = null;
+
+// ─── FEELING TEMPLATES ──────────────────────────────────────
+var FEELING_TEMPLATES = {
+  curious: {
+    activity:'personality',
+    hook:{
+      id:{headline:'Kamu Tipe [BRAND] yang Mana?',subheadline:'Ikuti tes 2 menit dan temukan profil unikmu.',socialProof:'"Sudah 3.200+ orang yang penasaran!"',startButtonText:'Temukan Profilku →'},
+      en:{headline:'What Kind of [BRAND] Person Are You?',subheadline:'Take this 2-minute test and find your unique profile.',socialProof:'"3,200+ people have found out!"',startButtonText:'Find My Profile →'}
+    },
+    questions:{
+      id:[
+        {text:'Ketika kamu punya waktu bebas, kamu paling sering...',options:[{text:'Scrolling media sosial sambil santai',points:1},{text:'Belajar hal baru dari YouTube atau podcast',points:4},{text:'Keluar dan melakukan aktivitas fisik',points:2},{text:'Mengerjakan proyek atau hobi kreatif',points:3}]},
+        {text:'Kalau kamu dapat kabar baik, hal pertama yang kamu lakukan adalah...',options:[{text:'Posting di Instagram story dulu',points:2},{text:'Cerita ke orang terdekat',points:3},{text:'Simpan dulu dalam hati, baru cerita nanti',points:1},{text:'Langsung action berdasarkan kabar itu',points:4}]},
+        {text:'Ketika kamu harus mengambil keputusan besar...',options:[{text:'Ikut kata hati aja',points:2},{text:'Minta pendapat orang lain dulu',points:3},{text:'Riset dulu, baru memutuskan',points:4},{text:'Tunda dulu sampai yakin',points:1}]},
+        {text:'Cara belajar yang paling cocok buatmu adalah...',options:[{text:'Baca buku atau artikel panjang',points:4},{text:'Nonton video atau infografis',points:3},{text:'Langsung praktik dan trial-error',points:2},{text:'Diskusi atau tanya orang lain',points:1}]},
+        {text:'Ketika ada tantangan di depanmu, kamu biasanya...',options:[{text:'Cari strategi dulu sebelum mulai',points:4},{text:'Langsung hadapi dengan semangat',points:3},{text:'Minta bantuan orang yang lebih ahli',points:2},{text:'Lihat dulu situasinya, baru bereaksi',points:1}]}
+      ],
+      en:[
+        {text:'When you have free time, you most often...',options:[{text:'Scroll social media and relax',points:1},{text:'Learn something new from YouTube or podcasts',points:4},{text:'Go out and do physical activities',points:2},{text:'Work on a creative project or hobby',points:3}]},
+        {text:'When you get good news, the first thing you do is...',options:[{text:'Post it on Instagram stories',points:2},{text:'Tell the people closest to you',points:3},{text:'Keep it in for a while, then share later',points:1},{text:'Immediately act on it',points:4}]},
+        {text:'When making a big decision...',options:[{text:'Follow your gut',points:2},{text:'Ask others for opinions first',points:3},{text:'Research thoroughly before deciding',points:4},{text:'Wait until you feel certain',points:1}]},
+        {text:'The learning style that suits you best is...',options:[{text:'Reading books or long articles',points:4},{text:'Watching videos or infographics',points:3},{text:'Hands-on practice and trial-and-error',points:2},{text:'Discussion or asking experts',points:1}]},
+        {text:'When facing a challenge, you usually...',options:[{text:'Plan a strategy before starting',points:4},{text:'Face it head-on with enthusiasm',points:3},{text:'Ask for help from an expert',points:2},{text:'Assess the situation before reacting',points:1}]}
+      ]
+    },
+    results:{
+      id:{
+        low:{badge:'Penjelajah Baru',title:'Kamu Baru Memulai Perjalanan',description:'Potensimu besar — kamu hanya butuh arah yang tepat dan sedikit dorongan untuk menemukan gaya belajarmu sendiri.',ctaText:'Mulai Perjalananku'},
+        mid:{badge:'Pemikir Berkembang',title:'Kamu Punya Fondasi yang Kuat',description:'Kamu sudah punya insting yang baik. Dengan tools yang tepat, kamu bisa unlock potensi penuh yang belum kamu sadari.',ctaText:'Lihat Rekomendasiku'},
+        high:{badge:'Visioner Sejati',title:'Kamu Berpikir Jauh ke Depan',description:'Cara berpikirmu yang strategis dan rasa ingin tahumu yang tinggi adalah kombinasi langka. Kamu siap untuk level berikutnya.',ctaText:'Coba Sekarang'}
+      },
+      en:{
+        low:{badge:'New Explorer',title:'You\'re Just Getting Started',description:'Your potential is huge — you just need the right direction and a little push to find your own learning style.',ctaText:'Start My Journey'},
+        mid:{badge:'Growing Thinker',title:'You Have a Strong Foundation',description:'You already have good instincts. With the right tools, you can unlock the full potential you haven\'t realized yet.',ctaText:'See My Recommendations'},
+        high:{badge:'True Visionary',title:'You Think Far Ahead',description:'Your strategic mindset and high curiosity are a rare combination. You\'re ready for the next level.',ctaText:'Try Now'}
+      }
+    }
+  },
+  challenged:{
+    activity:'benchmark',
+    hook:{
+      id:{headline:'Seberapa Siap Kamu di Era [BRAND]?',subheadline:'Uji pemahamanmu dan lihat di mana posisimu dibanding yang lain.',socialProof:'"1.800+ orang sudah menguji diri mereka"',startButtonText:'Uji Kemampuanku →'},
+      en:{headline:'How Ready Are You for the [BRAND] Era?',subheadline:'Test your understanding and see where you stand compared to others.',socialProof:'"1,800+ people have tested themselves"',startButtonText:'Test My Skills →'}
+    },
+    questions:{
+      id:[
+        {text:'Seberapa sering kamu memperbarui pengetahuan di bidangmu?',options:[{text:'Jarang — sibuk dengan pekerjaan sehari-hari',points:1},{text:'Sesekali — kalau ada waktu luang',points:2},{text:'Rutin — minimal sekali seminggu',points:3},{text:'Setiap hari — ini prioritasku',points:4}]},
+        {text:'Jika harus mengukur kemampuanmu saat ini, kamu akan bilang...',options:[{text:'Masih banyak yang belum aku tahu',points:1},{text:'Cukup untuk pekerjaan sehari-hari',points:2},{text:'Di atas rata-rata di bidangku',points:3},{text:'Saya termasuk yang terdepan di bidang ini',points:4}]},
+        {text:'Ketika ada teknologi atau metode baru di bidangmu, kamu...',options:[{text:'Tunggu sampai mainstream baru coba',points:1},{text:'Pelajari sedikit demi sedikit',points:2},{text:'Langsung eksplorasi dan coba terapkan',points:3},{text:'Sering jadi yang pertama mencoba',points:4}]},
+        {text:'Dalam 6 bulan terakhir, kamu sudah...',options:[{text:'Belum banyak yang berubah',points:1},{text:'Belajar 1-2 hal baru',points:2},{text:'Menguasai beberapa skill baru',points:3},{text:'Capai milestone besar dalam karierku',points:4}]},
+        {text:'Kalau ada tes kemampuan di bidangmu besok, kamu...',options:[{text:'Deg-degan dan merasa belum siap',points:1},{text:'Siap dengan persiapan minimal',points:2},{text:'Cukup yakin dengan kemampuanku',points:3},{text:'Sangat percaya diri — siap bersaing',points:4}]}
+      ],
+      en:[
+        {text:'How often do you update your knowledge in your field?',options:[{text:'Rarely — too busy with daily work',points:1},{text:'Occasionally — when I have free time',points:2},{text:'Regularly — at least once a week',points:3},{text:'Every day — this is my priority',points:4}]},
+        {text:'If you had to rate your current skills, you\'d say...',options:[{text:'There\'s still a lot I don\'t know',points:1},{text:'Enough for my daily work',points:2},{text:'Above average in my field',points:3},{text:'I\'m among the leaders in this field',points:4}]},
+        {text:'When new technology or methods emerge in your field, you...',options:[{text:'Wait until it\'s mainstream before trying',points:1},{text:'Learn about it gradually',points:2},{text:'Explore and try to apply it immediately',points:3},{text:'Often among the first to try',points:4}]},
+        {text:'In the last 6 months, you have...',options:[{text:'Not changed much',points:1},{text:'Learned 1-2 new things',points:2},{text:'Mastered several new skills',points:3},{text:'Hit a major career milestone',points:4}]},
+        {text:'If there\'s a skills test in your field tomorrow, you\'d...',options:[{text:'Feel nervous and unprepared',points:1},{text:'Be ready with minimal preparation',points:2},{text:'Be fairly confident in my abilities',points:3},{text:'Be very confident — ready to compete',points:4}]}
+      ]
+    },
+    results:{
+      id:{
+        low:{badge:'Tahap Awal',title:'Saatnya Level Up',description:'Kamu menyadari ada gap yang perlu diisi — dan itu sudah jadi langkah pertama yang benar. Mulai dari sini.',ctaText:'Mulai Belajar'},
+        mid:{badge:'Sedang Berkembang',title:'Kamu di Jalur yang Tepat',description:'Fondasi sudah ada. Yang kamu butuhkan adalah akselerasi yang tepat untuk melompat ke level berikutnya.',ctaText:'Percepat Progresmu'},
+        high:{badge:'Top Performer',title:'Kamu Termasuk yang Terdepan',description:'Komitmenmu untuk terus berkembang membedakanmu dari yang lain. Jaga momentum ini.',ctaText:'Pertahankan Keunggulanmu'}
+      },
+      en:{
+        low:{badge:'Early Stage',title:'Time to Level Up',description:'You\'ve acknowledged there\'s a gap to fill — and that\'s already the right first step. Start from here.',ctaText:'Start Learning'},
+        mid:{badge:'Growing Strong',title:'You\'re on the Right Track',description:'The foundation is there. What you need is the right acceleration to leap to the next level.',ctaText:'Accelerate Your Progress'},
+        high:{badge:'Top Performer',title:'You\'re Among the Leaders',description:'Your commitment to continuous growth sets you apart from the rest. Keep this momentum.',ctaText:'Maintain Your Edge'}
+      }
+    }
+  },
+  worried:{
+    activity:'diagnostic',
+    hook:{
+      id:{headline:'Apakah [BRAND]mu Sudah Aman?',subheadline:'Deteksi potensi masalah sebelum jadi krisis. Hanya butuh 2 menit.',socialProof:'"4.100+ sudah melakukan audit ini"',startButtonText:'Cek Sekarang →'},
+      en:{headline:'Is Your [BRAND] Actually Safe?',subheadline:'Detect potential issues before they become crises. Only takes 2 minutes.',socialProof:'"4,100+ have done this audit"',startButtonText:'Check Now →'}
+    },
+    questions:{
+      id:[
+        {text:'Kapan terakhir kali kamu mengevaluasi kondisi [BRAND]mu secara menyeluruh?',options:[{text:'Belum pernah secara formal',points:1},{text:'Lebih dari setahun lalu',points:2},{text:'Dalam 6 bulan terakhir',points:3},{text:'Secara rutin setiap kuartal',points:4}]},
+        {text:'Seberapa siap kamu jika ada perubahan besar tiba-tiba?',options:[{text:'Belum siap sama sekali',points:1},{text:'Punya sedikit cadangan',points:2},{text:'Cukup siap untuk bertahan',points:3},{text:'Punya sistem yang solid untuk adaptasi',points:4}]},
+        {text:'Apakah kamu tahu persis di mana titik lemah terbesarmu saat ini?',options:[{text:'Tidak tahu sama sekali',points:1},{text:'Punya gambaran samar-samar',points:2},{text:'Tahu tapi belum ada solusinya',points:3},{text:'Tahu dan sudah ada rencana mitigasinya',points:4}]},
+        {text:'Bagaimana kondisi perlindungan atau back-up plan kamu saat ini?',options:[{text:'Belum ada sama sekali',points:1},{text:'Ada tapi masih sangat dasar',points:2},{text:'Cukup memadai untuk saat ini',points:3},{text:'Komprehensif dan sudah diuji',points:4}]},
+        {text:'Jika situasi terburuk terjadi, berapa lama kamu bisa bertahan?',options:[{text:'Tidak akan lama',points:1},{text:'Mungkin 1-3 bulan',points:2},{text:'Setengah tahun atau lebih',points:3},{text:'Sudah ada sistem untuk recover dengan cepat',points:4}]}
+      ],
+      en:[
+        {text:'When did you last comprehensively evaluate your [BRAND] situation?',options:[{text:'Never formally',points:1},{text:'More than a year ago',points:2},{text:'Within the last 6 months',points:3},{text:'Regularly every quarter',points:4}]},
+        {text:'How prepared are you for sudden major changes?',options:[{text:'Not prepared at all',points:1},{text:'Have a small buffer',points:2},{text:'Prepared enough to survive',points:3},{text:'Have a solid system to adapt',points:4}]},
+        {text:'Do you know exactly where your biggest weak point is right now?',options:[{text:'Don\'t know at all',points:1},{text:'Have a vague idea',points:2},{text:'Know it but have no solution yet',points:3},{text:'Know it and have a mitigation plan',points:4}]},
+        {text:'What\'s the status of your protection or backup plan?',options:[{text:'Nothing at all',points:1},{text:'Something very basic',points:2},{text:'Adequate for now',points:3},{text:'Comprehensive and tested',points:4}]},
+        {text:'If the worst case happens, how long could you survive?',options:[{text:'Not long',points:1},{text:'Maybe 1-3 months',points:2},{text:'Half a year or more',points:3},{text:'Have a system to recover quickly',points:4}]}
+      ]
+    },
+    results:{
+      id:{
+        low:{badge:'Zona Merah',title:'Ada yang Perlu Segera Ditangani',description:'Beberapa area kritis butuh perhatian sekarang. Jangan tunda — semakin lama, semakin besar risikonya.',ctaText:'Dapatkan Bantuan Sekarang'},
+        mid:{badge:'Zona Kuning',title:'Sudah Oke, Tapi Masih Ada Gap',description:'Kamu punya dasar yang lumayan, tapi ada celah yang kalau dibiarkan bisa jadi masalah serius. Ayo perbaiki sekarang.',ctaText:'Audit Lebih Dalam'},
+        high:{badge:'Zona Hijau',title:'Kamu Sudah Jauh Lebih Siap dari Rata-Rata',description:'Persiapanmu lebih baik dari kebanyakan orang. Tapi selalu ada ruang untuk jadi lebih kuat.',ctaText:'Optimalkan Lebih Jauh'}
+      },
+      en:{
+        low:{badge:'Red Zone',title:'Something Needs Immediate Attention',description:'Several critical areas need attention now. Don\'t delay — the longer you wait, the bigger the risk.',ctaText:'Get Help Now'},
+        mid:{badge:'Yellow Zone',title:'Looking OK, But There Are Gaps',description:'You have a decent foundation, but there are gaps that could become serious problems if left unattended.',ctaText:'Audit Deeper'},
+        high:{badge:'Green Zone',title:'You\'re Far More Prepared Than Average',description:'Your preparation is better than most. But there\'s always room to become stronger.',ctaText:'Optimize Further'}
+      }
+    }
+  },
+  excited:{
+    activity:'calculator',
+    hook:{
+      id:{headline:'Berapa Besar Potensi [BRAND]mu?',subheadline:'Kalkulasi potensi nyata yang bisa kamu raih — berdasarkan situasimu sekarang.',socialProof:'"2.500+ sudah kalkulasi potensi mereka"',startButtonText:'Kalkulasi Sekarang →'},
+      en:{headline:'What\'s Your [BRAND] Potential?',subheadline:'Calculate the real potential you can achieve — based on your current situation.',socialProof:'"2,500+ have calculated their potential"',startButtonText:'Calculate Now →'}
+    },
+    questions:{
+      id:[
+        {text:'Seberapa konsisten kamu menerapkan strategi untuk mencapai tujuanmu?',options:[{text:'Belum terlalu konsisten',points:1},{text:'Cukup konsisten kalau mood bagus',points:2},{text:'Konsisten dengan sistem yang jelas',points:3},{text:'Sangat konsisten dengan tracking harian',points:4}]},
+        {text:'Seberapa besar komitmen waktu yang bisa kamu alokasikan?',options:[{text:'Sangat terbatas',points:1},{text:'Beberapa jam per minggu',points:2},{text:'Hampir setiap hari',points:3},{text:'Ini jadi prioritas utamaku',points:4}]},
+        {text:'Seberapa baik kamu memanfaatkan tools atau teknologi yang ada?',options:[{text:'Masih manual semua',points:1},{text:'Pakai beberapa tools dasar',points:2},{text:'Sudah optimize dengan berbagai tools',points:3},{text:'Always early adopter tools terbaru',points:4}]},
+        {text:'Bagaimana jaringan dan ekosistem pendukungmu saat ini?',options:[{text:'Masih sangat terbatas',points:1},{text:'Punya beberapa koneksi penting',points:2},{text:'Jaringan yang cukup solid',points:3},{text:'Ekosistem yang kuat dan saling mendukung',points:4}]},
+        {text:'Seberapa jelas visi dan roadmap yang kamu miliki?',options:[{text:'Masih kabur',points:1},{text:'Ada bayangan tapi belum detail',points:2},{text:'Jelas dengan milestone yang terdefinisi',points:3},{text:'Crystal clear dengan timeline konkret',points:4}]}
+      ],
+      en:[
+        {text:'How consistently do you apply strategies to achieve your goals?',options:[{text:'Not very consistent',points:1},{text:'Consistent when I\'m in the mood',points:2},{text:'Consistent with a clear system',points:3},{text:'Very consistent with daily tracking',points:4}]},
+        {text:'How much time can you commit?',options:[{text:'Very limited',points:1},{text:'A few hours per week',points:2},{text:'Almost every day',points:3},{text:'This is my top priority',points:4}]},
+        {text:'How well are you leveraging available tools or technology?',options:[{text:'Still doing everything manually',points:1},{text:'Using a few basic tools',points:2},{text:'Optimized with various tools',points:3},{text:'Always an early adopter of new tools',points:4}]},
+        {text:'What\'s your current network and support ecosystem like?',options:[{text:'Still very limited',points:1},{text:'Have a few key connections',points:2},{text:'A fairly solid network',points:3},{text:'A strong, mutually supportive ecosystem',points:4}]},
+        {text:'How clear is your vision and roadmap?',options:[{text:'Still unclear',points:1},{text:'Have an idea but not detailed yet',points:2},{text:'Clear with defined milestones',points:3},{text:'Crystal clear with concrete timelines',points:4}]}
+      ]
+    },
+    results:{
+      id:{
+        low:{badge:'Potensi Tersembunyi',title:'Banyak yang Masih Terkunci',description:'Potensimu nyata — kamu hanya perlu sistem yang tepat untuk mulai unlocking-nya satu per satu.',ctaText:'Mulai Unlock Potensi'},
+        mid:{badge:'Potensi Berkembang',title:'Kamu Sudah Setengah Jalan',description:'Progresmu nyata dan terukur. Dengan optimasi yang tepat di area kunci, hasilnya bisa berlipat ganda.',ctaText:'Percepat Pertumbuhanku'},
+        high:{badge:'Potensi Maksimal',title:'Kamu Siap Terbang Lebih Tinggi',description:'Fondasi, sistem, dan mindsetmu sudah kuat. Ini saatnya scale up ke level yang lebih besar.',ctaText:'Capai Level Berikutnya'}
+      },
+      en:{
+        low:{badge:'Hidden Potential',title:'A Lot Is Still Locked',description:'Your potential is real — you just need the right system to start unlocking it one by one.',ctaText:'Start Unlocking Potential'},
+        mid:{badge:'Growing Potential',title:'You\'re Halfway There',description:'Your progress is real and measurable. With the right optimization in key areas, results can multiply.',ctaText:'Accelerate My Growth'},
+        high:{badge:'Maximum Potential',title:'You\'re Ready to Fly Higher',description:'Your foundation, systems, and mindset are strong. It\'s time to scale up to a bigger level.',ctaText:'Reach the Next Level'}
+      }
+    }
+  },
+  proud:{
+    activity:'score_test',
+    hook:{
+      id:{headline:'Seberapa Jauh Perjalanan [BRAND]mu?',subheadline:'Ukur seberapa besar yang sudah kamu capai dan temukan langkah selanjutnya.',socialProof:'"1.900+ sudah membuktikan pencapaian mereka"',startButtonText:'Ukur Pencapaianku →'},
+      en:{headline:'How Far Has Your [BRAND] Journey Come?',subheadline:'Measure how much you\'ve achieved and find your next steps.',socialProof:'"1,900+ have validated their achievements"',startButtonText:'Measure My Progress →'}
+    },
+    questions:{
+      id:[
+        {text:'Dibanding 1 tahun lalu, kondisimu sekarang...',options:[{text:'Hampir sama, belum banyak berubah',points:1},{text:'Sedikit lebih baik',points:2},{text:'Jauh lebih baik dari sebelumnya',points:3},{text:'Transformasi total — beda banget',points:4}]},
+        {text:'Keputusan terbaik yang pernah kamu buat dalam hidupmu adalah...',options:[{text:'Masih mencari keputusan yang tepat',points:1},{text:'Sudah buat 1-2 keputusan yang membuahkan hasil',points:2},{text:'Beberapa keputusan besar yang mengubah arah hidupku',points:3},{text:'Serangkaian keputusan yang membawaku ke posisi terbaik saat ini',points:4}]},
+        {text:'Ketika melihat ke belakang, kamu merasa...',options:[{text:'Banyak penyesalan dan hal yang ingin diulang',points:1},{text:'Cukup puas tapi masih ada yang mengganjal',points:2},{text:'Bangga dengan perjalanan yang sudah dilalui',points:3},{text:'Sangat bersyukur atas setiap langkah yang diambil',points:4}]},
+        {text:'Orang-orang di sekitarmu melihatmu sebagai...',options:[{text:'Seseorang yang masih mencari jati diri',points:1},{text:'Orang yang sudah cukup stabil',points:2},{text:'Seseorang yang inspiratif',points:3},{text:'Role model yang sering dimintai saran',points:4}]},
+        {text:'Untuk 5 tahun ke depan, kamu sudah...',options:[{text:'Belum punya gambaran yang jelas',points:1},{text:'Punya harapan tapi belum ada rencana konkret',points:2},{text:'Punya rencana yang cukup jelas',points:3},{text:'Punya blueprint detail dan langsung dieksekusi',points:4}]}
+      ],
+      en:[
+        {text:'Compared to 1 year ago, your situation now is...',options:[{text:'Almost the same, not much has changed',points:1},{text:'Slightly better',points:2},{text:'Much better than before',points:3},{text:'Total transformation — completely different',points:4}]},
+        {text:'The best decision you\'ve ever made in your life was...',options:[{text:'Still looking for the right decisions',points:1},{text:'Made 1-2 decisions that paid off',points:2},{text:'Several big decisions that changed my life direction',points:3},{text:'A series of decisions that brought me to my best position now',points:4}]},
+        {text:'When you look back, you feel...',options:[{text:'Many regrets and things you\'d like to redo',points:1},{text:'Fairly satisfied but something still lingers',points:2},{text:'Proud of the journey you\'ve been through',points:3},{text:'Very grateful for every step taken',points:4}]},
+        {text:'The people around you see you as...',options:[{text:'Someone still finding themselves',points:1},{text:'Someone who is fairly stable',points:2},{text:'Someone inspirational',points:3},{text:'A role model often asked for advice',points:4}]},
+        {text:'For the next 5 years, you have...',options:[{text:'No clear picture yet',points:1},{text:'Hope but no concrete plans yet',points:2},{text:'A fairly clear plan',points:3},{text:'A detailed blueprint being executed now',points:4}]}
+      ]
+    },
+    results:{
+      id:{
+        low:{badge:'Pembangun Pondasi',title:'Kamu Sedang Membangun Sesuatu yang Nyata',description:'Setiap perjalanan besar dimulai dari sini. Yang penting bukan seberapa jauh — tapi bahwa kamu sudah mulai.',ctaText:'Kuatkan Fondasiku'},
+        mid:{badge:'Pembuktian Diri',title:'Pencapaianmu Nyata dan Terukur',description:'Kamu sudah bisa bangga dengan progresmu. Langkah berikutnya adalah memastikan momentum ini terus terjaga.',ctaText:'Jaga Momentumku'},
+        high:{badge:'Pelopor Sejati',title:'Perjalananmu Adalah Inspirasi',description:'Apa yang kamu capai bukan keberuntungan — itu hasil dari keputusan dan konsistensi. Saatnya berbagi dan scale up.',ctaText:'Ke Level Berikutnya'}
+      },
+      en:{
+        low:{badge:'Foundation Builder',title:'You\'re Building Something Real',description:'Every great journey starts here. What matters isn\'t how far — it\'s that you\'ve already started.',ctaText:'Strengthen My Foundation'},
+        mid:{badge:'Proving Yourself',title:'Your Achievements Are Real and Measurable',description:'You can already be proud of your progress. The next step is ensuring this momentum keeps going.',ctaText:'Maintain My Momentum'},
+        high:{badge:'True Pioneer',title:'Your Journey Is an Inspiration',description:'What you\'ve achieved isn\'t luck — it\'s the result of decisions and consistency. It\'s time to share and scale up.',ctaText:'To the Next Level'}
+      }
+    }
+  },
+  competitive:{
+    activity:'ranking',
+    hook:{
+      id:{headline:'Di Mana Posisimu dalam [BRAND]?',subheadline:'Lihat bagaimana kamu dibandingkan dengan ribuan orang lain. Berani cek?',socialProof:'"5.000+ sudah membandingkan diri mereka"',startButtonText:'Cek Posisiku →'},
+      en:{headline:'Where Do You Rank in [BRAND]?',subheadline:'See how you compare to thousands of others. Dare to check?',socialProof:'"5,000+ have compared themselves"',startButtonText:'Check My Ranking →'}
+    },
+    questions:{
+      id:[
+        {text:'Seberapa agresif kamu dalam mengejar target-targetmu?',options:[{text:'Santai — ikut arus aja',points:1},{text:'Cukup aktif tapi tidak terlalu push',points:2},{text:'Agresif ketika ada kesempatan',points:3},{text:'Selalu all-out dan push batas',points:4}]},
+        {text:'Bagaimana reaksimu ketika melihat orang lain lebih sukses?',options:[{text:'Sedikit iri dan tidak tahu harus apa',points:1},{text:'Termotivasi tapi tidak tahu caranya',points:2},{text:'Belajar dari mereka dan cari peluang serupa',points:3},{text:'Jadikan benchmark dan susun strategi untuk melewati',points:4}]},
+        {text:'Dalam hal inovasi dan mencoba hal baru...',options:[{text:'Prefer yang sudah terbukti aman',points:1},{text:'Sesekali mencoba hal baru',points:2},{text:'Aktif mencari dan mencoba inovasi',points:3},{text:'Selalu jadi yang terdepan dalam adopsi',points:4}]},
+        {text:'Ketika kamu "kalah" atau gagal, kamu biasanya...',options:[{text:'Menyerah dan cari hal lain',points:1},{text:'Istirahat dulu baru coba lagi',points:2},{text:'Evaluasi dan langsung perbaiki',points:3},{text:'Anggap sebagai data dan langsung pivot',points:4}]},
+        {text:'Seberapa kuat competitive intelligence kamu?',options:[{text:'Tidak terlalu memperhatikan kompetitor',points:1},{text:'Tahu siapa kompetitor tapi tidak detail',points:2},{text:'Monitor kompetitor secara berkala',points:3},{text:'Punya sistem tracking kompetitor yang komprehensif',points:4}]}
+      ],
+      en:[
+        {text:'How aggressively do you pursue your targets?',options:[{text:'Laid back — just go with the flow',points:1},{text:'Fairly active but not too pushy',points:2},{text:'Aggressive when opportunities arise',points:3},{text:'Always all-out and pushing limits',points:4}]},
+        {text:'How do you react when you see others more successful?',options:[{text:'A bit envious and don\'t know what to do',points:1},{text:'Motivated but don\'t know how',points:2},{text:'Learn from them and find similar opportunities',points:3},{text:'Use as a benchmark and strategize to surpass them',points:4}]},
+        {text:'When it comes to innovation and trying new things...',options:[{text:'Prefer what\'s already proven safe',points:1},{text:'Try new things occasionally',points:2},{text:'Actively seek and try innovations',points:3},{text:'Always at the forefront of adoption',points:4}]},
+        {text:'When you "lose" or fail, you usually...',options:[{text:'Give up and look for something else',points:1},{text:'Take a break then try again',points:2},{text:'Evaluate and immediately improve',points:3},{text:'Treat it as data and immediately pivot',points:4}]},
+        {text:'How strong is your competitive intelligence?',options:[{text:'Don\'t pay much attention to competitors',points:1},{text:'Know who competitors are but not in detail',points:2},{text:'Monitor competitors periodically',points:3},{text:'Have a comprehensive competitor tracking system',points:4}]}
+      ]
+    },
+    results:{
+      id:{
+        low:{badge:'Challenger',title:'Kamu Punya Api — Tinggal Diarahkan',description:'Semangat kompetitifmu ada. Yang kurang hanya sistem dan strategi untuk menyalurkannya dengan tepat.',ctaText:'Mulai Strategi Kompetitifku'},
+        mid:{badge:'Contender',title:'Kamu Sudah di Lapangan — Bukan Penonton',description:'Kamu bukan sekadar ikut-ikutan. Kamu sudah mulai bermain. Saatnya naik level.',ctaText:'Tingkatkan Performa'},
+        high:{badge:'Top Competitor',title:'Kamu Main di Level Tertinggi',description:'Pola pikir kompetitifmu adalah aset. Kamu tahu cara menang dan terus bergerak maju.',ctaText:'Pertahankan Posisi Terdepan'}
+      },
+      en:{
+        low:{badge:'Challenger',title:'You Have the Fire — Just Needs Direction',description:'Your competitive spirit is there. What\'s missing is the system and strategy to channel it properly.',ctaText:'Start My Competitive Strategy'},
+        mid:{badge:'Contender',title:'You\'re on the Field — Not Just Watching',description:'You\'re not just following along. You\'ve started playing. It\'s time to level up.',ctaText:'Boost My Performance'},
+        high:{badge:'Top Competitor',title:'You Play at the Highest Level',description:'Your competitive mindset is an asset. You know how to win and keep moving forward.',ctaText:'Maintain My Leading Position'}
+      }
+    }
+  }
+};
+
+// ─── STEP NAV ────────────────────────────────────────────────
+function goToStep(n) {
+  [1,2,3,4].forEach(function(i) {
+    document.getElementById('step-'+i).classList.toggle('active', i===n);
+    var pill = document.getElementById('pill-'+i);
+    pill.className = 'step-pill px-4 py-1.5 rounded-full text-xs font-bold ' +
+      (i===n ? 'active' : i<n ? 'done' : 'inactive');
+  });
+  updatePreview();
+}
+
+// ─── LANGUAGE ────────────────────────────────────────────────
+function setLanguage(lang) {
+  selectedLanguage = lang;
+  document.getElementById('lang-id').classList.toggle('active', lang==='id');
+  document.getElementById('lang-en').classList.toggle('active', lang==='en');
+  if (selectedFeelingKey) selectFeeling(document.querySelector('.feeling-card[data-feeling="'+selectedFeelingKey+'"]'));
+  updatePreview();
+}
+
+// ─── FEELINGS ────────────────────────────────────────────────
+function selectFeeling(el) {
+  document.querySelectorAll('.feeling-card').forEach(function(c){ c.classList.remove('active'); c.querySelector('.feeling-emoji-wrap').style.background='#f0f0f0'; });
+  el.classList.add('active');
+  el.querySelector('.feeling-emoji-wrap').style.background='#ffd9d7';
+  selectedFeelingKey = el.dataset.feeling;
+  var tpl = FEELING_TEMPLATES[selectedFeelingKey];
+  var h   = tpl.hook[selectedLanguage]||tpl.hook.id;
+  var q   = tpl.questions[selectedLanguage]||tpl.questions.id;
+  var r   = tpl.results[selectedLanguage]||tpl.results.id;
+  var bn  = document.getElementById('b-name').value||'[BRAND]';
+  appliedHook = { activityType:tpl.activity, headline:h.headline.replace('[BRAND]',bn), subheadline:h.subheadline.replace('[BRAND]',bn), socialProof:h.socialProof, startButtonText:h.startButtonText };
+  document.getElementById('h-headline').value = appliedHook.headline;
+  document.getElementById('h-sub').value       = appliedHook.subheadline;
+  document.getElementById('h-proof').value     = appliedHook.socialProof;
+  document.getElementById('h-btn').value       = appliedHook.startButtonText;
+  questions = q.map(function(qq){ return JSON.parse(JSON.stringify(qq)); });
+  renderQuestionsUI();
+  ['low','mid','high'].forEach(function(t){
+    document.getElementById('r-'+t+'-badge').value = r[t].badge||'';
+    document.getElementById('r-'+t+'-title').value = r[t].title||'';
+    document.getElementById('r-'+t+'-msg').value   = r[t].description||'';
+    document.getElementById('r-'+t+'-cta').value   = r[t].ctaText||'';
+  });
+  var desc = el.querySelector('.feeling-name').textContent+' · '+el.querySelector('.feeling-mechanic-badge').textContent+' mechanic';
+  document.getElementById('autogen-banner').style.display='flex';
+  document.getElementById('autogen-desc').textContent='Template applied: '+desc+'. Edit any field to customise.';
+  document.getElementById('q-banner').style.display='flex';
+  document.getElementById('q-banner-label').textContent='Questions from "'+el.querySelector('.feeling-name').textContent+'" template. Add or edit freely.';
+  updatePreview();
+}
+
+function syncHook() {
+  appliedHook.headline       = document.getElementById('h-headline').value;
+  appliedHook.subheadline    = document.getElementById('h-sub').value;
+  appliedHook.socialProof    = document.getElementById('h-proof').value;
+  appliedHook.startButtonText= document.getElementById('h-btn').value;
+}
+
+// ─── STYLE CARDS ─────────────────────────────────────────────
+function setStyle(el) {
+  document.querySelectorAll('.style-card').forEach(function(c){ c.classList.remove('active'); });
+  el.classList.add('active');
+  selectedStyle = el.dataset.style;
+}
+
+// ─── QUESTIONS ───────────────────────────────────────────────
+function renderQuestionsUI() {
+  var list = document.getElementById('questions-list');
+  if (!questions.length) { list.innerHTML='<div style="text-align:center;color:#bbb;font-size:13px;padding:20px">No questions yet. Pick a feeling or click "+ Add Question".</div>'; return; }
+  list.innerHTML = questions.map(function(q,qi){
+    return '<div class="q-block" id="qb-'+qi+'">' +
+      '<div class="q-block-header">' +
+        '<span style="font-size:11px;font-weight:700;color:#888">Q'+(qi+1)+'</span>' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<span style="font-size:10px;color:#bbb;font-weight:700">Weight</span>' +
+          '<input type="number" value="'+(q.weight||1)+'" min="0.5" max="3" step="0.5" oninput="updateQ('+qi+',\'weight\',+this.value)" style="width:50px;padding:5px 6px;border:1.5px solid #e0e0e0;border-radius:7px;font-size:12px;text-align:center;font-family:inherit" title="Impact multiplier — higher = more influence on final score">' +
+          '<button onclick="removeQ('+qi+')" style="background:none;border:none;color:#ccc;font-size:16px;cursor:pointer;line-height:1">✕</button>' +
+        '</div>' +
+      '</div>' +
+      '<input type="text" value="'+escAttrBuilder(q.text)+'" oninput="updateQ('+qi+',\'text\',this.value)" class="inp" placeholder="Question text" style="margin-bottom:10px">' +
+      q.options.map(function(o,oi){
+        return '<div style="display:flex;align-items:center;gap:7px;margin-bottom:7px">' +
+          '<span style="font-size:11px;font-weight:700;color:#bbb;width:16px;flex-shrink:0">'+'ABCDE'[oi]+'</span>' +
+          '<input type="text" value="'+escAttrBuilder(o.text)+'" oninput="updateQOpt('+qi+','+oi+',\'text\',this.value)" class="inp" placeholder="Option text" style="flex:1">' +
+          '<input type="number" value="'+o.points+'" oninput="updateQOpt('+qi+','+oi+',\'points\',+this.value)" style="width:52px;padding:8px 6px;border:1.5px solid #e0e0e0;border-radius:7px;font-size:13px;text-align:center" title="Points">' +
+          (q.options.length>2?'<button onclick="removeOpt('+qi+','+oi+')" style="background:none;border:none;color:#ddd;font-size:15px;cursor:pointer">✕</button>':'') +
+        '</div>';
+      }).join('') +
+      (q.options.length<6?'<button onclick="addOpt('+qi+')" style="font-size:11px;color:#aaa;background:none;border:none;cursor:pointer;padding:4px 0">+ Add option</button>':'') +
+    '</div>';
+  }).join('');
+}
+function addQuestion() {
+  questions.push({text:'',options:[{text:'',points:1},{text:'',points:2},{text:'',points:3},{text:'',points:4}],weight:1});
+  renderQuestionsUI(); updatePreview();
+}
+function removeQ(i) { questions.splice(i,1); renderQuestionsUI(); updatePreview(); }
+function updateQ(i,k,v) { questions[i][k]=v; updatePreview(); }
+function updateQOpt(i,j,k,v) { questions[i].options[j][k]=v; updatePreview(); }
+function addOpt(i) { questions[i].options.push({text:'',points:1}); renderQuestionsUI(); updatePreview(); }
+function removeOpt(i,j) { questions[i].options.splice(j,1); renderQuestionsUI(); updatePreview(); }
+
+// ─── PRESCREEN ───────────────────────────────────────────────
+function togglePrescreen() {
+  var cb = document.getElementById('ps-enabled');
+  var chip = document.getElementById('ps-toggle-chip');
+  chip.classList.toggle('active', cb.checked);
+  document.getElementById('ps-section').style.display = cb.checked ? 'block' : 'none';
+  updatePreview();
+}
+function renderPsUI() {
+  var list = document.getElementById('ps-questions-list');
+  if (!prescreenQuestions.length) { list.innerHTML=''; return; }
+  list.innerHTML = prescreenQuestions.map(function(q,qi){
+    return '<div class="ps-q-item">' +
+      '<div class="ps-q-header">' +
+        '<span style="font-size:11px;font-weight:700;color:#888">Qualifier Q'+(qi+1)+'</span>' +
+        '<button onclick="removePsQ('+qi+')" style="background:none;border:none;color:#ccc;font-size:15px;cursor:pointer">✕</button>' +
+      '</div>' +
+      '<input type="text" value="'+escAttrBuilder(q.text)+'" oninput="updatePsQ('+qi+',\'text\',this.value)" class="inp" placeholder="e.g. Berapa pengeluaran pendidikan anak per bulan?" style="margin-bottom:10px">' +
+      q.options.map(function(o,oi){
+        return '<div class="ps-opt-row">' +
+          '<input type="text" value="'+escAttrBuilder(o.text)+'" oninput="updatePsOpt('+qi+','+oi+',\'text\',this.value)" class="inp" placeholder="Answer option" style="flex:1">' +
+          '<label class="ps-dq-check" title="Disqualifies this lead"><input type="checkbox" '+(o.disqualify?'checked':'')+' onchange="updatePsOpt('+qi+','+oi+',\'disqualify\',this.checked);updatePreview()"> ❌ Disqualify</label>' +
+          (q.options.length>2?'<button onclick="removePsOpt('+qi+','+oi+')" style="background:none;border:none;color:#ddd;cursor:pointer;font-size:14px">✕</button>':'') +
+        '</div>';
+      }).join('') +
+      (q.options.length<4?'<button onclick="addPsOpt('+qi+')" style="font-size:11px;color:#aaa;background:none;border:none;cursor:pointer">+ Add option</button>':'') +
+    '</div>';
+  }).join('');
+}
+function addPsQuestion() {
+  if(prescreenQuestions.length>=3) return;
+  prescreenQuestions.push({text:'',options:[{text:'',disqualify:false},{text:'',disqualify:false}]});
+  renderPsUI(); updatePreview();
+}
+function removePsQ(i) { prescreenQuestions.splice(i,1); renderPsUI(); updatePreview(); }
+function updatePsQ(i,k,v) { prescreenQuestions[i][k]=v; updatePreview(); }
+function updatePsOpt(i,j,k,v) { prescreenQuestions[i].options[j][k]=v; }
+function addPsOpt(i) { prescreenQuestions[i].options.push({text:'',disqualify:false}); renderPsUI(); updatePreview(); }
+function removePsOpt(i,j) { prescreenQuestions[i].options.splice(j,1); renderPsUI(); updatePreview(); }
+
+// ─── URGENCY ─────────────────────────────────────────────────
+function toggleUrgency() {
+  var cb = document.getElementById('urg-enabled');
+  document.getElementById('urg-chip').classList.toggle('active', cb.checked);
+  document.getElementById('urg-section').style.display = cb.checked ? 'block' : 'none';
+  updatePreview();
+}
+
+// ─── ATTR TOGGLE ─────────────────────────────────────────────
+function toggleAttr() {
+  var cb = document.getElementById('r-attribution');
+  document.getElementById('chip-attribution').classList.toggle('active', cb.checked);
+  updatePreview();
+}
+
+// ─── COLOR THEME SYSTEM ──────────────────────────────────────
+function updateBuilderTheme(hex) {
+  var sc = deriveScale(hex);
+  document.documentElement.style.setProperty('--brand', sc.base);
+  document.documentElement.style.setProperty('--brand-rgb', sc.rgb);
+  document.getElementById('topbar-logo').style.background = sc.base;
+  // update gradient preview cards
+  var d = document.getElementById('gp-diagonal');
+  var s = document.getElementById('gp-spotlight');
+  var f = document.getElementById('gp-solid');
+  if(d) d.style.background = 'linear-gradient(135deg,'+sc.deep+' 0%,'+sc.base+' 100%)';
+  if(s) s.style.background = 'radial-gradient(ellipse at 25% 30%,'+sc.tint+' 0%,'+sc.base+' 52%,'+sc.shade+' 100%)';
+  if(f) f.style.background = sc.base;
+}
+
+function applyPalette(el) {
+  document.querySelectorAll('.palette-card').forEach(function(c){ c.classList.remove('active'); });
+  el.classList.add('active');
+  var p = el.dataset.primary;
+  var s = el.dataset.secondary;
+  document.getElementById('b-primary').value = p;
+  document.getElementById('b-primary-preview').style.background = p;
+  document.getElementById('b-primary-txt').value = p;
+  document.getElementById('b-secondary').value = s;
+  document.getElementById('b-secondary-preview').style.background = s;
+  document.getElementById('b-secondary-txt').value = s;
+  updateBuilderTheme(p);
+  updatePreview();
+}
+
+function setGradient(el) {
+  document.querySelectorAll('.grad-card').forEach(function(c){ c.classList.remove('active'); });
+  el.classList.add('active');
+  selectedGradient = el.dataset.grad;
+  updatePreview();
+}
+
+// ─── COLORS ──────────────────────────────────────────────────
+function syncColor(pickerId, previewId) {
+  var v = document.getElementById(pickerId).value;
+  document.getElementById(previewId).style.background = v;
+  var txtId = pickerId+'-txt';
+  if(document.getElementById(txtId)) document.getElementById(txtId).value = v;
+  if(pickerId === 'b-primary') updateBuilderTheme(v);
+  updatePreview();
+}
+function syncColorFromText(pickerId, txtId, previewId) {
+  var v = document.getElementById(txtId).value;
+  if(/^#[0-9a-f]{6}$/i.test(v)) {
+    document.getElementById(pickerId).value = v;
+    document.getElementById(previewId).style.background = v;
+    if(pickerId === 'b-primary') updateBuilderTheme(v);
+    updatePreview();
+  }
+}
+
+// ─── ADVANCED SECTIONS ───────────────────────────────────────
+function toggleAdv(header) {
+  var body = header.nextElementSibling;
+  var open = body.classList.toggle('open');
+  header.querySelector('span:last-child').textContent = open ? '▾ Hide' : '▸ Show';
+}
+
+// ─── LEAD FIELD SYNC ─────────────────────────────────────────
+function getLeadFields() {
+  var fields = [];
+  ['name','email','phone','whatsapp','company'].forEach(function(f){
+    var chip = document.getElementById('chip-'+f);
+    if(chip && chip.querySelector('input').checked) fields.push(f);
+  });
+  return fields;
+}
+
+// ─── AI PROMPT ───────────────────────────────────────────────
+function buildAIPrompt() {
+  var brief   = document.getElementById('ai-brief').value;
+  var tension = document.getElementById('ai-tension').value;
+  var identity= document.getElementById('ai-identity').value;
+  var style   = selectedStyle;
+  var lang    = selectedLanguage;
+  var bn      = document.getElementById('b-name').value||'[Brand]';
+  var styles  = {diagnostic:'Diagnostic (map their current reality)',profiler:'Profiler (name who they are)',readiness:'Readiness Check (are they ready?)',fittest:'Fit Test (is this right for me?)',gapfinder:'Gap Finder (surface what\'s missing)'};
+  return 'You are generating a psychological assessment landing page for a brand.\n\n' +
+    'BRAND: '+bn+'\n' +
+    'BRAND BRIEF: '+brief+'\n' +
+    'AUDIENCE TENSION: '+tension+'\n' +
+    'DESIRED RESULT IDENTITY: '+identity+'\n' +
+    'ASSESSMENT STYLE: '+(styles[style]||style)+'\n' +
+    'LANGUAGE: '+(lang==='id'?'Bahasa Indonesia (native quality — NOT translated English)':'English')+'\n\n' +
+    'RULES:\n' +
+    '- Generate exactly 5 questions with exactly 4 options each (points 1-4)\n' +
+    '- Questions must probe the audience\'s existing beliefs, behaviors, and situation — never mention the product or brand directly\n' +
+    '- Each option should feel like natural self-reflection ("my child usually...", "when I face this..."), not product evaluation\n' +
+    '- Result tier identities must be a name/label (not "Low/Mid/High scorer") — they should feel like discovering who you are\n' +
+    '- Tone: warm, confident, not corporate, not salesy\n' +
+    '- Use the specified language throughout ALL content\n' +
+    '- Replace [BRAND] token in headline with actual brand name where appropriate\n\n' +
+    'Return ONLY valid JSON with this exact structure:\n' +
+    '{\n' +
+    '  "hook": {\n' +
+    '    "headline": "...",\n' +
+    '    "subheadline": "...",\n' +
+    '    "socialProof": "...",\n' +
+    '    "startButtonText": "..."\n' +
+    '  },\n' +
+    '  "questions": [\n' +
+    '    {"text":"...","options":[{"text":"...","points":1},{"text":"...","points":2},{"text":"...","points":3},{"text":"...","points":4}]}\n' +
+    '  ],\n' +
+    '  "results": {\n' +
+    '    "low":  {"badge":"...","title":"...","description":"...","ctaText":"..."},\n' +
+    '    "mid":  {"badge":"...","title":"...","description":"...","ctaText":"..."},\n' +
+    '    "high": {"badge":"...","title":"...","description":"...","ctaText":"..."}\n' +
+    '  }\n' +
+    '}';
+}
+
+function copyAIPrompt() {
+  var status = document.getElementById('ai-status');
+  if (!document.getElementById('ai-brief').value.trim()) {
+    status.className='ai-status err';
+    status.textContent='Fill in the Brand Context fields first.';
+    return;
+  }
+  var prompt = buildAIPrompt();
+  var existing = document.getElementById('manual-prompt-wrap');
+  if(existing) existing.remove();
+  var wrap = document.createElement('div');
+  wrap.id='manual-prompt-wrap';
+  wrap.style.cssText='margin-top:12px;background:#f5f5f5;border-radius:10px;padding:12px';
+  wrap.innerHTML=
+    '<div style="font-size:11px;font-weight:700;color:#888;margin-bottom:6px">PASTE INTO CLAUDE / CHATGPT / GEMINI → COPY JSON BACK</div>'+
+    '<textarea id="manual-prompt-txt" style="width:100%;height:130px;font-size:11px;border:1.5px solid #e0e0e0;border-radius:8px;padding:8px;resize:vertical;font-family:monospace;background:#fff">'+escAttrBuilder(prompt)+'</textarea>'+
+    '<div style="display:flex;gap:8px;margin-top:8px">'+
+      '<button onclick="navigator.clipboard.writeText(document.getElementById(\'manual-prompt-txt\').value);document.getElementById(\'ai-status\').className=\'ai-status ok\';document.getElementById(\'ai-status\').textContent=\'✓ Copied! Paste into any AI tool, then paste the JSON back below.\';" style="flex:1;padding:8px;background:#1a1a1a;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer">📋 Copy Prompt</button>'+
+      '<button onclick="pasteAIResult()" style="flex:1;padding:8px;background:#6366f1;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer">⬇ Paste JSON Result</button>'+
+    '</div>';
+  status.after(wrap);
+  status.className='ai-status ok';
+  status.textContent='Prompt ready — copy it, paste into any AI tool, then paste the JSON back.';
+}
+
+function pasteAIResult() {
+  var json = prompt('Paste the JSON from Claude here:');
+  if(!json) return;
+  try {
+    var match = json.match(/\{[\s\S]*\}/);
+    var cfg = JSON.parse(match?match[0]:json);
+    applyAIResult(cfg);
+    document.getElementById('ai-status').className='ai-status ok';
+    document.getElementById('ai-status').textContent='✓ JSON applied! Review in Step 3.';
+  } catch(e) { alert('Invalid JSON: '+e.message); }
+}
+
+function applyAIResult(cfg) {
+  if(cfg.hook) {
+    document.getElementById('h-headline').value = cfg.hook.headline||'';
+    document.getElementById('h-sub').value       = cfg.hook.subheadline||'';
+    document.getElementById('h-proof').value     = cfg.hook.socialProof||'';
+    document.getElementById('h-btn').value       = cfg.hook.startButtonText||'';
+    syncHook();
+  }
+  if(cfg.questions&&cfg.questions.length) {
+    questions = cfg.questions;
+    renderQuestionsUI();
+    document.getElementById('q-banner').style.display='flex';
+    document.getElementById('q-banner-label').textContent='AI-generated questions. Edit freely.';
+  }
+  if(cfg.results) {
+    ['low','mid','high'].forEach(function(t){
+      var r=cfg.results[t]||{};
+      document.getElementById('r-'+t+'-badge').value = r.badge||'';
+      document.getElementById('r-'+t+'-title').value = r.title||'';
+      document.getElementById('r-'+t+'-msg').value   = r.description||'';
+      document.getElementById('r-'+t+'-cta').value   = r.ctaText||'';
+    });
+  }
+  goToStep(3);
+  updatePreview();
+}
+
+// ─── CONFIG COLLECTOR ────────────────────────────────────────
+function collectConfig() {
+  syncHook();
+  return {
+    brand:{
+      name:           document.getElementById('b-name').value,
+      logoUrl:        document.getElementById('b-logo').value,
+      primaryColor:   document.getElementById('b-primary').value,
+      secondaryColor: document.getElementById('b-secondary').value,
+    },
+    heroGradient: selectedGradient,
+    language: selectedLanguage,
+    socialProof:{ count: document.getElementById('sp-count').value },
+    tracking:{
+      metaPixel:   document.getElementById('t-meta').value,
+      gtmId:       document.getElementById('t-gtm').value,
+      tiktokPixel: document.getElementById('t-tiktok').value,
+    },
+    hook: appliedHook,
+    quiz:{ questions: questions },
+    prescreen:{
+      enabled:   document.getElementById('ps-enabled').checked,
+      questions: prescreenQuestions,
+      redirectUrl: document.getElementById('ps-redirect').value,
+    },
+    offer:{
+      low:{  type:document.getElementById('ot-low-type').value,  label:document.getElementById('ot-low-label').value,  detail:document.getElementById('ot-low-detail').value  },
+      mid:{  type:document.getElementById('ot-mid-type').value,  label:document.getElementById('ot-mid-label').value,  detail:document.getElementById('ot-mid-detail').value  },
+      high:{ type:document.getElementById('ot-high-type').value, label:document.getElementById('ot-high-label').value, detail:document.getElementById('ot-high-detail').value },
+    },
+    urgency:{
+      enabled: document.getElementById('urg-enabled').checked,
+      hours:   document.getElementById('urg-hours').value,
+    },
+    results:{
+      low:{  badge:document.getElementById('r-low-badge').value,  title:document.getElementById('r-low-title').value,  description:document.getElementById('r-low-msg').value,  ctaText:document.getElementById('r-low-cta').value,  ctaUrl:document.getElementById('r-low-url').value  },
+      mid:{  badge:document.getElementById('r-mid-badge').value,  title:document.getElementById('r-mid-title').value,  description:document.getElementById('r-mid-msg').value,  ctaText:document.getElementById('r-mid-cta').value,  ctaUrl:document.getElementById('r-mid-url').value  },
+      high:{ badge:document.getElementById('r-high-badge').value, title:document.getElementById('r-high-title').value, description:document.getElementById('r-high-msg').value, ctaText:document.getElementById('r-high-cta').value, ctaUrl:document.getElementById('r-high-url').value },
+      whatsappNumber:  document.getElementById('r-whatsapp').value,
+      showAttribution: document.getElementById('r-attribution').checked,
+      leadFields: getLeadFields(),
+      thresholdLow:  parseInt(document.getElementById('r-th-low').value)||40,
+      thresholdHigh: parseInt(document.getElementById('r-th-high').value)||75,
+    },
+    webhook:{ url: document.getElementById('wh-url').value },
+  };
+}
+
+// ─── PREVIEW ─────────────────────────────────────────────────
+function updatePreview() {
+  autoSave();
+  clearTimeout(previewTimer);
+  previewTimer = setTimeout(function(){
+    try {
+      var html = generateLandingPage(collectConfig());
+      document.getElementById('preview-frame').srcdoc = html;
+    } catch(e){ console.warn('Preview error:',e); }
+  }, 350);
+}
+
+function previewScreen(screen) {
+  var f = document.getElementById('preview-frame');
+  try {
+    var doc = f.contentDocument||f.contentWindow.document;
+    doc.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+    var t = doc.getElementById('screen-'+screen);
+    if(t) t.classList.add('active');
+  } catch(e){}
+}
+
+// ─── OUTPUT ──────────────────────────────────────────────────
+function openGenerated() {
+  try {
+    var html = generateLandingPage(collectConfig());
+    var url = URL.createObjectURL(new Blob([html],{type:'text/html'}));
+    window.open(url,'_blank');
+    setTimeout(function(){ URL.revokeObjectURL(url); },15000);
+  } catch(e){ alert('Error: '+e.message); }
+}
+
+function downloadHtml() {
+  try {
+    var html = generateLandingPage(collectConfig());
+    var bn   = (document.getElementById('b-name').value||'assessment').toLowerCase().replace(/\s+/g,'-');
+    var a    = document.createElement('a');
+    a.href   = 'data:text/html;charset=utf-8,'+encodeURIComponent(html);
+    a.download = bn+'-assessment.html';
+    a.click();
+  } catch(e){ alert('Error: '+e.message); }
+}
+
+function copyHtml() {
+  try {
+    var html = generateLandingPage(collectConfig());
+    navigator.clipboard.writeText(html).then(function(){ alert('HTML copied to clipboard!'); });
+  } catch(e){ alert('Error: '+e.message); }
+}
+
+// ─── UTILS ───────────────────────────────────────────────────
+function escAttrBuilder(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── AUTO-SAVE + EXPORT/IMPORT ───────────────────────────────
+var autoSaveTimer = null;
+function autoSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(function() {
+    try {
+      var data = collectConfig();
+      data._feelingKey = selectedFeelingKey;
+      localStorage.setItem('gamifylp_autosave', JSON.stringify(data));
+      var el = document.getElementById('autosave-status');
+      if(el) { el.textContent = '● Saved'; el.style.color = '#16a34a'; }
+    } catch(e) {}
+  }, 1500);
+}
+
+function autoRestore() {
+  try {
+    var raw = localStorage.getItem('gamifylp_autosave');
+    if(!raw) return false;
+    var cfg = JSON.parse(raw);
+    applyFullConfig(cfg);
+    var el = document.getElementById('autosave-status');
+    if(el) {
+      el.textContent = '↩ Session restored';
+      el.style.color = '#6366f1';
+      setTimeout(function(){ el.textContent = ''; }, 3000);
+    }
+    return true;
+  } catch(e) { return false; }
+}
+
+function exportConfig() {
+  try {
+    var cfg = collectConfig();
+    cfg._feelingKey = selectedFeelingKey;
+    var bn = (document.getElementById('b-name').value || 'assessment').toLowerCase().replace(/\s+/g,'-');
+    var a = document.createElement('a');
+    a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(cfg, null, 2));
+    a.download = bn + '-config.json';
+    a.click();
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
+function triggerImport() {
+  document.getElementById('cfg-file-input').click();
+}
+
+function handleImportFile(input) {
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var cfg = JSON.parse(e.target.result);
+      applyFullConfig(cfg);
+      updatePreview();
+      var el = document.getElementById('autosave-status');
+      if(el) {
+        el.textContent = '✓ Config imported';
+        el.style.color = '#16a34a';
+        setTimeout(function(){ el.textContent = ''; }, 3000);
+      }
+    } catch(err) { alert('Invalid config file: ' + err.message); }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function applyFullConfig(cfg) {
+  var setVal = function(id, v) { var el = document.getElementById(id); if(el && v !== undefined && v !== null) el.value = v; };
+  var br = cfg.brand || {};
+  setVal('b-name', br.name);
+  setVal('b-logo', br.logoUrl);
+  if(br.primaryColor) {
+    setVal('b-primary', br.primaryColor);
+    setVal('b-primary-txt', br.primaryColor);
+    var pp = document.getElementById('b-primary-preview');
+    if(pp) pp.style.background = br.primaryColor;
+    updateBuilderTheme(br.primaryColor);
+    document.querySelectorAll('.palette-card').forEach(function(c) {
+      c.classList.toggle('active', c.dataset.primary && c.dataset.primary.toLowerCase() === br.primaryColor.toLowerCase());
+    });
+  }
+  if(br.secondaryColor) {
+    setVal('b-secondary', br.secondaryColor);
+    setVal('b-secondary-txt', br.secondaryColor);
+    var sp = document.getElementById('b-secondary-preview');
+    if(sp) sp.style.background = br.secondaryColor;
+  }
+  if(cfg.heroGradient) {
+    selectedGradient = cfg.heroGradient;
+    document.querySelectorAll('.grad-card').forEach(function(c) {
+      c.classList.toggle('active', c.dataset.grad === cfg.heroGradient);
+    });
+  }
+  if(cfg.language) {
+    selectedLanguage = cfg.language;
+    document.getElementById('lang-id').classList.toggle('active', cfg.language === 'id');
+    document.getElementById('lang-en').classList.toggle('active', cfg.language === 'en');
+  }
+  setVal('sp-count', (cfg.socialProof||{}).count);
+  var tr = cfg.tracking || {};
+  setVal('t-meta', tr.metaPixel);
+  setVal('t-gtm', tr.gtmId);
+  setVal('t-tiktok', tr.tiktokPixel);
+  if(cfg.hook) {
+    appliedHook = cfg.hook;
+    setVal('h-headline', cfg.hook.headline);
+    setVal('h-sub', cfg.hook.subheadline);
+    setVal('h-proof', cfg.hook.socialProof);
+    setVal('h-btn', cfg.hook.startButtonText);
+  }
+  if(cfg._feelingKey) {
+    selectedFeelingKey = cfg._feelingKey;
+    document.querySelectorAll('.feeling-card').forEach(function(c) {
+      c.classList.toggle('active', c.dataset.feeling === cfg._feelingKey);
+    });
+  }
+  if(cfg.quiz && cfg.quiz.questions) {
+    questions = cfg.quiz.questions;
+    renderQuestionsUI();
+    document.getElementById('q-banner').style.display = 'flex';
+    document.getElementById('q-banner-label').textContent = 'Restored from saved session.';
+  }
+  var ps = cfg.prescreen || {};
+  if(ps.questions) { prescreenQuestions = ps.questions; renderPsUI(); }
+  var psCb = document.getElementById('ps-enabled');
+  if(psCb) {
+    psCb.checked = !!ps.enabled;
+    var psChip = document.getElementById('ps-toggle-chip');
+    if(psChip) psChip.classList.toggle('active', !!ps.enabled);
+    document.getElementById('ps-section').style.display = ps.enabled ? 'block' : 'none';
+  }
+  setVal('ps-redirect', ps.redirectUrl);
+  var of = cfg.offer || {};
+  ['low','mid','high'].forEach(function(t) {
+    var o = of[t] || {};
+    var sel = document.getElementById('ot-'+t+'-type');
+    if(sel && o.type) sel.value = o.type;
+    setVal('ot-'+t+'-label', o.label);
+    setVal('ot-'+t+'-detail', o.detail);
+  });
+  var urg = cfg.urgency || {};
+  var urgCb = document.getElementById('urg-enabled');
+  if(urgCb) {
+    urgCb.checked = !!urg.enabled;
+    document.getElementById('urg-section').style.display = urg.enabled ? 'block' : 'none';
+  }
+  setVal('urg-hours', urg.hours);
+  var res = cfg.results || {};
+  ['low','mid','high'].forEach(function(t) {
+    var r = res[t] || {};
+    setVal('r-'+t+'-badge', r.badge);
+    setVal('r-'+t+'-title', r.title);
+    setVal('r-'+t+'-msg', r.description);
+    setVal('r-'+t+'-cta', r.ctaText);
+    setVal('r-'+t+'-url', r.ctaUrl);
+  });
+  setVal('r-whatsapp', res.whatsappNumber);
+  if(res.thresholdLow)  setVal('r-th-low',  res.thresholdLow);
+  if(res.thresholdHigh) setVal('r-th-high', res.thresholdHigh);
+  var attrCb = document.getElementById('r-attribution');
+  if(attrCb) {
+    attrCb.checked = !!res.showAttribution;
+    document.getElementById('chip-attribution').classList.toggle('active', !!res.showAttribution);
+  }
+  if(res.leadFields && res.leadFields.length) {
+    ['name','email','phone','whatsapp','company'].forEach(function(f) {
+      var chip = document.getElementById('chip-'+f);
+      if(chip) {
+        var inp = chip.querySelector('input');
+        if(inp) { var on = res.leadFields.indexOf(f) >= 0; inp.checked = on; chip.classList.toggle('active', on); }
+      }
+    });
+  }
+  setVal('wh-url', (cfg.webhook||{}).url);
+  document.getElementById('autogen-banner').style.display = 'none';
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+window.onload = function() {
+  updateBuilderTheme('#E63329');
+  if(!autoRestore()) {
+    var firstFeeling = document.querySelector('.feeling-card[data-feeling="curious"]');
+    if(firstFeeling) selectFeeling(firstFeeling);
+  }
+  updatePreview();
+};
+</script>
+</body>
+</html>

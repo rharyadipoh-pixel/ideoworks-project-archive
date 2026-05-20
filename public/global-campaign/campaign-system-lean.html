@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IDEOWORKS — Lean Campaign System (Free Stack)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:      #1C1B19;
+    --ink-soft: #3A3935;
+    --body:     #55534D;
+    --muted:    #87847C;
+    --line:     #E8E4DC;
+    --bg:       #FFFFFF;
+    --bg-alt:   #FAF6EF;
+    --bg-warm:  #F4ECDD;
+    --bg-dark:  #1C1B19;
+    --accent:   #EE4823;
+    --accent-d: #C8351A;
+    --accent-s: #FBE5DE;
+    --green:    #1A7A4A;
+    --green-s:  #E0F5EC;
+    --blue:     #1A4FA0;
+    --blue-s:   #E0EAFF;
+    --gold:     #B07A10;
+    --gold-s:   #FFF4D6;
+    --r: 10px;
+    --sh: 0 2px 10px rgba(0,0,0,0.07);
+    --sh-md: 0 6px 22px rgba(0,0,0,0.10);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; font-family:'Inter',sans-serif; background:var(--bg-alt); color:var(--body); -webkit-font-smoothing:antialiased; line-height:1.6; }
+
+  /* HEADER */
+  .hdr { background:var(--bg-dark); padding:28px 32px 24px; }
+  .hdr-inner { max-width:1100px; margin:0 auto; }
+  .logo { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .logo-dot { width:32px; height:32px; border-radius:50%; background:var(--accent); color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; }
+  .logo-name { font-weight:700; font-size:16px; color:#fff; }
+  .logo-name span { color:var(--accent); }
+  .badge { display:inline-flex; align-items:center; gap:6px; background:rgba(26,122,74,0.2); border:1px solid rgba(26,122,74,0.4); color:#5DDBA0; padding:3px 12px; border-radius:50px; font-size:0.7rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:10px; }
+  .badge::before { content:'●'; font-size:7px; }
+  .hdr h1 { font-size:clamp(1.5rem,2.4vw,2rem); font-weight:800; color:#fff; margin:0 0 6px; letter-spacing:-0.4px; line-height:1.2; }
+  .hdr p { font-size:0.85rem; color:#A09D97; margin:0; max-width:580px; }
+
+  /* TABS */
+  .tabs { background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .tabs-inner { max-width:1100px; margin:0 auto; display:flex; padding:0 32px; overflow-x:auto; scrollbar-width:none; }
+  .tabs-inner::-webkit-scrollbar { display:none; }
+  .tab { padding:13px 18px; font-size:0.83rem; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all .2s; user-select:none; }
+  .tab:hover { color:var(--ink); }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+  /* LAYOUT */
+  .section { display:none; }
+  .section.active { display:block; }
+  .main { max-width:1100px; margin:0 auto; padding:36px 32px 80px; }
+  .sec-hdr { margin-bottom:22px; }
+  .sec-hdr h2 { font-size:1.25rem; font-weight:800; color:var(--ink); margin:0 0 4px; letter-spacing:-0.3px; }
+  .sec-hdr p { font-size:0.83rem; color:var(--muted); margin:0; }
+  .divider { height:1px; background:var(--line); margin:24px 0; }
+
+  /* CARDS */
+  .card { background:#fff; border-radius:var(--r); border:1px solid var(--line); box-shadow:var(--sh); overflow:hidden; }
+  .card-hd { padding:18px 20px 14px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px; }
+  .card-hd h2 { font-size:0.95rem; font-weight:700; color:var(--ink); margin:0; }
+  .card-hd p { font-size:0.77rem; color:var(--muted); margin:2px 0 0; }
+  .card-bd { padding:20px; }
+  .ci { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+
+  .g2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+  @media(max-width:820px) { .g2,.g3 { grid-template-columns:1fr; } }
+
+  /* STEPS */
+  .steps { display:flex; flex-direction:column; gap:0; }
+  .step { display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--line); }
+  .step:last-child { border-bottom:none; padding-bottom:0; }
+  .sn { width:30px; height:30px; border-radius:50%; background:var(--accent); color:#fff; font-weight:800; font-size:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .sn.green { background:var(--green); }
+  .sn.blue { background:var(--blue); }
+  .sc { flex:1; }
+  .st { font-size:0.87rem; font-weight:700; color:var(--ink); margin-bottom:3px; }
+  .sd { font-size:0.77rem; color:var(--body); line-height:1.5; }
+  .chips { display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; }
+  .chip { font-size:0.64rem; font-weight:600; padding:2px 9px; border-radius:50px; background:var(--bg-warm); color:var(--ink-soft); border:1px solid var(--line); }
+  .chip.free { background:var(--green-s); color:var(--green); border-color:#85D4AE; }
+  .chip.key { background:var(--accent-s); color:var(--accent-d); border-color:#F4A08A; }
+
+  /* TOOL CARDS */
+  .tc { background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:16px; box-shadow:var(--sh); }
+  .tc-hd { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .tc-emoji { font-size:22px; }
+  .tc-name { font-size:0.88rem; font-weight:700; color:var(--ink); }
+  .tc-role { font-size:0.7rem; color:var(--muted); }
+  .tc-use { font-size:0.77rem; color:var(--body); line-height:1.5; margin-bottom:8px; }
+
+  /* TAGS */
+  .tag { font-size:0.63rem; font-weight:700; padding:2px 8px; border-radius:50px; }
+  .t-free { background:var(--green-s); color:var(--green); border:1px solid #85D4AE; }
+  .t-cheap { background:var(--gold-s); color:var(--gold); border:1px solid #D4A83A; }
+  .t-key { background:var(--accent-s); color:var(--accent-d); border:1px solid #F4A08A; }
+
+  /* FLOW */
+  .flow-wrap { background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:28px; box-shadow:var(--sh); }
+  .flow-label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); text-align:center; margin-bottom:24px; }
+  .flow { display:flex; align-items:flex-start; justify-content:center; gap:0; overflow-x:auto; }
+  .fc { display:flex; flex-direction:column; align-items:center; min-width:130px; }
+  .fn { width:120px; border-radius:10px; padding:12px 9px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+  .fn .ni { font-size:18px; margin-bottom:5px; }
+  .fn .nl { font-size:0.68rem; font-weight:700; color:var(--ink); line-height:1.25; margin-bottom:2px; }
+  .fn .nd { font-size:0.62rem; color:var(--muted); line-height:1.3; }
+  .fn-o { background:var(--accent-s); border:1.5px solid #F4A08A; }
+  .fn-g { background:var(--green-s); border:1.5px solid #85D4AE; }
+  .fn-b { background:var(--blue-s); border:1.5px solid #85A8E0; }
+  .fn-p { background:#EEE5FF; border:1.5px solid #B899DC; }
+  .fn-k { background:var(--gold-s); border:1.5px solid #D4A83A; }
+  .va { width:1.5px; height:18px; background:var(--line); margin:0 auto; position:relative; }
+  .va::after { content:''; position:absolute; bottom:-4px; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:var(--line); }
+  .fa { display:flex; align-items:center; padding:0 3px; padding-top:28px; color:var(--muted); font-size:17px; flex-shrink:0; }
+  .col-label { margin-top:8px; font-size:0.64rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; text-align:center; }
+
+  /* PIPELINE STRIP */
+  .pipe { display:flex; overflow-x:auto; margin-bottom:4px; }
+  .ps { flex:1; min-width:110px; }
+  .psb { padding:12px 8px 10px; background:var(--bg-alt); border:1px solid var(--line); border-right:none; height:100%; text-align:center; }
+  .ps:first-child .psb { border-radius:var(--r) 0 0 var(--r); }
+  .ps:last-child .psb { border-radius:0 var(--r) var(--r) 0; border-right:1px solid var(--line); }
+  .psi { font-size:18px; margin-bottom:5px; }
+  .psn { font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--muted); margin-bottom:3px; }
+  .psname { font-size:0.77rem; font-weight:700; color:var(--ink); margin-bottom:5px; line-height:1.25; }
+  .psa { font-size:0.64rem; color:var(--muted); line-height:1.35; }
+  .pcv { font-size:0.67rem; font-weight:600; padding:2px 7px; border-radius:50px; display:inline-block; margin-bottom:3px; }
+
+  /* DAY CARDS */
+  .day-row { display:flex; gap:0; overflow-x:auto; }
+  .day { flex:1; min-width:90px; }
+  .day-hd { background:var(--bg-dark); color:#fff; text-align:center; padding:8px 6px; font-size:0.7rem; font-weight:700; }
+  .day:first-child .day-hd { border-radius:var(--r) 0 0 0; }
+  .day:last-child .day-hd { border-radius:0 var(--r) 0 0; }
+  .day-bd { padding:10px 8px; background:#fff; border:1px solid var(--line); border-top:none; border-right:none; height:100%; }
+  .day:last-child .day-bd { border-right:1px solid var(--line); border-radius:0 0 var(--r) var(--r); }
+  .day:first-child .day-bd { border-radius:0 0 0 var(--r); }
+  .day-item { font-size:0.68rem; color:var(--body); padding:5px 0; border-bottom:1px solid var(--line); line-height:1.4; }
+  .day-item:last-child { border-bottom:none; }
+  .day-item strong { color:var(--ink); display:block; font-size:0.67rem; }
+
+  /* COST TABLE */
+  table { width:100%; border-collapse:collapse; font-size:0.8rem; }
+  thead tr { border-bottom:2px solid var(--line); }
+  th { text-align:left; padding:8px 4px; color:var(--muted); font-weight:600; text-transform:uppercase; font-size:0.67rem; letter-spacing:0.8px; }
+  tbody tr { border-bottom:1px solid var(--line); }
+  tbody tr:last-child { border-bottom:none; }
+  td { padding:10px 4px; vertical-align:middle; }
+
+  /* ALERT BOX */
+  .alert { border-radius:var(--r); padding:14px 18px; display:flex; gap:12px; align-items:flex-start; margin-bottom:20px; }
+  .alert-green { background:var(--green-s); border:1px solid #85D4AE; }
+  .alert-orange { background:var(--accent-s); border:1px solid #F4A08A; }
+  .alert-blue { background:var(--blue-s); border:1px solid #85A8E0; }
+  .alert-text { font-size:0.8rem; color:var(--ink-soft); }
+  .alert-text strong { color:var(--ink); }
+
+  /* FOOTER */
+  .footer { background:var(--bg-dark); color:#A09D97; text-align:center; font-size:0.72rem; padding:18px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="logo">
+      <div class="logo-dot">IW</div>
+      <div class="logo-name">IDEO<span>WORKS</span></div>
+    </div>
+    <div class="badge">Lean Version · Free Stack</div>
+    <h1>Campaign System —<br>Simplified for Your Team</h1>
+    <p>Same system, zero complexity. Built on free tools your whole team can use from day one without training.</p>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tabs-inner">
+    <div class="tab active" onclick="show('stack',this)">① Free Tool Stack</div>
+    <div class="tab" onclick="show('flow',this)">② How It Works</div>
+    <div class="tab" onclick="show('pipeline',this)">③ Pipeline & CRM</div>
+    <div class="tab" onclick="show('playbook',this)">④ Team Playbook</div>
+    <div class="tab" onclick="show('upgrade',this)">⑤ When to Upgrade</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ -->
+<!-- TAB 1: FREE STACK -->
+<!-- ══════════════════════════ -->
+<div id="tab-stack" class="section active">
+<div class="main">
+  <div class="sec-hdr">
+    <h2>Free Tool Stack — IDR 0/month to start</h2>
+    <p>All tools below are 100% free. No credit card. No setup fee. Works on phone and laptop.</p>
+  </div>
+
+  <div class="alert alert-green">
+    <div style="font-size:1.2rem">✅</div>
+    <div class="alert-text"><strong>Budget Reality Check:</strong> IDR 200K/day = ~IDR 6M/month (~$370 USD). The stack below costs <strong>IDR 0/month</strong> for the first 3–6 months. Save that budget entirely for your <strong>outbound effort</strong> (not tools).</div>
+  </div>
+
+  <!-- CORE 4 -->
+  <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px">🧠 The Core 4 — All Free</div>
+  <div class="g2" style="margin-bottom:20px">
+
+    <div class="tc" style="border-color:#F4A08A;border-width:2px">
+      <div class="tc-hd">
+        <div class="tc-emoji">🟠</div>
+        <div><div class="tc-name">HubSpot Free CRM</div><div class="tc-role">Pipeline · Contacts · Tasks · Email Tracking</div></div>
+      </div>
+      <div class="tc-use">This is your command centre. Track every lead, every deal, every follow-up. See your whole pipeline in one view. Comes with a <strong>mobile app</strong> so your team can update deals from their phone.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag t-free">100% Free Forever</span>
+        <span class="tag t-key">Core Tool</span>
+        <span class="chip">hubspot.com/crm</span>
+      </div>
+    </div>
+
+    <div class="tc">
+      <div class="tc-hd">
+        <div class="tc-emoji">📊</div>
+        <div><div class="tc-name">Google Analytics 4</div><div class="tc-role">Website traffic · Lead source · Campaign tracking</div></div>
+      </div>
+      <div class="tc-use">Already partially set up on your site. Tells you which campaigns bring visitors, how long they stay, and whether they fill out the form. Zero cost, no limits.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag t-free">100% Free</span>
+        <span class="chip">analytics.google.com</span>
+      </div>
+    </div>
+
+    <div class="tc">
+      <div class="tc-hd">
+        <div class="tc-emoji">🚀</div>
+        <div><div class="tc-name">Apollo.io Free</div><div class="tc-role">Find prospect emails + LinkedIn profiles</div></div>
+      </div>
+      <div class="tc-use">Find verified email and LinkedIn of your target clients — CMOs, VPs, Heads of Growth at companies overseas. Free tier gives 50 email exports/month. Enough to get your first 10 clients moving.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag t-free">Free Tier</span>
+        <span class="chip">apollo.io</span>
+        <span class="chip">50 leads/mo free</span>
+      </div>
+    </div>
+
+    <div class="tc">
+      <div class="tc-hd">
+        <div class="tc-emoji">📈</div>
+        <div><div class="tc-name">Google Looker Studio</div><div class="tc-role">Live campaign dashboard — shareable with team</div></div>
+      </div>
+      <div class="tc-use">Build one dashboard that pulls from GA4 and HubSpot. Share the link with your whole team — no login needed. Refresh automatically. Shows CPL, pipeline value, deal stages, and revenue forecast.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag t-free">100% Free</span>
+        <span class="chip">lookerstudio.google.com</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPORTING TOOLS -->
+  <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px">🔧 Supporting (All Free)</div>
+  <div class="g3" style="margin-bottom:24px">
+    <div class="tc">
+      <div class="tc-hd"><div class="tc-emoji">📅</div><div><div class="tc-name">Calendly Free</div><div class="tc-role">Discovery call booking</div></div></div>
+      <div class="tc-use">Put your booking link in every email and LinkedIn message. Prospects book a call themselves — no back-and-forth. Free tier = 1 event type (that's all you need).</div>
+      <div style="display:flex;gap:6px"><span class="tag t-free">Free</span></div>
+    </div>
+    <div class="tc">
+      <div class="tc-hd"><div class="tc-emoji">📋</div><div><div class="tc-name">Google Sheets</div><div class="tc-role">Shared team pipeline backup</div></div></div>
+      <div class="tc-use">Simple weekly export from HubSpot to a shared Sheet. Everyone on the team can see pipeline status without needing HubSpot login.</div>
+      <div style="display:flex;gap:6px"><span class="tag t-free">Free</span></div>
+    </div>
+    <div class="tc">
+      <div class="tc-hd"><div class="tc-emoji">💬</div><div><div class="tc-name">WhatsApp / Slack Free</div><div class="tc-role">Team alerts on new leads</div></div></div>
+      <div class="tc-use">When a lead comes in, one person manually drops a note in a shared WhatsApp group or Slack free channel. Simple, no automation needed at this stage.</div>
+      <div style="display:flex;gap:6px"><span class="tag t-free">Free</span></div>
+    </div>
+  </div>
+
+  <!-- COST COMPARISON TABLE -->
+  <div class="card">
+    <div class="card-hd">
+      <div class="ci" style="background:var(--gold-s)">💰</div>
+      <div><h2>Old Stack vs Lean Stack</h2><p>Same outcome, massively different cost</p></div>
+    </div>
+    <div class="card-bd">
+      <table>
+        <thead><tr><th>Tool Category</th><th>Previous (Complex)</th><th style="color:var(--green)">Lean (Now)</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:var(--ink)">CRM & Pipeline</td><td style="color:var(--muted)">HubSpot Starter — $20/mo</td><td><strong style="color:var(--green)">HubSpot Free — $0</strong></td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Prospecting</td><td style="color:var(--muted)">Apollo Paid — $59/mo</td><td><strong style="color:var(--green)">Apollo Free — $0</strong></td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">B2B Targeting</td><td style="color:var(--muted)">LinkedIn Sales Nav — $100/mo</td><td><strong style="color:var(--green)">LinkedIn Free + Apollo — $0</strong></td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Automation</td><td style="color:var(--muted)">Make.com — $10/mo</td><td><strong style="color:var(--green)">HubSpot built-in — $0</strong></td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Analytics</td><td style="color:var(--muted)">GA4 + Looker Studio — $0</td><td><strong style="color:var(--green)">Same — $0</strong></td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Booking</td><td style="color:var(--muted)">Calendly Standard — $12/mo</td><td><strong style="color:var(--green)">Calendly Free — $0</strong></td></tr>
+          <tr style="background:var(--bg-alt)"><td style="font-weight:800;color:var(--ink);font-size:0.9rem">Monthly Total</td><td style="color:var(--muted);font-weight:700">~$201 USD (±IDR 3.2M)</td><td style="font-weight:800;color:var(--green);font-size:1rem">$0 USD</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--line)">💡 When you land your first 2–3 clients and want to scale outbound, <em>then</em> upgrade Apollo ($59/mo) and HubSpot Starter ($20/mo). Spend the saved budget on your time and outreach instead.</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════ -->
+<!-- TAB 2: HOW IT WORKS -->
+<!-- ══════════════════════════ -->
+<div id="tab-flow" class="section">
+<div class="main">
+  <div class="sec-hdr">
+    <h2>How the System Works</h2>
+    <p>Simplified to 4 stages. Each stage has one tool. Your team only needs to know their part.</p>
+  </div>
+
+  <div class="flow-wrap" style="margin-bottom:24px">
+    <div class="flow-label">LEAN CAMPAIGN FLOW — 4 STAGES, 4 TOOLS</div>
+    <div class="flow">
+
+      <div class="fc">
+        <div class="fn fn-b">
+          <div class="ni">🔍</div>
+          <div class="nl">Find Prospects</div>
+          <div class="nd">Apollo.io free list of target CMOs / VPs</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-b">
+          <div class="ni">✉️</div>
+          <div class="nl">Send Outreach</div>
+          <div class="nd">Personal email from Gmail with Calendly link</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-b">
+          <div class="ni">💼</div>
+          <div class="nl">LinkedIn Touch</div>
+          <div class="nd">Connect + message on LinkedIn same day</div>
+        </div>
+        <div class="col-label" style="color:#1A4FA0">OUTBOUND</div>
+      </div>
+
+      <div class="fa">→</div>
+
+      <div class="fc">
+        <div class="fn fn-o">
+          <div class="ni">📋</div>
+          <div class="nl">Lead Comes In</div>
+          <div class="nd">Reply to email or books Calendly call</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-o">
+          <div class="ni">👤</div>
+          <div class="nl">Add to HubSpot</div>
+          <div class="nd">Create contact + deal manually (takes 2 min)</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-o">
+          <div class="ni">🔔</div>
+          <div class="nl">Alert Team</div>
+          <div class="nd">Drop message in WhatsApp/Slack group</div>
+        </div>
+        <div class="col-label" style="color:#C8351A">CAPTURE</div>
+      </div>
+
+      <div class="fa">→</div>
+
+      <div class="fc">
+        <div class="fn fn-g">
+          <div class="ni">📞</div>
+          <div class="nl">Discovery Call</div>
+          <div class="nd">Qualify budget, timeline, decision maker</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-g">
+          <div class="ni">📄</div>
+          <div class="nl">Send Proposal</div>
+          <div class="nd">Deck + pricing sent, deal value logged in HubSpot</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-g">
+          <div class="ni">🔁</div>
+          <div class="nl">Follow Up</div>
+          <div class="nd">HubSpot task reminds you when to follow up next</div>
+        </div>
+        <div class="col-label" style="color:#1A7A4A">NURTURE</div>
+      </div>
+
+      <div class="fa">→</div>
+
+      <div class="fc">
+        <div class="fn fn-k">
+          <div class="ni">✅</div>
+          <div class="nl">Deal Closed</div>
+          <div class="nd">Mark Won in HubSpot, revenue logged</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-k">
+          <div class="ni">📊</div>
+          <div class="nl">Dashboard Updates</div>
+          <div class="nd">Looker Studio shows new win + pipeline health</div>
+        </div>
+        <div class="va"></div>
+        <div class="fn fn-k">
+          <div class="ni">🎯</div>
+          <div class="nl">Review & Improve</div>
+          <div class="nd">What channel won? Double down on that one.</div>
+        </div>
+        <div class="col-label" style="color:#B07A10">CLOSE</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="alert alert-orange">
+    <div style="font-size:1.2rem">⚡</div>
+    <div class="alert-text"><strong>Key simplification:</strong> No Make.com automations needed yet. At this stage, manual entry into HubSpot takes 2–3 minutes per lead. You will not have so many leads that this becomes a bottleneck — if you do, that's a great problem and the right time to automate.</div>
+  </div>
+
+  <!-- WHAT EACH TOOL DOES -->
+  <div class="g2">
+    <div class="card">
+      <div class="card-hd"><div class="ci" style="background:var(--accent-s)">🟠</div><div><h2>HubSpot — What Your Team Does In It</h2></div></div>
+      <div class="card-bd">
+        <div class="steps">
+          <div class="step"><div class="sn">1</div><div class="sc"><div class="st">Check pipeline every morning (2 min)</div><div class="sd">Open HubSpot, look at the pipeline board. See where each deal is. Flag anything stuck more than 7 days.</div></div></div>
+          <div class="step"><div class="sn">2</div><div class="sc"><div class="st">Add new leads when they come in (2 min)</div><div class="sd">When someone replies or books a call: create contact, create deal, assign to stage "New Lead".</div></div></div>
+          <div class="step"><div class="sn">3</div><div class="sc"><div class="st">Set follow-up tasks after every interaction</div><div class="sd">After each email or call, log a note and set the next task with a date. HubSpot reminds you.</div></div></div>
+          <div class="step"><div class="sn">4</div><div class="sc"><div class="st">Move deals through stages</div><div class="sd">When a discovery call is done, drag the deal card to "Qualified". When proposal is sent, move to "Proposal". This keeps everyone aligned.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="ci" style="background:var(--blue-s)">🚀</div><div><h2>Apollo.io — How to Use the Free Tier</h2></div></div>
+      <div class="card-bd">
+        <div class="steps">
+          <div class="step"><div class="sn blue">1</div><div class="sc"><div class="st">Build a target list (once a week, 15 min)</div><div class="sd">Search by: Job Title (CMO / VP Marketing / Head of Growth), Country (US, UK, Australia, Singapore), Company size (50–500 employees).</div></div></div>
+          <div class="step"><div class="sn blue">2</div><div class="sc"><div class="st">Export 10–20 contacts per day</div><div class="sd">Free tier gives 50/month. Use them carefully. Export only people you will actually reach out to that week.</div></div></div>
+          <div class="step"><div class="sn blue">3</div><div class="sc"><div class="st">Copy email + LinkedIn URL</div><div class="sd">You'll use email for cold outreach, LinkedIn for connection request. Both from one Apollo profile view.</div></div></div>
+          <div class="step"><div class="sn blue">4</div><div class="sc"><div class="st">Track who you've contacted</div><div class="sd">Export Apollo list to Google Sheets. Mark status: Contacted / Replied / Booked. Simple but effective.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════ -->
+<!-- TAB 3: PIPELINE -->
+<!-- ══════════════════════════ -->
+<div id="tab-pipeline" class="section">
+<div class="main">
+  <div class="sec-hdr">
+    <h2>Pipeline Setup in HubSpot</h2>
+    <p>5 stages only. Simple enough for the whole team to use consistently.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-bd" style="padding:16px 12px">
+      <div class="pipe">
+        <div class="ps"><div class="psb">
+          <div class="psi">📥</div>
+          <div class="psn">Stage 1</div>
+          <div class="psname">New Lead</div>
+          <div class="pcv" style="background:var(--blue-s);color:var(--blue)">10%</div>
+          <div class="psa">Just replied or came inbound. Not yet qualified.</div>
+        </div></div>
+        <div class="ps"><div class="psb">
+          <div class="psi">📞</div>
+          <div class="psn">Stage 2</div>
+          <div class="psname">Discovery Call Done</div>
+          <div class="pcv" style="background:var(--gold-s);color:var(--gold)">30%</div>
+          <div class="psa">Call completed. Budget + authority confirmed.</div>
+        </div></div>
+        <div class="ps"><div class="psb">
+          <div class="psi">📄</div>
+          <div class="psn">Stage 3</div>
+          <div class="psname">Proposal Sent</div>
+          <div class="pcv" style="background:var(--gold-s);color:var(--gold)">50%</div>
+          <div class="psa">Deck + pricing delivered. Awaiting decision.</div>
+        </div></div>
+        <div class="ps"><div class="psb">
+          <div class="psi">💬</div>
+          <div class="psn">Stage 4</div>
+          <div class="psname">Negotiating</div>
+          <div class="pcv" style="background:var(--accent-s);color:var(--accent-d)">70%</div>
+          <div class="psa">Scope/price discussions. Contract being drafted.</div>
+        </div></div>
+        <div class="ps"><div class="psb" style="background:var(--green-s)">
+          <div class="psi">✅</div>
+          <div class="psn">Stage 5</div>
+          <div class="psname">Closed Won</div>
+          <div class="pcv" style="background:var(--green-s);color:var(--green)">100% ✓</div>
+          <div class="psa">Signed. Log revenue. Start onboarding.</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-hd"><div class="ci" style="background:var(--green-s)">💰</div><div><h2>What to Fill In Per Deal</h2><p>Keep it minimal — 5 fields only</p></div></div>
+      <div class="card-bd">
+        <div class="steps">
+          <div class="step"><div class="sn green">1</div><div class="sc"><div class="st">Company Name + Contact Name</div><div class="sd">Who are you talking to and where are they from.</div></div></div>
+          <div class="step"><div class="sn green">2</div><div class="sc"><div class="st">Deal Value (USD)</div><div class="sd">Estimate the contract size. Even a rough number. This builds your pipeline forecast.</div></div></div>
+          <div class="step"><div class="sn green">3</div><div class="sc"><div class="st">Lead Source</div><div class="sd">How did they come in? LinkedIn / Cold Email / Referral / Inbound. This tells you what's working.</div></div></div>
+          <div class="step"><div class="sn green">4</div><div class="sc"><div class="st">Expected Close Date</div><div class="sd">When do you think this deal will close? Rough is fine. Helps build monthly forecast.</div></div></div>
+          <div class="step"><div class="sn green">5</div><div class="sc"><div class="st">Next Follow-Up Date</div><div class="sd">Set a HubSpot task. This is the most important field — it stops deals from going cold.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="ci" style="background:var(--accent-s)">🔔</div><div><h2>Follow-Up Rules (Simple)</h2><p>When to reach out and how</p></div></div>
+      <div class="card-bd">
+        <div class="steps">
+          <div class="step"><div class="sn">1</div><div class="sc"><div class="st">Same day — respond to inbound</div><div class="sd">If someone fills a form or replies, respond within 4 hours. Speed here wins deals.</div><div class="chips"><span class="chip key">Highest priority</span></div></div></div>
+          <div class="step"><div class="sn">2</div><div class="sc"><div class="st">Day 3 — if no reply to cold email</div><div class="sd">Send a 1-line follow-up. "Just checking if this landed." Short. No guilt. Move on after 3 attempts.</div></div></div>
+          <div class="step"><div class="sn">3</div><div class="sc"><div class="st">Day 7 — send value (not a pitch)</div><div class="sd">Send a relevant case study, insight, or article. No ask. Just useful.</div></div></div>
+          <div class="step"><div class="sn">4</div><div class="sc"><div class="st">After proposal — follow up in 3 days</div><div class="sd">If they haven't responded to the proposal after 3 days, call or message: "Any questions on the proposal?"</div></div></div>
+          <div class="step"><div class="sn">5</div><div class="sc"><div class="st">No response after 3 tries — park it</div><div class="sd">Add to a "Nurture" list in HubSpot. Send one email per month with something useful. No pressure.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════ -->
+<!-- TAB 4: TEAM PLAYBOOK -->
+<!-- ══════════════════════════ -->
+<div id="tab-playbook" class="section">
+<div class="main">
+  <div class="sec-hdr">
+    <h2>Team Daily Playbook</h2>
+    <p>What each person does, each day. No confusion. No missed follow-ups.</p>
+  </div>
+
+  <div class="alert alert-blue">
+    <div style="font-size:1.2rem">👥</div>
+    <div class="alert-text"><strong>Team structure assumption:</strong> 1 person handles outbound prospecting, 1 person handles calls + proposals. If it's just you, do both. This playbook scales to any team size.</div>
+  </div>
+
+  <!-- DAILY ROUTINE -->
+  <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px">📅 Daily Routine (Monday–Friday)</div>
+  <div class="day-row" style="margin-bottom:24px">
+    <div class="day">
+      <div class="day-hd">☀️ Morning<br>9–10am</div>
+      <div class="day-bd">
+        <div class="day-item"><strong>Check HubSpot pipeline</strong>Any new leads? Any tasks due today?</div>
+        <div class="day-item"><strong>Check email replies</strong>Anyone responded to outbound?</div>
+        <div class="day-item"><strong>Team standup</strong>1 min: "I'm working on X leads today"</div>
+      </div>
+    </div>
+    <div class="day">
+      <div class="day-hd">💼 Mid-Morning<br>10am–12pm</div>
+      <div class="day-bd">
+        <div class="day-item"><strong>Send 5–10 outreach emails</strong>From Apollo list via Gmail. Personal, not template.</div>
+        <div class="day-item"><strong>LinkedIn connections</strong>Connect + message 5–10 people on the same list.</div>
+        <div class="day-item"><strong>Follow up on existing leads</strong>Check HubSpot tasks due today.</div>
+      </div>
+    </div>
+    <div class="day">
+      <div class="day-hd">📞 Afternoon<br>2–5pm</div>
+      <div class="day-bd">
+        <div class="day-item"><strong>Discovery calls</strong>(Calendly bookings show here)</div>
+        <div class="day-item"><strong>Update HubSpot after calls</strong>Log notes, move stage, set next task.</div>
+        <div class="day-item"><strong>Draft proposals</strong>For deals in Stage 2.</div>
+      </div>
+    </div>
+    <div class="day">
+      <div class="day-hd">📊 End of Day<br>5–6pm</div>
+      <div class="day-bd">
+        <div class="day-item"><strong>Update all deal stages</strong>Move anything that progressed today.</div>
+        <div class="day-item"><strong>Set tomorrow's tasks</strong>What are the 3 most important follow-ups?</div>
+        <div class="day-item"><strong>Log any new leads</strong>Anyone who replied today.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEKLY REVIEW -->
+  <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px">📆 Weekly Review (Every Monday, 30 min)</div>
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-bd">
+      <div class="g3">
+        <div style="background:var(--blue-s);border-radius:8px;padding:14px;border:1px solid #85A8E0">
+          <div style="font-size:0.9rem;margin-bottom:6px">🔢</div>
+          <div style="font-size:0.8rem;font-weight:700;color:#0A2A60;margin-bottom:4px">Count your numbers</div>
+          <div style="font-size:0.72rem;color:var(--muted)">How many emails sent last week? How many replies? How many calls booked? Compare to previous week.</div>
+        </div>
+        <div style="background:var(--accent-s);border-radius:8px;padding:14px;border:1px solid #F4A08A">
+          <div style="font-size:0.9rem;margin-bottom:6px">🔎</div>
+          <div style="font-size:0.8rem;font-weight:700;color:#7A2010;margin-bottom:4px">Find stuck deals</div>
+          <div style="font-size:0.72rem;color:var(--muted)">Any deal sitting in same stage for 10+ days? Either push it forward or move it to Closed Lost. Dead deals clog your pipeline.</div>
+        </div>
+        <div style="background:var(--green-s);border-radius:8px;padding:14px;border:1px solid #85D4AE">
+          <div style="font-size:0.9rem;margin-bottom:6px">🎯</div>
+          <div style="font-size:0.8rem;font-weight:700;color:#0A4A28;margin-bottom:4px">Decide next week's focus</div>
+          <div style="font-size:0.72rem;color:var(--muted)">Which channel had the best reply rate? Allocate more effort there next week. What worked? Do more of it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARGETS -->
+  <div class="card">
+    <div class="card-hd"><div class="ci" style="background:var(--gold-s)">🏆</div><div><h2>Simple Targets to Hit</h2><p>Realistic for a small team doing outbound B2B</p></div></div>
+    <div class="card-bd">
+      <table>
+        <thead><tr><th>Metric</th><th>Weekly Target</th><th>Monthly Target</th><th>Why This Number</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:var(--ink)">Outreach emails sent</td><td>50–70</td><td>200–300</td><td>10–14/day is realistic with personalisation</td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">LinkedIn connections</td><td>30–50</td><td>120–200</td><td>5–10/day, accepted rate ~30%</td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Replies received</td><td>3–7</td><td>12–30</td><td>5–10% reply rate on good outreach</td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Discovery calls booked</td><td>1–2</td><td>4–8</td><td>~30–40% of replies convert to call</td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Proposals sent</td><td>0–1</td><td>2–3</td><td>50–60% of calls qualify for proposal</td></tr>
+          <tr style="background:var(--green-s)"><td style="font-weight:800;color:var(--ink)">Deals closed</td><td>—</td><td style="font-weight:800;color:var(--green)">1 every 6–8 weeks</td><td>Standard B2B close cycle: 30–60 days</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════ -->
+<!-- TAB 5: WHEN TO UPGRADE -->
+<!-- ══════════════════════════ -->
+<div id="tab-upgrade" class="section">
+<div class="main">
+  <div class="sec-hdr">
+    <h2>When to Upgrade Each Tool</h2>
+    <p>Stay free until you hit these specific trigger points. Don't pay for capacity you haven't earned yet.</p>
+  </div>
+
+  <div class="alert alert-green">
+    <div style="font-size:1.2rem">💡</div>
+    <div class="alert-text"><strong>The rule:</strong> Upgrade a tool only when it becomes the bottleneck. If a free tool is doing the job, there is no reason to pay. Free tools here are genuinely good enough for 0–5 clients.</div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-hd"><div class="ci" style="background:var(--accent-s)">📈</div><div><h2>Upgrade Trigger Points</h2><p>Specific signals that tell you it's time to pay</p></div></div>
+    <div class="card-bd">
+      <div class="steps">
+        <div class="step">
+          <div class="sn" style="background:var(--blue)">1</div>
+          <div class="sc">
+            <div class="st">Apollo Free → Apollo Basic ($59/mo) when:</div>
+            <div class="sd">You're hitting the 50 email credit limit AND your outreach is getting a 5%+ reply rate (meaning you've proven the message works and just need volume).</div>
+            <div class="chips"><span class="chip">Trigger: 50 credits used in first 2 weeks</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn" style="background:var(--blue)">2</div>
+          <div class="sc">
+            <div class="st">HubSpot Free → HubSpot Starter ($20/mo) when:</div>
+            <div class="sd">You have more than 2 reps needing access, OR you need automated email sequences so follow-ups happen without manual sending. Around your 3rd–4th client.</div>
+            <div class="chips"><span class="chip">Trigger: Team grows past 2 people on CRM</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn" style="background:var(--blue)">3</div>
+          <div class="sc">
+            <div class="st">Manual alerts → Make.com ($10/mo) when:</div>
+            <div class="sd">You're getting more than 10 leads/week and manually updating HubSpot is taking 30+ minutes daily. Not before then — that manual time forces you to know every lead personally.</div>
+            <div class="chips"><span class="chip">Trigger: 40+ leads/month</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn" style="background:var(--blue)">4</div>
+          <div class="sc">
+            <div class="st">LinkedIn Free → Sales Navigator ($100/mo) when:</div>
+            <div class="sd">You've closed at least 5 clients from LinkedIn, you know it works for you, and you need advanced filtering + InMail to scale. This is a "scale" tool, not a "start" tool.</div>
+            <div class="chips"><span class="chip">Trigger: 5+ LinkedIn-sourced clients closed</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn" style="background:var(--green)">5</div>
+          <div class="sc">
+            <div class="st">No ads → Google Ads ($5–15/day) when:</div>
+            <div class="sd">You have a proven landing page (5%+ conversion rate confirmed via GA4), and a clear offer that has already closed inbound leads. Run ads only after organic inbound has validated your message.</div>
+            <div class="chips"><span class="chip">Trigger: 3%+ form conversion rate from organic</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROWTH STAGES -->
+  <div class="g3">
+    <div class="card">
+      <div class="card-hd" style="background:var(--green-s)"><div class="ci" style="background:#fff">🌱</div><div><h2>Phase 1: $0/month</h2><p>0–3 clients · First 3 months</p></div></div>
+      <div class="card-bd">
+        <div style="font-size:0.78rem;color:var(--body);line-height:1.6">
+          <div style="margin-bottom:8px">✓ HubSpot Free</div>
+          <div style="margin-bottom:8px">✓ Apollo Free (50/mo)</div>
+          <div style="margin-bottom:8px">✓ Calendly Free</div>
+          <div style="margin-bottom:8px">✓ GA4 + Looker Studio</div>
+          <div style="margin-bottom:8px">✓ Gmail for outreach</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-weight:700;color:var(--green)">Cost: $0/month</div>
+          <div style="font-size:0.72rem;color:var(--muted)">Focus: Prove your message. Get first 3 clients.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd" style="background:var(--gold-s)"><div class="ci" style="background:#fff">🌿</div><div><h2>Phase 2: ~$80/month</h2><p>3–10 clients · Months 4–9</p></div></div>
+      <div class="card-bd">
+        <div style="font-size:0.78rem;color:var(--body);line-height:1.6">
+          <div style="margin-bottom:8px">✓ HubSpot Starter ($20)</div>
+          <div style="margin-bottom:8px">✓ Apollo Basic ($59)</div>
+          <div style="margin-bottom:8px">✓ Make.com Core ($10)</div>
+          <div style="margin-bottom:8px">✓ Everything else free</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-weight:700;color:var(--gold)">Cost: ~$89/month</div>
+          <div style="font-size:0.72rem;color:var(--muted)">Focus: Scale outbound. Automate follow-ups.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd" style="background:var(--accent-s)"><div class="ci" style="background:#fff">🌳</div><div><h2>Phase 3: ~$200/month</h2><p>10+ clients · Month 10+</p></div></div>
+      <div class="card-bd">
+        <div style="font-size:0.78rem;color:var(--body);line-height:1.6">
+          <div style="margin-bottom:8px">✓ HubSpot Pro ($90)</div>
+          <div style="margin-bottom:8px">✓ Apollo Basic ($59)</div>
+          <div style="margin-bottom:8px">✓ LinkedIn Sales Nav ($100)</div>
+          <div style="margin-bottom:8px">✓ Make.com Core ($10)</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-weight:700;color:var(--accent)">Cost: ~$259/month</div>
+          <div style="font-size:0.72rem;color:var(--muted)">Focus: Full automation. Team of 3–5 reps.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="footer">
+  IDEOWORKS Lean Campaign System — Free Stack Edition · April 2026
+</div>
+
+<script>
+function show(name, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

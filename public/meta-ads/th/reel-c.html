@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Reel C · เข้าสู่ตลาดอินโดนีเซีย · Ideoworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,700;0,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8192C;--navy:#0D1B2A;--white:#FFFFFF;--bg:#F7F5F0;--muted:rgba(13,27,42,.5);--muted2:rgba(13,27,42,.3);--lp-bg:#0A0D14;--fd:'Sarabun',sans-serif;--fb:'Sarabun',sans-serif;--fm:'JetBrains Mono',monospace;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060608;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:14px;padding:40px 20px}
+  .fmt{font-family:var(--fm);font-size:10px;color:#5C5867;letter-spacing:.2em;text-transform:uppercase}
+  .ad{width:405px;height:720px;background:#F7F5F0;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.07)}
+  .strip{position:absolute;bottom:0;left:0;right:0;height:40px;background:var(--navy);display:flex;align-items:center;padding:0 24px;z-index:15}
+  .strip-cta{font-family:var(--fm);font-size:8px;color:rgba(232,25,44,.7);letter-spacing:.12em;text-transform:uppercase}
+  .ghost{position:absolute;bottom:-10px;right:-8px;font-family:var(--fm);font-size:200px;color:rgba(13,27,42,.03);line-height:1;pointer-events:none;letter-spacing:-.04em}
+  .red-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);z-index:20}
+  .logo{position:absolute;top:20px;left:24px;z-index:20;font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--navy)}
+  .logo b{color:var(--red)}
+  .progress{position:absolute;bottom:40px;left:0;height:2px;background:var(--red);z-index:20;width:0}
+  .scene{position:absolute;inset:0;bottom:40px;z-index:10;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:52px 32px 28px;opacity:0;pointer-events:none;transition:opacity .5s ease}
+  .scene.active{opacity:1;pointer-events:auto}
+  .s1-kicker{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.22em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:8px}
+  .s1-kicker::before{content:'';width:18px;height:2px;background:var(--red)}
+  .s1-hl{font-family:var(--fd);font-size:34px;font-weight:800;color:var(--navy);line-height:1.2;letter-spacing:-.01em;margin-bottom:20px}
+  .s1-hl .red{color:var(--red)}
+  .s1-w{display:inline-block;overflow:hidden;margin-right:.06em}
+  .s1-w span{display:block;animation:su .5s cubic-bezier(.16,1,.3,1) both}
+  @keyframes su{from{transform:translateY(105%);opacity:0}to{transform:translateY(0);opacity:1}}
+  .s1-sub{font-family:var(--fb);font-size:13px;color:var(--muted);line-height:1.65;max-width:26ch;opacity:0;animation:fu .6s ease 1s forwards}
+  @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .s2{justify-content:flex-start;padding-top:72px}
+  .s2-hdr{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:8px}
+  .s2-hdr::before{content:'';width:18px;height:2px;background:var(--red)}
+  .mistakes{display:flex;flex-direction:column;gap:16px;width:100%}
+  .m{display:flex;gap:14px;align-items:flex-start;opacity:0;transform:translateX(-12px)}
+  .m.show{animation:min .4s cubic-bezier(.16,1,.3,1) forwards}
+  @keyframes min{to{opacity:1;transform:translateX(0)}}
+  .m-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--red);opacity:.3;line-height:1;flex-shrink:0;min-width:28px}
+  .m-title{font-family:var(--fd);font-size:14px;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:4px}
+  .m-desc{font-family:var(--fb);font-size:11px;color:var(--muted);line-height:1.6}
+  .m-desc b{color:var(--navy)}
+  .s3-label{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .s3-label::before{content:'';width:18px;height:2px;background:var(--red)}
+  .lp-device{width:100%;background:var(--lp-bg);border-radius:8px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15);padding:18px 20px}
+  .lp-device::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.022;pointer-events:none}
+  .lp-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .lp-results-hd{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .lp-rows{display:flex;flex-direction:column;gap:8px}
+  .lp-row{display:flex;align-items:center;justify-content:space-between}
+  .lp-key{font-family:var(--fm);font-size:8.5px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em}
+  .lp-val{font-family:var(--fd);font-size:13px;font-weight:600;color:#F2F0EC}
+  .lp-val.ok{color:#4ADE80}
+  .lp-val.lk{color:rgba(255,255,255,.25);font-size:10px;letter-spacing:.1em}
+  .s3-caption{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--navy);margin-top:16px;line-height:1.5}
+  .s3-caption span{color:var(--red)}
+  .s4{background:var(--red)}
+  .s4-bg{position:absolute;bottom:-30px;right:-20px;font-family:var(--fm);font-size:150px;color:rgba(255,255,255,.06);line-height:1;pointer-events:none}
+  .s4>*:not(.s4-bg){position:relative;z-index:1}
+  .s4-kicker{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
+  .s4-hl{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--white);line-height:1.2;letter-spacing:-.01em;margin-bottom:16px}
+  .s4-proof{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+  .s4-pr{font-family:var(--fb);font-size:13px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:8px;line-height:1.5}
+  .s4-pr::before{content:'';width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.7);flex-shrink:0}
+  .s4-btn{padding:14px 28px;background:var(--white);color:var(--red);font-family:var(--fd);font-weight:700;font-size:14px;letter-spacing:.04em;display:inline-flex;align-items:center;gap:8px}
+  .s4-url{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.45);margin-top:12px;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="fmt">REELS · STORIES · 9:16 · ANGLE C · IDEOWORKS BRAND</div>
+<div class="ad" id="ad">
+  <div class="red-bar"></div>
+  <div class="logo">IDEO<b>WORKS</b></div>
+  <div class="scene active" id="s1">
+    <div class="s1-kicker">เข้าสู่ตลาดอินโดนีเซีย</div>
+    <h1 class="s1-hl">
+      <div class="s1-w"><span style="animation-delay:.05s">แบรนด์ส่วนใหญ่</span></div>
+      <div class="s1-w"><span style="animation-delay:.18s">เตรียมตัวสำหรับ</span></div>
+      <div class="s1-w"><span style="animation-delay:.31s">ตลาดที่ผิด</span></div>
+      <div class="s1-w red"><span style="animation-delay:.44s">แล้วก็เข้า</span></div>
+      <div class="s1-w red"><span style="animation-delay:.57s">อินโดนีเซีย</span></div>
+    </h1>
+    <p class="s1-sub">ไม่ใช่เพราะไม่เตรียมตัว แต่เพราะเตรียมสิ่งผิด</p>
+  </div>
+  <div class="scene s2" id="s2">
+    <div class="s2-hdr">จุดที่กลยุทธ์ล้มเหลว</div>
+    <div class="mistakes">
+      <div class="m" id="m1"><div class="m-num">01</div><div class="m-body"><div class="m-title">จาการ์ตาไม่ใช่อินโดนีเซีย</div><div class="m-desc">ผู้ซื้อ 60% อยู่ในเมืองระดับ 2-3 <b>ที่มีทริกเกอร์การซื้อแตกต่างกันโดยสิ้นเชิง</b></div></div></div>
+      <div class="m" id="m2"><div class="m-num">02</div><div class="m-body"><div class="m-title">เกณฑ์ระดับโลกใช้ไม่ได้ที่นี่</div><div class="m-desc"><b>TikTok Shop ค่า KOL CPM</b> มีตรรกะของตัวเองที่นี่ การใช้ตัวเลขระดับโลกทำให้งบประมาณผิดพลาด</div></div></div>
+      <div class="m" id="m3"><div class="m-num">03</div><div class="m-body"><div class="m-title">พรีเมียมไม่สื่อสารได้โดยตรง</div><div class="m-desc"><b>สิ่งที่อ่านว่าสร้างแรงบันดาลใจในต่างประเทศ</b> อาจอ่านว่าเย็นชาหรือห่างเหินที่นี่ โทนแบรนด์ต้องการการโลคัลไลซ์</div></div></div>
+    </div>
+  </div>
+  <div class="scene" id="s3">
+    <div class="s3-label">ดูตำแหน่งแบรนด์ของคุณ</div>
+    <div class="lp-device">
+      <div class="lp-bar"></div>
+      <div class="lp-results-hd">รายงานความพร้อมอินโดนีเซีย · yourbrand.com</div>
+      <div class="lp-rows">
+        <div class="lp-row"><span class="lp-key">ความเหมาะสมของแบรนด์</span><span class="lp-val ok">78. แข็งแกร่ง.</span></div>
+        <div class="lp-row"><span class="lp-key">โอกาส</span><span class="lp-val ok">85. สูง.</span></div>
+        <div class="lp-row"><span class="lp-key">การแมปเพอร์โซนา</span><span class="lp-val lk">🔒 ล็อก</span></div>
+        <div class="lp-row"><span class="lp-key">กลยุทธ์ GTM</span><span class="lp-val lk">🔒 ล็อก</span></div>
+        <div class="lp-row"><span class="lp-key">กรอบงบประมาณ</span><span class="lp-val lk">🔒 ล็อก</span></div>
+      </div>
+    </div>
+    <div class="s3-caption">ภาพรวมทั้งหมด<br>เป็นของคุณ. <span>ฟรี.</span></div>
+  </div>
+  <div class="scene s4" id="s4">
+    <div class="s4-bg">IDW</div>
+    <div class="s4-kicker">ดำเนินการในอินโดนีเซียตั้งแต่ปี 2010</div>
+    <h2 class="s4-hl">บรีฟแคมเปญ<br>อินโดนีเซียของคุณ.</h2>
+    <div class="s4-proof">
+      <div class="s4-pr">แคมเปญที่ดำเนินการในอินโดนีเซียกว่า 15 ปี</div>
+      <div class="s4-pr">Calvin Klein. HSBC. GoPro. Park Hyatt.</div>
+      <div class="s4-pr">ฟรี. ส่งภายใน 90 วินาที.</div>
+    </div>
+    <div class="s4-btn">รับบรีฟฟรี</div>
+  </div>
+  <div class="strip"><span class="strip-cta">Free · No Signup</span></div>
+  <div class="progress" id="progress"></div>
+</div>
+<script>
+const SC=['s1','s2','s3','s4'],DUR=[3000,5500,4000,4500],TOT=DUR.reduce((a,b)=>a+b,0);
+let cur=0,ls=performance.now();
+function show(i){SC.forEach((id,x)=>document.getElementById(id).classList.toggle('active',x===i));if(i===1)mistakes();}
+function mistakes(){['m1','m2','m3'].forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('show'),i*1200));}
+function next(){setTimeout(()=>{cur=(cur+1)%SC.length;if(!cur)ls=performance.now();show(cur);next();},DUR[cur]);}
+(function tick(){document.getElementById('progress').style.width=Math.min(((performance.now()-ls)/TOT)*100,100)+'%';requestAnimationFrame(tick);})();
+show(0);next();
+</script>
+</body>
+</html>

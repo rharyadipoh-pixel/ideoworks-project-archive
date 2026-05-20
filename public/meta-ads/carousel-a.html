@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Carousel A · Ideoworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8192C;--navy:#0D1B2A;--white:#FFFFFF;--off:#F7F6F3;--rule:#E8E6E0;--fd:'Space Grotesk',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;--cs:380px;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060608;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;padding:40px;gap:22px}
+  .fmt{font-family:var(--fm);font-size:10px;color:#5C5867;letter-spacing:.2em;text-transform:uppercase}
+
+  .tw{overflow-x:auto;padding-bottom:18px;width:100%;cursor:grab;user-select:none}
+  .tw:active{cursor:grabbing}
+  .track{display:flex;gap:14px;width:max-content;padding:3px}
+  .tw::-webkit-scrollbar{height:3px}
+  .tw::-webkit-scrollbar-track{background:#0F1320}
+  .tw::-webkit-scrollbar-thumb{background:#2D2A3A}
+
+  /* BASE CARD — white editorial */
+  .card{width:var(--cs);height:var(--cs);background:var(--white);border-radius:10px;position:relative;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;padding:0;box-shadow:0 16px 48px rgba(0,0,0,.4)}
+  .card-top{height:3px;background:var(--red);flex-shrink:0}
+  .card-body{flex:1;display:flex;flex-direction:column;padding:22px 24px 20px}
+
+  /* nav counter */
+  .cn{font-family:var(--fm);font-size:8.5px;color:rgba(13,27,42,.3);letter-spacing:.18em;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+  .cn-dot{width:5px;height:5px;border-radius:50%;background:var(--red)}
+
+  /* eyebrow */
+  .ey{font-family:var(--fm);font-size:8.5px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .ey::before{content:'';width:14px;height:2px;background:var(--red);flex-shrink:0}
+
+  /* headline */
+  .ct{font-family:var(--fd);font-size:24px;font-weight:800;color:var(--navy);line-height:1.05;letter-spacing:-.025em;margin-bottom:10px}
+  .ct .red{color:var(--red)}
+
+  /* body */
+  .cb{font-family:var(--fb);font-size:11px;color:rgba(13,27,42,.55);line-height:1.65}
+  .cb b{color:var(--navy)}
+
+  /* pip progress */
+  .pips{display:flex;gap:4px;margin-top:auto;padding-top:14px}
+  .pip{height:2px;flex:1;background:var(--rule);border-radius:1px}
+  .pip.on{background:var(--red)}
+
+  /* CARD 1 — LP bridge */
+  .lp-mini{margin-top:auto;background:#0A0D14;border-radius:6px;padding:12px 14px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.2)}
+  .lp-mini::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:18px 18px;opacity:.022;pointer-events:none}
+  .lp-mini-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .lp-mini-domain{font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.25);letter-spacing:.1em;margin-bottom:6px}
+  .lp-mini-score{font-family:var(--fd);font-size:36px;font-weight:800;color:#F2F0EC;letter-spacing:-.04em;line-height:1;display:flex;align-items:baseline;gap:3px}
+  .lp-mini-score span{font-size:13px;color:rgba(255,255,255,.25);font-weight:400}
+  .lp-mini-badges{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .lp-mini-badge{padding:3px 7px;border:1px solid rgba(255,255,255,.08);font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase}
+  .lp-mini-badge.lk{border-color:rgba(232,25,44,.2);color:rgba(232,25,44,.45)}
+
+  /* Score bars (cards 2) */
+  .sbars{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+  .sbi{display:flex;flex-direction:column;gap:4px}
+  .sbi-head{display:flex;justify-content:space-between;align-items:center}
+  .sbi-name{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.45);letter-spacing:.12em;text-transform:uppercase}
+  .sbi-val{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--navy)}
+  .sbi-track{height:3px;background:var(--rule);border-radius:2px;overflow:hidden}
+  .sbi-fill{height:100%;border-radius:2px;background:var(--red)}
+  .insight{padding:10px 12px;background:rgba(232,25,44,.04);border-left:2px solid var(--red);margin-top:12px}
+  .insight p{font-family:var(--fb);font-size:10px;color:rgba(13,27,42,.55);line-height:1.55}
+  .insight p b{color:var(--navy)}
+
+  /* City tiers (card 3) */
+  .tiers{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+  .tier{display:flex;align-items:flex-start;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+  .tier:last-child{border-bottom:none;padding-bottom:0}
+  .tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px}
+  .t1{background:var(--red)}.t2{background:#FFB347}.t3{background:rgba(13,27,42,.2)}
+  .tier-name{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--navy);line-height:1.2}
+  .tier-desc{font-family:var(--fm);font-size:7.5px;color:rgba(13,27,42,.4);letter-spacing:.07em;margin-top:2px}
+
+  /* Personas (card 4) */
+  .personas{display:flex;gap:8px;margin-top:auto}
+  .persona{flex:1;padding:12px;background:var(--off);border:1px solid var(--rule);position:relative}
+  .persona.lk::after{content:'🔒';position:absolute;top:8px;right:8px;font-size:10px;opacity:.4}
+  .p-tier{font-family:var(--fm);font-size:7.5px;color:var(--red);letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}
+  .p-name{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--navy);margin-bottom:2px}
+  .p-age{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.4)}
+  .p-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
+  .p-tag{padding:2px 5px;background:rgba(232,25,44,.06);border:1px solid rgba(232,25,44,.14);font-family:var(--fm);font-size:7px;color:rgba(13,27,42,.55);letter-spacing:.08em}
+
+  /* GTM timeline (card 5) */
+  .gtm{display:flex;flex-direction:column;gap:0;margin-top:auto;flex:1}
+  .gp{display:flex;gap:12px;align-items:flex-start;position:relative}
+  .gp:not(:last-child)::after{content:'';position:absolute;left:10px;top:22px;bottom:-8px;width:1px;background:var(--rule)}
+  .gd{width:20px;height:20px;border-radius:50%;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--white);z-index:1}
+  .gd.on{border-color:var(--red);background:rgba(232,25,44,.06)}
+  .gd span{font-family:var(--fm);font-size:7px;color:rgba(13,27,42,.4)}
+  .gd.on span{color:var(--red)}
+  .gc{padding-bottom:16px}
+  .gm{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+  .ga{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--navy);line-height:1.25}
+  .gs{font-family:var(--fb);font-size:10px;color:rgba(13,27,42,.5);margin-top:2px}
+
+  /* CARD 6 — red CTA */
+  .card-red{background:var(--red)}
+  .card-red .card-top{background:rgba(255,255,255,.25)}
+  .card-red .cn{color:rgba(255,255,255,.35)}
+  .card-red .cn-dot{background:var(--white)}
+  .c6-bg{position:absolute;bottom:-20px;right:-10px;font-family:var(--fd);font-size:150px;font-weight:800;color:rgba(255,255,255,.06);line-height:1;letter-spacing:-.05em;pointer-events:none}
+  .c6-logo{font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+  .c6-hl{font-family:var(--fd);font-size:30px;font-weight:800;color:var(--white);line-height:1.0;letter-spacing:-.025em;margin-bottom:14px}
+  .c6-clients{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+  .c6-cl{padding:4px 9px;border:1px solid rgba(255,255,255,.25);font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.7);letter-spacing:.1em}
+  .c6-btn{width:100%;padding:13px 18px;background:var(--white);color:var(--red);font-family:var(--fd);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-align:center;display:flex;align-items:center;justify-content:center}
+  .c6-url{font-family:var(--fm);font-size:8.5px;color:rgba(255,255,255,.45);margin-top:8px;text-align:center;letter-spacing:.1em}
+  .card-red .pips{padding-top:12px}
+  .card-red .pip{background:rgba(255,255,255,.2)}
+  .card-red .pip.on{background:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="fmt">FEED CAROUSEL · 1:1 · 6 CARDS · ANGLE A · IDEOWORKS BRAND</div>
+<div class="tw" id="tw">
+  <div class="track">
+
+    <!-- CARD 1 — Hook + LP Bridge -->
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="cn"><span>01 / 06</span><div class="cn-dot"></div></div>
+        <div class="ey">Indonesia Market Entry</div>
+        <div class="ct">INDONESIA WORKS BY <span class="red">ITS OWN RULES.</span></div>
+        <div class="cb">15 years running campaigns inside this market. Here's what it actually looks like for your brand.</div>
+        <div class="lp-mini">
+          <div class="lp-mini-bar"></div>
+          <div class="lp-mini-domain">yourbrand.com</div>
+          <div class="lp-mini-score">74<span>/100</span></div>
+          <div class="lp-mini-badges">
+            <span class="lp-mini-badge">Brand Fit</span>
+            <span class="lp-mini-badge">Opportunity</span>
+            <span class="lp-mini-badge lk">🔒 3 more</span>
+          </div>
+        </div>
+        <div class="pips">
+          <div class="pip on"></div><div class="pip"></div><div class="pip"></div>
+          <div class="pip"></div><div class="pip"></div><div class="pip"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 — Brand Readiness -->
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="cn"><span>02 / 06</span><div class="cn-dot"></div></div>
+        <div class="ey">01. Brand Readiness</div>
+        <div class="ct">Your brand name, tone, and visual. <span class="red">Scored for Indonesia.</span></div>
+        <div class="sbars">
+          <div class="sbi">
+            <div class="sbi-head"><span class="sbi-name">Brand Name Fit</span><span class="sbi-val">82</span></div>
+            <div class="sbi-track"><div class="sbi-fill" style="width:82%"></div></div>
+          </div>
+          <div class="sbi">
+            <div class="sbi-head"><span class="sbi-name">Visual Identity</span><span class="sbi-val">74</span></div>
+            <div class="sbi-track"><div class="sbi-fill" style="width:74%"></div></div>
+          </div>
+          <div class="sbi">
+            <div class="sbi-head"><span class="sbi-name">Messaging Tone</span><span class="sbi-val">68</span></div>
+            <div class="sbi-track"><div class="sbi-fill" style="width:68%"></div></div>
+          </div>
+        </div>
+        <div class="insight"><p>What reads as <b>premium in Seoul</b> can read as cold in Surabaya. This score shows you exactly where the gap is.</p></div>
+        <div class="pips">
+          <div class="pip on"></div><div class="pip on"></div><div class="pip"></div>
+          <div class="pip"></div><div class="pip"></div><div class="pip"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 — Market Opportunity -->
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="cn"><span>03 / 06</span><div class="cn-dot"></div></div>
+        <div class="ey">02. Market Opportunity</div>
+        <div class="ct">Entry timing. City sequencing. <span class="red">Category-specific.</span></div>
+        <div class="cb" style="margin-bottom:14px">A fast-growing segment can already be <b>crowded at your price point.</b> We measure yours before you move.</div>
+        <div class="tiers">
+          <div class="tier"><div class="tier-dot t1"></div><div><div class="tier-name">Tier 1. Jakarta. Surabaya.</div><div class="tier-desc">High penetration. Competitive. Premium-viable.</div></div></div>
+          <div class="tier"><div class="tier-dot t2"></div><div><div class="tier-name">Tier 2. Bandung. Medan. Bali.</div><div class="tier-desc">Fastest growth. Lower CPM. High opportunity.</div></div></div>
+          <div class="tier"><div class="tier-dot t3"></div><div><div class="tier-name">Tier 3. Outer islands.</div><div class="tier-desc">Early mover advantage. Different purchase triggers.</div></div></div>
+        </div>
+        <div class="pips">
+          <div class="pip on"></div><div class="pip on"></div><div class="pip on"></div>
+          <div class="pip"></div><div class="pip"></div><div class="pip"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4 — Persona Mapping -->
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="cn"><span>04 / 06</span><div class="cn-dot"></div></div>
+        <div class="ey">03. Persona Mapping</div>
+        <div class="ct">Your two highest-probability <span class="red">buyers here.</span></div>
+        <div class="cb" style="margin-bottom:14px">Consumer behavior shifts sharply between city tiers. A profile that converts in Central Jakarta <b>may not exist 90 minutes away.</b></div>
+        <div class="personas">
+          <div class="persona">
+            <div class="p-tier">Tier 1. Urban.</div>
+            <div class="p-name">The Urban Pro</div>
+            <div class="p-age">Age 26 to 34. Jakarta.</div>
+            <div class="p-tags"><span class="p-tag">TikTok-first</span><span class="p-tag">Brand-aware</span><span class="p-tag">Shopee</span></div>
+          </div>
+          <div class="persona lk">
+            <div class="p-tier">Tier 2. Rising.</div>
+            <div class="p-name">Mid-Market</div>
+            <div class="p-age">Age 22 to 35. Tier 2.</div>
+            <div class="p-tags"><span class="p-tag">Value-driven</span><span class="p-tag">KOL-led</span></div>
+          </div>
+        </div>
+        <div class="pips">
+          <div class="pip on"></div><div class="pip on"></div><div class="pip on"></div>
+          <div class="pip on"></div><div class="pip"></div><div class="pip"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 5 — GTM + Budget -->
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="cn"><span>05 / 06</span><div class="cn-dot"></div></div>
+        <div class="ey">04 + 05. GTM + Budget</div>
+        <div class="ct">90-day entry plan. <span class="red">Real costs.</span></div>
+        <div class="gtm" style="margin-top:14px">
+          <div class="gp"><div class="gd on"><span>M1</span></div><div class="gc"><div class="gm">Month 1</div><div class="ga">Jakarta Soft Launch</div><div class="gs">KOL seeding. TikTok Shop setup. Shopee presence.</div></div></div>
+          <div class="gp"><div class="gd on"><span>M2</span></div><div class="gc"><div class="gm">Month 2</div><div class="ga">Tier 2 Expansion</div><div class="gs">City-specific creative. Bandung and Surabaya push.</div></div></div>
+          <div class="gp"><div class="gd"><span>M3</span></div><div class="gc"><div class="gm">Month 3</div><div class="ga">Scale and Retarget</div><div class="gs">Performance loop. Category domination play.</div></div></div>
+        </div>
+        <div class="pips">
+          <div class="pip on"></div><div class="pip on"></div><div class="pip on"></div>
+          <div class="pip on"></div><div class="pip on"></div><div class="pip"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 6 — Red CTA -->
+    <div class="card card-red">
+      <div class="card-top"></div>
+      <div class="c6-bg">IDW</div>
+      <div class="card-body">
+        <div class="cn"><span>06 / 06</span><div class="cn-dot"></div></div>
+        <div class="c6-logo">IDEOWORKS</div>
+        <div class="c6-hl">YOUR INDONESIA BRIEF. FREE.</div>
+        <div class="c6-clients">
+          <span class="c6-cl">Calvin Klein</span><span class="c6-cl">HSBC</span>
+          <span class="c6-cl">GoPro</span><span class="c6-cl">Park Hyatt</span>
+        </div>
+        <div class="c6-btn">Get My Indonesia Brief</div>
+        <div class="c6-url">Free · Delivered in 90 seconds.</div>
+        <div class="pips">
+          <div class="pip on"></div><div class="pip on"></div><div class="pip on"></div>
+          <div class="pip on"></div><div class="pip on"></div><div class="pip on"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+const tw=document.getElementById('tw');
+let dn=false,sx,sl;
+tw.addEventListener('mousedown',e=>{dn=true;tw.style.cursor='grabbing';sx=e.pageX-tw.offsetLeft;sl=tw.scrollLeft;});
+tw.addEventListener('mouseleave',()=>{dn=false;tw.style.cursor='grab';});
+tw.addEventListener('mouseup',()=>{dn=false;tw.style.cursor='grab';});
+tw.addEventListener('mousemove',e=>{if(!dn)return;e.preventDefault();tw.scrollLeft=sl-(e.pageX-tw.offsetLeft-sx);});
+</script>
+</body>
+</html>

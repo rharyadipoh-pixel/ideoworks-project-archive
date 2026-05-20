@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan AM — Ideoworks CRM</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #1a1a1a;
+    background: #fff;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #E3000F;
+    color: #fff;
+    padding: 32px 48px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .header-left p {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 11px;
+    opacity: 0.8;
+    line-height: 1.8;
+  }
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 1;
+  }
+
+  /* ── CONTACT BANNER ── */
+  .contact-bar {
+    background: #fef2f2;
+    border-left: 4px solid #E3000F;
+    padding: 10px 48px;
+    font-size: 12px;
+    color: #7f1d1d;
+  }
+  .contact-bar strong { color: #E3000F; }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    padding: 32px 48px 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    font-size: 12.5px;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+  }
+  .intro strong { color: #E3000F; }
+
+  /* ── SECTION HEADERS ── */
+  h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #E3000F;
+    margin: 36px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #fecaca;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2 .num {
+    background: #E3000F;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    margin: 20px 0 8px;
+  }
+
+  /* ── FORM CARDS ── */
+  .form-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .form-card-header {
+    background: #E3000F;
+    color: #fff;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .form-card-header .form-title {
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .form-card-header .form-badge {
+    font-size: 10px;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .form-card-body {
+    padding: 16px 18px;
+  }
+
+  /* ── LINK BOX ── */
+  .link-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 10px 0 14px;
+    font-size: 11px;
+    word-break: break-all;
+  }
+  .link-box span { color: #166534; font-weight: 600; }
+  .link-box a { color: #15803d; text-decoration: none; }
+
+  /* ── WHEN TO FILL ── */
+  .when-list {
+    margin: 8px 0 12px 16px;
+    font-size: 12px;
+    color: #374151;
+  }
+  .when-list li { margin-bottom: 3px; }
+  .when-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  thead tr {
+    background: #1a1a1a;
+    color: #fff;
+  }
+  thead th {
+    padding: 7px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+  tbody tr:nth-child(even) { background: #f9fafb; }
+  tbody tr:hover { background: #fef2f2; }
+  tbody td {
+    padding: 6px 12px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: top;
+  }
+  tbody td:first-child { font-weight: 500; color: #E3000F; white-space: nowrap; }
+
+  /* ── FLOW BOX ── */
+  .flow-box {
+    background: #1a1a1a;
+    color: #f0f0f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 2;
+    margin: 12px 0;
+  }
+  .flow-box .arrow { color: #E3000F; font-weight: bold; }
+  .flow-box .highlight { color: #fbbf24; }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .info-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .info-card h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: #E3000F;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .info-card ul {
+    margin-left: 14px;
+    font-size: 12px;
+    color: #374151;
+  }
+  .info-card li { margin-bottom: 3px; }
+
+  /* ── TARGET BOX ── */
+  .target-box {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 12px;
+    color: #7c2d12;
+  }
+  .target-box .icon { font-size: 22px; flex-shrink: 0; }
+  .target-box strong { display: block; font-size: 13px; margin-bottom: 4px; }
+
+  /* ── TIPS ── */
+  .tips-list {
+    counter-reset: tips;
+    list-style: none;
+    margin: 12px 0;
+  }
+  .tips-list li {
+    counter-increment: tips;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 9px 14px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    font-size: 12px;
+  }
+  .tips-list li::before {
+    content: counter(tips);
+    background: #E3000F;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── TROUBLE TABLE ── */
+  .trouble-table td:first-child {
+    color: #b45309;
+    font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: #1a1a1a;
+    color: #9ca3af;
+    text-align: center;
+    padding: 16px 48px;
+    font-size: 11px;
+    margin-top: 40px;
+  }
+  .footer strong { color: #E3000F; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { font-size: 11px; }
+    .header { padding: 20px 32px; }
+    .content { padding: 20px 32px 32px; }
+    h2 { margin-top: 24px; }
+    .form-card { break-inside: avoid; }
+    .info-grid { break-inside: avoid; }
+    a { text-decoration: none; color: inherit; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>Panduan Penggunaan CRM</h1>
+    <p>Untuk Account Manager — Ideoworks Digital Agency</p>
+  </div>
+  <div class="header-right">
+    <div class="logo-text">IDEOWORKS</div>
+    <div>ideoworks.id</div>
+    <div>v1.0 · Mei 2026</div>
+  </div>
+</div>
+
+<!-- CONTACT BAR -->
+<div class="contact-bar">
+  Pertanyaan & bantuan teknis → hubungi <strong>Ryan</strong>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- INTRO -->
+  <div class="intro">
+    CRM ini berbasis <strong>Google Sheets + Google Forms</strong>. Sebagai AM, kamu <strong>tidak perlu buka spreadsheet</strong> — cukup isi form dari HP atau laptop. Data otomatis masuk ke pipeline, dashboard diperbarui real-time.
+  </div>
+
+  <!-- SECTION 1: FORM LOG ACTIVITY -->
+  <h2><span class="num">1</span> Form Log Aktivitas</h2>
+
+  <div class="form-card">
+    <div class="form-card-header">
+      <span class="form-title">IDW CRM — Log Activity</span>
+      <span class="form-badge">Diisi setelah setiap interaksi</span>
+    </div>
+    <div class="form-card-body">
+      <div class="link-box">
+        <span>Link:</span><br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZeII2tzpJLKSYPn6aMrLwQSnkD3Jb31U_c1OI9sNCGdnAig/viewform" target="_blank">
+          https://docs.google.com/forms/d/e/1FAIpQLSeZeII2tzpJLKSYPn6aMrLwQSnkD3Jb31U_c1OI9sNCGdnAig/viewform
+        </a>
+      </div>
+
+      <div class="when-label">Kapan diisi</div>
+      <ul class="when-list">
+        <li>Habis meeting / call dengan klien</li>
+        <li>Setelah kirim proposal atau rate card</li>
+        <li>Setiap follow-up yang perlu direkam</li>
+      </ul>
+
+      <table>
+        <thead><tr><th>Field</th><th>Keterangan</th></tr></thead>
+        <tbody>
+          <tr><td>AM Name</td><td>Nama kamu</td></tr>
+          <tr><td>Account</td><td>Pilih nama klien dari dropdown</td></tr>
+          <tr><td>Deal</td><td>Pilih deal yang relevan (opsional)</td></tr>
+          <tr><td>Activity Type</td><td>Meeting / Call / Email / WA / Proposal / dll</td></tr>
+          <tr><td>Outcome</td><td>Hasil singkat dari aktivitas</td></tr>
+          <tr><td>Notes</td><td>Catatan detail</td></tr>
+          <tr><td>Duration (min)</td><td>Durasi dalam menit</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 2: FORM NEW ACCOUNT -->
+  <h2><span class="num">2</span> Form New Account / Lead</h2>
+
+  <div class="form-card">
+    <div class="form-card-header">
+      <span class="form-title">IDW CRM — New Account / Lead</span>
+      <span class="form-badge">Diisi untuk klien baru</span>
+    </div>
+    <div class="form-card-body">
+      <div class="link-box">
+        <span>Link:</span><br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdnFYINLuWBLOnSmnG5H7iKOuFb5lTdQiT9BYB-XbRrB4yHrg/viewform" target="_blank">
+          https://docs.google.com/forms/d/e/1FAIpQLSdnFYINLuWBLOnSmnG5H7iKOuFb5lTdQiT9BYB-XbRrB4yHrg/viewform
+        </a>
+      </div>
+
+      <div class="when-label">Kapan diisi</div>
+      <ul class="when-list">
+        <li>Ada klien baru yang pertama kali masuk</li>
+        <li>Dapat referral atau lead dari pihak lain</li>
+      </ul>
+
+      <table>
+        <thead><tr><th>Field</th><th>Keterangan</th></tr></thead>
+        <tbody>
+          <tr><td>Account Name</td><td>Nama brand / perusahaan</td></tr>
+          <tr><td>PIC Name</td><td>Nama kontak klien</td></tr>
+          <tr><td>PIC Contact</td><td>Nomor HP — format: <strong>628xxx</strong> (tanpa 0 di depan)</td></tr>
+          <tr><td>PIC Email</td><td>Email kontak</td></tr>
+          <tr><td>Country</td><td>Indonesia / Other</td></tr>
+          <tr><td>Service Interest</td><td>Social Media / Ads / Web / dll</td></tr>
+          <tr><td>Est. Budget (IDR)</td><td>Estimasi budget klien</td></tr>
+          <tr><td>Source</td><td>Bagaimana lead ini masuk</td></tr>
+          <tr><td>Account Type</td><td>Prospect / Client / Partner</td></tr>
+          <tr><td>Assigned AM</td><td>Nama AM yang handle</td></tr>
+          <tr><td>Notes</td><td>Catatan tambahan</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 3: FORM UPDATE DEAL -->
+  <h2><span class="num">3</span> Form Update Deal</h2>
+
+  <div class="form-card">
+    <div class="form-card-header">
+      <span class="form-title">IDW CRM — Update Deal</span>
+      <span class="form-badge">Diisi saat status deal berubah</span>
+    </div>
+    <div class="form-card-body">
+      <div class="link-box">
+        <span>Link:</span><br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdVhM2scQbiSCqX1TMvp70XgfNgz2pV2Nhj4quLXYm4hbIj5w/viewform" target="_blank">
+          https://docs.google.com/forms/d/e/1FAIpQLSdVhM2scQbiSCqX1TMvp70XgfNgz2pV2Nhj4quLXYm4hbIj5w/viewform
+        </a>
+      </div>
+
+      <div class="when-label">Kapan diisi</div>
+      <ul class="when-list">
+        <li>Ada perubahan stage deal (misal: Proposal → Negotiation)</li>
+        <li>Update nilai deal atau next action</li>
+        <li>Deal won atau lost</li>
+      </ul>
+
+      <table>
+        <thead><tr><th>Field</th><th>Keterangan</th></tr></thead>
+        <tbody>
+          <tr><td>Account</td><td>Pilih nama klien</td></tr>
+          <tr><td>Deal</td><td>Pilih deal yang mau diupdate</td></tr>
+          <tr><td>New Stage</td><td>Stage baru (lihat alur stage di bawah)</td></tr>
+          <tr><td>Deal Value (IDR)</td><td>Nilai deal terbaru</td></tr>
+          <tr><td>Next Action</td><td>Langkah selanjutnya</td></tr>
+          <tr><td>Next Action Date</td><td>Kapan next action dilakukan</td></tr>
+          <tr><td>Lost Reason</td><td>Wajib diisi kalau stage = Lost</td></tr>
+          <tr><td>Notes</td><td>Catatan tambahan</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:16px;">Alur Stage Deal</h3>
+      <div style="font-size:11.5px; color:#374151; background:#f9fafb; border-radius:6px; padding:12px 16px; border:1px solid #e5e7eb; line-height:2;">
+        <span style="color:#E3000F; font-weight:600;">Lead</span> (5%)
+        → <span style="color:#E3000F; font-weight:600;">Qualified</span> (15%)
+        → <span style="color:#E3000F; font-weight:600;">Credentials Sent</span> (20%)
+        → <span style="color:#E3000F; font-weight:600;">Rate Card / Proposal Sent</span> (35%)
+        → <span style="color:#E3000F; font-weight:600;">Meeting Done</span> (50%)
+        → <span style="color:#E3000F; font-weight:600;">Hot Leads</span> (65%)
+        → <span style="color:#E3000F; font-weight:600;">Negotiation</span> (80%)
+        → <span style="color:#15803d; font-weight:600;">Won</span> (100%) / <span style="color:#b91c1c; font-weight:600;">Lost</span> (0%)
+      </div>
+      <p style="font-size:11px; color:#6b7280; margin-top:6px;">Angka dalam kurung = probabilitas closing. Weighted value di dashboard dihitung otomatis.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4: ALUR DATA -->
+  <h2><span class="num">4</span> Alur Data</h2>
+
+  <div class="flow-box">
+    Kamu isi Form
+    <span class="arrow"> → </span> Data masuk ke Form Responses
+    <span class="arrow"> → </span> Script otomatis routing:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Form 1 <span class="arrow">→</span> <span class="highlight">tab Activities</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Form 2 <span class="arrow">→</span> <span class="highlight">tab Accounts</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Form 3 <span class="arrow">→</span> <span class="highlight">tab Deals</span> (update baris existing)<br>
+    <br>
+    Dashboard &amp; Monday Review <span class="arrow">→</span> terbaca otomatis ✓
+  </div>
+
+  <!-- SECTION 5: DASHBOARD -->
+  <h2><span class="num">5</span> Dashboard &amp; Monday Review</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>&#9632; Dashboard</h4>
+      <ul>
+        <li>Total pipeline per AM</li>
+        <li>Weighted value vs target bulan / kuartal</li>
+        <li>Breakdown per stage</li>
+        <li>Deals stale (&gt;14 hari tidak ada aktivitas)</li>
+        <li>Win rate &amp; deal count</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>&#9632; Monday Review</h4>
+      <ul>
+        <li>Semua open deals terdaftar</li>
+        <li>Last activity date per deal</li>
+        <li>Next action &amp; due date</li>
+        <li>Flag deals yang sudah overdue</li>
+        <li>Cocok dibuka tiap Senin pagi</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 6: TARGET -->
+  <h2><span class="num">6</span> Target Tahunan</h2>
+
+  <div class="target-box">
+    <div class="icon">&#127919;</div>
+    <div>
+      <strong>Target revenue diatur otomatis dari Annual Target</strong>
+      Nilai <code>AnnualTargetIDR</code> di tab Users menjadi sumber kalkulasi:<br>
+      &bull; Target per kuartal = Annual ÷ 4<br>
+      &bull; Target per bulan = Annual ÷ 12<br><br>
+      Untuk mengubah target, hubungi <strong>Ryan</strong>.
+    </div>
+  </div>
+
+  <!-- SECTION 7: TIPS -->
+  <h2><span class="num">7</span> Tips Harian</h2>
+
+  <ul class="tips-list">
+    <li><strong>Simpan 3 link form di HP</strong> — pakai shortcut browser atau pin di WA saved messages supaya mudah diakses kapan saja</li>
+    <li><strong>Isi Form 1 setiap habis aktivitas</strong> — jangan tunggu numpuk, biar data dashboard akurat dan pipeline termonitor dengan baik</li>
+    <li><strong>Update Form 3 tiap ada perubahan stage</strong> — ini yang menggerakkan angka pipeline dan weighted value di dashboard</li>
+    <li><strong>Cek Monday Review tiap Senin pagi</strong> — lihat next action yang sudah jatuh tempo, prioritaskan follow-up hari itu</li>
+  </ul>
+
+  <!-- SECTION 8: TROUBLESHOOTING -->
+  <h2><span class="num">8</span> Troubleshooting</h2>
+
+  <table class="trouble-table">
+    <thead><tr><th>Masalah</th><th>Solusi</th></tr></thead>
+    <tbody>
+      <tr><td>Nama klien tidak muncul di dropdown form</td><td>Klien belum terdaftar — isi Form 2 (New Account) dulu</td></tr>
+      <tr><td>Data tidak muncul di Dashboard setelah submit form</td><td>Tunggu ~1 menit lalu refresh spreadsheet</td></tr>
+      <tr><td>Form tidak bisa diakses / error permission</td><td>Pastikan login Google dengan akun Ideoworks (@ideoworks.co.id)</td></tr>
+      <tr><td>Deal tidak ada di dropdown Form 3</td><td>Deal belum dibuat — buat dulu lewat spreadsheet atau hubungi Ryan</td></tr>
+      <tr><td>Ada data salah yang perlu dikoreksi</td><td>Hubungi Ryan untuk koreksi langsung di spreadsheet</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>IDEOWORKS</strong> — Creativity is Everywhere &nbsp;|&nbsp; ideoworks.id &nbsp;|&nbsp;
+  Pertanyaan: hubungi <strong>Ryan</strong> &nbsp;|&nbsp; CRM v1.0 · Mei 2026
+</div>
+
+</body>
+</html>

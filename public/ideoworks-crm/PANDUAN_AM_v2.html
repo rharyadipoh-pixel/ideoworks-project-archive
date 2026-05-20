@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan CRM — Ideoworks</title>
+<style>
+  :root {
+    --red:    #CC0000;
+    --red-dk: #990000;
+    --white:  #FFFFFF;
+    --grey:   #F5F5F5;
+    --text:   #1A1A1A;
+    --muted:  #666666;
+    --border: #E0E0E0;
+    --green:  #2E7D32;
+    --amber:  #E65100;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--white);
+    max-width: 680px;
+    margin: 0 auto;
+    padding-bottom: 48px;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--red);
+    color: var(--white);
+    padding: 20px 24px 16px;
+  }
+  .site-header .brand {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+  .site-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .site-header .subtitle {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+
+  /* ── Section ── */
+  .section {
+    padding: 24px 24px 0;
+  }
+  .section + .section {
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #333;
+    margin-bottom: 12px;
+  }
+
+  /* ── Form Cards ── */
+  .form-card {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .form-card-header {
+    background: var(--red);
+    color: var(--white);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .form-card-header .icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+  .form-card-header .form-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .form-card-header .form-time {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 1px;
+  }
+  .form-card-body {
+    padding: 16px 18px;
+    background: var(--white);
+  }
+  .form-card-body .trigger-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .form-card-body .trigger-text {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .form-link {
+    display: block;
+    background: var(--red);
+    color: var(--white);
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-top: 4px;
+    transition: background 0.15s;
+  }
+  .form-link:hover { background: var(--red-dk); }
+  .form-link-placeholder {
+    display: block;
+    background: var(--grey);
+    color: var(--muted);
+    text-align: center;
+    font-size: 13px;
+    padding: 11px 18px;
+    border-radius: 8px;
+    margin-top: 4px;
+    border: 1.5px dashed var(--border);
+  }
+
+  /* ── Flow diagram ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 16px 0;
+  }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--grey);
+    border-radius: 8px;
+    margin-bottom: 4px;
+  }
+  .flow-step .step-num {
+    background: var(--red);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .flow-step .step-text {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .flow-step .step-text strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .flow-step .step-text span {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ── Fields list ── */
+  .fields {
+    list-style: none;
+    margin: 8px 0 12px;
+  }
+  .fields li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .fields li:last-child { border-bottom: none; }
+  .fields li .field-name {
+    font-weight: 600;
+    min-width: 130px;
+    flex-shrink: 0;
+  }
+  .fields li .field-note { color: var(--muted); }
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .badge-req  { background: #FFEBEE; color: var(--red); }
+  .badge-opt  { background: #F5F5F5; color: var(--muted); }
+  .badge-auto { background: #E8F5E9; color: var(--green); }
+
+  /* ── Branch indicator ── */
+  .branch {
+    background: #FFF8E1;
+    border-left: 3px solid #FFC107;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: #5D4037;
+    margin: 8px 0 4px;
+  }
+  .branch strong { display: block; margin-bottom: 2px; }
+
+  /* ── Rules ── */
+  .rules {
+    counter-reset: rule;
+    list-style: none;
+    margin: 8px 0;
+  }
+  .rules li {
+    counter-increment: rule;
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .rules li:last-child { border-bottom: none; }
+  .rules li::before {
+    content: counter(rule);
+    background: var(--red);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rules li .rule-text { font-size: 14px; line-height: 1.5; }
+  .rules li .rule-text strong { display: block; margin-bottom: 2px; }
+  .rules li .rule-text span { color: var(--muted); font-size: 13px; }
+
+  /* ── Trouble table ── */
+  .trouble-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .trouble-table th {
+    background: var(--grey);
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+  }
+  .trouble-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .trouble-table tr:last-child td { border-bottom: none; }
+  .trouble-table td:first-child { font-weight: 600; }
+
+  /* ── Info box ── */
+  .info-box {
+    background: var(--grey);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin: 12px 0;
+  }
+  .info-box .info-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 40px;
+    padding: 20px 24px;
+    background: var(--grey);
+    border-top: 2px solid var(--red);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .footer strong { color: var(--text); }
+
+  @media (max-width: 400px) {
+    .fields li { flex-wrap: wrap; }
+    .fields li .field-name { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <div class="brand">Ideoworks · CRM</div>
+  <h1>Panduan AM — CRM v2</h1>
+  <div class="subtitle">Untuk: Account Manager &amp; Leader · Pertanyaan → Ryan</div>
+</header>
+
+
+<!-- ── DEV BANNER ── -->
+<div style="background:#FFF3CD;border-bottom:2px solid #FFC107;padding:10px 24px;font-size:12px;color:#5D4037;">
+  <strong>Development Testing</strong> — Sistem ini masih dalam tahap uji coba. Silakan test kedua form dan berikan feedback ke Ryan (ryan@ideoworks.co.id).
+  <a href="https://docs.google.com/spreadsheets/d/1fiMUWtuwPHk75iWsLcL7iVpN3DrodSCymV8s07e6-9s" target="_blank" style="color:#CC0000;font-weight:600;margin-left:8px;">Buka Sheet CRM</a>
+</div>
+
+<!-- ── INTRO ── -->
+<div class="section">
+  <div class="section-label">Cara Kerja</div>
+  <h2>2 Form. 2 Trigger. Simpel.</h2>
+  <p>
+    Kamu input lewat Form, data masuk ke Sheet otomatis. Tidak perlu buka spreadsheet — cukup isi form dari HP kapanpun.
+  </p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <strong>Habis ngobrol sama client atau lead?</strong>
+        <span>Buka Form 1 — catat aktivitas + update deal kalau ada pergerakan</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <strong>Ada company baru yang masuk?</strong>
+        <span>Buka Form 2 — daftarkan lead baru ke sistem</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <strong>Mau lihat pipeline kamu?</strong>
+        <span>Buka tab "My Deals – [Namamu]" di Sheet — sudah difilter dan diurutkan</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── FORM 1 ── -->
+<div class="section">
+  <div class="section-label">Form 1</div>
+
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="icon">📞</div>
+      <div>
+        <div class="form-title">Apa yang terjadi?</div>
+        <div class="form-time">Target: 10–30 detik</div>
+      </div>
+    </div>
+    <div class="form-card-body">
+      <div class="trigger-label">Kapan dibuka</div>
+      <div class="trigger-text">"Habis ngobrol sama siapapun — client, lead, atau prospect"</div>
+
+      <ul class="fields">
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Nama AM</span>
+          <span class="field-note">Nama kamu</span>
+        </li>
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Nama Akun</span>
+          <span class="field-note">Ketik nama perusahaan atau klien — sebagian kata sudah cukup</span>
+        </li>
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Jenis Update</span>
+          <span class="field-note">Aktivitas / Update Deal / Won / Lost</span>
+        </li>
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Catatan / Detail</span>
+          <span class="field-note">Apa yang terjadi — meeting, call, proposal, dll</span>
+        </li>
+        <li>
+          <span class="badge badge-opt">Opsional</span>
+          <span class="field-name">Nilai Deal (Rp)</span>
+          <span class="field-note">Isi jika ada perubahan nilai deal</span>
+        </li>
+        <li>
+          <span class="badge badge-opt">Opsional</span>
+          <span class="field-name">Stage Sekarang</span>
+          <span class="field-note">Prospek / Proposal / Negosiasi / Won / Lost</span>
+        </li>
+        <li>
+          <span class="badge badge-opt">Opsional</span>
+          <span class="field-name">Follow-up Berikutnya</span>
+          <span class="field-note">Tanggal follow-up selanjutnya</span>
+        </li>
+      </ul>
+
+      <div class="branch">
+        <strong>Pilih "Update Deal":</strong>
+        Isi Stage Sekarang, Nilai Deal, dan Follow-up Berikutnya supaya pipeline selalu akurat.
+      </div>
+      <div class="branch">
+        <strong>Pilih "Won":</strong>
+        Deal ditutup sebagai Won. Leader langsung dapat notif email.
+      </div>
+      <div class="branch">
+        <strong>Pilih "Lost":</strong>
+        Deal ditutup sebagai Lost. Leader langsung dapat notif email.
+      </div>
+
+      <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSekAd3JZ1YRzSiCsQLD0zCNNjgO4aKc5aMWfalHJYKtl9Yaqw/viewform" target="_blank">Buka Form 1 — Apa yang terjadi?</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── FORM 2 ── -->
+<div class="section">
+  <div class="section-label">Form 2</div>
+
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="icon">🆕</div>
+      <div>
+        <div class="form-title">Lead Baru</div>
+        <div class="form-time">Target: 25 detik · 6 field</div>
+      </div>
+    </div>
+    <div class="form-card-body">
+      <div class="trigger-label">Kapan dibuka</div>
+      <div class="trigger-text">"Ada company baru yang masuk — inbound, referral, atau ketemu di event"</div>
+
+      <ul class="fields">
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Nama Kamu</span>
+          <span class="field-note">Nama kamu — AM, Leader, COO, atau siapapun</span>
+        </li>
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Nama Perusahaan</span>
+          <span class="field-note">Nama brand / company</span>
+        </li>
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Nama PIC</span>
+          <span class="field-note">Kontak di perusahaan tersebut</span>
+        </li>
+        <li>
+          <span class="badge badge-opt">Opsional</span>
+          <span class="field-name">No. HP / Email PIC</span>
+          <span class="field-note">Format WA: 628xxx</span>
+        </li>
+        <li>
+          <span class="badge badge-req">Wajib</span>
+          <span class="field-name">Sumber Lead</span>
+          <span class="field-note">Referral / LinkedIn / Cold Outreach / Event / Inbound / Lainnya</span>
+        </li>
+        <li>
+          <span class="badge badge-opt">Opsional</span>
+          <span class="field-name">Catatan Awal</span>
+          <span class="field-note">Konteks singkat tentang lead ini</span>
+        </li>
+      </ul>
+
+      <div class="info-box">
+        <div class="info-label">Auto setelah submit</div>
+        Lead langsung masuk ke Sheet. Leader akan assign AM dan buat deal.
+        Form ini untuk semua tim — bukan cuma AM.
+      </div>
+
+      <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSc0-zORg94Xkorx48t6JLfnfD9M-XjEsRPhhOwkXJUWOeKnJg/viewform" target="_blank">Buka Form 2 — Lead Baru</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 3 RULES ── -->
+<div class="section">
+  <div class="section-label">Aturan Main</div>
+  <h2>3 Aturan. Tidak ada negosiasi.</h2>
+
+  <ul class="rules">
+    <li>
+      <div class="rule-text">
+        <strong>Setiap open deal wajib punya Next Action + Next Action Date</strong>
+        <span>Cell merah di kolom O dan P = belum diisi. Itu tanggung jawabmu. Lihat My Deals tab.</span>
+      </div>
+    </li>
+    <li>
+      <div class="rule-text">
+        <strong>Tidak ada deal diam lebih dari 14 hari tanpa aktivitas</strong>
+        <span>Amber = 14 hari. Merah = 21 hari. Kalau muncul di Monday Review, Pak Ari akan tanya kamu.</span>
+      </div>
+    </li>
+    <li>
+      <div class="rule-text">
+        <strong>Deal close (Won/Lost) harus lewat Form 1</strong>
+        <span>Pilih "Won ✅" atau "Lost ❌" di pertanyaan "Deal bergerak?". Jangan diam — Leader langsung dapat notif.</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<!-- ── MY DEALS TAB ── -->
+<div class="section">
+  <div class="section-label">Dashboard Kamu</div>
+  <h2>Tab "My Deals – [Namamu]"</h2>
+  <p>
+    Ini landing page pipeline kamu. Otomatis difilter — hanya deal yang assigned ke kamu, open deals aja, diurutkan berdasarkan Next Action Date paling dekat.
+  </p>
+
+  <div class="info-box">
+    <div class="info-label">Habit pagi — 2 menit</div>
+    Buka tab ini setiap pagi. Lihat baris merah = ada yang perlu difollow up hari ini.
+    Simpan link Sheet di bookmark HP-mu.
+  </div>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">✓</div>
+      <div class="step-text">
+        <strong>Warna hijau</strong>
+        <span>Deal Won — selesai</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">!</div>
+      <div class="step-text">
+        <strong>Warna amber</strong>
+        <span>Stale 14 hari — perlu difollow up atau ubah stage</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">!!</div>
+      <div class="step-text">
+        <strong>Warna merah</strong>
+        <span>Stale 21+ hari atau Next Action kosong — urgent, fix sekarang</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── TROUBLESHOOTING ── -->
+<div class="section">
+  <div class="section-label">Troubleshooting</div>
+  <h2>Kalau ada masalah</h2>
+
+  <table class="trouble-table">
+    <thead>
+      <tr>
+        <th>Masalah</th>
+        <th>Solusi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Nama client tidak muncul di dropdown Form 1</td>
+        <td>Belum terdaftar — isi Form 2 dulu. Akan muncul dalam hitungan detik setelah submit.</td>
+      </tr>
+      <tr>
+        <td>Form tidak bisa diakses</td>
+        <td>Pastikan login Google pakai akun <strong>@ideoworks.co.id</strong></td>
+      </tr>
+      <tr>
+        <td>Salah input data</td>
+        <td>Hubungi Ryan — koreksi dilakukan langsung di Sheet</td>
+      </tr>
+      <tr>
+        <td>Deal tidak muncul di My Deals tab</td>
+        <td>Cek apakah Assigned AM di Deals tab sudah sesuai namamu. Kalau belum, hubungi Leader.</td>
+      </tr>
+      <tr>
+        <td>Dashboard tidak update</td>
+        <td>Refresh Sheet (Ctrl+R atau F5). Kalau masih tidak update, hubungi Ryan.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ── BATAS SISTEM ── -->
+<div class="section">
+  <div class="section-label">Yang Masuk di Sini vs Tidak</div>
+  <h2>Batas Sistem</h2>
+
+  <table class="trouble-table">
+    <thead>
+      <tr>
+        <th>Hal</th>
+        <th>Tempatnya</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Interaksi sama client / lead (call, WA, meeting, email, lunch)</td>
+        <td>✅ Form 1</td>
+      </tr>
+      <tr>
+        <td>Pipeline bergerak — stage, value, next action, close</td>
+        <td>✅ Form 1 (pilih "Deal bergerak?")</td>
+      </tr>
+      <tr>
+        <td>Lead baru / company baru masuk</td>
+        <td>✅ Form 2</td>
+      </tr>
+      <tr>
+        <td>Internal task — bikin deck, revisi proposal, meeting internal</td>
+        <td>❌ Plaky, bukan di sini</td>
+      </tr>
+      <tr>
+        <td>Credentials, password, ad account login</td>
+        <td>❌ 1Password / Bitwarden</td>
+      </tr>
+      <tr>
+        <td>MP / Deck / Proposal dokumen</td>
+        <td>❌ Google Drive (link ditempel di kolom Deal)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <strong>IDEOWORKS CRM v2</strong> · Pertanyaan atau ada yang salah → hubungi <strong>Ryan</strong> (ryan@ideoworks.co.id)<br>
+  <span style="font-size:12px; margin-top:4px; display:block;">Data kamu aman di Google Sheet — kamu Viewer, tidak bisa merusak formula.</span>
+</div>
+
+</body>
+</html>

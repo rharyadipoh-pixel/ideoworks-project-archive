@@ -1,0 +1,841 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth Team: Shareholder Briefing Q2 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:      #E63027;
+  --red2:     #B91C1C;
+  --red-lite: #FEF2F2;
+  --red-mid:  #FECACA;
+  --charcoal: #1E2B4A;
+  --grey-dk:  #334155;
+  --grey-md:  #64748B;
+  --grey-lt:  #F1F5F9;
+  --grey-ln:  #CBD5E1;
+  --white:    #FFFFFF;
+  --stone:    #78716C;
+  --green:    #15803D;
+  --amber:    #D97706;
+  --teal:     #0E7490;
+  --shadow:   0 2px 12px rgba(0,0,0,.07);
+  --fh: 'Plus Jakarta Sans', sans-serif;
+  --fb: 'Inter', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { width:100%; height:100%; background:#111; overflow:hidden; font-family:var(--fb); }
+
+#deck {
+  position:fixed; top:50%; left:50%;
+  width:1280px; height:720px;
+  background:var(--white); overflow:hidden;
+  transform:translate(-50%,-50%) scale(var(--scale,1));
+  transform-origin:center center;
+}
+
+.slide { position:absolute; inset:0; display:none; flex-direction:column; background:var(--white); }
+.slide.active { display:flex; }
+
+#nav {
+  position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:16px;
+  background:rgba(10,10,10,.8); backdrop-filter:blur(8px);
+  padding:8px 18px; border-radius:40px; z-index:999;
+}
+#nav button { width:32px; height:32px; border-radius:50%; border:none; background:rgba(255,255,255,.12); color:#fff; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+#nav button:hover { background:var(--red); }
+#counter { color:rgba(255,255,255,.7); font-size:12px; font-family:var(--fb); min-width:52px; text-align:center; }
+
+.slide-hdr { background:var(--red); padding:0 36px; height:68px; min-height:68px; display:flex; align-items:center; gap:16px; flex-shrink:0; }
+.slide-hdr h2 { font-family:var(--fh); font-size:22px; font-weight:800; color:var(--white); letter-spacing:.01em; line-height:1; }
+.slide-hdr .sub { font-size:12px; color:rgba(255,200,200,.9); font-family:var(--fb); margin-left:2px; }
+
+.slide-footer { background:var(--grey-lt); border-top:1px solid var(--grey-ln); height:34px; min-height:34px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.slide-footer span { font-size:11px; color:var(--grey-md); font-family:var(--fb); letter-spacing:.03em; }
+
+.body { flex:1; min-height:0; overflow:hidden; padding:18px 24px; }
+
+.tag { display:inline-block; padding:2px 9px; border-radius:3px; font-size:9px; font-weight:700; background:var(--red-lite); color:var(--red); font-family:var(--fb); letter-spacing:.05em; text-transform:uppercase; }
+
+/* ═══════════ PASSWORD GATE ═══════════ */
+#gate {
+  position:fixed; inset:0; background:#111;
+  display:flex; align-items:center; justify-content:center;
+  z-index:9999; font-family:var(--fb);
+}
+#gate-card {
+  width:420px; background:var(--white); border-radius:6px;
+  overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.5);
+}
+#gate-top {
+  background:var(--red); padding:24px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+#gate-brand {
+  font-family:var(--fh); font-size:18px; font-weight:800;
+  color:var(--white); letter-spacing:.04em;
+}
+#gate-label {
+  font-size:9px; font-weight:700; letter-spacing:.1em;
+  color:rgba(255,255,255,.6); text-transform:uppercase;
+}
+#gate-body { padding:28px 28px 20px; }
+#gate-title {
+  font-family:var(--fh); font-size:22px; font-weight:800;
+  color:var(--charcoal); line-height:1.2; margin-bottom:10px;
+}
+#gate-title span { color:var(--grey-md); font-size:14px; font-weight:500; }
+#gate-hint { font-size:12px; color:var(--grey-md); margin-bottom:18px; }
+#gate-field { display:flex; gap:8px; }
+#gate-input {
+  flex:1; padding:10px 14px; border:1.5px solid var(--grey-ln);
+  border-radius:4px; font-size:14px; font-family:var(--fb);
+  outline:none; transition:border-color .15s; color:var(--charcoal);
+}
+#gate-input:focus { border-color:var(--red); }
+#gate-btn {
+  padding:10px 20px; background:var(--red); color:var(--white);
+  border:none; border-radius:4px; font-size:13px; font-weight:700;
+  font-family:var(--fb); cursor:pointer; transition:background .15s;
+}
+#gate-btn:hover { background:var(--red2); }
+#gate-err {
+  font-size:11px; color:var(--red); margin-top:10px;
+  display:none; font-weight:600;
+}
+#gate-footer {
+  background:var(--grey-lt); border-top:1px solid var(--grey-ln);
+  padding:10px 28px; font-size:10px; color:var(--grey-md);
+  letter-spacing:.02em;
+}
+
+/* ═══════════ SLIDE 1 - COVER ═══════════ */
+#s1 { flex-direction:column; }
+#s1 .main-row { display:flex; flex:1; min-height:0; flex-direction:row; }
+#s1 .left { flex:1; padding:0 52px; display:flex; flex-direction:column; justify-content:center; position:relative; }
+#s1 .top-bar { position:absolute; top:0; left:0; right:0; height:130px; background:var(--red); }
+#s1 .left-content { position:relative; z-index:1; padding-top:110px; }
+#s1 h1 { font-family:var(--fh); font-size:56px; font-weight:800; color:var(--charcoal); line-height:.92; letter-spacing:-.02em; }
+#s1 h1 span { color:var(--red); display:block; }
+#s1 .rule { width:280px; height:6px; background:var(--red); margin:18px 0; }
+#s1 .tagline { font-size:17px; color:var(--grey-md); font-family:var(--fb); }
+#s1 .team-list { margin-top:22px; display:flex; flex-direction:column; gap:5px; }
+#s1 .team-list p { font-size:11px; color:var(--grey-md); }
+#s1 .right { width:360px; background:var(--grey-lt); display:flex; flex-direction:column; }
+#s1 .right-top { background:var(--red); padding:36px 30px; flex:0 0 auto; }
+#s1 .right-top .big { font-family:var(--fh); font-size:34px; font-weight:800; color:var(--white); line-height:1; }
+#s1 .right-top .big span { color:rgba(255,255,255,.65); }
+#s1 .right-cards { padding:20px; display:flex; flex-direction:column; gap:14px; flex:1; justify-content:center; }
+#s1 .info-card { background:var(--white); padding:14px 16px; border-radius:4px; box-shadow:var(--shadow); }
+#s1 .info-card .label { font-size:9px; font-weight:700; color:var(--red); letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px; }
+#s1 .info-card .val { font-family:var(--fh); font-size:14px; font-weight:700; color:var(--charcoal); }
+#s1 .info-card .val2 { font-size:11px; color:var(--grey-md); margin-top:2px; }
+#s1 .bottom-bar { background:var(--grey-lt); border-top:1px solid var(--grey-ln); padding:12px 52px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+#s1 .bottom-bar .brand { font-family:var(--fh); font-size:14px; font-weight:800; color:var(--charcoal); }
+#s1 .bottom-bar .conf { font-size:9px; font-weight:700; color:var(--grey-md); letter-spacing:.08em; }
+
+/* ═══════════ SLIDE 2 - WHO WE ARE ═══════════ */
+#s2 .body { display:flex; flex-direction:column; gap:10px; padding:14px 24px; justify-content:center; }
+#s2 .vienesia { background:var(--grey-lt); border-radius:4px; padding:14px 20px; display:flex; align-items:center; gap:24px; position:relative; overflow:hidden; flex-shrink:0; }
+#s2 .vienesia::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--red); }
+#s2 .vienesia .vname { font-family:var(--fh); font-size:15px; font-weight:800; color:var(--charcoal); }
+#s2 .vienesia .vrole { font-size:11px; font-weight:700; color:var(--red); margin-top:2px; }
+#s2 .vienesia .vbullets { font-size:10.5px; color:var(--grey-md); margin-left:auto; text-align:right; }
+#s2 .fork-row { display:flex; gap:16px; flex-shrink:0; height:10px; }
+#s2 .fork-ads { flex:2; display:flex; justify-content:center; }
+#s2 .fork-pm { flex:1; display:flex; justify-content:center; }
+#s2 .fork-line { width:2px; background:var(--grey-ln); height:10px; }
+#s2 .two-branches { display:flex; gap:16px; flex:1; min-height:0; align-items:stretch; }
+#s2 .ads-branch { flex:2; display:flex; flex-direction:column; }
+#s2 .branch-con { display:flex; justify-content:center; flex-shrink:0; }
+#s2 .branch-con .line { width:2px; height:12px; background:var(--grey-ln); }
+#s2 .branch-con.grow { flex:1; }
+#s2 .branch-con.grow .line { height:100%; }
+#s2 .ryan { background:var(--red-lite); border-radius:4px; padding:12px 24px; text-align:center; position:relative; overflow:hidden; flex-shrink:0; }
+#s2 .ryan::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--red); }
+#s2 .ryan .rname { font-family:var(--fh); font-size:15px; font-weight:800; color:var(--charcoal); }
+#s2 .ryan .rrole { font-size:11px; font-weight:700; color:var(--red); margin-top:2px; }
+#s2 .ryan .rresp { font-size:12px; color:var(--grey-md); margin-top:9px; padding-top:9px; border-top:1px solid rgba(230,48,39,.2); line-height:1.6; }
+#s2 .ads-pair { display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; flex-shrink:0; }
+#s2 .pm-branch { flex:1; display:flex; flex-direction:column; }
+#s2 .pm-con { flex:1; display:flex; justify-content:center; }
+#s2 .pm-line { width:2px; background:var(--grey-ln); }
+#s2 .member { border-radius:4px; padding:16px; position:relative; overflow:hidden; display:flex; flex-direction:column; }
+#s2 .member::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+#s2 .member.ads1 { background:var(--red-lite); } #s2 .member.ads1::before { background:var(--red); }
+#s2 .member.ads2 { background:var(--red-lite); } #s2 .member.ads2::before { background:var(--red2); }
+#s2 .member.pm { background:#FAF9F7; } #s2 .member.pm::before { background:var(--stone); }
+#s2 .member .mname { font-family:var(--fh); font-size:15px; font-weight:800; color:var(--charcoal); }
+#s2 .member .mrole { font-size:10.5px; font-weight:700; margin-top:2px; }
+#s2 .member ul { list-style:none; margin-top:10px; }
+#s2 .member ul li { font-size:11px; color:var(--grey-md); padding:2.5px 0; }
+#s2 .member ul li::before { content:"›  "; }
+#s2 .member .platforms { display:flex; flex-wrap:wrap; gap:5px; margin-top:14px; padding-top:12px; border-top:1px solid rgba(0,0,0,.07); }
+#s2 .member .plt-tag { font-size:9.5px; font-weight:700; padding:3px 9px; border-radius:20px; background:var(--white); color:var(--grey-md); letter-spacing:.3px; }
+
+/* ═══════════ SLIDE 3 - WHAT WE DO (redesigned) ═══════════ */
+#s3 .body { display:grid; grid-template-columns:1fr 360px; gap:14px; }
+#s3 .lane { border-radius:4px; padding:20px; position:relative; overflow:hidden; display:flex; flex-direction:column; }
+#s3 .ads-lane { background:var(--grey-lt); }
+#s3 .ads-lane::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--red); }
+#s3 .pm-lane { background:#FAF9F7; }
+#s3 .pm-lane::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--stone); }
+#s3 .lane-title { font-family:var(--fh); font-size:19px; font-weight:800; color:var(--charcoal); }
+#s3 .lane-sub { font-size:11px; font-weight:600; color:var(--grey-md); margin-top:2px; margin-bottom:16px; }
+#s3 .svc-row { display:flex; align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid var(--grey-ln); flex:1; }
+#s3 .svc-cat { font-size:12px; font-weight:800; letter-spacing:.06em; min-width:130px; flex-shrink:0; }
+#s3 .svc-cat.red { color:var(--red); }
+#s3 .svc-cat.red2 { color:var(--red2); }
+#s3 .svc-cat.dkred { color:#7F1D1D; }
+#s3 .svc-cat.stone { color:var(--stone); }
+#s3 .svc-items { font-size:12px; color:var(--grey-md); line-height:1.5; }
+#s3 .svc-caps { display:flex; flex-wrap:wrap; gap:6px; flex-shrink:0; padding-top:14px; border-top:1px solid var(--grey-ln); }
+#s3 .svc-cap { font-size:9.5px; font-weight:700; padding:3px 10px; border-radius:20px; background:var(--white); color:var(--grey-md); }
+
+/* ═══════════ SLIDE 4 - REQUEST FLOW (redesigned) ═══════════ */
+#s4 .body { display:flex; flex-direction:column; gap:10px; }
+#s4 .steps { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex-shrink:0; }
+#s4 .step { border-radius:4px; padding:16px; position:relative; }
+#s4 .step-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:3px; background:rgba(255,255,255,.2); font-family:var(--fh); font-size:15px; font-weight:800; color:var(--white); margin-bottom:9px; }
+#s4 .step-label { font-size:12px; font-weight:700; color:var(--white); line-height:1.3; }
+#s4 .step-arrow { position:absolute; right:-7px; top:50%; transform:translateY(-50%); font-size:12px; color:var(--grey-ln); z-index:2; }
+#s4 .triage-bar { background:#FEF3C7; border-radius:3px; padding:7px 14px; flex-shrink:0; }
+#s4 .triage-label { font-size:10px; font-weight:800; color:#92400A; letter-spacing:.06em; }
+#s4 .triage-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; flex:1; min-height:0; }
+#s4 .triage-col { border-radius:3px; padding:16px; display:flex; flex-direction:column; }
+#s4 .tc-head { font-size:12px; font-weight:800; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid rgba(0,0,0,.07); }
+#s4 .tc-rules { list-style:none; flex:1; display:flex; flex-direction:column; }
+#s4 .tc-rules li { font-size:13px; color:var(--grey-md); padding:5px 0; border-bottom:1px solid rgba(0,0,0,.04); flex:1; display:flex; align-items:center; }
+#s4 .tc-rules li::before { content:"→  "; flex-shrink:0; }
+#s4 .tc-rules li:last-child { border-bottom:none; }
+#s4 .tc-tag { margin-top:12px; padding:7px 12px; border-radius:3px; font-size:10px; font-weight:700; text-align:center; }
+
+/* ═══════════ SLIDE 5 - SLA ═══════════ */
+#s5 .body { display:grid; grid-template-columns:1fr 340px; gap:14px; }
+#s5 .sla-panel { background:var(--grey-lt); border-radius:4px; padding:18px; display:flex; flex-direction:column; }
+#s5 .section-title { font-family:var(--fh); font-size:14px; font-weight:800; color:var(--charcoal); margin-bottom:12px; }
+#s5 .sla-table { width:100%; border-collapse:collapse; }
+#s5 .sla-table th { background:var(--red); color:var(--white); font-size:11px; font-weight:700; padding:11px 12px; text-align:left; }
+#s5 .sla-table td { font-size:11px; padding:13px 12px; border-bottom:1px solid var(--grey-ln); }
+#s5 .sla-table tbody tr { height:62px; }
+#s5 .sla-table tr:nth-child(odd) td { background:var(--white); }
+#s5 .sla-table tr:nth-child(even) td { background:var(--grey-lt); }
+#s5 .sla-table td:first-child { color:var(--charcoal); font-weight:600; }
+#s5 .sla-table td:not(:first-child) { color:var(--grey-md); }
+#s5 .check-panel { background:var(--white); border-radius:4px; padding:18px; border-top:4px solid var(--red); box-shadow:var(--shadow); display:flex; flex-direction:column; }
+#s5 .check-item { display:flex; align-items:flex-start; gap:10px; padding:6px 0; border-bottom:1px solid var(--grey-lt); }
+#s5 .check-item:last-child { border-bottom:none; }
+#s5 .check-icon { width:22px; height:22px; background:var(--red); border-radius:2px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+#s5 .check-icon svg { width:12px; height:12px; fill:none; stroke:white; stroke-width:2.5; }
+#s5 .check-text { font-size:11px; color:var(--grey-md); padding-top:2px; }
+
+/* ═══════════ SLIDE 6 - CLIENT PORTFOLIO ═══════════ */
+#s6 .body { display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:1fr; gap:14px; }
+#s6 .client-card { background:var(--grey-lt); border-radius:4px; padding:20px; position:relative; overflow:hidden; display:flex; flex-direction:column; }
+#s6 .client-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+#s6 .c-wink::before { background:var(--red); }
+#s6 .c-verisign::before { background:var(--red2); }
+#s6 .c-mayo::before { background:var(--teal); }
+#s6 .c-goodyear::before { background:#7F1D1D; }
+#s6 .c-idw::before { background:var(--stone); }
+#s6 .client-header { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+#s6 .client-name { font-family:var(--fh); font-size:17px; font-weight:800; color:var(--charcoal); }
+#s6 .client-type { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+#s6 .t-wink { color:var(--red); }
+#s6 .t-verisign { color:var(--red2); }
+#s6 .t-mayo { color:var(--teal); }
+#s6 .t-goodyear { color:#7F1D1D; }
+#s6 .t-idw { color:var(--stone); }
+#s6 .client-desc { font-size:11.5px; color:var(--grey-md); line-height:1.55; flex:1; }
+#s6 .client-challenge { font-size:10.5px; color:var(--grey-md); margin-top:10px; padding-top:10px; border-top:1px solid var(--grey-ln); font-style:italic; }
+
+/* ═══════════ SLIDES 7 & 8 - CLIENT HIGHLIGHTS (3-col & 2-col) ═══════════ */
+.hl-body-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.hl-body-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+.client-col { border-radius:4px; overflow:hidden; display:flex; flex-direction:column; }
+.col-hdr { padding:14px 18px; position:relative; flex-shrink:0; }
+.col-hdr::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+.v-hdr { background:var(--red-lite); } .v-hdr::before { background:var(--red2); }
+.m-hdr { background:#EFF6FF; } .m-hdr::before { background:var(--teal); }
+.g-hdr { background:#FEF2F2; } .g-hdr::before { background:#7F1D1D; }
+.w-hdr { background:var(--red-lite); } .w-hdr::before { background:var(--red); }
+.i-hdr { background:#FAF9F7; } .i-hdr::before { background:var(--stone); }
+.col-name { font-family:var(--fh); font-size:17px; font-weight:800; color:var(--charcoal); }
+.col-tag { font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-top:2px; }
+.v-hdr .col-tag { color:var(--red2); }
+.m-hdr .col-tag { color:var(--teal); }
+.g-hdr .col-tag { color:#7F1D1D; }
+.w-hdr .col-tag { color:var(--red); }
+.i-hdr .col-tag { color:var(--stone); }
+.col-rows { flex:1; display:flex; flex-direction:column; }
+.col-row { padding:10px 18px; border-bottom:1px solid var(--grey-lt); flex:1; display:flex; flex-direction:column; justify-content:flex-start; }
+.col-row:nth-child(odd) { background:var(--white); }
+.col-row:nth-child(even) { background:var(--grey-lt); }
+.row-label { font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px; }
+.row-label.obj { color:var(--red); }
+.row-label.ch { color:var(--red2); }
+.row-label.sol { color:var(--green); }
+.row-label.ins { color:var(--amber); }
+.row-text { font-size:13px; color:var(--grey-md); line-height:1.5; }
+
+/* ═══════════ SLIDE 9 - AI PORTFOLIO ═══════════ */
+#s9 .body { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:auto; align-content:center; gap:12px; }
+#s9 .ai-card { background:var(--grey-lt); border-radius:4px; padding:20px; position:relative; overflow:hidden; display:flex; flex-direction:column; transition:transform .15s, box-shadow .15s; }
+#s9 .ai-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--red); }
+#s9 a.ai-card { text-decoration:none; cursor:pointer; color:inherit; }
+#s9 a.ai-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(230,48,39,.14); }
+#s9 a.ai-card .ai-name { color:var(--charcoal); }
+#s9 a.ai-card .ai-desc { color:var(--grey-md); }
+#s9 .ai-card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px; }
+#s9 .ai-name { font-family:var(--fh); font-size:14px; font-weight:800; color:var(--charcoal); }
+#s9 .ai-badge-live { font-size:8px; font-weight:800; letter-spacing:.07em; background:var(--red); color:var(--white); padding:3px 8px; border-radius:20px; flex-shrink:0; white-space:nowrap; }
+#s9 .ai-badge-wip { font-size:8px; font-weight:800; letter-spacing:.07em; background:var(--white); color:var(--grey-md); padding:3px 8px; border-radius:20px; flex-shrink:0; border:1px solid var(--grey-ln); white-space:nowrap; }
+#s9 .ai-desc { font-size:12px; color:var(--grey-md); line-height:1.55; flex:1; margin-top:6px; }
+
+/* ═══════════ SLIDE 10 - HOW WE USE AI (redesigned) ═══════════ */
+#s10 .body { display:flex; flex-direction:column; gap:0; padding:14px 24px 0; }
+#s10 .phases { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; flex:1; min-height:0; }
+#s10 .phase { border-radius:4px; padding:20px; display:flex; flex-direction:column; min-height:0; }
+#s10 .phase-done { background:var(--red-lite); border-top:4px solid var(--red); }
+#s10 .phase-now  { background:var(--grey-lt);  border-top:4px solid var(--charcoal); }
+#s10 .phase-next { background:var(--white); border:1px solid var(--grey-ln); border-top:4px solid var(--grey-ln); }
+#s10 .phase-header { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+#s10 .pill { padding:3px 10px; border-radius:20px; font-size:9px; font-weight:800; letter-spacing:.06em; }
+#s10 .pill-done { background:var(--red); color:var(--white); }
+#s10 .pill-now  { background:transparent; border:1.5px solid var(--charcoal); color:var(--charcoal); }
+#s10 .pill-next { background:var(--grey-lt); color:var(--grey-md); border:1px solid var(--grey-ln); }
+#s10 .phase-num { font-size:9px; font-weight:700; letter-spacing:.06em; }
+#s10 .phase-done .phase-num { color:var(--red); }
+#s10 .phase-now  .phase-num { color:var(--charcoal); }
+#s10 .phase-next .phase-num { color:var(--grey-md); }
+#s10 .phase-title  { font-family:var(--fh); font-size:20px; font-weight:800; color:var(--charcoal); margin-bottom:2px; }
+#s10 .phase-period { font-size:10px; color:var(--grey-md); font-style:italic; margin-bottom:12px; }
+#s10 .phase-divider { border:none; border-top:1px solid var(--grey-ln); margin-bottom:12px; }
+#s10 .phase-bullets { list-style:none; flex:1; display:flex; flex-direction:column; }
+#s10 .phase-bullets li { font-size:13px; color:var(--grey-md); padding:4px 0; border-bottom:1px solid rgba(0,0,0,.04); flex:1; display:flex; align-items:center; }
+#s10 .phase-bullets li::before { content:"›  "; flex-shrink:0; }
+#s10 .phase-bullets li:last-child { border-bottom:none; }
+#s10 .impact { margin-top:14px; padding:9px 12px; border-radius:3px; font-size:10.5px; font-weight:700; text-align:center; }
+#s10 .phase-done .impact { background:var(--red); color:var(--white); }
+#s10 .phase-now  .impact { background:var(--white); color:var(--charcoal); border:1.5px solid var(--charcoal); }
+#s10 .phase-next .impact { background:var(--grey-lt); color:var(--grey-md); }
+#s10 .bottom-callout { background:var(--grey-lt); border-top:3px solid var(--red); padding:10px 24px; flex-shrink:0; margin:0 -24px; }
+#s10 .bottom-callout p { font-family:var(--fh); font-size:12px; font-weight:700; color:var(--charcoal); text-align:center; }
+
+/* ═══════════ SLIDE 11 - CLOSING ═══════════ */
+#s11 .main-row { display:flex; flex:1; min-height:0; flex-direction:row; }
+#s11 .left { flex:1; padding:0 52px; display:flex; flex-direction:column; justify-content:center; position:relative; }
+#s11 .top-bar { position:absolute; top:0; left:0; right:0; height:130px; background:var(--red); }
+#s11 .left-content { position:relative; z-index:1; padding-top:110px; }
+#s11 h1 { font-family:var(--fh); font-size:56px; font-weight:800; color:var(--charcoal); line-height:.92; letter-spacing:-.02em; }
+#s11 .rule { width:280px; height:6px; background:var(--red); margin:18px 0; }
+#s11 .disc { font-size:20px; font-weight:700; color:var(--red); font-family:var(--fh); }
+#s11 .team-strip { background:var(--grey-lt); padding:10px 18px; border-radius:3px; margin-top:22px; }
+#s11 .team-strip p { font-size:11px; color:var(--grey-md); }
+#s11 .contact { font-size:11px; color:var(--grey-md); margin-top:12px; }
+#s11 .right { width:360px; background:var(--grey-lt); display:flex; flex-direction:column; }
+#s11 .right-top { background:var(--red); padding:36px 30px; flex:0 0 auto; }
+#s11 .right-top .brand-name { font-family:var(--fh); font-size:17px; font-weight:800; color:var(--white); }
+#s11 .right-top .tagline { font-family:var(--fh); font-size:22px; font-weight:800; color:rgba(255,255,255,.85); margin-top:6px; line-height:1.15; }
+#s11 .right-body { padding:22px; flex:1; display:flex; flex-direction:column; gap:12px; justify-content:center; }
+#s11 .cred { background:var(--white); padding:13px 16px; border-radius:3px; font-size:11px; color:var(--grey-md); box-shadow:var(--shadow); }
+#s11 .bottom-bar { background:var(--grey-lt); border-top:1px solid var(--grey-ln); padding:12px 52px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+#s11 .bottom-bar .brand { font-family:var(--fh); font-size:14px; font-weight:800; color:var(--charcoal); }
+#s11 .bottom-bar .conf { font-size:9px; font-weight:700; color:var(--grey-md); letter-spacing:.08em; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div id="gate-card">
+    <div id="gate-top">
+      <div id="gate-brand">IDEOWORKS</div>
+      <div id="gate-label">CONFIDENTIAL</div>
+    </div>
+    <div id="gate-body">
+      <div id="gate-title">Growth Team<br><span>Shareholder Briefing Q2 2026</span></div>
+      <p id="gate-hint">Enter the access password to view this presentation.</p>
+      <div id="gate-field">
+        <input type="password" id="gate-input" placeholder="Password" autocomplete="off" />
+        <button id="gate-btn" onclick="checkPass()">Enter</button>
+      </div>
+      <p id="gate-err">Incorrect password. Please try again.</p>
+    </div>
+    <div id="gate-footer">This presentation is intended for internal use only.</div>
+  </div>
+</div>
+
+<div id="deck">
+
+<!-- ══════════════════════════════ SLIDE 1 - COVER -->
+<section class="slide active" id="s1">
+  <div class="main-row">
+    <div class="left">
+      <div class="top-bar"></div>
+      <div class="left-content">
+        <h1>PERFORMANCE<span>MARKETING (GROWTH)</span></h1>
+        <div class="rule"></div>
+        <p class="tagline">Department Framework &amp; Operating Model</p>
+        <div class="team-list">
+          <p>Project Director: <strong>Vienesia (COO)</strong> &nbsp;·&nbsp; Growth Lead: <strong>Ryan</strong></p>
+          <p>Senior Ads Ops: <strong>Tyas</strong> &nbsp;·&nbsp; Ads Ops: <strong>Nahdah</strong> &nbsp;·&nbsp; Project Manager: <strong>Putri</strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="right-top">
+        <div class="big">GROWTH<span><br>TEAM</span></div>
+      </div>
+      <div class="right-cards">
+        <div class="info-card"><div class="label">Briefing</div><div class="val">Shareholder Presentation</div><div class="val2">Q2 2026</div></div>
+        <div class="info-card"><div class="label">Team Size</div><div class="val">5 Members</div><div class="val2">Ads · KOL · Web · AI</div></div>
+        <div class="info-card"><div class="label">Scope</div><div class="val">Full-funnel Performance</div><div class="val2">Paid Media + Project Management</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span class="brand">IDEOWORKS</span>
+    <span style="font-size:10px;color:var(--grey-md);">Performance Marketing · Framework v2.0 · 2026</span>
+    <span class="conf">CONFIDENTIAL</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 2 - WHO WE ARE -->
+<section class="slide" id="s2">
+  <div class="slide-hdr"><h2>WHO WE ARE</h2><span class="sub">Growth Team · Structure &amp; Responsibilities</span></div>
+  <div class="body">
+    <div class="vienesia">
+      <div><div class="vname">VIENESIA</div><div class="vrole">Project Director / COO</div></div>
+      <div class="vbullets">Strategy &amp; oversight &nbsp;·&nbsp; Client relationship lead &nbsp;·&nbsp; Final quality assurance &nbsp;·&nbsp; Escalation decisions</div>
+    </div>
+    <div class="fork-row">
+      <div class="fork-ads"><div class="fork-line"></div></div>
+      <div class="fork-pm"><div class="fork-line"></div></div>
+    </div>
+    <div class="two-branches">
+      <div class="ads-branch">
+        <div class="branch-con"><div class="line"></div></div>
+        <div class="ryan">
+          <div class="rname">RYAN</div>
+          <div class="rrole">Growth Lead</div>
+          <div class="rresp">Growth strategy &nbsp;·&nbsp; Campaign oversight &nbsp;·&nbsp; Client reporting &nbsp;·&nbsp; Team coordination &nbsp;·&nbsp; AI tools</div>
+        </div>
+        <div class="branch-con grow"><div class="line"></div></div>
+        <div class="ads-pair">
+          <div class="member ads1">
+            <div class="mname">TYAS</div>
+            <div class="mrole" style="color:var(--red)">Senior Ads Operations</div>
+            <ul><li>Campaign execution &amp; strategy</li><li>Platform optimisation</li><li>Day-to-day operations</li><li>Client communication</li></ul>
+            <div class="platforms"><span class="plt-tag">Meta</span><span class="plt-tag">Google</span><span class="plt-tag">TikTok</span><span class="plt-tag">DV360</span><span class="plt-tag">PMAX</span></div>
+          </div>
+          <div class="member ads2">
+            <div class="mname">NAHDAH</div>
+            <div class="mrole" style="color:var(--red2)">Ads Operations</div>
+            <ul><li>Campaign setup &amp; tagging</li><li>Data pulls &amp; reporting</li><li>Creative trafficking</li><li>Platform support tasks</li></ul>
+            <div class="platforms"><span class="plt-tag">Meta Ads</span><span class="plt-tag">TikTok</span><span class="plt-tag">UTM Tagging</span><span class="plt-tag">Reporting</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pm-branch">
+        <div class="pm-con"><div class="pm-line"></div></div>
+        <div class="member pm">
+          <div class="mname">PUTRI <span style="font-size:11px;color:var(--stone)">★ New</span></div>
+          <div class="mrole" style="color:var(--stone)">Project Manager</div>
+          <ul><li>KOL / Influencer campaigns</li><li>Website project management</li><li>Client-facing coordination</li><li>Cross-team scheduling</li></ul>
+          <div class="platforms"><span class="plt-tag">KOL Networks</span><span class="plt-tag">Web Projects</span><span class="plt-tag">Client Comms</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>A lean, expert team. Each member carries full cross-platform fluency and direct client ownership</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 3 - WHAT WE DO -->
+<section class="slide" id="s3">
+  <div class="slide-hdr"><h2>WHAT WE DO</h2><span class="sub">Full-funnel paid media coverage · KOL management · Web projects</span></div>
+  <div class="body">
+    <div class="lane ads-lane">
+      <div class="lane-title">ADS CORE</div>
+      <div class="lane-sub">Ryan · Tyas · Nahdah</div>
+      <div class="svc-row"><div class="svc-cat red">SEARCH</div><div class="svc-items">Google Ads &nbsp;·&nbsp; Microsoft / Bing Ads &nbsp;·&nbsp; PMAX &nbsp;·&nbsp; Discovery Campaigns</div></div>
+      <div class="svc-row"><div class="svc-cat red2">PAID SOCIAL</div><div class="svc-items">Meta (Facebook &amp; Instagram) &nbsp;·&nbsp; TikTok Ads &nbsp;·&nbsp; LinkedIn Ads &nbsp;·&nbsp; X (Twitter) Ads &nbsp;·&nbsp; YouTube</div></div>
+      <div class="svc-row"><div class="svc-cat dkred">PROGRAMMATIC</div><div class="svc-items">DV360 &nbsp;·&nbsp; The Trade Desk &nbsp;·&nbsp; App Campaigns &nbsp;·&nbsp; Other DSPs &nbsp;·&nbsp; Retargeting</div></div>
+      <div class="svc-caps">
+        <span class="svc-cap">Strategy &amp; Planning</span><span class="svc-cap">Campaign Build</span><span class="svc-cap">Audience Targeting</span><span class="svc-cap">Creative Trafficking</span><span class="svc-cap">Performance Optimisation</span><span class="svc-cap">ROAS Reporting</span><span class="svc-cap">Budget Management</span>
+      </div>
+    </div>
+    <div class="lane pm-lane">
+      <div class="lane-title">PROJECT MANAGEMENT</div>
+      <div class="lane-sub">Putri</div>
+      <div class="svc-row"><div class="svc-cat stone">KOL / INFLUENCER</div><div class="svc-items">Talent sourcing &amp; shortlisting &nbsp;·&nbsp; Campaign coordination &nbsp;·&nbsp; Content briefing &nbsp;·&nbsp; ROI tracking</div></div>
+      <div class="svc-row"><div class="svc-cat stone">WEBSITE PROJECTS</div><div class="svc-items">Project scoping &nbsp;·&nbsp; Timeline management &nbsp;·&nbsp; Dev &amp; agency liaison &nbsp;·&nbsp; Client sign-off</div></div>
+      <div class="svc-row"><div class="svc-cat stone">CLIENT COORDINATION</div><div class="svc-items">Brief management &nbsp;·&nbsp; Cross-team scheduling &nbsp;·&nbsp; Status updates &nbsp;·&nbsp; Meeting facilitation</div></div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>One team. Two lanes. Zero overlap. · Ads Core (3 specialists) + Project Management (1 PM)</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 4 - REQUEST FLOW -->
+<section class="slide" id="s4">
+  <div class="slide-hdr"><h2>HOW WE WORK: CLIENT REQUEST FLOW</h2><span class="sub">Straightforward triage - fast execution by design</span></div>
+  <div class="body">
+    <div class="steps">
+      <div class="step" style="background:var(--red);"><div class="step-num">01</div><div class="step-label">Client Email<br>Received</div><div class="step-arrow">▶</div></div>
+      <div class="step" style="background:var(--red2);"><div class="step-num">02</div><div class="step-label">Team Member<br>Triages Request</div><div class="step-arrow">▶</div></div>
+      <div class="step" style="background:var(--green);"><div class="step-num">03</div><div class="step-label">Trivial?<br>Execute Now</div><div class="step-arrow">▶</div></div>
+      <div class="step" style="background:var(--amber);"><div class="step-num">04</div><div class="step-label">Complex?<br>Team Aligns</div><div class="step-arrow">▶</div></div>
+      <div class="step" style="background:var(--red);"><div class="step-num">05</div><div class="step-label">Execute &amp;<br>Confirm Client</div></div>
+    </div>
+    <div class="triage-bar"><span class="triage-label">TRIAGE DECISION</span></div>
+    <div class="triage-cols">
+      <div class="triage-col" style="background:#F0FDF4;border-top:3px solid var(--green);">
+        <div class="tc-head" style="color:var(--green);">TRIVIAL / SIMPLE TASK</div>
+        <ul class="tc-rules">
+          <li>Execute directly - no approval needed</li>
+          <li>Reply to client confirming completion</li>
+          <li>Target SLA: same business day</li>
+          <li>Log task completion in team tracker</li>
+          <li>No sync needed before executing</li>
+        </ul>
+        <div class="tc-tag" style="background:#DCFCE7;color:var(--green);">Done before end of day</div>
+      </div>
+      <div class="triage-col" style="background:#FFF7ED;border-top:3px solid var(--amber);">
+        <div class="tc-head" style="color:var(--amber);">COMPLEX / STRATEGIC TASK</div>
+        <ul class="tc-rules">
+          <li>Acknowledge client with ETA (within 1h)</li>
+          <li>Align internally - async or quick sync</li>
+          <li>Execute after alignment confirmed</li>
+          <li>Confirm outcome to client post-execution</li>
+          <li>Document decision rationale</li>
+        </ul>
+        <div class="tc-tag" style="background:#FEF3C7;color:var(--amber);">Closed with confirmed outcome</div>
+      </div>
+      <div class="triage-col" style="background:var(--red-lite);border-top:3px solid var(--red);">
+        <div class="tc-head" style="color:var(--red);">ESCALATION / SENSITIVE</div>
+        <ul class="tc-rules">
+          <li>Flag immediately to Growth Lead (Ryan)</li>
+          <li>Do not respond to client until aligned</li>
+          <li>Loop in Vienesia if budget / relationship risk</li>
+          <li>Confirm approach before any action</li>
+          <li>Document and close with full visibility</li>
+        </ul>
+        <div class="tc-tag" style="background:var(--red-mid);color:var(--red2);">Nothing goes out unreviewed</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Every request enters triage - no task falls through the gap</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 5 - SLA -->
+<section class="slide" id="s5">
+  <div class="slide-hdr"><h2>SLA COMMITMENTS &amp; QUALITY STANDARDS</h2><span class="sub">Growth Team · Service Level Agreements</span></div>
+  <div class="body">
+    <div class="sla-panel">
+      <div class="section-title">SLA BY REQUEST TYPE</div>
+      <table class="sla-table">
+        <thead><tr><th>Request Tier</th><th>Acknowledge</th><th>Completion</th></tr></thead>
+        <tbody>
+          <tr><td>Trivial / Simple</td><td>None needed</td><td>Same business day</td></tr>
+          <tr><td>Internal Discussion</td><td>Within 2 hours</td><td>24-48 business hours</td></tr>
+          <tr><td>Urgent (client-flagged)</td><td>Within 1 hour</td><td>Best effort same day</td></tr>
+          <tr><td>KOL Shortlist (Putri)</td><td>Within 4 hours</td><td>48 business hours</td></tr>
+          <tr><td>Website Update (Putri)</td><td>Same day</td><td>Weekly progress report</td></tr>
+          <tr><td>Campaign Brief Review</td><td>Within 24 hours</td><td>Strategy alignment confirmed</td></tr>
+          <tr><td>Weekly Performance Report</td><td>N/A</td><td>Every Monday, 10:00 WIB</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="check-panel">
+      <div class="section-title">PRE-LAUNCH QUALITY CHECKLIST</div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">KPIs and objectives confirmed with brief</div></div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">Targeting &amp; audience parameters reviewed</div></div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">Budget caps and pacing verified</div></div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">Conversion tracking confirmed firing</div></div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">Creative assets reviewed for compliance</div></div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">UTM parameters applied consistently</div></div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">Peer spot-check on high-stakes launches</div></div>
+      <div class="check-item"><div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="check-text">KOL brief reviewed and approved (Putri)</div></div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Straightforward SLA. Lean team, fast execution.</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 6 - CLIENT PORTFOLIO -->
+<section class="slide" id="s6">
+  <div class="slide-hdr"><h2>CLIENT PORTFOLIO</h2><span class="sub">Growth Team · Current portfolio across paid media, KOL &amp; web</span></div>
+  <div class="body">
+    <div class="client-card c-wink">
+      <div class="client-header"><div class="client-name">WINK</div></div>
+      <div class="client-type t-wink">Lead Generation · Meta · TikTok · Google</div>
+      <div class="client-desc">Kids learning platform (ages 3-7). Lead gen targeting parents via full-funnel paid media - SEM, PMAX, YouTube, Meta &amp; TikTok.</div>
+      <div class="client-challenge">Challenge: Frequent setup changes disrupting the learning phase &amp; CPA stability.</div>
+    </div>
+    <div class="client-card c-verisign">
+      <div class="client-header"><div class="client-name">VERISIGN</div></div>
+      <div class="client-type t-verisign">Brand Awareness · Multi-channel</div>
+      <div class="client-desc">Global owner of the .com domain. Campaign to build brand authority, nurture audiences about .com usage, and drive domain registration consideration.</div>
+      <div class="client-challenge">Challenge: Complex multi-deliverable reporting across performance, webpage &amp; brand safety.</div>
+    </div>
+    <div class="client-card c-mayo">
+      <div class="client-header"><div class="client-name">MAYO CLINIC</div></div>
+      <div class="client-type t-mayo">Awareness &amp; Lead Gen · Meta · Search</div>
+      <div class="client-desc">Leading US non-profit medical centre. Campaign targeting Indonesian UHNWI audience for specialist healthcare consideration &amp; qualified lead generation.</div>
+      <div class="client-challenge">Challenge: 12-hour time difference + no conversion data access limiting lower-funnel visibility.</div>
+    </div>
+    <div class="client-card c-goodyear">
+      <div class="client-header"><div class="client-name">GOODYEAR</div></div>
+      <div class="client-type t-goodyear">Social Engagement · Brand Presence</div>
+      <div class="client-desc">Goodyear Indonesia. Campaign to drive social media engagement, strengthen brand consistency, and amplify a high-value giveaway (Mercedes AMG prize).</div>
+      <div class="client-challenge">Challenge: Frequent weekly reporting + knowledge gap on campaign objectives impacting alignment.</div>
+    </div>
+    <div class="client-card c-idw">
+      <div class="client-header"><div class="client-name">IDEOWORKS GLOBAL</div><span class="tag" style="background:#F3F0FF;color:var(--stone);margin-left:8px;">Internal</span></div>
+      <div class="client-type t-idw">B2B Lead Gen · Meta · LinkedIn</div>
+      <div class="client-desc">Ideoworks own B2B growth campaign. Targeting C-suite decision makers planning ASEAN expansion - run entirely by the Growth Team.</div>
+      <div class="client-challenge">Internal initiative - full creative and media ownership by Growth Team.</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Growth Team Portfolio · Q2 2026 · Wink · Verisign · Mayo Clinic · Goodyear · Ideoworks Global</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 7 - TYAS CLIENT HIGHLIGHTS -->
+<section class="slide" id="s7">
+  <div class="slide-hdr"><h2>CLIENT HIGHLIGHTS</h2><span class="sub">Verisign · Mayo Clinic · Goodyear &nbsp;·&nbsp; Managed by Tyas · Senior Ads Operations</span></div>
+  <div class="body hl-body-3">
+    <div class="client-col">
+      <div class="col-hdr v-hdr"><div class="col-name">VERISIGN</div><div class="col-tag">.com Domain · Brand Awareness</div></div>
+      <div class="col-rows">
+        <div class="col-row"><div class="row-label obj">Objective</div><div class="row-text">Increase .com brand awareness in Indonesia. Nurture audiences on .com usage and drive domain registration consideration.</div></div>
+        <div class="col-row"><div class="row-label ch">Challenge</div><div class="row-text">Multiple reporting requirements across performance, webpage &amp; brand safety deliverables. Complex asset mapping for effective campaign setup.</div></div>
+        <div class="col-row"><div class="row-label sol">Solution</div><div class="row-text">Optimised reporting framework for consistency and timely delivery. Structured asset mapping aligned creatives with objectives and user journey.</div></div>
+        <div class="col-row"><div class="row-label ins">Insight</div><div class="row-text">Campaign architecture is critical when managing multiple deliverables. Performance-driven optimisation must align with each reporting layer simultaneously.</div></div>
+      </div>
+    </div>
+    <div class="client-col">
+      <div class="col-hdr m-hdr"><div class="col-name">MAYO CLINIC</div><div class="col-tag">Healthcare · Awareness &amp; Lead Gen</div></div>
+      <div class="col-rows">
+        <div class="col-row"><div class="row-label obj">Objective</div><div class="row-text">Increase awareness &amp; consideration of Mayo Clinic in Indonesia. Capture demand across priority treatment categories. Drive qualified lead actions.</div></div>
+        <div class="col-row"><div class="row-label ch">Challenge</div><div class="row-text">12-hour time difference limiting communication cadence. No conversion data access, reducing lower-funnel performance visibility.</div></div>
+        <div class="col-row"><div class="row-label sol">Solution</div><div class="row-text">Proactively delivered tasks to minimise delays. Structured campaign planning reduced dependencies. Consistent follow-ups maintained progress despite time-zone constraints.</div></div>
+        <div class="col-row"><div class="row-label ins">Insight</div><div class="row-text">UHNWI healthcare targeting requires precision. Meta drives cost-efficient visibility; Search captures high-intent users via long-tail keywords.</div></div>
+      </div>
+    </div>
+    <div class="client-col">
+      <div class="col-hdr g-hdr"><div class="col-name">GOODYEAR</div><div class="col-tag">Social Engagement · Brand</div></div>
+      <div class="col-rows">
+        <div class="col-row"><div class="row-label obj">Objective</div><div class="row-text">Drive engagement across Goodyear Indonesia's social platforms. Strengthen brand presence and amplify the Mercedes AMG giveaway campaign.</div></div>
+        <div class="col-row"><div class="row-label ch">Challenge</div><div class="row-text">Extensive reporting requirements with frequent weekly meetings. Knowledge gap in campaign objectives impacting alignment with expected outcomes.</div></div>
+        <div class="col-row"><div class="row-label sol">Solution</div><div class="row-text">Optimised content &amp; media strategy to maximise giveaway reach. Proactive communication ensured quick feedback turnaround and smooth execution.</div></div>
+        <div class="col-row"><div class="row-label ins">Insight</div><div class="row-text">High-value giveaway mechanics effectively spike engagement. Interactive and promotional posts consistently outperform standard brand content.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Verisign · Mayo Clinic · Goodyear · Managed by Tyas · Growth Team Ads Core</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 8 - NAHDAH CLIENT HIGHLIGHTS -->
+<section class="slide" id="s8">
+  <div class="slide-hdr"><h2>CLIENT HIGHLIGHTS</h2><span class="sub">Wink · Ideoworks Global &nbsp;·&nbsp; Managed by Nahdah · Ads Operations</span></div>
+  <div class="body hl-body-2">
+    <div class="client-col">
+      <div class="col-hdr w-hdr"><div class="col-name">WINK</div><div class="col-tag">Lead Generation · Meta · TikTok · Google</div></div>
+      <div class="col-rows">
+        <div class="col-row"><div class="row-label obj">Objective</div><div class="row-text">Generate leads from parents with children aged 3-7 via Meta (Instagram &amp; Facebook), TikTok, and Google (SEM, PMAX &amp; YouTube). Subscription-based kids learning platform.</div></div>
+        <div class="col-row"><div class="row-label ch">Challenge</div><div class="row-text">Frequent campaign setup changes disrupted the learning phase, impacting performance stability and CPA efficiency across channels.</div></div>
+        <div class="col-row"><div class="row-label sol">Solution</div><div class="row-text">Maintained internal alignment and clear task ownership throughout setup changes. Communicated performance implications to the client proactively. Monitored results post-adjustment and adapted campaigns rapidly to recover.</div></div>
+        <div class="col-row"><div class="row-label ins">Insight</div><div class="row-text">CPA volatility was largely driven by setup changes, not core optimisations. Transparent communication aligns strategy with achievable performance outcomes.</div></div>
+      </div>
+    </div>
+    <div class="client-col">
+      <div class="col-hdr i-hdr" style="display:flex;align-items:center;justify-content:space-between;">
+        <div><div class="col-name">IDEOWORKS GLOBAL</div><div class="col-tag" style="color:var(--stone);">B2B Lead Gen · Meta · LinkedIn</div></div>
+        <span class="tag" style="background:#F3F0FF;color:var(--stone);margin-left:8px;align-self:flex-start;">Internal</span>
+      </div>
+      <div class="col-rows">
+        <div class="col-row"><div class="row-label obj">Objective</div><div class="row-text">Generate qualified leads from CEOs, Directors and C-suite decision makers planning ASEAN expansion. Channels: Meta (IG &amp; FB) + LinkedIn Ads. Internal Ideoworks initiative.</div></div>
+        <div class="col-row"><div class="row-label ch">Challenge</div><div class="row-text">Target a niche audience - C-suite decision makers planning to expand into Indonesia - and convert them into qualified leads at scale without large budgets.</div></div>
+        <div class="col-row"><div class="row-label sol">Solution</div><div class="row-text">Retargeted warm audience + lookalike expansion for scale. Evaluated creative performance and rebuilt best-performing ad styles. Refined messaging to match decision maker's intent signals.</div></div>
+        <div class="col-row"><div class="row-label ins">Insight</div><div class="row-text">CEO and Director roles are a niche audience - broad targeting wastes budget. Continuous creative testing is the highest-leverage optimisation lever in this segment.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Wink · Ideoworks Global · Managed by Nahdah · Growth Team Ads Operations</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 9 - WHAT WE'VE BUILT WITH AI -->
+<section class="slide" id="s9">
+  <div class="slide-hdr"><h2>WHAT WE'VE BUILT WITH AI</h2><span class="sub">Growth Team · Tools &amp; experiments built in-house · Click to open</span></div>
+  <div class="body">
+    <a class="ai-card" href="https://script.google.com/a/macros/ideoworks.co.id/s/AKfycbwaPCrEe9uWf0PRH7tmsHd4qTym8r5KkvFwSdMfu261RApp9vA9K5PfFW1Fo1-0u8b7KQ/exec" target="_blank">
+      <div class="ai-card-top"><div class="ai-name">LinkedIn Pitch Scanner</div><span class="ai-badge-live">LIVE ↗</span></div>
+      <span class="tag">Automation</span>
+      <div class="ai-desc">Scores inbound LinkedIn pitches and flags high-priority leads for BD review. Built on Google Apps Script, accessible by the team.</div>
+    </a>
+    <a class="ai-card" href="meta-ads/index.html" target="_blank">
+      <div class="ai-card-top"><div class="ai-name">Meta Ad Creatives</div><span class="ai-badge-live">LIVE ↗</span></div>
+      <span class="tag">Global Campaign</span>
+      <div class="ai-desc">Indonesia Market Entry campaign brief - 24 creatives across 4 languages (EN, KO, TH, MS), covering Reels, Carousel, and Static Feed formats.</div>
+    </a>
+    <a class="ai-card" href="report-generator.html" target="_blank">
+      <div class="ai-card-top"><div class="ai-name">Report Generator</div><span class="ai-badge-live">LIVE ↗</span></div>
+      <span class="tag">Reporting</span>
+      <div class="ai-desc">Upload channel data (Meta, Google, TikTok) and generate a branded monthly performance PPTX report. Potential to cut monthly reporting time significantly.</div>
+    </a>
+    <a class="ai-card" href="https://web-production-0e5e0.up.railway.app/" target="_blank">
+      <div class="ai-card-top"><div class="ai-name">Global Landing Page</div><span class="ai-badge-live">LIVE ↗</span></div>
+      <span class="tag">Web</span>
+      <div class="ai-desc">Campaign landing page for Ideoworks Global, built and deployed on Railway. Full page built with Claude AI - from brief to live.</div>
+    </a>
+    <a class="ai-card" href="https://web-production-0e5e0.up.railway.app/ideoworks-crm-v2.html" target="_blank">
+      <div class="ai-card-top"><div class="ai-name">Ideoworks CRM</div><span class="ai-badge-live">LIVE ↗</span></div>
+      <span class="tag">Internal Tool</span>
+      <div class="ai-desc">Internal CRM dashboard for lead and client management. Live on Railway, accessible by the team.</div>
+    </a>
+    <div class="ai-card">
+      <div class="ai-card-top"><div class="ai-name">This Presentation</div></div>
+      <span class="tag">AI-Built Deck</span>
+      <div class="ai-desc">This entire shareholder deck - structure, content, layout, and code - built with Claude AI from a written brief.</div>
+    </div>
+    <div style="border:1.5px dashed var(--grey-ln);border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--white);">
+      <span style="font-size:11px;color:var(--grey-ln);font-style:italic;text-align:center;padding:12px;">+ Next build</span>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Experimental builds · All tools built in-house by Growth Team · Ideoworks 2026</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 10 - HOW WE USE AI -->
+<section class="slide" id="s10">
+  <div class="slide-hdr"><h2>HOW WE USE AI</h2><span class="sub">From report assistant to in-house tool builder: a phased journey</span></div>
+  <div class="body">
+    <div class="phases">
+      <div class="phase phase-done">
+        <div class="phase-header"><span class="pill pill-done">DONE</span><span class="phase-num">2025</span></div>
+        <div class="phase-title">Report Assistant</div>
+        <div class="phase-period">Full Year 2025</div>
+        <hr class="phase-divider">
+        <ul class="phase-bullets">
+          <li>Team writes performance insights for weekly &amp; monthly client reports</li>
+          <li>AI used as a writing tool to speed up drafting</li>
+          <li>Team owns the narrative - AI assists with structure and phrasing</li>
+          <li>Consistent insight format and quality across all client reports</li>
+          <li>Foundation for how the team integrates AI into daily work</li>
+        </ul>
+        <div class="impact">Faster insight delivery per report</div>
+      </div>
+      <div class="phase phase-now">
+        <div class="phase-header"><span class="pill pill-now">NOW</span><span class="phase-num">Q2 2026</span></div>
+        <div class="phase-title">Build &amp; Deploy</div>
+        <div class="phase-period">Q2 2026 · In Progress</div>
+        <hr class="phase-divider">
+        <ul class="phase-bullets">
+          <li>Claude AI used to develop Global Campaign (Internal)</li>
+          <li>LinkedIn Pitching Scanner - score inbound leads</li>
+          <li>Meta Ad Creatives - multilingual campaign brief for Indonesia Market Entry</li>
+          <li>Report Generator - upload channel data, output branded monthly PPTX</li>
+          <li>All tools built and deployed in-house by Growth Team</li>
+        </ul>
+        <div class="impact">4 tools deployed in 1 quarter</div>
+      </div>
+      <div class="phase phase-next">
+        <div class="phase-header"><span class="pill pill-next">NEXT</span><span class="phase-num">Q3 2026</span></div>
+        <div class="phase-title">Scale Intelligently</div>
+        <div class="phase-period">Q3 2026 · Planned</div>
+        <hr class="phase-divider">
+        <ul class="phase-bullets">
+          <li>Roll out AI reporting across all client accounts</li>
+          <li>AI-assisted media planning &amp; budget allocation</li>
+          <li>Predictive performance flags - catch issues early</li>
+          <li>Expand creative generation to all campaign formats</li>
+          <li>Full campaign lifecycle, AI-augmented end to end</li>
+        </ul>
+        <div class="impact">More clients. Same team size.</div>
+      </div>
+    </div>
+    <div class="bottom-callout">
+      <p>AI doesn't replace the team. It multiplies what we can deliver for each client.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>Built and deployed in-house · Powered by Claude AI · Growth Team · Ideoworks 2026</span></div>
+</section>
+
+<!-- ══════════════════════════════ SLIDE 11 - CLOSING -->
+<section class="slide" id="s11">
+  <div class="main-row">
+    <div class="left">
+      <div class="top-bar"></div>
+      <div class="left-content">
+        <h1>GROWTH<br>TEAM</h1>
+        <div class="rule"></div>
+        <div class="disc">Questions &amp; Discussion</div>
+        <div class="team-strip"><p>Vienesia &nbsp;·&nbsp; Ryan &nbsp;·&nbsp; Tyas &nbsp;·&nbsp; Nahdah &nbsp;·&nbsp; Putri</p></div>
+        <div class="contact">account@ideoworks.co.id &nbsp;·&nbsp; ideoworks.id</div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="right-top">
+        <div class="brand-name">IDEOWORKS</div>
+        <div class="tagline">Creativity is<br>Everywhere</div>
+      </div>
+      <div class="right-body">
+        <div class="cred">Since 2013 · Jakarta, Indonesia</div>
+        <div class="cred">Google Premier Partner · Meta Marketing Partner</div>
+        <div class="cred">Performance Marketing · Growth Team · 2026</div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span class="brand">IDEOWORKS</span>
+    <span style="font-size:10px;color:var(--grey-md);">Performance Marketing · Growth Team · 2026</span>
+    <span class="conf">CONFIDENTIAL</span>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<div id="nav">
+  <button onclick="go(-1)" title="Previous (←)">&#8592;</button>
+  <span id="counter">1 / 11</span>
+  <button onclick="go(1)" title="Next (→)">&#8594;</button>
+</div>
+
+<script>
+function checkPass() {
+  const val = document.getElementById('gate-input').value;
+  if (val === 'GrowthTeam2026') {
+    document.getElementById('gate').style.display = 'none';
+  } else {
+    document.getElementById('gate-err').style.display = 'block';
+    document.getElementById('gate-input').value = '';
+    document.getElementById('gate-input').focus();
+  }
+}
+document.getElementById('gate-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPass();
+});
+
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function go(d) {
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(cur + d, slides.length - 1));
+  slides[cur].classList.add('active');
+  document.getElementById('counter').textContent = (cur+1) + ' / ' + slides.length;
+}
+document.addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown','Space',' '].includes(e.key)) { e.preventDefault(); go(1); }
+  if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); go(-1); }
+});
+function scale() {
+  const s = Math.min(window.innerWidth/1280, window.innerHeight/720);
+  document.getElementById('deck').style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+window.addEventListener('resize', scale);
+scale();
+</script>
+</body>
+</html>

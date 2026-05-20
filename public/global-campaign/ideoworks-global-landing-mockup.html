@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Indonesia Market Entry & Growth | IDEOWORKS Global</title>
+<meta name="description" content="The Indonesia growth partner for global brands. Strategy, creative, media, and analytics for multinational companies entering and scaling in Indonesia." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  // Replace G-XXXXXXXXXX with the real GA4 measurement ID
+  // gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<style>
+  /* ============================================
+     COLOR TOKENS
+     Matched to ideoworks.id main site:
+     dark bg #131314, white text, red accent #CD201F
+  ============================================ */
+  :root {
+    --dark:       #131314;
+    --dark-up:    #1D1D1E;
+    --dark-card:  #222224;
+    --white:      #FFFFFF;
+    --white-80:   rgba(255,255,255,0.80);
+    --white-60:   rgba(255,255,255,0.55);
+    --white-20:   rgba(255,255,255,0.12);
+    --white-10:   rgba(255,255,255,0.06);
+    --accent:     #CD201F;
+    --accent-soft:#3A1515;
+    --radius:     10px;
+    --shadow:     0 2px 12px rgba(0,0,0,0.3);
+    --shadow-md:  0 8px 28px rgba(0,0,0,0.4);
+    --max:        1140px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--white-80);
+    background: var(--dark);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Inter', sans-serif;
+    color: var(--white);
+    line-height: 1.25;
+    margin: 0 0 0.5em;
+    letter-spacing: -0.01em;
+  }
+  h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; }
+  h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 700; }
+  h3 { font-size: 1.15rem; font-weight: 600; }
+  p  { margin: 0 0 1em; }
+  a  { color: var(--white); text-decoration: none; }
+  a:hover { color: var(--accent); text-decoration: none; }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(19,19,20,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--white-10);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px; max-width: var(--max); margin: 0 auto;
+  }
+  .logo { color: var(--white); font-size: 1.3rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+  .logo span { color: var(--white); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--white-60); font-size: 0.92rem; font-weight: 500; }
+  .nav-links a:hover { color: var(--white); text-decoration: none; }
+  .nav-cta {
+    background: var(--accent); color: #fff; padding: 10px 20px;
+    border-radius: 6px; font-weight: 600; font-size: 0.88rem;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #A81A19; text-decoration: none; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 100px 0 80px;
+    background: var(--dark);
+    border-bottom: 1px solid var(--white-10);
+    position: relative;
+  }
+  .hero .eyebrow {
+    display: inline-block;
+    font-size: 0.74rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+  }
+  .hero h1 { color: var(--white); margin-bottom: 20px; max-width: 760px; }
+  .hero h1 .accent { color: var(--accent); }
+  .hero p.lead {
+    font-size: 1.1rem; color: var(--white-60);
+    max-width: 660px; margin-bottom: 32px;
+  }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 14px 26px; border-radius: 6px;
+    font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer;
+    transition: background 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary:hover { background: #A81A19; text-decoration: none; }
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    padding: 14px 26px; border-radius: 6px;
+    font-weight: 600; font-size: 0.95rem;
+    border: 1.5px solid var(--white-20);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { background: var(--white-10); border-color: var(--white-60); text-decoration: none; }
+
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    padding-top: 36px; border-top: 1px solid var(--white-20);
+  }
+  .stat .num { font-size: 1.85rem; font-weight: 700; color: var(--white); display: block; line-height: 1.1; }
+  .stat .label { color: var(--white-60); font-size: 0.85rem; font-weight: 500; }
+  @media (max-width: 768px) { .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+
+  /* ---------- LOGO BAR ---------- */
+  .logos { padding: 52px 0; background: var(--dark-up); border-bottom: 1px solid var(--white-10); }
+  .logos .label {
+    text-align: center; color: var(--white-60);
+    font-size: 0.74rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 28px;
+  }
+  .logo-grid {
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px;
+    align-items: center;
+  }
+  .logo-cell {
+    height: 48px; background: var(--white-10);
+    border: 1px solid var(--white-10); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; color: var(--white-60); font-weight: 600;
+  }
+  @media (max-width: 768px) { .logo-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  /* ---------- SECTIONS ---------- */
+  .section { padding: 80px 0; background: var(--dark); }
+  .section-head { max-width: 680px; margin: 0 auto 48px; text-align: center; }
+  .section-head .eyebrow {
+    color: var(--accent); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: 12px; display: inline-block;
+  }
+
+  /* ---------- CASE STUDIES ---------- */
+  .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .case-card {
+    background: var(--dark-card); border: 1px solid var(--white-10);
+    border-radius: var(--radius); padding: 28px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .case-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
+  .case-card .industry {
+    display: inline-block; padding: 4px 10px;
+    background: var(--accent-soft); color: var(--accent);
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; border-radius: 4px; margin-bottom: 14px;
+  }
+  .case-card h3 { margin-bottom: 10px; }
+  .case-card .summary { color: var(--white-60); font-size: 0.92rem; margin-bottom: 20px; }
+  .case-metrics {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+    padding-top: 18px; border-top: 1px solid var(--white-10);
+  }
+  .case-metrics .m-num { font-size: 1.3rem; font-weight: 700; color: var(--white); display: block; }
+  .case-metrics .m-label { font-size: 0.74rem; color: var(--white-60); }
+  @media (max-width: 768px) { .case-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- SERVICES ---------- */
+  .services { background: var(--dark-up); }
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .svc-card {
+    background: var(--dark-card); border-radius: var(--radius);
+    padding: 32px; border: 1px solid var(--white-10);
+    border-top: 2px solid var(--accent);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .svc-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .svc-icon {
+    width: 44px; height: 44px; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 18px;
+  }
+  .svc-card h3 { margin-bottom: 10px; }
+  .svc-card p { font-size: 0.94rem; }
+  .svc-card ul { margin: 14px 0 0; padding: 0; list-style: none; }
+  .svc-card li {
+    padding: 7px 0 7px 20px; position: relative;
+    color: var(--white-60); font-size: 0.9rem;
+  }
+  .svc-card li::before {
+    content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-size: 1.1rem; top: 4px;
+  }
+  @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- WHY US ---------- */
+  .why { background: var(--dark-up); }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .why-card {
+    background: var(--dark-card); padding: 28px;
+    border: 1px solid var(--white-10); border-radius: var(--radius);
+  }
+  .why-card .num { font-size: 1.6rem; color: var(--accent); font-weight: 700; }
+  .why-card h3 { margin: 6px 0 10px; }
+  .why-card p { font-size: 0.94rem; }
+  @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- TESTIMONIAL ---------- */
+  .testimonial { padding: 90px 0; background: var(--dark); position: relative; border-top: 1px solid var(--white-10); }
+  .testimonial::before {
+    content: '"'; position: absolute; top: 30px; left: 50%;
+    transform: translateX(-50%); font-size: 8rem; color: var(--accent);
+    opacity: 0.15; line-height: 1; font-family: Georgia, serif;
+  }
+  .testimonial-card {
+    max-width: 760px; margin: 0 auto;
+    padding: 48px; position: relative;
+    background: var(--dark-card);
+    border: 1px solid var(--white-10);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius);
+  }
+  .testimonial-card blockquote { color: var(--white); }
+  .testimonial-card .author-name { color: var(--white); }
+  .testimonial-card .author-title { color: var(--white-60); }
+  .testimonial-card blockquote {
+    font-size: 1.2rem; line-height: 1.55;
+    color: var(--ink); margin: 0 0 24px; font-weight: 500;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 14px; }
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.95rem;
+  }
+  .author-name { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+  .author-title { font-size: 0.84rem; color: var(--white-60); }
+
+  /* ---------- LEAD FORM ---------- */
+  .lead-section {
+    padding: 90px 0;
+    background: #F5F5F5;
+  }
+  .lead-section .section-head h2 { color: #131314; }
+  .lead-section .section-head p { color: #555; }
+  .lead-section .section-head .eyebrow { color: var(--accent); }
+  .form-wrapper {
+    max-width: 680px; margin: 0 auto;
+    background: #FFFFFF; border-radius: var(--radius);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+  }
+  .form-wrapper h3 { color: #131314; margin-bottom: 6px; font-size: 1.3rem; }
+  .form-wrapper .form-sub { color: #666; margin-bottom: 28px; font-size: 0.9rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .form-field { display: flex; flex-direction: column; }
+  .form-field label {
+    color: #131314; font-size: 0.8rem; font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .form-field label .req { color: var(--accent); }
+  .form-field input, .form-field select, .form-field textarea {
+    padding: 11px 13px; border: 1.5px solid #E0E0E0;
+    border-radius: 6px; font-family: inherit; font-size: 0.93rem;
+    color: #131314; background: #FFFFFF;
+    transition: border-color 0.2s;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .form-field textarea { min-height: 86px; resize: vertical; }
+  .form-row.single { grid-template-columns: 1fr; }
+  .qualifier-note {
+    background: #FFF5F5;
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px; border-radius: 4px;
+    font-size: 0.85rem; color: #444; margin: 6px 0 22px;
+  }
+  .submit-btn {
+    width: 100%; padding: 14px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 6px;
+    font-family: inherit; font-size: 0.96rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .submit-btn:hover { background: #A81A19; }
+  .form-foot { text-align: center; margin-top: 12px; font-size: 0.8rem; color: #999; }
+  @media (max-width: 768px) {
+    .form-row { grid-template-columns: 1fr; }
+    .form-wrapper { padding: 28px 22px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.7);
+    padding: 56px 0 28px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    margin-bottom: 36px;
+  }
+  footer h4 { color: #fff; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  footer ul { list-style: none; padding: 0; margin: 0; }
+  footer li { padding: 5px 0; }
+  footer a { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+  footer a:hover { color: var(--accent); text-decoration: none; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 22px; display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 14px; font-size: 0.8rem;
+  }
+  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; } }
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .wa-float {
+    position: fixed; bottom: 22px; right: 22px;
+    background: #25D366; color: #fff;
+    padding: 12px 20px; border-radius: 100px;
+    box-shadow: 0 6px 18px rgba(37,211,102,0.35);
+    font-weight: 600; font-size: 0.88rem; z-index: 99;
+    display: flex; align-items: center; gap: 8px;
+    transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.04); text-decoration: none; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+   NAVIGATION
+============================================ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">IDEO<span>WORKS</span></a>
+    <nav class="nav-links">
+      <a href="#cases">Case Studies</a>
+      <a href="#services">CASA</a>
+      <a href="#why">Why Us</a>
+    </nav>
+    <a href="#contact" class="nav-cta" onclick="trackCTA('nav_request_meeting')">Request Meeting</a>
+  </div>
+</header>
+
+<!-- ============================================
+   HERO
+============================================ -->
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">The Indonesia Growth Partner For Global Brands</span>
+    <h1>From market entry to <span class="accent">market mastery</span> in Indonesia.</h1>
+    <p class="lead">For over a decade, we have helped global brands win in Indonesia, Southeast Asia&rsquo;s largest economy. Strategy, creative, media, and analytics, delivered by one integrated team.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary" onclick="trackCTA('hero_request_meeting')">Request a Strategy Call</a>
+      <a href="#cases" class="btn-secondary" onclick="trackCTA('hero_view_work')">See Our Work</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="num">120+</span><span class="label">Global brands served</span></div>
+      <div class="stat"><span class="num">12 yrs</span><span class="label">In the Indonesian market</span></div>
+      <div class="stat"><span class="num">USD 40M+</span><span class="label">Media managed annually</span></div>
+      <div class="stat"><span class="num">4.6&times;</span><span class="label">Average ROAS uplift</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+   LOGO BAR
+============================================ -->
+<section class="logos">
+  <div class="container">
+    <p class="label">Trusted by global &amp; multinational brands</p>
+    <div class="logo-grid">
+      <div class="logo-cell">CLIENT 01</div>
+      <div class="logo-cell">CLIENT 02</div>
+      <div class="logo-cell">CLIENT 03</div>
+      <div class="logo-cell">CLIENT 04</div>
+      <div class="logo-cell">CLIENT 05</div>
+      <div class="logo-cell">CLIENT 06</div>
+      <div class="logo-cell">CLIENT 07</div>
+      <div class="logo-cell">CLIENT 08</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+   CASE STUDIES
+============================================ -->
+<section class="section" id="cases">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Proof, Not Promises</span>
+      <h2>Outcomes for global brands entering Indonesia</h2>
+      <p>A snapshot of recent campaigns. Replace placeholders with your actual brand names and metrics.</p>
+    </div>
+    <div class="case-grid">
+      <div class="case-card">
+        <span class="industry">Global FMCG</span>
+        <h3>From zero to category leader in 9 months</h3>
+        <p class="summary">Full market entry. Positioning, creative system, paid media launch, and influencer activation across six cities.</p>
+        <div class="case-metrics">
+          <div><span class="m-num">3.2M</span><span class="m-label">Audience reached</span></div>
+          <div><span class="m-num">5.8&times;</span><span class="m-label">ROAS achieved</span></div>
+          <div><span class="m-num">+184%</span><span class="m-label">Brand search lift</span></div>
+          <div><span class="m-num">#1</span><span class="m-label">Category share by Q3</span></div>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="industry">European Luxury</span>
+        <h3>Premium audience capture in Jakarta &amp; Bali</h3>
+        <p class="summary">High-net-worth targeting, bilingual creative, and KOL partnerships with Indonesia&rsquo;s top tier-1 lifestyle voices.</p>
+        <div class="case-metrics">
+          <div><span class="m-num">+62%</span><span class="m-label">Qualified leads</span></div>
+          <div><span class="m-num">USD 1.4M</span><span class="m-label">Pipeline generated</span></div>
+          <div><span class="m-num">9.1%</span><span class="m-label">Engagement rate</span></div>
+          <div><span class="m-num">28</span><span class="m-label">KOL partnerships</span></div>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="industry">Global Tech / SaaS</span>
+        <h3>Scaling APAC demand-gen into Indonesia</h3>
+        <p class="summary">Localized SEO, account-based campaigns, and event activations targeting enterprise decision-makers across Java.</p>
+        <div class="case-metrics">
+          <div><span class="m-num">412</span><span class="m-label">SQLs generated</span></div>
+          <div><span class="m-num">&minus;47%</span><span class="m-label">Cost per lead</span></div>
+          <div><span class="m-num">3.4&times;</span><span class="m-label">Pipeline velocity</span></div>
+          <div><span class="m-num">22%</span><span class="m-label">SQL to close rate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+   SERVICES
+============================================ -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Our Framework</span>
+      <h2 style="font-size:clamp(2rem,5vw,3.2rem);letter-spacing:0.08em;">C.A.S.A.</h2>
+      <p style="font-size:1.1rem;">Creative. Advertising. Social Media. Analytics. Four disciplines, one integrated team, one outcome.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="svc-icon">C</div>
+        <h3>Creative &amp; Communication Strategy</h3>
+        <p>Brand stories that translate. Localized creative that respects Indonesian culture without diluting global brand equity.</p>
+        <ul>
+          <li>Strategy and creative assets</li>
+          <li>TVC and video content production</li>
+          <li>Brand and visual design systems</li>
+          <li>Bilingual copywriting (English / Bahasa)</li>
+        </ul>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">A</div>
+        <h3>Advertising &amp; Media</h3>
+        <p>Performance and brand media planned, bought, and optimized in-house. Every IDR accountable.</p>
+        <ul>
+          <li>Search, display, and video advertising</li>
+          <li>SEO and content marketing</li>
+          <li>Programmatic and OOH integration</li>
+          <li>Conversion rate optimization</li>
+        </ul>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">S</div>
+        <h3>Social Media &amp; Influence</h3>
+        <p>Indonesia is a top three global social market. We build communities, not just follower counts.</p>
+        <ul>
+          <li>Always-on social media management</li>
+          <li>Influencer and KOL partnerships</li>
+          <li>Community building and activation</li>
+          <li>Crisis and reputation management</li>
+        </ul>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon">A</div>
+        <h3>Analytics &amp; Insight</h3>
+        <p>Indonesian consumer truth, decoded. We turn data into decisions before competitors finish their workshop.</p>
+        <ul>
+          <li>Social listening and benchmarking</li>
+          <li>Audience and persona research</li>
+          <li>Attribution and growth modeling</li>
+          <li>Quarterly strategy reviews</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+   WHY US
+============================================ -->
+<section class="section why" id="why">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why IDEOWORKS</span>
+      <h2>Built for global brands. Native to Indonesia.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="num">01</span>
+        <h3>Senior-led, every account</h3>
+        <p>You work directly with strategists who have launched global brands here, not a rotating bench of juniors.</p>
+      </div>
+      <div class="why-card">
+        <span class="num">02</span>
+        <h3>Cultural fluency, business discipline</h3>
+        <p>We speak boardroom English and Jakarta street slang. Your global brand guidelines stay intact while the work feels local.</p>
+      </div>
+      <div class="why-card">
+        <span class="num">03</span>
+        <h3>Outcomes, not retainers</h3>
+        <p>Every engagement is structured around the metric that matters most to your CMO: pipeline, ROAS, share, or lift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+   TESTIMONIAL
+============================================ -->
+<section class="testimonial">
+  <div class="container">
+    <div class="testimonial-card">
+      <blockquote>
+        Ideoworks gave us the speed of a startup, the rigor of a global network, and the cultural insight only a true Indonesian partner could bring. They have become an extension of our regional marketing team.
+      </blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">JD</div>
+        <div>
+          <div class="author-name">[Client Name]</div>
+          <div class="author-title">Regional Marketing Director, [Global Brand]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+   LEAD FORM (with multi-touch attribution)
+============================================ -->
+
+<\!-- BRAND CHECKER CTA -->
+<section style="background:#0D1B2A;padding:80px 24px">
+  <div style="max-width:900px;margin:0 auto;text-align:center">
+    <div style="display:inline-block;background:rgba(230,57,70,.15);border:1px solid rgba(230,57,70,.3);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;color:#FF6B6B;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:24px">Free Tool</div>
+    <h2 style="font-size:clamp(32px,5vw,54px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-1.5px;margin-bottom:18px">Check If Your Brand Is<br>Ready for Indonesia</h2>
+    <p style="font-size:18px;color:rgba(255,255,255,.5);max-width:560px;margin:0 auto 40px;line-height:1.7">Paste your website and social links. Our AI analyzes your brand, estimates your total addressable market, maps your competition, and gives you a free GTM blueprint in under 2 minutes.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+      <a href="https://web-production-0e5e0.up.railway.app" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#E63946;color:#fff;padding:16px 36px;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;box-shadow:0 8px 28px rgba(230,57,70,.35)">
+        Analyze My Brand Free &#8594;
+      </a>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.25)">No credit card &nbsp;&middot;&nbsp; Takes 2 minutes &nbsp;&middot;&nbsp; Real AI analysis</p>
+    <div style="display:flex;justify-content:center;gap:48px;margin-top:48px;flex-wrap:wrap">
+      <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#fff">277M+</div><div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;margin-top:4px">Population</div></div>
+      <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#fff">$1.3T</div><div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;margin-top:4px">GDP (2024)</div></div>
+      <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#fff">212M+</div><div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;margin-top:4px">Internet Users</div></div>
+      <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#fff">#1</div><div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;margin-top:4px">SE Asian Economy</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="lead-section" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Let&rsquo;s Talk</span>
+      <h2>Tell us about your Indonesia ambitions</h2>
+      <p>We respond to every qualified inquiry within one business day. Your first reply will come from a senior strategist.</p>
+    </div>
+
+    <div class="form-wrapper">
+      <h3>Request a strategy call</h3>
+      <p class="form-sub">Most engagements begin with a 45-minute call to scope your goals and assess fit. There is no obligation.</p>
+
+      <form id="leadForm" name="lp-digitalmarketing-global" onsubmit="return handleSubmit(event)">
+
+        <!-- Hidden fields for multi-touch attribution -->
+        <input type="hidden" name="utm_source"   id="utm_source" />
+        <input type="hidden" name="utm_medium"   id="utm_medium" />
+        <input type="hidden" name="utm_campaign" id="utm_campaign" />
+        <input type="hidden" name="utm_term"     id="utm_term" />
+        <input type="hidden" name="utm_content"  id="utm_content" />
+        <input type="hidden" name="gclid"        id="gclid" />
+        <input type="hidden" name="fbclid"       id="fbclid" />
+        <input type="hidden" name="first_touch_source"  id="first_touch_source" />
+        <input type="hidden" name="first_touch_date"    id="first_touch_date" />
+        <input type="hidden" name="last_touch_source"   id="last_touch_source" />
+        <input type="hidden" name="referrer"            id="referrer" />
+        <input type="hidden" name="landing_page"        id="landing_page" />
+        <input type="hidden" name="session_count"       id="session_count" />
+        <input type="hidden" name="page_journey"        id="page_journey" />
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name">Full Name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" required placeholder="Jane Doe" />
+          </div>
+          <div class="form-field">
+            <label for="company">Company <span class="req">*</span></label>
+            <input type="text" id="company" name="company" required placeholder="Acme Global Inc." />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">Work Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" required placeholder="jane@acme.com" />
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone / WhatsApp <span class="req">*</span></label>
+            <div style="display:flex;gap:6px">
+              <select id="phoneCode" style="flex:0 0 auto;width:158px;border:1px solid #d1d5db;border-radius:6px;padding:10px 6px;font-size:13px;background:#fff;color:#131314">
+                <option value="+1">US / CA (+1)</option>
+                <option value="+44">UK (+44)</option>
+                <option value="+61">AU (+61)</option>
+                <option value="+65">SG (+65)</option>
+                <option value="+60">MY (+60)</option>
+                <option value="+66">TH (+66)</option>
+                <option value="+63">PH (+63)</option>
+                <option value="+84">VN (+84)</option>
+                <option value="+62">ID (+62)</option>
+                <option value="+852">HK (+852)</option>
+                <option value="+82">KR (+82)</option>
+                <option value="+81">JP (+81)</option>
+                <option value="+86">CN (+86)</option>
+                <option value="+91">IN (+91)</option>
+                <option value="+971">AE (+971)</option>
+                <option value="+966">SA (+966)</option>
+                <option value="+974">QA (+974)</option>
+                <option value="+49">DE (+49)</option>
+                <option value="+33">FR (+33)</option>
+                <option value="+31">NL (+31)</option>
+                <option value="+41">CH (+41)</option>
+                <option value="+46">SE (+46)</option>
+                <option value="+55">BR (+55)</option>
+                <option value="+52">MX (+52)</option>
+                <option value="+27">ZA (+27)</option>
+                <option value="+234">NG (+234)</option>
+              </select>
+              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="555 123 4567" required style="flex:1;min-width:0" />
+            </div>
+            <div id="phoneError" style="color:var(--accent);font-size:11px;margin-top:3px;display:none">Please enter your phone number</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="country">Country / HQ <span class="req">*</span></label>
+            <input type="text" id="country" name="country" required placeholder="United States" />
+          </div>
+          <div class="form-field">
+            <label for="role">Your Role</label>
+            <select id="role" name="role">
+              <option value="">Select</option>
+              <option>CMO / VP Marketing</option>
+              <option>Regional / APAC Marketing Lead</option>
+              <option>Brand / Product Marketing</option>
+              <option>Performance / Growth</option>
+              <option>Founder / CEO</option>
+              <option>Procurement</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="service">Services of Interest</label>
+            <select id="service" name="service">
+              <option>Mix / Integrated Engagement</option>
+              <option>Creative &amp; Communication</option>
+              <option>Advertising &amp; Media</option>
+              <option>Social Media &amp; Influence</option>
+              <option>Analytics &amp; Insight</option>
+              <option>Market Entry Diagnostic</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="budget">Monthly Budget Range <span class="req">*</span></label>
+            <select id="budget" name="budget" required>
+              <option value="">Select</option>
+              <option>USD 2,000 to USD 6,000 / month</option>
+              <option>USD 6,000 to USD 15,000 / month</option>
+              <option>USD 15,000 to USD 50,000 / month</option>
+              <option>USD 50,000+ / month</option>
+              <option>Project-based / Not yet defined</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="qualifier-note">
+          We work best with global brands investing USD 6,000+ per month in Indonesian market growth. For smaller pilots we still respond, but priority is given to larger programs.
+        </div>
+
+        <div class="form-row single">
+          <div class="form-field">
+            <label for="how_heard">How did you hear about us? <span class="req">*</span></label>
+            <select id="how_heard" name="how_heard" required>
+              <option value="">Select</option>
+              <option value="google_search">Google Search</option>
+              <option value="linkedin">LinkedIn (post or ad)</option>
+              <option value="referral_client">Referral from a client or partner</option>
+              <option value="referral_colleague">Word of mouth or colleague</option>
+              <option value="industry_event">Industry event or conference</option>
+              <option value="press_article">Press, article, or podcast</option>
+              <option value="social_organic">Instagram or Facebook (organic)</option>
+              <option value="paid_ad">Saw an ad (Google, Meta, LinkedIn)</option>
+              <option value="email_outreach">Email from your team</option>
+              <option value="agency_directory">Agency directory (Clutch, Sortlist, etc.)</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="form-field">
+            <label for="notes">Tell us about your goals</label>
+            <textarea id="notes" name="notes" placeholder="What are you trying to achieve in Indonesia? Timeline, current presence, key questions."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Request Strategy Call</button>
+        <p class="form-foot">We respond within one business day. By submitting, you agree to our privacy policy.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+   FOOTER
+============================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="logo" style="font-size:1.4rem;color:#fff;">IDEO<span style="color:var(--accent)">WORKS</span></a>
+        <p style="margin-top:14px;font-size:0.88rem;color:rgba(255,255,255,0.6);max-width:300px;">The Indonesia growth partner for global brands. Strategy, creative, media, measurement.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Creative</a></li>
+          <li><a href="#services">Advertising</a></li>
+          <li><a href="#services">Social Media</a></li>
+          <li><a href="#services">Analytics</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#cases">Case Studies</a></li>
+          <li><a href="#process">How We Work</a></li>
+          <li><a href="#why">Why Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/ideoworks.id">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/ideoworks.id/">Instagram</a></li>
+          <li><a href="mailto:marketing@ideoworks.co.id">marketing@ideoworks.co.id</a></li>
+          <li><a href="https://api.whatsapp.com/send?phone=628111846466">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 IDEOWORKS. All rights reserved.</span>
+      <span>Jakarta, Indonesia. Serving global brands worldwide.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://api.whatsapp.com/send?phone=628111846466" class="wa-float" onclick="trackCTA('whatsapp_float')">
+  Chat on WhatsApp
+</a>
+
+<!-- ============================================
+   JAVASCRIPT   multi-touch attribution capture
+============================================ -->
+<script>
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name) || '';
+}
+
+const utmFields = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
+
+function buildSourceString() {
+  const src = getParam('utm_source') || (document.referrer ? new URL(document.referrer).hostname : 'direct');
+  const med = getParam('utm_medium') || (document.referrer ? 'referral' : 'none');
+  const cmp = getParam('utm_campaign') || '';
+  return src + ' / ' + med + (cmp ? ' / ' + cmp : '');
+}
+
+(function attributionTracker() {
+  try {
+    const now = new Date().toISOString();
+    const currentSource = buildSourceString();
+
+    if (!localStorage.getItem('idw_first_touch_source')) {
+      localStorage.setItem('idw_first_touch_source', currentSource);
+      localStorage.setItem('idw_first_touch_date', now);
+    }
+
+    localStorage.setItem('idw_last_touch_source', currentSource);
+    localStorage.setItem('idw_last_touch_date', now);
+
+    const sessions = parseInt(localStorage.getItem('idw_session_count') || '0', 10) + 1;
+    localStorage.setItem('idw_session_count', sessions);
+
+    const journey = JSON.parse(localStorage.getItem('idw_page_journey') || '[]');
+    journey.push({ url: window.location.pathname, ts: now });
+    if (journey.length > 10) journey.shift();
+    localStorage.setItem('idw_page_journey', JSON.stringify(journey));
+
+    window.dataLayer.push({
+      event: 'attribution_loaded',
+      first_touch: localStorage.getItem('idw_first_touch_source'),
+      last_touch:  currentSource,
+      session_count: sessions
+    });
+  } catch (e) { console.warn('Attribution tracker error', e); }
+})();
+
+document.addEventListener('DOMContentLoaded', function() {
+  utmFields.forEach(f => { const el = document.getElementById(f); if (el) el.value = getParam(f); });
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  set('first_touch_source', localStorage.getItem('idw_first_touch_source'));
+  set('first_touch_date',   localStorage.getItem('idw_first_touch_date'));
+  set('last_touch_source',  localStorage.getItem('idw_last_touch_source'));
+  set('referrer',           document.referrer);
+  set('landing_page',       window.location.href);
+  set('session_count',      localStorage.getItem('idw_session_count'));
+  set('page_journey',       localStorage.getItem('idw_page_journey'));
+});
+
+function trackCTA(label) {
+  window.dataLayer.push({ event: 'cta_click', cta_label: label });
+}
+
+// ── Change this to your live server URL after deploying ──────────────────────
+// e.g. 'https://brandid-server.up.railway.app'
+const BACKEND = 'https://web-production-0e5e0.up.railway.app';
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  var form = document.getElementById('leadForm');
+  var btn  = form.querySelector('.submit-btn');
+  var emailVal = (document.getElementById('email').value || '').trim();
+  var FREE = ['gmail.com','yahoo.com','yahoo.co.uk','hotmail.com','hotmail.co.uk','outlook.com','live.com','msn.com','icloud.com','me.com','mac.com','aol.com','protonmail.com','proton.me','mail.com','gmx.com','gmx.net','yandex.com','yandex.ru','zoho.com','tutanota.com','rocketmail.com','att.net','verizon.net','comcast.net'];
+  var domain = (emailVal.split('@')[1] || '').toLowerCase();
+  if (FREE.indexOf(domain) > -1) { alert('Please use your work email (not Gmail, Yahoo, Hotmail, etc.)'); document.getElementById('email').focus(); return false; }
+  var phoneNum = (document.getElementById('phoneNumber').value || '').trim();
+  if (phoneNum.replace(/[\s\-]/g,'').length < 6) { document.getElementById('phoneError').style.display='block'; document.getElementById('phoneNumber').focus(); return false; }
+  document.getElementById('phoneError').style.display='none';
+  var phoneVal = document.getElementById('phoneCode').value + ' ' + phoneNum;
+  var data = {};
+  var els = form.querySelectorAll('[name]');
+  for (var i=0;i<els.length;i++) { data[els[i].name] = els[i].value; }
+  data.email = emailVal;
+  data.phone = phoneVal;
+  try { window.dataLayer = window.dataLayer||[]; window.dataLayer.push({event:'qualified_lead',budget_tier:data.budget,country:data.country}); } catch(x) {}
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  fetch(BACKEND + '/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) })
+    .then(function(r){ if(\!r.ok) throw new Error('err'); btn.textContent='Sent - we will be in touch within 1 business day'; btn.style.background='#16a34a'; form.querySelectorAll('input,select,textarea').forEach(function(el){el.disabled=true;}); })
+    .catch(function(){ btn.disabled=false; btn.textContent='Request Strategy Call'; alert('Something went wrong. Email us at marketing@ideoworks.co.id'); });
+  return false;
+}
+</script>
+</body>
+</html>

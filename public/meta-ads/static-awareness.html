@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Static Awareness 1:1 · Ideoworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8192C;--navy:#0D1B2A;--white:#FFFFFF;--fd:'Space Grotesk',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060608;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;gap:14px}
+  .fmt{font-family:var(--fm);font-size:10px;color:#5C5867;letter-spacing:.2em;text-transform:uppercase}
+
+  /* 1:1 — white editorial */
+  .ad{width:500px;height:500px;background:var(--white);position:relative;overflow:hidden;border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,.5);display:flex;flex-direction:column}
+
+  /* Red stripe top */
+  .top-stripe{height:4px;background:var(--red);flex-shrink:0}
+
+  /* Header bar */
+  .hdr{padding:18px 28px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #F0F0ED;flex-shrink:0}
+  .brand{font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--navy)}
+  .brand b{color:var(--red)}
+  .hdr-tag{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.4);letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(13,27,42,.15)}
+
+  /* Main content */
+  .body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0}
+
+  /* Left — bold statement */
+  .left{padding:24px 24px 20px 28px;display:flex;flex-direction:column;justify-content:space-between;border-right:2px solid #F0F0ED}
+  .eyebrow{font-family:var(--fm);font-size:8.5px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+  .eyebrow::before{content:'';width:16px;height:2px;background:var(--red)}
+  .headline{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--navy);line-height:1.0;letter-spacing:-.025em}
+  .headline .red{color:var(--red)}
+  .sub{font-family:var(--fb);font-size:11px;color:rgba(13,27,42,.55);line-height:1.6;max-width:22ch;margin-top:12px}
+
+  /* Stats */
+  .stats{display:flex;flex-direction:column;gap:0;border-top:2px solid #F0F0ED;margin-top:auto}
+  .stat{padding:8px 0;border-bottom:1px solid #F0F0ED}
+  .stat:last-child{border-bottom:none}
+  .stat-val{font-family:var(--fd);font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1}
+  .stat-val b{color:var(--red)}
+  .stat-lbl{font-family:var(--fm);font-size:7.5px;color:rgba(13,27,42,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+
+  /* Right — LP preview */
+  .right{padding:20px 24px 20px 20px;display:flex;flex-direction:column;gap:12px}
+  .right-label{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.4);letter-spacing:.15em;text-transform:uppercase}
+
+  .lp-preview{flex:1;background:#0A0D14;border-radius:6px;padding:14px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.2)}
+  .lp-preview::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:18px 18px;opacity:.025;pointer-events:none}
+  .lp-top{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .lp-domain{font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.25);letter-spacing:.1em;margin-bottom:8px}
+  .lp-score{font-family:var(--fd);font-size:48px;font-weight:800;color:#F2F0EC;letter-spacing:-.04em;line-height:1;margin-bottom:10px}
+  .lp-score span{font-size:16px;color:rgba(255,255,255,.25)}
+  .lp-bars{display:flex;flex-direction:column;gap:6px}
+  .lp-bar-item{display:flex;flex-direction:column;gap:3px}
+  .lp-bar-head{display:flex;justify-content:space-between}
+  .lp-bar-n{font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em}
+  .lp-bar-v{font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.4)}
+  .lp-bar-track{height:2px;background:rgba(255,255,255,.08);border-radius:1px;overflow:hidden}
+  .lp-bar-fill{height:100%;background:var(--red);border-radius:1px}
+
+  /* Bottom bar */
+  .bottom{padding:14px 28px;border-top:2px solid #F0F0ED;display:flex;align-items:center;justify-content:space-between;background:var(--navy);flex-shrink:0}
+  .bottom-url{display:flex;flex-direction:column;gap:2px}
+  .bottom-url-main{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.7);letter-spacing:.08em}
+  .bottom-url-sub{font-family:var(--fm);font-size:7.5px;color:rgba(255,255,255,.3);letter-spacing:.08em}
+  .bottom-btn{padding:9px 18px;background:var(--red);color:var(--white);font-family:var(--fd);font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="fmt">FEED STATIC · 1:1 · COLD AWARENESS · IDEOWORKS BRAND</div>
+<div class="ad">
+  <div class="top-stripe"></div>
+  <div class="hdr">
+    <div class="brand">IDEO<b>WORKS</b></div>
+    <div class="hdr-tag">Indonesia Market Intelligence</div>
+  </div>
+  <div class="body">
+    <div class="left">
+      <div>
+        <div class="eyebrow">Market Entry</div>
+        <div class="headline">THE BRANDS<br>THAT WIN<br><span class="red">KNOW THIS</span><br>FIRST.</div>
+        <div class="sub">15 years navigating overseas brands through Indonesia. Now in a free tool.</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-val">15<b>+</b></div><div class="stat-lbl">Years operating in market</div></div>
+        <div class="stat"><div class="stat-val"><b>270M</b></div><div class="stat-lbl">Consumer market</div></div>
+        <div class="stat"><div class="stat-val"><b>Free</b></div><div class="stat-lbl">No signup needed</div></div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="right-label">Your brand. Scored.</div>
+      <div class="lp-preview">
+        <div class="lp-top"></div>
+        <div class="lp-domain">yourbrand.com</div>
+        <div class="lp-score">74<span>/100</span></div>
+        <div class="lp-bars">
+          <div class="lp-bar-item">
+            <div class="lp-bar-head"><span class="lp-bar-n">Brand Fit</span><span class="lp-bar-v">78</span></div>
+            <div class="lp-bar-track"><div class="lp-bar-fill" style="width:78%"></div></div>
+          </div>
+          <div class="lp-bar-item">
+            <div class="lp-bar-head"><span class="lp-bar-n">Opportunity</span><span class="lp-bar-v">85</span></div>
+            <div class="lp-bar-track"><div class="lp-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="lp-bar-item">
+            <div class="lp-bar-head"><span class="lp-bar-n">Competitive</span><span class="lp-bar-v">72</span></div>
+            <div class="lp-bar-track"><div class="lp-bar-fill" style="width:72%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="bottom-url">
+      <div class="bottom-url-sub">Calvin Klein · HSBC · GoPro · Park Hyatt</div>
+    </div>
+    <div class="bottom-btn">See Where I Stand</div>
+  </div>
+</div>
+</body>
+</html>

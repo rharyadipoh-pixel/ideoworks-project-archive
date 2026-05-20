@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reel A · 인도네시아 시장 진출 · Ideoworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8192C;--navy:#0D1B2A;--white:#FFFFFF;--bg:#F7F5F0;--muted:rgba(13,27,42,.5);--muted2:rgba(13,27,42,.3);--lp-bg:#0A0D14;--lp-rule:#2D2A3A;--fd:'Noto Sans KR',sans-serif;--fb:'Noto Sans KR',sans-serif;--fm:'JetBrains Mono',monospace;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060608;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:14px;padding:40px 20px}
+  .fmt{font-family:var(--fm);font-size:10px;color:#5C5867;letter-spacing:.2em;text-transform:uppercase}
+  .ad{width:405px;height:720px;background:#F7F5F0;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.07)}
+  .strip{position:absolute;bottom:0;left:0;right:0;height:40px;background:var(--navy);display:flex;align-items:center;padding:0 24px;z-index:15}
+  .strip-cta{font-family:var(--fm);font-size:8px;color:rgba(232,25,44,.7);letter-spacing:.12em;text-transform:uppercase}
+  .ghost{position:absolute;bottom:-10px;right:-8px;font-family:var(--fm);font-size:200px;color:rgba(13,27,42,.03);line-height:1;pointer-events:none;letter-spacing:-.04em}
+  .red-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);z-index:20}
+  .logo{position:absolute;top:20px;left:24px;z-index:20;font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--navy)}
+  .logo b{color:var(--red)}
+  .progress{position:absolute;bottom:40px;left:0;height:2px;background:var(--red);z-index:20;width:0}
+  .scene{position:absolute;inset:0;bottom:40px;z-index:10;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:52px 32px 28px;opacity:0;pointer-events:none;transition:opacity .5s ease}
+  .scene.active{opacity:1;pointer-events:auto}
+  .s1-eyebrow{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.22em;text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:8px}
+  .s1-eyebrow::before{content:'';width:20px;height:2px;background:var(--red);display:block}
+  .s1-hl{font-family:var(--fd);font-size:44px;font-weight:900;line-height:1.1;letter-spacing:-.01em;color:var(--navy);margin-bottom:28px}
+  .s1-hl .red{color:var(--red)}
+  .s1-hl .word{display:inline-block;overflow:hidden}
+  .s1-hl .word span{display:block;animation:slideUp .5s cubic-bezier(.16,1,.3,1) both}
+  @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+  .s1-sub{font-family:var(--fb);font-size:13px;color:var(--muted);line-height:1.7;max-width:24ch;opacity:0;animation:fadeup .6s ease 1.2s forwards}
+  @keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .s1-deco{position:absolute;right:-20px;bottom:80px;width:120px;height:4px;background:var(--red);opacity:.4}
+  .s1-deco2{position:absolute;right:-20px;bottom:90px;width:80px;height:4px;background:var(--red);opacity:.2}
+  .s2{justify-content:flex-start;padding-top:72px}
+  .s2-label{font-family:var(--fm);font-size:9px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px}
+  .s2-sub{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--navy);line-height:1.4;letter-spacing:-.01em;margin-bottom:24px;max-width:22ch}
+  .s2-sub span{color:var(--red)}
+  .lp-preview{width:100%;background:var(--lp-bg);border-radius:8px;padding:20px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15)}
+  .lp-preview::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.022;pointer-events:none}
+  .lp-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .lp-eyebrow{font-family:var(--fm);font-size:7px;color:rgba(232,25,44,.7);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+  .lp-input{background:rgba(255,255,255,.04);border:1px solid var(--lp-rule);padding:10px 12px;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+  .lp-proto{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.25)}
+  .lp-url{font-family:var(--fm);font-size:11px;color:#F2F0EC}
+  .lp-cursor{display:inline-block;width:1px;height:11px;background:var(--red);animation:blink .75s step-end infinite;vertical-align:bottom}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .lp-btn{width:100%;padding:10px;background:var(--red);color:#fff;font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.04em;text-align:center}
+  .lp-hint{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.2);text-align:center;margin-top:8px;letter-spacing:.08em}
+  .s3{}
+  .s3-domain{font-family:var(--fm);font-size:9px;color:var(--muted2);letter-spacing:.1em;margin-bottom:8px}
+  .s3-lp{width:100%;background:var(--lp-bg);border-radius:8px;padding:20px 20px 16px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15);margin-bottom:20px}
+  .s3-lp::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.022;pointer-events:none}
+  .s3-lp-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .s3-score-row{display:flex;align-items:baseline;gap:4px;margin-bottom:16px}
+  .s3-num{font-family:var(--fm);font-size:80px;color:#F2F0EC;letter-spacing:-.04em;line-height:1}
+  .s3-den{font-family:var(--fm);font-size:24px;color:rgba(255,255,255,.3)}
+  .s3-bars{display:flex;flex-direction:column;gap:9px}
+  .s3-bar{display:flex;flex-direction:column;gap:4px;opacity:0;transform:translateY(5px)}
+  .s3-bar.show{animation:bin .35s ease forwards}
+  @keyframes bin{to{opacity:1;transform:translateY(0)}}
+  .s3-bh{display:flex;justify-content:space-between}
+  .s3-bn{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+  .s3-bv{font-family:var(--fm);font-size:8px;color:#F2F0EC}
+  .s3-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+  .s3-fill{height:100%;background:linear-gradient(90deg,var(--red),#FFB347);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+  .s3-fill.go{transform:scaleX(1)}
+  .s3-label{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--navy);line-height:1.5}
+  .s3-label span{color:var(--red)}
+  .s4{}
+  .s4-lp{width:100%;background:var(--lp-bg);border-radius:8px;padding:18px 20px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15);margin-bottom:20px}
+  .s4-lp::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.02;pointer-events:none}
+  .s4-lp-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+  .s4-score-mini{font-family:var(--fm);font-size:48px;color:#F2F0EC;letter-spacing:-.04em;line-height:1}
+  .s4-score-mini span{font-size:16px;color:rgba(255,255,255,.3);vertical-align:super}
+  .s4-domain{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.25);align-self:flex-end;margin-bottom:4px}
+  .s4-rows{display:flex;flex-direction:column;gap:6px}
+  .s4-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(232,25,44,.05);border:1px solid rgba(232,25,44,.12)}
+  .s4-name{font-family:var(--fm);font-size:8.5px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase}
+  .s4-ico{font-size:10px;opacity:.3}
+  .s4-hl{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--navy);line-height:1.5;margin-bottom:6px}
+  .s4-hl b{color:var(--red)}
+  .s4-sub{font-family:var(--fb);font-size:12px;color:var(--muted);line-height:1.7}
+  .s5{background:var(--red);align-items:flex-start}
+  .s5-kicker{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.22em;text-transform:uppercase;margin-bottom:20px}
+  .s5-hl{font-family:var(--fd);font-size:38px;font-weight:900;color:var(--white);line-height:1.15;letter-spacing:-.01em;margin-bottom:20px}
+  .s5-credentials{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+  .s5-cred{font-family:var(--fb);font-size:12px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:8px;line-height:1.5}
+  .s5-cred::before{content:'';width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.6);flex-shrink:0}
+  .s5-btn{padding:14px 28px;background:var(--white);color:var(--red);font-family:var(--fd);font-weight:700;font-size:13px;letter-spacing:.04em;display:inline-flex;align-items:center;gap:8px}
+  .s5-url{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.5);margin-top:14px;letter-spacing:.1em}
+  .s5-bg-text{position:absolute;bottom:-20px;right:-10px;font-family:var(--fm);font-size:120px;color:rgba(255,255,255,.07);line-height:1;z-index:0;pointer-events:none}
+  .s5>*{position:relative;z-index:1}
+</style>
+</head>
+<body>
+<div class="fmt">REELS · STORIES · 9:16 · ANGLE A · IDEOWORKS BRAND</div>
+<div class="ad" id="ad">
+  <div class="red-bar"></div>
+  <div class="logo">IDEO<b>WORKS</b></div>
+  <div class="scene s1 active" id="s1">
+    <div class="s1-eyebrow">인도네시아 시장 진출</div>
+    <h1 class="s1-hl">
+      <div class="word"><span style="animation-delay:.05s">인도네시아는</span></div>
+      <div class="word"><span style="animation-delay:.2s">브랜드를</span></div>
+      <div class="word"><span style="animation-delay:.35s">기다려</span></div>
+      <div class="word red"><span style="animation-delay:.5s">주지</span></div>
+      <div class="word red"><span style="animation-delay:.65s">않습니다.</span></div>
+    </h1>
+    <p class="s1-sub">2010년부터 해외 브랜드의 인도네시아 진출을 이끌어왔습니다. 지금 귀하의 실제 위치를 확인하세요.</p>
+    <div class="s1-deco"></div><div class="s1-deco2"></div>
+  </div>
+  <div class="scene s2" id="s2">
+    <div class="s2-label">인도네시아 브랜드 인텔리전스</div>
+    <div class="s2-sub">브랜드 위치를 확인하세요. <span>60초면 충분합니다.</span></div>
+    <div class="lp-preview">
+      <div class="lp-bar"></div>
+      <div class="lp-input"><span class="lp-proto">https://</span><span class="lp-url" id="typeUrl"></span><span class="lp-cursor"></span></div>
+      <div class="lp-btn">내 위치 확인하기</div>
+      <div class="lp-hint">실시간 점수. 가입 불필요.</div>
+    </div>
+  </div>
+  <div class="scene s3" id="s3">
+    <div class="s3-domain">yourbrand.com</div>
+    <div class="s3-lp">
+      <div class="s3-lp-bar"></div>
+      <div class="s3-score-row"><div class="s3-num" id="scoreNum">0</div><div class="s3-den">/100</div></div>
+      <div class="s3-bars">
+        <div class="s3-bar" id="bar1"><div class="s3-bh"><span class="s3-bn">브랜드 준비도</span><span class="s3-bv">78</span></div><div class="s3-track"><div class="s3-fill" style="width:78%" id="fill1"></div></div></div>
+        <div class="s3-bar" id="bar2"><div class="s3-bh"><span class="s3-bn">인도네시아 기회</span><span class="s3-bv">85</span></div><div class="s3-track"><div class="s3-fill" style="width:85%" id="fill2"></div></div></div>
+        <div class="s3-bar" id="bar3"><div class="s3-bh"><span class="s3-bn">경쟁적 위치</span><span class="s3-bv">72</span></div><div class="s3-track"><div class="s3-fill" style="width:72%" id="fill3"></div></div></div>
+      </div>
+    </div>
+    <div class="s3-label">당신의 브랜드.<br>인도네시아 완전 분석.<br><span>60초 안에.</span></div>
+  </div>
+  <div class="scene s4" id="s4">
+    <div class="s4-lp">
+      <div class="s4-lp-top"><div class="s4-score-mini">74<span>/100</span></div><div class="s4-domain">yourbrand.com</div></div>
+      <div class="s4-rows">
+        <div class="s4-row"><span class="s4-name">페르소나 매핑</span><span class="s4-ico">🔒</span></div>
+        <div class="s4-row"><span class="s4-name">GTM 전략</span><span class="s4-ico">🔒</span></div>
+        <div class="s4-row"><span class="s4-name">예산 프레임워크</span><span class="s4-ico">🔒</span></div>
+      </div>
+    </div>
+    <div class="s4-hl">전체 그림은<br>당신의 것입니다. <b>무료로.</b></div>
+    <div class="s4-sub">페르소나 맵, GTM 블루프린트, 실제 인도네시아 예산 티어. 90초 이내 전달.</div>
+  </div>
+  <div class="scene s5" id="s5">
+    <div class="s5-bg-text">IDW</div>
+    <div class="s5-kicker">2010년부터 인도네시아에서 활동</div>
+    <h2 class="s5-hl">시장 내 15년의 경험.</h2>
+    <div class="s5-credentials">
+      <div class="s5-cred">Calvin Klein, HSBC, GoPro, Park Hyatt 캠페인 집행</div>
+      <div class="s5-cred">모든 도시 등급. 모든 주요 채널.</div>
+      <div class="s5-cred">무료 브리핑. 90초 이내 전달.</div>
+    </div>
+    <div class="s5-btn">무료 점수 받기</div>
+  </div>
+  <div class="strip"><span class="strip-cta">Free · No Signup</span></div>
+  <div class="progress" id="progress"></div>
+</div>
+<script>
+const SC=['s1','s2','s3','s4','s5'],DUR=[3200,3500,5000,3000,3500],TOT=DUR.reduce((a,b)=>a+b,0);
+let cur=0,ls=performance.now();
+function show(i){SC.forEach((id,x)=>document.getElementById(id).classList.toggle('active',x===i));if(i===1)startType();if(i===2)startScore();}
+function next(){setTimeout(()=>{cur=(cur+1)%SC.length;if(!cur)ls=performance.now();show(cur);next();},DUR[cur]);}
+function animN(el,a,b,d){const s=performance.now();(function t(n){const p=Math.min((n-s)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(a+(b-a)*e);if(p<1)requestAnimationFrame(t);})(s);}
+const URL_TXT='yourbrand.com';let tt;
+function startType(){const el=document.getElementById('typeUrl');el.textContent='';clearInterval(tt);let i=0;tt=setInterval(()=>{el.textContent+=URL_TXT[i++];if(i>=URL_TXT.length)clearInterval(tt);},80);}
+function startScore(){document.getElementById('scoreNum').textContent='0';setTimeout(()=>animN(document.getElementById('scoreNum'),0,74,1800),200);[1,2,3].forEach((n,i)=>setTimeout(()=>{document.getElementById('bar'+n).classList.add('show');setTimeout(()=>document.getElementById('fill'+n).classList.add('go'),60);},i*350+600));}
+(function tick(){document.getElementById('progress').style.width=Math.min(((performance.now()-ls)/TOT)*100,100)+'%';requestAnimationFrame(tick);})();
+show(0);next();
+</script>
+</body>
+</html>

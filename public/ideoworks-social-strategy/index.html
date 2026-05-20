@@ -1,0 +1,1889 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideoworks Social Media Strategy 2026</title>
+<style>
+  :root {
+    --red: #D42B2B;
+    --red-dark: #A82020;
+    --red-light: #FDEAEA;
+    --red-mid: #F5C5C5;
+    --white: #FFFFFF;
+    --off-white: #F8F9FA;
+    --gray: #6B7280;
+    --gray-light: #E5E7EB;
+    --gray-dark: #374151;
+    --text: #1F2937;
+    --green: #16A34A;
+    --green-light: #F0FDF4;
+    --orange: #D97706;
+    --orange-light: #FFFBEB;
+    --blue: #2563EB;
+    --blue-light: #EFF6FF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  /* TOP NAV */
+  .top-nav {
+    background: var(--red);
+    color: var(--white);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .top-nav .logo { font-size: 18px; font-weight: 800; letter-spacing: 1.5px; }
+  .top-nav .meta { font-size: 12px; color: rgba(255,255,255,0.75); }
+  .top-nav .badge {
+    background: var(--white);
+    color: var(--red);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  /* LAYOUT */
+  .layout { display: flex; }
+  .sidebar {
+    width: 230px;
+    min-height: calc(100vh - 52px);
+    background: var(--white);
+    border-right: 1px solid var(--gray-light);
+    padding: 28px 0;
+    position: sticky;
+    top: 52px;
+    height: calc(100vh - 52px);
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .sidebar-section a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar-section a:hover, .sidebar-section a.active {
+    color: var(--red);
+    background: var(--red-light);
+    border-left-color: var(--red);
+  }
+  .sidebar-section a .num {
+    background: var(--red-light);
+    color: var(--red);
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #9CA3AF;
+    padding: 16px 20px 6px;
+    text-transform: uppercase;
+  }
+  /* MAIN */
+  .main { flex: 1; padding: 40px 48px; max-width: 980px; }
+  /* HERO */
+  .hero {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-top: 5px solid var(--red);
+    border-radius: 12px;
+    padding: 48px;
+    margin-bottom: 32px;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--red-light);
+    color: var(--red);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero h1 { font-size: 34px; font-weight: 800; line-height: 1.2; margin-bottom: 14px; color: var(--text); }
+  .hero h1 span { color: var(--red); }
+  .hero p { font-size: 15px; color: var(--gray); max-width: 620px; line-height: 1.7; }
+  .hero-meta {
+    display: flex;
+    gap: 28px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--gray-light);
+    flex-wrap: wrap;
+  }
+  .hero-meta-item { font-size: 13px; color: var(--gray); }
+  .hero-meta-item strong { color: var(--text); display: block; font-size: 14px; margin-bottom: 2px; }
+  /* SECTIONS */
+  .section {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 36px;
+    margin-bottom: 28px;
+    border: 1px solid var(--gray-light);
+    scroll-margin-top: 72px;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--gray-light);
+  }
+  .section-number {
+    background: var(--red);
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 800;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title h2 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .section-title p { font-size: 13px; color: var(--gray); }
+  /* SUBSECTIONS */
+  .subsection { margin-bottom: 28px; }
+  .subsection h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .subsection h3::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 16px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card {
+    background: var(--off-white);
+    border: 1px solid var(--gray-light);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .card-icon { font-size: 22px; margin-bottom: 8px; }
+  .card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .card p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+  .card.red { border-left: 4px solid var(--red); }
+  .card.green { border-left: 4px solid var(--green); }
+  .card.orange { border-left: 4px solid var(--orange); }
+  .card.blue { border-left: 4px solid var(--blue); }
+  /* ALERT */
+  .alert {
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .alert.critical { background: var(--red-light); border: 1px solid var(--red-mid); }
+  .alert.info { background: var(--blue-light); border: 1px solid #BFDBFE; }
+  .alert.success { background: var(--green-light); border: 1px solid #BBF7D0; }
+  .alert.warning { background: var(--orange-light); border: 1px solid #FDE68A; }
+  .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .alert-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .alert-body p, .alert-body li { font-size: 13px; line-height: 1.7; }
+  .alert-body ul { padding-left: 16px; }
+  /* QUICKSTART */
+  .quickstart {
+    background: var(--red);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 28px;
+    color: var(--white);
+  }
+  .quickstart h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+  .quickstart .qs-sub { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+  .quickstart-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .qs-step {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .qs-step .step-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.4);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .qs-step h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .qs-step p { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; border-radius: 10px; border: 1px solid var(--gray-light); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: var(--red); color: var(--white); }
+  thead th { padding: 11px 14px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; }
+  tbody tr:nth-child(even) { background: var(--off-white); }
+  tbody tr:hover { background: var(--red-light); }
+  tbody td { padding: 11px 14px; border-bottom: 1px solid var(--gray-light); vertical-align: top; line-height: 1.6; }
+  tbody td:first-child { font-weight: 600; color: var(--text); }
+  /* PILLAR CARDS */
+  .pillar-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; }
+  .pillar { border: 1px solid var(--gray-light); border-radius: 12px; overflow: hidden; }
+  .pillar-header {
+    background: var(--red);
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .pillar-header h3 { font-size: 15px; font-weight: 800; color: var(--white); }
+  .pillar-header .pct {
+    background: rgba(255,255,255,0.2);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .pillar-body { padding: 22px; }
+  .pillar-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-light);
+    font-size: 13px;
+  }
+  .pillar-row:last-child { border-bottom: none; }
+  .pillar-label { font-weight: 700; color: var(--text); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .pillar-val { color: var(--gray-dark); line-height: 1.6; }
+  .pillar-val code {
+    background: var(--off-white);
+    border: 1px solid var(--gray-light);
+    border-left: 3px solid var(--red);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 12px;
+    display: block;
+    line-height: 1.8;
+    color: var(--gray-dark);
+    white-space: pre-wrap;
+  }
+  .approval-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .approval-tag.self { background: #DCFCE7; color: #166534; }
+  .approval-tag.manager { background: #FEF9C3; color: #713F12; }
+  /* HIGHLIGHT BOX (replaces positioning box) */
+  .highlight-box {
+    background: var(--red-light);
+    border: 1px solid var(--red-mid);
+    border-left: 4px solid var(--red);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .highlight-box h3 { font-size: 11px; letter-spacing: 2px; color: var(--red); margin-bottom: 12px; text-transform: uppercase; font-weight: 700; }
+  .highlight-box .statement { font-size: 18px; font-weight: 800; line-height: 1.5; color: var(--text); }
+  .highlight-box .statement em { color: var(--red); font-style: normal; }
+  /* CALENDAR */
+  .cal-week { border: 1px solid var(--gray-light); border-radius: 10px; overflow: hidden; margin-bottom: 18px; }
+  .cal-week-header {
+    background: var(--red);
+    color: var(--white);
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cal-week-header .theme {
+    background: rgba(255,255,255,0.2);
+    color: var(--white);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  .cal-day { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 0; border-bottom: 1px solid var(--gray-light); }
+  .cal-day:last-child { border-bottom: none; }
+  .cal-day-name {
+    background: var(--off-white);
+    padding: 12px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    border-right: 1px solid var(--gray-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .cal-ig { padding: 12px 14px; font-size: 12px; line-height: 1.6; border-right: 1px solid var(--gray-light); background: white; }
+  .cal-li { padding: 12px 14px; font-size: 12px; line-height: 1.6; background: white; }
+  .cal-platform { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: var(--gray); margin-bottom: 4px; text-transform: uppercase; }
+  .cal-post-type { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; margin-bottom: 6px; }
+  .tag-reel { background: #EDE9FE; color: #5B21B6; }
+  .tag-carousel { background: var(--red-light); color: var(--red-dark); }
+  .tag-static { background: #FEF3C7; color: #92400E; }
+  .tag-article { background: var(--green-light); color: #064E3B; }
+  .tag-text { background: var(--blue-light); color: #1D4ED8; }
+  .tag-off { background: var(--gray-light); color: var(--gray); }
+  .rest-tag { display: inline-block; font-size: 11px; color: var(--gray); font-style: italic; }
+  /* PROMPT BOXES */
+  .prompt-box {
+    background: var(--off-white);
+    border: 1px solid var(--gray-light);
+    border-left: 4px solid var(--red);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin: 14px 0;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    color: var(--gray-dark);
+  }
+  .prompt-box .comment { color: #9CA3AF; }
+  .prompt-box .var { color: var(--blue); }
+  .prompt-box .string { color: var(--green); }
+  .prompt-box .keyword { color: var(--red); font-weight: 700; }
+  /* STATS ROW */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+  .stat-box {
+    background: var(--red);
+    color: var(--white);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+  }
+  .stat-box .val { font-size: 26px; font-weight: 800; color: var(--white); }
+  .stat-box .label { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+  /* REFERENCE CARDS */
+  .ref-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .ref-card { border: 1px solid var(--gray-light); border-radius: 10px; padding: 18px; background: white; }
+  .ref-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .ref-card p { font-size: 12px; color: var(--gray); margin-bottom: 8px; }
+  .ref-card .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: var(--red-light); border: 1px solid var(--red-mid); color: var(--red-dark); }
+  /* REPURPOSE FLOW */
+  .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 14px 0; }
+  .flow-box { background: var(--red); color: var(--white); padding: 10px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; }
+  .flow-arrow { color: var(--red); font-size: 18px; font-weight: 700; }
+  /* PRINT */
+  @media print {
+    .sidebar, .top-nav { display: none; }
+    .main { padding: 20px; max-width: 100%; }
+    .section { break-inside: avoid; }
+    .pillar { break-inside: avoid; }
+    .prompt-box { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <div class="logo">IDEOWORKS</div>
+  <div class="meta">Social Media Strategy 2026 · Internal Use</div>
+  <div class="badge">CONTENT TEAM PLAYBOOK</div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-label">Contents</div>
+    <div class="sidebar-section">
+      <a href="#quickstart"><span class="num">★</span>Start Here</a>
+      <a href="#part1"><span class="num">1</span>Where We Are</a>
+      <a href="#part2"><span class="num">2</span>Content Pillars</a>
+      <a href="#part3"><span class="num">3</span>30-Day Calendar</a>
+      <a href="#part4"><span class="num">4</span>AI Prompt Toolkit</a>
+      <a href="#part5"><span class="num">5</span>AI Platform Guide</a>
+      <a href="#part6"><span class="num">6</span>Resources</a>
+    </div>
+    <div class="sidebar-label">Key Note</div>
+    <div class="sidebar-section">
+      <a href="#constraint-note"><span class="num">!</span>No CEO Needed</a>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Social Media Strategy · 2026</div>
+      <h1>From Invisible to<br><span>Inevitable</span></h1>
+      <p>Your team's step-by-step guide to rebuilding Ideoworks' Instagram and LinkedIn: content you can plan, create, and post without waiting for CEO approval. Everything in this document is built for the content team to own, start to finish.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><strong>Instagram</strong>11,500 followers · 0.05% engagement</div>
+        <div class="hero-meta-item"><strong>LinkedIn</strong>2,279 followers · barely used</div>
+        <div class="hero-meta-item"><strong>Goal</strong>Fix both by Q3 2026</div>
+        <div class="hero-meta-item"><strong>Who does this</strong>Content team: no C-level sign-off needed</div>
+      </div>
+    </div>
+
+    <!-- QUICK START -->
+    <div class="quickstart" id="quickstart" style="scroll-margin-top:72px">
+      <h2>Start Here: Do This Before Anything Else</h2>
+      <div class="qs-sub">Three actions. This week. Before you read the rest.</div>
+      <div class="quickstart-steps">
+        <div class="qs-step">
+          <div class="step-num">1</div>
+          <h4>Pick one completed project</h4>
+          <p>Any campaign your team has finished. Pull the metrics from the report: even rough numbers work. This becomes your first post.</p>
+        </div>
+        <div class="qs-step">
+          <div class="step-num">2</div>
+          <h4>Open Claude, run Template 1</h4>
+          <p>Go to Part 4 of this document. Copy-paste Template 1, fill in the brackets with your project info. You'll get 8 ready-to-use content pieces in under 5 minutes.</p>
+        </div>
+        <div class="qs-step">
+          <div class="step-num">3</div>
+          <h4>Publish the LinkedIn post this week</h4>
+          <p>Don't wait until everything is planned. The strategy becomes real the moment the first piece goes live. One LinkedIn text post. This week.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONSTRAINT NOTE -->
+    <div id="constraint-note" class="alert warning" style="scroll-margin-top:72px">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-body">
+        <h4>Important: You Don't Need CEO Approval for Most Posts</h4>
+        <p>Every pillar, format, and calendar slot in this document is designed so the <strong>content team can draft and publish independently</strong>. The only exception: if you're naming a specific client or sharing a major win announcement: that needs one quick manager check. Everything else, just post it.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ PART 1 ═══════════════════════════════ -->
+    <div class="section" id="part1">
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <div class="section-title">
+          <h2>Where We Are Right Now</h2>
+          <p>The honest picture: what's not working, what our audience wants, and where we're going</p>
+        </div>
+      </div>
+
+      <!-- CURRENT STATS -->
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="val">0.05%</div>
+          <div class="label">IG Engagement Rate</div>
+        </div>
+        <div class="stat-box">
+          <div class="val">1–7</div>
+          <div class="label">Avg Likes per Post</div>
+        </div>
+        <div class="stat-box">
+          <div class="val">0</div>
+          <div class="label">Reels Published</div>
+        </div>
+        <div class="stat-box">
+          <div class="val">2,279</div>
+          <div class="label">LinkedIn Followers</div>
+        </div>
+      </div>
+
+      <!-- GAPS -->
+      <div class="subsection">
+        <h3>3 Things We're Not Doing (That We Should Be)</h3>
+        <div class="card-grid">
+          <div class="card red">
+            <div class="card-icon">📭</div>
+            <h4>No Proof of Results</h4>
+            <p>We post what we do, not what we've achieved. Brands who are deciding whether to hire us need to see real results: numbers, before/afters, what changed. Right now there's none of that.</p>
+          </div>
+          <div class="card red">
+            <div class="card-icon">🫥</div>
+            <h4>No Faces, No Team</h4>
+            <p>No photos of the team, no behind-the-scenes, no personality. People trust people: not logos. When there's no human attached to the work, the work is forgettable.</p>
+          </div>
+          <div class="card red">
+            <div class="card-icon">🔇</div>
+            <h4>No Opinions on the Industry</h4>
+            <p>We share nothing about Indonesian digital marketing trends, no commentary, no takes. The channel reads like a brochure, not a living agency. Competitors who do share opinions get found: we don't.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIENCE PAIN POINTS -->
+      <div class="subsection">
+        <h3>What Our Potential Clients Are Actually Worried About</h3>
+        <div class="card-grid">
+          <div class="card orange">
+            <div class="card-icon">🤔</div>
+            <h4>"Does this agency actually deliver?"</h4>
+            <p>Indonesian brand managers have been burned by agencies that pitch well but execute poorly. They want evidence, not claims. Show the numbers.</p>
+          </div>
+          <div class="card orange">
+            <div class="card-icon">🎯</div>
+            <h4>"Will they understand our brand?"</h4>
+            <p>They worry a generic playbook gets copy-pasted onto their brand. Content that shows how we think: our process, our decisions: proves we don't do cookie-cutter.</p>
+          </div>
+          <div class="card orange">
+            <div class="card-icon">🤝</div>
+            <h4>"Who's actually going to work on our account?"</h4>
+            <p>The person pitching is rarely the person doing the work. Showing team members: by name, with personality: builds trust before the first meeting.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- OUR ANGLE -->
+      <div class="subsection">
+        <h3>Our One Clear Angle</h3>
+        <div class="highlight-box">
+          <h3>How We Stand Out</h3>
+          <div class="statement">Ideoworks is the agency that <em>shows its work</em>: we share our process, our thinking, and our results, while competitors only post polished outputs.</div>
+        </div>
+        <div class="alert info">
+          <div class="alert-icon">💡</div>
+          <div class="alert-body">
+            <h4>Why This Works For Us</h4>
+            <ul>
+              <li><strong>No other local agency owns this lane.</strong> Most agencies share portfolio shots and award wins. The "here's how we actually do it" space is wide open.</li>
+              <li><strong>The content team can lead this</strong>: process posts, tool walkthroughs, methodology explainers don't require CEO input.</li>
+              <li><strong>One piece of process content does three things at once:</strong> proves we know what we're doing, educates potential clients, and builds trust.</li>
+              <li><strong>It works on both platforms:</strong> carousels on Instagram and text posts on LinkedIn both reward educational, process-driven content right now.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPETITIVE CONTEXT -->
+      <div class="subsection">
+        <h3>How We Compare to Other Indonesian Agencies</h3>
+        <div class="alert warning">
+          <div class="alert-icon">📌</div>
+          <div class="alert-body">
+            <h4>Note on These Numbers</h4>
+            <p>Follower counts are approximate, based on research done early 2026. Social numbers change fast: verify before using in any external presentation. The strategic takeaways in the last two columns are the useful part.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Agency</th>
+                <th>IG Followers</th>
+                <th>LI Followers</th>
+                <th>What They Do Well</th>
+                <th>What We Can Learn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ogilvy Indonesia</td>
+                <td>~44,000</td>
+                <td>~18,000</td>
+                <td>Award credibility, big-name client work</td>
+                <td>Consistent project showcase format</td>
+              </tr>
+              <tr>
+                <td>BigEvo</td>
+                <td>~28,000</td>
+                <td>~6,200</td>
+                <td>Results-first posting: leads with metrics</td>
+                <td>Put numbers in the post, not just the caption</td>
+              </tr>
+              <tr>
+                <td>Boleh Dicoba Digital</td>
+                <td>~35,000</td>
+                <td>~8,900</td>
+                <td>Education + entertainment: easy to follow</td>
+                <td>Make complex topics feel light and relatable</td>
+              </tr>
+              <tr>
+                <td>Toffeedev</td>
+                <td>~19,000</td>
+                <td>~4,100</td>
+                <td>Tutorial content, how-to carousels</td>
+                <td>Clear step-by-step structure with a CTA at the end</td>
+              </tr>
+              <tr>
+                <td>Arfadia</td>
+                <td>~16,500</td>
+                <td>~3,900</td>
+                <td>Team visibility: people-first content</td>
+                <td>Team spotlights that feel human, not HR-copy</td>
+              </tr>
+              <tr>
+                <td>Flock Creative Network</td>
+                <td>~22,000</td>
+                <td>~3,400</td>
+                <td>Creative process transparency, BTS content</td>
+                <td>Showing the process makes the work more exciting</td>
+              </tr>
+              <tr style="background:var(--red-light)">
+                <td style="color:var(--red)">Ideoworks</td>
+                <td style="color:var(--red-dark)">11,500</td>
+                <td style="color:var(--red-dark)">2,279</td>
+                <td>Four-pillar framework (untapped on social)</td>
+                <td><em>Everything above: start here</em></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ PART 2 ═══════════════════════════════ -->
+    <div class="section" id="part2">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <div class="section-title">
+          <h2>Content Pillars</h2>
+          <p>4 types of content: each with clear examples, AI prompts, and no approval bottleneck</p>
+        </div>
+      </div>
+
+      <div class="alert success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-body">
+          <h4>Approval Path: Two Simple Rules</h4>
+          <p>
+            <span class="approval-tag self">POST IT YOURSELF</span> = Content team publishes directly, no review needed &nbsp;&nbsp;
+            <span class="approval-tag manager">QUICK MANAGER CHECK</span> = One senior review before posting (target: 15 minutes, max 24 hours) &nbsp;&nbsp;
+            CEO or C-level sign-off is only for major client win announcements: flagged explicitly below.
+          </p>
+        </div>
+      </div>
+
+      <div class="pillar-grid">
+
+        <!-- PILLAR 1 -->
+        <div class="pillar">
+          <div class="pillar-header">
+            <h3>PILLAR 1: PROOF: Show What We've Achieved</h3>
+            <div class="pct">30% of posts</div>
+          </div>
+          <div class="pillar-body">
+            <div class="pillar-row">
+              <div class="pillar-label">Do This First</div>
+              <div class="pillar-val"><strong>Quick win this week:</strong> Pick one finished campaign. Write: "We ran a Meta campaign for an e-commerce client during Ramadan 2025. Here's what worked, what didn't, and the one insight that changed our approach." Turn it into a 7-slide LinkedIn carousel using the AI prompt below. Takes 30 minutes. No client name needed.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Why It Works</div>
+              <div class="pillar-val">This is the #1 thing potential clients want to see. They've been burned by agencies before. Numbers: even anonymized ones: prove we actually deliver. Competitors post portfolio shots; we post outcomes. That's the difference.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Where to Get Content</div>
+              <div class="pillar-val">Completed project folders, analytics exports, account managers' monthly reports. You don't need to name the client: industry + numbers + insight is enough.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">LinkedIn Posts</div>
+              <div class="pillar-val">
+                • Before/after text post with 3 metrics (reach, cost per lead, conversion)<br>
+                • PDF carousel: "How we grew an [industry] client's Instagram in 90 days"<br>
+                • Campaign summary article (anonymized, 600–800 words)
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Instagram Posts</div>
+              <div class="pillar-val">
+                • 7-slide carousel: Problem → Insight → Strategy → Execution → Result → What we learned → CTA<br>
+                • Reel: Before/after split-screen or animated chart reveal (15–30 sec)<br>
+                • Static graphic: Bold metric over campaign image ("5.2× ROAS in 6 weeks")
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">AI Prompt</div>
+              <div class="pillar-val">
+                <code>You are a content writer for Ideoworks, a Jakarta-based digital marketing agency.
+
+Write a LinkedIn carousel script for this project result:
+- Industry: [e.g., F&B / Retail / Property]
+- What we did: [brief description]
+- Key metric: [e.g., "ROAS 4.1x" or "CPL turun 38%"]
+- Duration: [weeks/months]
+
+Format: 7 slides.
+Slide 1 = bold hook with the metric.
+Slides 2–6 = one insight per slide.
+Slide 7 = CTA to DM or visit ideoworks.id.
+
+Tone: confident but not boastful. No client name needed. Each slide max 25 words.</code>
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Approval Path</div>
+              <div class="pillar-val"><span class="approval-tag manager">QUICK MANAGER CHECK</span>: Account manager confirms nothing is confidential, then publish. Max 24 hours.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PILLAR 2 -->
+        <div class="pillar">
+          <div class="pillar-header">
+            <h3>PILLAR 2: CRAFT: Show How We Work</h3>
+            <div class="pct">25% of posts</div>
+          </div>
+          <div class="pillar-body">
+            <div class="pillar-row">
+              <div class="pillar-label">Do This First</div>
+              <div class="pillar-val"><strong>Quick win this week:</strong> Screenshot your brief template (blur any client names). Turn it into an 8-slide Instagram carousel titled "Here's the exact 5-question brief we use before every campaign." Takes 45 minutes from idea to scheduled post.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Why It Works</div>
+              <div class="pillar-val">Showing how we think does more than explaining what we do. Potential clients can see the quality of our thinking before we've even met. No faces, no client data: just tools, templates, and process. 100% content-team owned.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Where to Get Content</div>
+              <div class="pillar-val">Real project work: strategy decks, brief templates, creative review notes. One team member captures with their phone during actual work sessions. No staged setups needed.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">LinkedIn Posts</div>
+              <div class="pillar-val">
+                • "How we brief a content creator": step-by-step text post<br>
+                • "3 questions we ask before every social media audit": list format<br>
+                • Tool spotlight: "Why we use [X] for competitive analysis: and what it found"
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Instagram Posts</div>
+              <div class="pillar-val">
+                • Reel: "Day in the life of a social media strategist at Ideoworks" (60 sec, text overlay only: no voiceover needed)<br>
+                • Carousel: "Our content calendar template: 7 steps we use with every client"<br>
+                • Story series: behind-the-scenes of a live campaign launch
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">AI Prompt</div>
+              <div class="pillar-val">
+                <code>You are a content strategist at Ideoworks, a digital marketing agency in Jakarta.
+
+Write an Instagram carousel teaching this concept:
+- Topic: [e.g., "How to write a social media brief" / "How we analyze a competitor's Instagram"]
+- Reader: Brand marketing managers at Indonesian companies
+- Slides: 8 total (hook → 5 teaching points → key takeaway → CTA)
+
+Rules:
+- Max 20 words per slide
+- Use "we" voice: this is how Ideoworks does it
+- Slide 1 must start with a question or a surprising statement
+- No buzzwords. Plain Indonesian/English mix is fine.</code>
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Approval Path</div>
+              <div class="pillar-val"><span class="approval-tag self">POST IT YOURSELF</span>: No client data, no confidentiality issues. Content team creates and publishes.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PILLAR 3 -->
+        <div class="pillar">
+          <div class="pillar-header">
+            <h3>PILLAR 3: CULTURE: Show the Team</h3>
+            <div class="pct">25% of posts</div>
+          </div>
+          <div class="pillar-body">
+            <div class="pillar-row">
+              <div class="pillar-label">Do This First</div>
+              <div class="pillar-val"><strong>Quick win this week:</strong> Pick one team member. Take a photo (or use one from your phone). Ask them 3 questions over WhatsApp: what's their role, what's their superpower, what's one thing most people don't know about the job. Draft a LinkedIn post using the AI prompt below. Do this once a week: by Week 4, Ideoworks will have the most human agency feed in Jakarta.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Why It Works</div>
+              <div class="pillar-val">Clients worry about who's actually on their account. When they see real team members with real personalities before the first meeting, the sales conversation starts warmer. CEO doesn't need to be involved: junior and mid-level team members are the stars here.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Where to Get Content</div>
+              <div class="pillar-val">Team photos, office moments, project wins, brainstorm sessions. Each team member contributes 1 piece of input per month: a quote, a tip, a fun fact: over WhatsApp. That's all you need.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">LinkedIn Posts</div>
+              <div class="pillar-val">
+                • Team spotlight: "[Name], our Social Media Analyst: here's how she approaches a new client brief"<br>
+                • New hire announcement with their first-week learnings<br>
+                • "3 things our team does that most agencies don't": written by a team lead, not the CEO
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Instagram Posts</div>
+              <div class="pillar-val">
+                • Reel: "Meet [Name]: [role]" (30 sec: team member talks to camera OR text-only with their photo)<br>
+                • Reaction reel: "When the client says 'we love it'": relatable agency humor<br>
+                • "Our workspace" carousel: office, tools, whiteboard notes, screens
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">AI Prompt</div>
+              <div class="pillar-val">
+                <code>Write a LinkedIn team spotlight post for a digital marketing agency employee.
+
+Details:
+- Name: [First name only is fine]
+- Role: [e.g., Content Strategist, Performance Analyst]
+- Their superpower: [e.g., "finds the right TikTok hook in under 10 minutes"]
+- One non-work fact: [e.g., "obsessed with Indonesian indie music"]
+- Time at company: [X months/years]
+
+Format: 3 short paragraphs.
+Para 1: who they are + their superpower.
+Para 2: their approach to the work (use their own words, paraphrased).
+Para 3: what clients say / what the team loves about working with them.
+End with a one-line team tagline. Max 150 words. Warm tone: not HR copy.</code>
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Approval Path</div>
+              <div class="pillar-val"><span class="approval-tag self">POST IT YOURSELF</span>: Team member approves their own spotlight before you publish. That's it.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PILLAR 4 -->
+        <div class="pillar">
+          <div class="pillar-header">
+            <h3>PILLAR 4: COMMENTARY: Share Our Point of View</h3>
+            <div class="pct">20% of posts</div>
+          </div>
+          <div class="pillar-body">
+            <div class="pillar-row">
+              <div class="pillar-label">Do This First</div>
+              <div class="pillar-val"><strong>Quick win this week:</strong> Look at one trend in Indonesian digital marketing right now: a Meta update, a TikTok Shop change, something brands are getting wrong. Write a 200-word LinkedIn post with your team's take. Use the AI prompt below. This is the kind of post that gets shared by brand managers and builds Ideoworks' name in the industry.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Why It Works</div>
+              <div class="pillar-val">When Ideoworks has opinions on the industry, brands follow us even when they're not ready to hire an agency yet. So when the moment comes, we're the first name they think of. Sharing a point of view costs nothing: silence is the only mistake.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Where to Get Content</div>
+              <div class="pillar-val">Meta/Instagram/TikTok platform announcements. Local marketing news (Marketeers ID, Campaign Asia). Monthly team check-in: "What's one thing we noticed this month that brands are getting wrong?" That one answer becomes a post.</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">LinkedIn Posts</div>
+              <div class="pillar-val">
+                • Trend take: "Meta just changed the algorithm. Here's what it means for Indonesian brands." (text post + opinion)<br>
+                • Myth-bust: "3 things brands still believe about Instagram that are no longer true"<br>
+                • Data post: "We audited 20 Indonesian brand accounts. Here's what the best ones do differently."
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Instagram Posts</div>
+              <div class="pillar-val">
+                • Carousel: "5 signs your agency doesn't understand social media anymore" (controversial hook drives saves)<br>
+                • Reel: Rapid-fire "fact or myth": text on screen, upbeat music, 30 sec<br>
+                • Static: Quote from a trend report with Ideoworks' take in the caption
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">AI Prompt</div>
+              <div class="pillar-val">
+                <code>You are a digital marketing strategist at Ideoworks writing a LinkedIn opinion post.
+
+Topic: [e.g., "Meta's new algorithm update" / "Why Indonesian brands still track follower count as a success metric"]
+
+Format:
+- Opening line: bold, specific claim or counterintuitive statement
+- 3 supporting points, each 1–2 sentences
+- Closing: what Ideoworks recommends brands do about this
+- Length: 200–250 words
+- Tone: confident expert: like a smart colleague sharing an observation over lunch, not an academic paper
+- Max 3 hashtags. No emojis unless natural.
+
+Avoid: "in today's digital landscape", "game-changer", "leverage", "synergy".</code>
+              </div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Approval Path</div>
+              <div class="pillar-val"><span class="approval-tag manager">QUICK MANAGER CHECK</span>: Senior strategist or content lead reviews for accuracy and tone before posting. Target: 4 hours. No C-level needed.</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end pillar-grid -->
+
+      <!-- MIX SUMMARY -->
+      <div class="subsection" style="margin-top:28px">
+        <h3>How Many Posts Per Month</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pillar</th>
+                <th>% of Mix</th>
+                <th>IG Posts/Month</th>
+                <th>LI Posts/Month</th>
+                <th>CEO Sign-off?</th>
+                <th>Goal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PROOF</td>
+                <td>30%</td>
+                <td>5</td>
+                <td>4</td>
+                <td>❌ No</td>
+                <td>Build trust, convert prospects</td>
+              </tr>
+              <tr>
+                <td>CRAFT</td>
+                <td>25%</td>
+                <td>4</td>
+                <td>3</td>
+                <td>❌ No</td>
+                <td>Prove expertise</td>
+              </tr>
+              <tr>
+                <td>CULTURE</td>
+                <td>25%</td>
+                <td>4</td>
+                <td>3</td>
+                <td>❌ No</td>
+                <td>Human connection, talent pipeline</td>
+              </tr>
+              <tr>
+                <td>COMMENTARY</td>
+                <td>20%</td>
+                <td>3</td>
+                <td>3</td>
+                <td>❌ No</td>
+                <td>Industry authority, discoverability</td>
+              </tr>
+              <tr style="background:var(--green-light); font-weight:700">
+                <td>TOTAL</td>
+                <td>100%</td>
+                <td>16/month</td>
+                <td>13/month</td>
+                <td>0 of 29 posts</td>
+                <td>Full content pipeline</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ PART 3 ═══════════════════════════════ -->
+    <div class="section" id="part3">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <div class="section-title">
+          <h2>30-Day Content Calendar</h2>
+          <p>Week 1 with full post topics. Weeks 2–4 with direction. All team-executable.</p>
+        </div>
+      </div>
+
+      <div class="alert info">
+        <div class="alert-icon">📅</div>
+        <div class="alert-body">
+          <h4>Posting Schedule</h4>
+          <p>
+            <strong>Instagram:</strong> Mon · Wed · Fri · Sun (4×/week = ~16/month) &nbsp;|&nbsp;
+            <strong>LinkedIn:</strong> Mon · Wed · Thu (3×/week = ~13/month) &nbsp;|&nbsp;
+            <strong>Best times (WIB):</strong> IG: 7–8pm · LI: 8–9am or 12–1pm
+          </p>
+        </div>
+      </div>
+
+      <!-- WEEK 1 -->
+      <div class="subsection">
+        <h3>Week 1: "Introduce the New Ideoworks" (Full Detail)</h3>
+        <div class="alert success">
+          <div class="alert-icon">🎯</div>
+          <div class="alert-body">
+            <h4>Week 1 Goal: Signal the New Direction</h4>
+            <p>Every post this week says: "Ideoworks shows its work now." People who've seen the old feed will notice the shift immediately. All 7 posts can be done by the content team.</p>
+          </div>
+        </div>
+        <div class="cal-week">
+          <div class="cal-week-header">
+            <span>Week 1 · Days 1–7</span>
+            <span class="theme">Theme: Show Your Work Launch</span>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">MON<br>Day 1</div>
+            <div class="cal-ig">
+              <div class="cal-platform">Instagram</div>
+              <span class="cal-post-type tag-carousel">Carousel · 8 slides</span>
+              <div><strong>PILLAR: PROOF</strong><br>"We audited 6 Indonesian digital agency Instagram accounts. Here's the ranking and what separates the top from the bottom." Use the competitor data from Part 1. Last slide: where Ideoworks is going.</div>
+              <div style="color:#6B7280;font-size:11px;margin-top:6px">Generate all 8 slide captions in one Claude session: takes 10 minutes</div>
+            </div>
+            <div class="cal-li">
+              <div class="cal-platform">LinkedIn</div>
+              <span class="cal-post-type tag-text">Text Post</span>
+              <div><strong>PILLAR: COMMENTARY</strong><br>"We finished a deep audit of Indonesia's top digital agencies on social media. One number surprised us: the average engagement rate across all 6 is under 0.5%. Here's what we found." 3 key takeaways. Ends with a question: "What do you want to see from your agency's social media?"</div>
+            </div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">WED<br>Day 3</div>
+            <div class="cal-ig">
+              <div class="cal-platform">Instagram</div>
+              <span class="cal-post-type tag-reel">Reel · 30 sec</span>
+              <div><strong>PILLAR: CRAFT</strong><br>"This is how we brief a content creator." Screen recording of brief template (Notion or Google Doc) + text overlay narrating each section. No voiceover needed: music + text only. Ends with: "Want our template? DM us."</div>
+              <div style="color:#6B7280;font-size:11px;margin-top:6px">Film with phone. 30 mins total.</div>
+            </div>
+            <div class="cal-li">
+              <div class="cal-platform">LinkedIn</div>
+              <span class="cal-post-type tag-article">Long Post</span>
+              <div><strong>PILLAR: CRAFT</strong><br>"The 5-question brief we use before every campaign: and why most briefs fail before the first asset is made." 400 words with the actual questions. Offer a Google Drive template link at the end.</div>
+            </div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">THU<br>Day 4</div>
+            <div class="cal-ig">
+              <div class="cal-platform">Instagram</div>
+              <span class="cal-post-type tag-off">Rest</span>
+              <div class="rest-tag">No post scheduled</div>
+            </div>
+            <div class="cal-li">
+              <div class="cal-platform">LinkedIn</div>
+              <span class="cal-post-type tag-text">Text Post</span>
+              <div><strong>PILLAR: CULTURE</strong><br>First team spotlight: pick one team member (analyst, strategist, or designer). 3 paragraphs: their role, their approach, one detail that makes them memorable. Ends with: "This is the kind of person you get when you work with Ideoworks."</div>
+            </div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">FRI<br>Day 5</div>
+            <div class="cal-ig">
+              <div class="cal-platform">Instagram</div>
+              <span class="cal-post-type tag-carousel">Carousel · 7 slides</span>
+              <div><strong>PILLAR: PROOF</strong><br>"One Ramadan campaign. 6 weeks. Here's what the numbers looked like: and the one creative decision that changed everything." Anonymized F&B or retail client. Real metrics preferred, indexed metrics acceptable.</div>
+            </div>
+            <div class="cal-li">
+              <div class="cal-platform">LinkedIn</div>
+              <span class="cal-post-type tag-off">Rest</span>
+              <div class="rest-tag">No post scheduled</div>
+            </div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">SUN<br>Day 7</div>
+            <div class="cal-ig">
+              <div class="cal-platform">Instagram</div>
+              <span class="cal-post-type tag-reel">Reel · 45 sec</span>
+              <div><strong>PILLAR: CULTURE</strong><br>"A week at Ideoworks." Montage of Monday–Friday: whiteboard, screens, meetings, desk setups, team lunch. No scripting needed. Assign one team member to document the week with their phone, 2–3 clips per day.</div>
+              <div style="color:#6B7280;font-size:11px;margin-top:6px">Raw and real beats polished and staged for this format</div>
+            </div>
+            <div class="cal-li">
+              <div class="cal-platform">LinkedIn</div>
+              <span class="cal-post-type tag-off">Rest</span>
+              <div class="rest-tag">No post scheduled (Sunday)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEEKS 2–4 -->
+      <div class="subsection">
+        <h3>Weeks 2–4: Direction by Week</h3>
+        <div class="cal-week">
+          <div class="cal-week-header">
+            <span>Week 2 · Days 8–14</span>
+            <span class="theme">Theme: Build the Team</span>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">MON</div>
+            <div class="cal-ig"><span class="cal-post-type tag-carousel">Carousel</span><br><strong>CRAFT</strong>: "Our content audit checklist: 12 things we check before we fix an account"</div>
+            <div class="cal-li"><span class="cal-post-type tag-text">Text</span><br><strong>PROOF</strong>: Anonymized case study: LinkedIn B2B lead gen campaign result</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">WED</div>
+            <div class="cal-ig"><span class="cal-post-type tag-reel">Reel</span><br><strong>CULTURE</strong>: Team member #2 spotlight (30 sec, text-on-screen)</div>
+            <div class="cal-li"><span class="cal-post-type tag-text">Text</span><br><strong>COMMENTARY</strong>: "What the TikTok Shop surge means for Meta advertisers in Indonesia"</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">FRI</div>
+            <div class="cal-ig"><span class="cal-post-type tag-carousel">Carousel</span><br><strong>COMMENTARY</strong>: "5 Indonesian brands with the best social media this year: what they're doing right"</div>
+            <div class="cal-li"><span class="cal-post-type tag-text">Text</span><br><strong>CULTURE</strong>: Team member #2 (repurpose from IG with a LinkedIn-native rewrite)</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">SUN</div>
+            <div class="cal-ig"><span class="cal-post-type tag-static">Static</span><br><strong>PROOF</strong>: Bold metric graphic: "X campaigns. Y industries. One methodology."</div>
+            <div class="cal-li"><span class="cal-post-type tag-off">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="cal-week">
+          <div class="cal-week-header">
+            <span>Week 3 · Days 15–21</span>
+            <span class="theme">Theme: Go Deep on One Expertise Area</span>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">MON</div>
+            <div class="cal-ig"><span class="cal-post-type tag-carousel">Carousel</span><br><strong>PROOF</strong>: "We ran 3 different creative formats for the same client. Here's which won and why."</div>
+            <div class="cal-li"><span class="cal-post-type tag-article">Long Post</span><br><strong>CRAFT</strong>: "Why creative testing is the most underused tool in Indonesian digital marketing"</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">WED</div>
+            <div class="cal-ig"><span class="cal-post-type tag-reel">Reel</span><br><strong>CRAFT</strong>: Screen-recording: "How we do a 15-minute competitor analysis before every client call"</div>
+            <div class="cal-li"><span class="cal-post-type tag-text">Text</span><br><strong>COMMENTARY</strong>: Hot take: "Follower count is a vanity metric. Here's the number that actually matters."</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">FRI</div>
+            <div class="cal-ig"><span class="cal-post-type tag-carousel">Carousel</span><br><strong>CULTURE</strong>: "How Ideoworks plans a campaign launch": whiteboard photo series with captions</div>
+            <div class="cal-li"><span class="cal-post-type tag-text">Text</span><br><strong>PROOF</strong>: "A client came to us with 0.2% engagement. 90 days later: [result]."</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">SUN</div>
+            <div class="cal-ig"><span class="cal-post-type tag-reel">Reel</span><br><strong>CULTURE</strong>: "Things our team says every Monday": relatable agency humor, text-on-screen</div>
+            <div class="cal-li"><span class="cal-post-type tag-off">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="cal-week">
+          <div class="cal-week-header">
+            <span>Week 4 · Days 22–30</span>
+            <span class="theme">Theme: Close Month 1, Set Up Month 2</span>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">MON</div>
+            <div class="cal-ig"><span class="cal-post-type tag-carousel">Carousel</span><br><strong>COMMENTARY</strong>: "What we learned running 30 days of consistent content at Ideoworks" (show the actual numbers)</div>
+            <div class="cal-li"><span class="cal-post-type tag-text">Text</span><br><strong>CRAFT</strong>: "The tools Ideoworks uses for every campaign: and one we removed" (authentic, specific)</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">WED</div>
+            <div class="cal-ig"><span class="cal-post-type tag-reel">Reel</span><br><strong>PROOF</strong>: "30 days ago, this account had X engagement. Here's what changed."</div>
+            <div class="cal-li"><span class="cal-post-type tag-article">Long Post</span><br><strong>COMMENTARY</strong>: "3 digital marketing trends we're watching in Indonesia this quarter"</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">FRI</div>
+            <div class="cal-ig"><span class="cal-post-type tag-carousel">Carousel</span><br><strong>PROOF</strong>: Month's best result: full case study carousel, most polished piece of the month</div>
+            <div class="cal-li"><span class="cal-post-type tag-text">Text</span><br><strong>CULTURE</strong>: Team member #3 spotlight + team capability statement</div>
+          </div>
+          <div class="cal-day">
+            <div class="cal-day-name">SUN</div>
+            <div class="cal-ig"><span class="cal-post-type tag-static">Static</span><br><strong>CULTURE</strong>: Team photo or workspace photo with a forward-looking caption: "Month 2 incoming."</div>
+            <div class="cal-li"><span class="cal-post-type tag-off">Rest</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI BATCH NOTE -->
+      <div class="alert warning">
+        <div class="alert-icon">⚡</div>
+        <div class="alert-body">
+          <h4>Produce the Whole Month in Two Work Sessions</h4>
+          <ul>
+            <li><strong>Session 1 (Day 1 of the month, ~4 hours):</strong> Run Claude for each pillar. Generate all post copy in one batch. Input a short brief per post: get all slide captions in one output.</li>
+            <li><strong>Session 2 (Day 2, ~4 hours):</strong> Bring all copy into Canva/Figma. Build one template per pillar, then duplicate and swap content for the rest. Schedule everything in Meta Business Suite and LinkedIn Scheduler.</li>
+            <li>Result: all 29 posts planned, designed, and scheduled in 8 hours of total work per month.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ PART 4 ═══════════════════════════════ -->
+    <div class="section" id="part4">
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <div class="section-title">
+          <h2>AI Prompt Toolkit</h2>
+          <p>3 copy-paste templates: fill in the brackets, get content in minutes</p>
+        </div>
+      </div>
+
+      <div class="alert success">
+        <div class="alert-icon">🤖</div>
+        <div class="alert-body">
+          <h4>How to Use These Templates</h4>
+          <p>Open Claude (claude.ai). Copy the full prompt. Replace everything in [brackets] with your actual project info. Hit send. Review and edit the output, then hand to the designer. Each template is designed so you can generate a full month of content for one pillar in a single session.</p>
+        </div>
+      </div>
+
+      <!-- TEMPLATE 1 -->
+      <div class="subsection">
+        <h3>Template 1: One Project Result → 8 Pieces of Content</h3>
+        <p style="font-size:13px;color:var(--gray);margin-bottom:14px">Give Claude one client result. Get 8 ready-to-use pieces across all formats. Use this for the PROOF pillar.</p>
+        <div class="prompt-box"><span class="comment"># IDEOWORKS: PROJECT RESULT → CONTENT PACK</span>
+<span class="comment"># Fill in the brackets. Output = 8 ready pieces of content.</span>
+
+<span class="keyword">CONTEXT:</span>
+You are a senior content strategist at Ideoworks, a Jakarta-based integrated digital marketing agency.
+You create content for two channels: Instagram (visual, lifestyle-leaning B2B audience) and LinkedIn (professional, decision-maker audience).
+Brand voice: confident but not boastful, specific not vague, shows process and results.
+
+<span class="keyword">PROJECT INPUT:</span>
+- Industry: <span class="var">[e.g., Property / F&B / E-commerce / FMCG]</span>
+- What we did: <span class="var">[2–3 sentences describing the campaign or project]</span>
+- Key result 1: <span class="var">[e.g., "CPL turun 42% dalam 8 minggu"]</span>
+- Key result 2: <span class="var">[e.g., "Reach naik 5x dari baseline"]</span>
+- Key insight: <span class="var">[the one decision that made this work]</span>
+- Client visibility: <span class="var">[Name client / Industry only / Full anonymize]</span>
+
+<span class="keyword">GENERATE ALL 8:</span>
+
+1. <span class="string">Instagram Carousel (8 slides)</span>
+   Hook → Problem → Our approach → 3 key moves → Result → Lesson → CTA
+   Max 20 words per slide.
+
+2. <span class="string">LinkedIn Text Post (200–250 words)</span>
+   Lead with the result. Explain the decision. End with a question.
+
+3. <span class="string">Instagram Reel Script (30 sec)</span>
+   Text-overlay only (no voiceover). 8–10 text frames. Music direction note included.
+
+4. <span class="string">LinkedIn Article Intro (150 words)</span>
+   Hook + 3-sentence summary for a longer follow-up article.
+
+5. <span class="string">Instagram Story Sequence (5 frames)</span>
+   Question → Build-up → Reveal → Insight → CTA to swipe to post
+
+6. <span class="string">Caption for Static/Quote Post</span>
+   One bold statement from the case. 2-line caption. 5 hashtags max.
+
+7. <span class="string">WhatsApp/Email Broadcast (100 words)</span>
+   For Ideoworks email or WA broadcast. Conversational, link to full post.
+
+8. <span class="string">Sales Team Talking Point (3 bullets)</span>
+   For new business meetings: what the team can say out loud.</div>
+      </div>
+
+      <!-- TEMPLATE 2 -->
+      <div class="subsection">
+        <h3>Template 2: Educational Carousel Generator (Craft & Commentary)</h3>
+        <p style="font-size:13px;color:var(--gray);margin-bottom:14px">The fastest way to produce Instagram carousels that get saved and shared. Use for CRAFT and COMMENTARY pillars.</p>
+        <div class="prompt-box"><span class="comment"># IDEOWORKS: CAROUSEL SCRIPT GENERATOR</span>
+<span class="comment"># For CRAFT and COMMENTARY pillars. Output goes straight to the designer.</span>
+
+<span class="keyword">ROLE:</span>
+You are a content strategist writing Instagram carousel copy for Ideoworks.
+Target reader: Marketing Manager or Brand Manager at an Indonesian mid-to-large company.
+Goal: They should save this post AND share it with a colleague.
+
+<span class="keyword">CAROUSEL BRIEF:</span>
+- Topic: <span class="var">[e.g., "How to brief a social media agency" / "Why your Instagram engagement is dropping"]</span>
+- Type: <span class="var">[CRAFT = how we do it at Ideoworks / COMMENTARY = industry trend or opinion]</span>
+- Angle: <span class="var">[e.g., "Most brands do X wrong. Here's the right way." OR "We tried Y. Here's what happened."]</span>
+- Number of slides: <span class="var">[7 or 9: odd numbers tend to perform better]</span>
+
+<span class="keyword">FORMAT FOR EACH SLIDE:</span>
+SLIDE [n]: [brief visual description]
+HEADLINE: [max 8 words: bold statement or question]
+BODY: [max 15 words: supporting detail]
+
+<span class="keyword">RULES:</span>
+- Slide 1: Make someone stop scrolling. Use a specific number, a counterintuitive claim, or a direct question.
+- Middle slides: One idea per slide. Never two.
+- Last slide: Clear CTA. Options: "Save this", "DM us", "Try this in your next campaign", or "Visit ideoworks.id"
+- Do NOT use: "in today's digital age", "game-changing", "leverage", "synergy", "holistic approach"
+- Write like you're talking to one specific person, not addressing a crowd.</div>
+      </div>
+
+      <!-- TEMPLATE 3 -->
+      <div class="subsection">
+        <h3>Template 3: Team Spotlight Content Pack</h3>
+        <p style="font-size:13px;color:var(--gray);margin-bottom:14px">One team member input → 5 pieces of content. Run once per person per month for the CULTURE pillar.</p>
+        <div class="prompt-box"><span class="comment"># IDEOWORKS: CULTURE CONTENT PACK</span>
+<span class="comment"># For CULTURE pillar. One input → 5 pieces. Run once per team member.</span>
+
+<span class="keyword">TEAM MEMBER INPUT:</span>
+- First name: <span class="var">[Name]</span>
+- Role/title: <span class="var">[e.g., Social Media Analyst / Creative Strategist / Performance Manager]</span>
+- Time at Ideoworks: <span class="var">[months/years]</span>
+- Their superpower (what they're known for): <span class="var">[e.g., "finds the hook in any brief in 10 minutes"]</span>
+- Their approach (3–4 sentences you got from them via WhatsApp Q&A): <span class="var">[paste here]</span>
+- One non-work detail: <span class="var">[hobby, obsession, fun fact]</span>
+- Photo description for designer: <span class="var">[e.g., "candid shot at desk" / "headshot in office"]</span>
+
+<span class="keyword">GENERATE ALL 5:</span>
+
+1. <span class="string">LinkedIn Spotlight Post (150 words)</span>
+   Para 1: who they are + superpower. Para 2: their approach in their own words. Para 3: what clients and team love about them.
+
+2. <span class="string">Instagram Caption (80 words)</span>
+   First line = their superpower as a bold claim. Introduce them personally. CTA = "meet the team at ideoworks.id"
+
+3. <span class="string">Instagram Reel Script (30 sec, text-overlay)</span>
+   Frame 1: Name + role. Frames 2–5: 4 things they believe about their craft. Frame 6: CTA.
+
+4. <span class="string">Instagram Story Poll</span>
+   "Our [Name] says [claim about their craft]. Agree or disagree?": drives story engagement during spotlight week.
+
+5. <span class="string">Internal Team Announcement (50 words)</span>
+   For the team WhatsApp group when the spotlight goes live: gets the team to share it.</div>
+      </div>
+
+      <!-- REPURPOSING -->
+      <div class="subsection">
+        <h3>One Piece of Content → Multiple Platforms</h3>
+        <div class="alert success">
+          <div class="alert-icon">♻️</div>
+          <div class="alert-body">
+            <h4>The Rule: Create Once, Publish Seven Times</h4>
+            <p>Every project result, industry opinion, or team story should become content on multiple channels: not copy-paste, but rewritten for each platform's native feel. Use these three flows.</p>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Flow A: From a Client Result (PROOF Pillar)</h3>
+          <div class="flow">
+            <div class="flow-box">📊 Project Result<br><small>metric + insight</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">📱 IG Carousel<br><small>visual story</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">🎬 IG Reel<br><small>30-sec animation</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">💼 LI Text Post<br><small>professional take</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">📰 LI Article<br><small>deep dive</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">📧 Email/WA<br><small>broadcast</small></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Flow B: From an Industry Trend (COMMENTARY Pillar)</h3>
+          <div class="flow">
+            <div class="flow-box">📰 News / Platform Update<br><small>trigger</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">💼 LI Opinion Post<br><small>publish same day</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">📱 IG Carousel<br><small>visualize the argument</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">🎬 IG Reel<br><small>rapid-fire format</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">📖 IG Save-bait<br><small>quote graphic + caption</small></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Flow C: From a Team Member (CULTURE Pillar)</h3>
+          <div class="flow">
+            <div class="flow-box">👤 Team Member Input<br><small>WhatsApp Q&A</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">💼 LI Spotlight<br><small>first publish</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">📱 IG Static Post<br><small>photo + caption</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">🎬 IG Reel<br><small>30-sec text overlay</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">⭕ Story Poll<br><small>engagement boost</small></div>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:20px">
+          <table>
+            <thead>
+              <tr>
+                <th>Starting Point</th>
+                <th>Time to Gather</th>
+                <th>Content Pieces</th>
+                <th>Time with AI</th>
+                <th>Without AI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 client result (metrics + insight)</td>
+                <td>30 min (pull from project folder)</td>
+                <td>8 pieces</td>
+                <td>2 hours total</td>
+                <td>2 days</td>
+              </tr>
+              <tr>
+                <td>1 trend article or platform update</td>
+                <td>20 min (read + note your take)</td>
+                <td>5 pieces</td>
+                <td>1.5 hours</td>
+                <td>1 day</td>
+              </tr>
+              <tr>
+                <td>1 team member WhatsApp Q&A</td>
+                <td>15 min (4 questions over chat)</td>
+                <td>5 pieces</td>
+                <td>1 hour</td>
+                <td>4 hours</td>
+              </tr>
+              <tr>
+                <td>1 existing process doc or template</td>
+                <td>Already exists: just locate it</td>
+                <td>6 pieces</td>
+                <td>1.5 hours</td>
+                <td>1 day</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ PART 5 ═══════════════════════════════ -->
+    <div class="section" id="part5">
+      <div class="section-header">
+        <div class="section-number">5</div>
+        <div class="section-title">
+          <h2>AI Platform Guide</h2>
+          <p>The best tools by job type: copy, images, video, research, and agents. Honest picks, no hype.</p>
+        </div>
+      </div>
+
+      <div class="alert info">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-body">
+          <h4>About Manus (manus.im)</h4>
+          <p>Manus is now officially part of Meta (confirmed on their site, © 2026 Meta). It started as an independent autonomous AI agent and was acquired by Meta. It is distinct from <strong>Meta AI</strong> (the chatbot inside WhatsApp and Instagram): Manus is a full task-execution agent that browses the web, writes, builds files, and completes multi-step work end-to-end without you steering it.</p>
+        </div>
+      </div>
+
+      <!-- CATEGORY 1: COPY -->
+      <div class="subsection">
+        <h3>Copy and Strategy: Which AI Writes Best</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Made By</th>
+                <th>Best For</th>
+                <th>Weakness</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Claude (Sonnet / Opus)</td>
+                <td>Anthropic</td>
+                <td>Long-form content, brand voice consistency, structured copy, following specific instructions. The prompts in this document are built for Claude specifically because it follows complex formats reliably.</td>
+                <td>No real-time web browsing in base version; slower than GPT-4o for rapid brainstorming</td>
+                <td>Free tier available. Pro: $20/month</td>
+              </tr>
+              <tr>
+                <td>ChatGPT (GPT-4o)</td>
+                <td>OpenAI</td>
+                <td>Fastest for brainstorming and iteration. Best plugin ecosystem. Multimodal: can analyze images, PDFs, and spreadsheets in the same conversation. Most widely understood by clients if you need to demo AI.</td>
+                <td>Can be generic without strong prompting. Tends toward filler phrases ("In today's digital landscape...").</td>
+                <td>Free tier. Plus: $20/month</td>
+              </tr>
+              <tr>
+                <td>Gemini 1.5 Pro</td>
+                <td>Google</td>
+                <td>Best if your team runs on Google Workspace. Drafts directly in Google Docs, summarizes Gmail threads, analyzes Google Sheets data. Native integration removes copy-paste friction.</td>
+                <td>Weaker creative voice than Claude or GPT-4o. Better as a workflow tool than a standalone writer.</td>
+                <td>Free with Google account. Advanced: $19.99/month</td>
+              </tr>
+              <tr>
+                <td>Perplexity AI</td>
+                <td>Perplexity</td>
+                <td>Research with citations. Best tool for fact-checking competitor claims, finding fresh platform stats, and researching Indonesian market trends. Every answer links to its sources.</td>
+                <td>Not a writing tool. Use for research input, then bring findings into Claude or ChatGPT to write.</td>
+                <td>Free tier (good enough). Pro: $20/month</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert info">
+          <div class="alert-icon">💡</div>
+          <div class="alert-body">
+            <h4>Recommended Workflow for Copy</h4>
+            <p>Use <strong>Perplexity</strong> to research the topic and gather real data. Bring that data into <strong>Claude</strong> to write the actual post using the templates in Part 4. Use <strong>ChatGPT</strong> for quick brainstorm variations if you want to compare options fast. Use <strong>Gemini</strong> if you are drafting directly inside Google Docs.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY 2: IMAGE -->
+      <div class="subsection">
+        <h3>Image Creation: From Concept to Visual Asset</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Best For</th>
+                <th>Commercial Use?</th>
+                <th>Skill Level</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Midjourney v6</td>
+                <td>Highest quality creative images. Campaign mood boards, visual concepts, stylized illustrations. The output quality is a level above every other image AI. Best for creating a visual direction before a photoshoot or for social assets that need to look distinctive.</td>
+                <td>Yes (paid plans)</td>
+                <td>Medium: prompt writing takes practice</td>
+                <td>From $10/month (Discord or web)</td>
+              </tr>
+              <tr>
+                <td>Adobe Firefly</td>
+                <td>Commercially safe image generation trained only on licensed content. Best for agencies creating assets for clients: no copyright risk. Integrates directly into Photoshop and Canva. Strong for product-adjacent visuals and background generation.</td>
+                <td>Yes: fully licensed</td>
+                <td>Low: works inside tools the team already uses</td>
+                <td>Included in Adobe CC or Canva Pro</td>
+              </tr>
+              <tr>
+                <td>Canva AI (Magic Media)</td>
+                <td>Fastest for non-designers. Generate images, remove backgrounds, resize for platforms, and animate in one place. Most of the team already uses Canva: AI features are just one click away from the design workflow.</td>
+                <td>Yes (Canva Pro)</td>
+                <td>Low: no learning curve</td>
+                <td>Included in Canva Pro (~$15/month)</td>
+              </tr>
+              <tr>
+                <td>DALL-E 3 (via ChatGPT)</td>
+                <td>Quick concept visualization mid-conversation. Best when you are already in ChatGPT and need to see something visually without switching tools. Good for mockups and rough concept direction: not a final-production tool.</td>
+                <td>Yes</td>
+                <td>Low: just describe what you want</td>
+                <td>Included with ChatGPT Plus</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CATEGORY 3: VIDEO -->
+      <div class="subsection">
+        <h3>Video Creation: The Highest-Leverage AI Category for Social</h3>
+        <div class="alert success">
+          <div class="alert-icon">🎬</div>
+          <div class="alert-body">
+            <h4>Why Video AI Matters Most Right Now</h4>
+            <p>Reels and short video are the highest-reach format on both Instagram and LinkedIn in 2026. The barrier used to be time and equipment. AI video tools collapse that barrier: a strategist with a phone and a script can now produce professional-quality content. This is the category where investment pays off fastest.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Best For</th>
+                <th>Indonesia-Relevant?</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CapCut AI</td>
+                <td>The default starting point for any Indonesian content team. Auto-captions in Bahasa Indonesia, AI B-roll generation, auto-cut to music, viral template library. Already used by most creators in the market. Free tier is generous enough for full production use.</td>
+                <td>Yes: Bahasa Indonesia captions, trending local audio</td>
+                <td>Free. Pro: from $7.99/month</td>
+              </tr>
+              <tr>
+                <td>Kling AI</td>
+                <td>High-quality AI video generation from text or image prompts. Strong for creating realistic motion video (people, environments, product shots in motion) without a camera. Especially strong in the Asian market context: trained on diverse visual data. Use for B-roll and campaign concept videos.</td>
+                <td>Yes: strong Asian visual context</td>
+                <td>Free tier. Standard: from $9/month</td>
+              </tr>
+              <tr>
+                <td>Runway Gen-3 Alpha</td>
+                <td>Best overall quality for AI-generated video. Industry standard for agencies doing creative video work. Text-to-video, image-to-video, and video-to-video editing. Steeper learning curve but the output quality justifies it for polished campaign content.</td>
+                <td>Neutral</td>
+                <td>From $15/month</td>
+              </tr>
+              <tr>
+                <td>HeyGen</td>
+                <td>AI avatar videos. Create a talking-head explainer or spokesperson video with a realistic AI presenter, without a camera or studio. Best use case: LinkedIn educational content, product walkthroughs, and explainer carousels with voice. The presenter can speak in Bahasa Indonesia.</td>
+                <td>Yes: Bahasa Indonesia voice support</td>
+                <td>Free tier (limited). Creator: $29/month</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CATEGORY 4: AGENTS -->
+      <div class="subsection">
+        <h3>Autonomous Agents: AI That Works While You Don't</h3>
+        <p style="font-size:13px;color:var(--gray);margin-bottom:16px">These tools go beyond answering questions. They take a goal and complete multi-step tasks independently: researching, writing, building, and executing without hand-holding. Think of them as an AI intern that can work overnight.</p>
+        <div class="card-grid card-grid-2">
+          <div class="card blue">
+            <div class="card-icon">🤖</div>
+            <h4>Manus (Meta)</h4>
+            <p>Now part of Meta, Manus is the most capable autonomous agent in this stack. Give it a complex task ("audit our competitor's Instagram, summarize their top 10 posts by engagement, and draft 5 post ideas we can steal") and it completes it end-to-end: browsing the web, analyzing content, and writing the output without you steering it. This is what separates Manus from Meta AI (the chatbot): Manus executes, it doesn't just answer. Best for research tasks and multi-step content production.</p>
+          </div>
+          <div class="card blue">
+            <div class="card-icon">⚡</div>
+            <h4>Meta AI (WhatsApp, Instagram, Facebook)</h4>
+            <p>Meta's own AI assistant, powered by Llama 4. Already available inside WhatsApp and Instagram DMs for Indonesian users. Not an agent (it won't complete tasks autonomously), but useful for quick content ideas and customer query responses directly inside the platforms your team already uses every day.</p>
+          </div>
+          <div class="card blue">
+            <div class="card-icon">🔗</div>
+            <h4>n8n / Make.com</h4>
+            <p>Workflow automation platforms that connect AI tools to each other and to your existing stack. Example: when a client result is logged in Notion, automatically trigger Claude to draft a LinkedIn post and save it to a Google Doc for review. Not AI itself, but the connective tissue that makes AI tools work as a system.</p>
+          </div>
+          <div class="card blue">
+            <div class="card-icon">🔍</div>
+            <h4>Perplexity (Research Mode)</h4>
+            <p>When given a research question, Perplexity searches the live web, synthesizes sources, and cites every claim. Use it as the research layer before writing: "What are the top 5 digital marketing trends in Indonesia in Q2 2026?" Feed the output into Claude to write the post. Two tools, one clean workflow.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORY 5: AUDIO -->
+      <div class="subsection">
+        <h3>Audio: Voice and Music for Reels</h3>
+        <div class="card-grid card-grid-2">
+          <div class="card orange">
+            <div class="card-icon">🎙️</div>
+            <h4>ElevenLabs</h4>
+            <p>Best AI voice generation available. Can clone a voice from a short sample or choose from hundreds of realistic voices. Use for narrated Reels or explainer videos where recording your own voice isn't practical. Bahasa Indonesia voice support is available. Start with the free tier to test quality before committing.</p>
+          </div>
+          <div class="card orange">
+            <div class="card-icon">🎵</div>
+            <h4>Suno</h4>
+            <p>AI music generation. Describe the mood and style, get a full original track in seconds. Use for Reel background music instead of risking copyright issues with trending audio. Particularly useful for brand content that needs a consistent audio identity. Free tier generates up to 50 tracks per day.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK REFERENCE TABLE -->
+      <div class="subsection">
+        <h3>Quick Reference: Which Tool for Which Task</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Best Tool</th>
+                <th>Backup</th>
+                <th>Time Saved vs. Manual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Write a LinkedIn text post</td>
+                <td>Claude</td>
+                <td>ChatGPT</td>
+                <td>60-80%</td>
+              </tr>
+              <tr>
+                <td>Write an Instagram carousel (8 slides)</td>
+                <td>Claude (use templates in Part 4)</td>
+                <td>ChatGPT</td>
+                <td>70%</td>
+              </tr>
+              <tr>
+                <td>Research a trend or competitor</td>
+                <td>Perplexity</td>
+                <td>Manus (Meta)</td>
+                <td>80%</td>
+              </tr>
+              <tr>
+                <td>Create a campaign concept image</td>
+                <td>Midjourney</td>
+                <td>Adobe Firefly</td>
+                <td>90%</td>
+              </tr>
+              <tr>
+                <td>Design a social post (non-designer)</td>
+                <td>Canva AI</td>
+                <td>Adobe Firefly</td>
+                <td>50%</td>
+              </tr>
+              <tr>
+                <td>Edit a Reel or short video</td>
+                <td>CapCut AI</td>
+                <td>Runway</td>
+                <td>70%</td>
+              </tr>
+              <tr>
+                <td>Generate B-roll video footage</td>
+                <td>Kling AI</td>
+                <td>Runway Gen-3</td>
+                <td>95%</td>
+              </tr>
+              <tr>
+                <td>Create a talking-head explainer</td>
+                <td>HeyGen</td>
+                <td>CapCut AI</td>
+                <td>95%</td>
+              </tr>
+              <tr>
+                <td>Add voiceover to a Reel</td>
+                <td>ElevenLabs</td>
+                <td>CapCut AI voice</td>
+                <td>85%</td>
+              </tr>
+              <tr>
+                <td>Background music for a video</td>
+                <td>Suno</td>
+                <td>CapCut AI audio</td>
+                <td>100% (no licensing risk)</td>
+              </tr>
+              <tr>
+                <td>Full multi-step research task</td>
+                <td>Manus (Meta)</td>
+                <td>Perplexity + Claude</td>
+                <td>90% (overnight runs)</td>
+              </tr>
+              <tr>
+                <td>Draft inside Google Docs directly</td>
+                <td>Gemini</td>
+                <td>Claude (copy-paste)</td>
+                <td>40%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- STACK RECOMMENDATION -->
+      <div class="alert success">
+        <div class="alert-icon">🏆</div>
+        <div class="alert-body">
+          <h4>Recommended Starter Stack for Ideoworks Content Team</h4>
+          <p>If budget is a constraint, start with these five: <strong>Claude Pro</strong> (copy), <strong>Canva Pro</strong> (design + Firefly images), <strong>CapCut AI</strong> (video editing, free), <strong>Perplexity free</strong> (research), and <strong>ElevenLabs free</strong> (voiceover testing). Total cost: around $35/month. That stack handles 80% of all content production needs in this playbook.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════ PART 6 ═══════════════════════════════ -->
+    <div class="section" id="part6">
+      <div class="section-header">
+        <div class="section-number">6</div>
+        <div class="section-title">
+          <h2>Resources</h2>
+          <p>What "working" looks like, accounts to follow, and where to read more</p>
+        </div>
+      </div>
+
+      <!-- BENCHMARKS -->
+      <div class="subsection">
+        <h3>What Success Looks Like: Month by Month</h3>
+        <div class="card-grid">
+          <div class="card green">
+            <h4>Month 1 (Instagram)</h4>
+            <p>Engagement rate: 0.05% → 0.3%+<br>Avg likes per post: 5 → 30+<br>First Reel: target 500+ views</p>
+          </div>
+          <div class="card green">
+            <h4>Month 1 (LinkedIn)</h4>
+            <p>Impressions per post: 200 → 1,000+<br>New followers: +50–100<br>1 post that generates a DM or comment from a real prospect</p>
+          </div>
+          <div class="card green">
+            <h4>Month 3</h4>
+            <p>IG engagement: 0.5%+ (competitive)<br>LinkedIn followers: 2,500+<br>At least 2 inbound inquiries traceable to social content</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCOUNTS TO STUDY -->
+      <div class="subsection">
+        <h3>6 Accounts to Learn From</h3>
+        <div class="ref-grid">
+          <div class="ref-card">
+            <h4>@wearesocial (IG + LinkedIn)</h4>
+            <p>Global agency that uses its own social media to prove its social media expertise. Study their carousel structure and how they present data.</p>
+            <span class="tag">Reference: PROOF pillar</span>
+          </div>
+          <div class="ref-card">
+            <h4>@bolehdicobadigital (Instagram)</h4>
+            <p>Best local example of making complex digital marketing topics feel easy and fun. The closest benchmark to what our COMMENTARY and CRAFT pillars should feel like.</p>
+            <span class="tag">Reference: COMMENTARY pillar</span>
+          </div>
+          <div class="ref-card">
+            <h4>@growwithward (LinkedIn)</h4>
+            <p>Agency growth strategist. His LinkedIn text post structure: confident, specific, never buzzwordy: is exactly what our COMMENTARY pillar should sound like.</p>
+            <span class="tag">Reference: COMMENTARY voice</span>
+          </div>
+          <div class="ref-card">
+            <h4>@arfadia (Instagram)</h4>
+            <p>Best team-visibility play among Indonesian agencies. Study how they introduce team members without it feeling like an HR announcement.</p>
+            <span class="tag">Reference: CULTURE pillar</span>
+          </div>
+          <div class="ref-card">
+            <h4>@bigevo.id (Instagram)</h4>
+            <p>Results-first content: leads with metrics, not aesthetics. Study their before/after format and how they frame numbers without revealing client names.</p>
+            <span class="tag">Reference: PROOF pillar</span>
+          </div>
+          <div class="ref-card">
+            <h4>@flockcreativenetwork (Instagram)</h4>
+            <p>Best local reference for process-reveal content. They make showing creative work feel exciting, not academic: that's the CRAFT pillar done right.</p>
+            <span class="tag">Reference: CRAFT pillar</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- READING LIST -->
+      <div class="subsection">
+        <h3>3 Things Worth Reading</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Where</th>
+                <th>Why It Matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Show Your Work</td>
+                <td>Austin Kleon (book: 2 hours)</td>
+                <td>The philosophy behind this whole strategy. Share with the team before the first week of content. It reframes "posting" as something meaningful, not a chore.</td>
+              </tr>
+              <tr>
+                <td>LinkedIn Algorithm Report</td>
+                <td>Richard van der Blom (annual, free PDF)</td>
+                <td>The most reliable breakdown of what actually reaches people on LinkedIn. Use it every quarter to check if our posting format is still right.</td>
+              </tr>
+              <tr>
+                <td>Building a StoryBrand</td>
+                <td>Donald Miller (book)</td>
+                <td>One rule from this book matters most: the client is the hero, Ideoworks is the guide. Apply this to every post: it prevents self-promotional content that nobody cares about.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FINAL NOTE -->
+      <div class="alert critical" style="margin-top:24px">
+        <div class="alert-icon">🚀</div>
+        <div class="alert-body">
+          <h4>The Most Important Line in This Document</h4>
+          <p>Don't perfect the strategy. <strong>Publish the first post.</strong> Pick one completed project, open Claude, run Template 1, and publish the LinkedIn text post before Friday. The strategy becomes real the moment the first piece is live: everything else is just planning.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="text-align:center;padding:28px 0;color:#9CA3AF;font-size:12px;border-top:1px solid var(--gray-light);margin-top:20px">
+      <strong style="color:var(--red)">IDEOWORKS</strong> &nbsp;·&nbsp; Social Media Strategy 2026 &nbsp;·&nbsp; Internal Use Only &nbsp;·&nbsp; ideoworks.id<br>
+      <span style="font-size:11px;margin-top:4px;display:block">Content pillars and AI prompts are built for the content team: zero C-level dependency.</span>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.section[id], #quickstart');
+  const navLinks = document.querySelectorAll('.sidebar-section a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 90) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>

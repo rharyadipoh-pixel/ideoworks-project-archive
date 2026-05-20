@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Carousel A · เข้าสู่ตลาดอินโดนีเซีย · Ideoworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,700;0,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8192C;--navy:#0D1B2A;--white:#FFFFFF;--off:#F7F6F3;--rule:#E8E6E0;--fd:'Sarabun',sans-serif;--fb:'Sarabun',sans-serif;--fm:'JetBrains Mono',monospace;--cs:380px;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060608;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;padding:40px;gap:22px}
+  .fmt{font-family:var(--fm);font-size:10px;color:#5C5867;letter-spacing:.2em;text-transform:uppercase}
+  .tw{overflow-x:auto;padding-bottom:18px;width:100%;cursor:grab;user-select:none}
+  .tw:active{cursor:grabbing}
+  .track{display:flex;gap:14px;width:max-content;padding:3px}
+  .tw::-webkit-scrollbar{height:3px}
+  .tw::-webkit-scrollbar-track{background:#0F1320}
+  .tw::-webkit-scrollbar-thumb{background:#2D2A3A}
+  .card{width:var(--cs);height:var(--cs);background:var(--white);border-radius:10px;position:relative;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;padding:0;box-shadow:0 16px 48px rgba(0,0,0,.4)}
+  .card-top{height:3px;background:var(--red);flex-shrink:0}
+  .card-body{flex:1;display:flex;flex-direction:column;padding:22px 24px 20px}
+  .cn{font-family:var(--fm);font-size:8.5px;color:rgba(13,27,42,.3);letter-spacing:.18em;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+  .cn-dot{width:5px;height:5px;border-radius:50%;background:var(--red)}
+  .ey{font-family:var(--fm);font-size:8.5px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .ey::before{content:'';width:14px;height:2px;background:var(--red);flex-shrink:0}
+  .ct{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--navy);line-height:1.25;letter-spacing:-.01em;margin-bottom:10px}
+  .ct .red{color:var(--red)}
+  .cb{font-family:var(--fb);font-size:11px;color:rgba(13,27,42,.55);line-height:1.7}
+  .cb b{color:var(--navy)}
+  .pips{display:flex;gap:4px;margin-top:auto;padding-top:14px}
+  .pip{height:2px;flex:1;background:var(--rule);border-radius:1px}
+  .pip.on{background:var(--red)}
+  .lp-mini{margin-top:auto;background:#0A0D14;border-radius:6px;padding:12px 14px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.2)}
+  .lp-mini::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:18px 18px;opacity:.022;pointer-events:none}
+  .lp-mini-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .lp-mini-domain{font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.25);letter-spacing:.1em;margin-bottom:6px}
+  .lp-mini-score{font-family:var(--fm);font-size:36px;color:#F2F0EC;letter-spacing:-.04em;line-height:1;display:flex;align-items:baseline;gap:3px}
+  .lp-mini-score span{font-size:13px;color:rgba(255,255,255,.25)}
+  .lp-mini-badges{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .lp-mini-badge{padding:3px 7px;border:1px solid rgba(255,255,255,.08);font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.3);letter-spacing:.08em;text-transform:uppercase}
+  .lp-mini-badge.lk{border-color:rgba(232,25,44,.2);color:rgba(232,25,44,.45)}
+  .sbars{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+  .sbi{display:flex;flex-direction:column;gap:4px}
+  .sbi-head{display:flex;justify-content:space-between;align-items:center}
+  .sbi-name{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.45);letter-spacing:.1em;text-transform:uppercase}
+  .sbi-val{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--navy)}
+  .sbi-track{height:3px;background:var(--rule);border-radius:2px;overflow:hidden}
+  .sbi-fill{height:100%;border-radius:2px;background:var(--red)}
+  .insight{padding:10px 12px;background:rgba(232,25,44,.04);border-left:2px solid var(--red);margin-top:12px}
+  .insight p{font-family:var(--fb);font-size:10px;color:rgba(13,27,42,.55);line-height:1.6}
+  .insight p b{color:var(--navy)}
+  .tiers{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+  .tier{display:flex;align-items:flex-start;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+  .tier:last-child{border-bottom:none;padding-bottom:0}
+  .tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px}
+  .t1{background:var(--red)}.t2{background:#FFB347}.t3{background:rgba(13,27,42,.2)}
+  .tier-name{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--navy);line-height:1.2}
+  .tier-desc{font-family:var(--fm);font-size:7.5px;color:rgba(13,27,42,.4);letter-spacing:.06em;margin-top:2px}
+  .personas{display:flex;gap:8px;margin-top:auto}
+  .persona{flex:1;padding:12px;background:var(--off);border:1px solid var(--rule);position:relative}
+  .persona.lk::after{content:'🔒';position:absolute;top:8px;right:8px;font-size:10px;opacity:.4}
+  .p-tier{font-family:var(--fm);font-size:7.5px;color:var(--red);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+  .p-name{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--navy);margin-bottom:2px}
+  .p-age{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.4)}
+  .p-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
+  .p-tag{padding:2px 5px;background:rgba(232,25,44,.06);border:1px solid rgba(232,25,44,.14);font-family:var(--fm);font-size:7px;color:rgba(13,27,42,.55);letter-spacing:.06em}
+  .gtm{display:flex;flex-direction:column;gap:0;margin-top:auto;flex:1}
+  .gp{display:flex;gap:12px;align-items:flex-start;position:relative}
+  .gp:not(:last-child)::after{content:'';position:absolute;left:10px;top:22px;bottom:-8px;width:1px;background:var(--rule)}
+  .gd{width:20px;height:20px;border-radius:50%;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--white);z-index:1}
+  .gd.on{border-color:var(--red);background:rgba(232,25,44,.06)}
+  .gd span{font-family:var(--fm);font-size:7px;color:rgba(13,27,42,.4)}
+  .gd.on span{color:var(--red)}
+  .gc{padding-bottom:16px}
+  .gm{font-family:var(--fm);font-size:8px;color:rgba(13,27,42,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+  .ga{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--navy);line-height:1.25}
+  .gs{font-family:var(--fb);font-size:10px;color:rgba(13,27,42,.5);margin-top:2px}
+  .card-red{background:var(--red)}
+  .card-red .card-top{background:rgba(255,255,255,.25)}
+  .card-red .cn{color:rgba(255,255,255,.35)}
+  .card-red .cn-dot{background:var(--white)}
+  .c6-bg{position:absolute;bottom:-20px;right:-10px;font-family:var(--fm);font-size:150px;color:rgba(255,255,255,.06);line-height:1;pointer-events:none}
+  .c6-logo{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+  .c6-hl{font-family:var(--fd);font-size:24px;font-weight:800;color:var(--white);line-height:1.2;letter-spacing:-.01em;margin-bottom:14px}
+  .c6-clients{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+  .c6-cl{padding:4px 9px;border:1px solid rgba(255,255,255,.25);font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.7);letter-spacing:.1em}
+  .c6-btn{width:100%;padding:13px 18px;background:var(--white);color:var(--red);font-family:var(--fd);font-weight:700;font-size:13px;letter-spacing:.06em;text-align:center;display:flex;align-items:center;justify-content:center}
+  .c6-url{font-family:var(--fm);font-size:8.5px;color:rgba(255,255,255,.45);margin-top:8px;text-align:center;letter-spacing:.1em}
+  .card-red .pips{padding-top:12px}
+  .card-red .pip{background:rgba(255,255,255,.2)}
+  .card-red .pip.on{background:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="fmt">FEED CAROUSEL · 1:1 · 6 CARDS · ANGLE A · IDEOWORKS BRAND</div>
+<div class="tw" id="tw">
+  <div class="track">
+    <div class="card"><div class="card-top"></div><div class="card-body">
+      <div class="cn"><span>01 / 06</span><div class="cn-dot"></div></div>
+      <div class="ey">เข้าสู่ตลาดอินโดนีเซีย</div>
+      <div class="ct">อินโดนีเซีย <span class="red">มีกฎของตัวเอง.</span></div>
+      <div class="cb">เราดำเนินแคมเปญในตลาดนี้มา 15 ปี ดูว่าแบรนด์ของคุณเป็นอย่างไรในบริบทนี้</div>
+      <div class="lp-mini"><div class="lp-mini-bar"></div><div class="lp-mini-domain">yourbrand.com</div><div class="lp-mini-score">74<span>/100</span></div><div class="lp-mini-badges"><span class="lp-mini-badge">ความเหมาะสม</span><span class="lp-mini-badge">โอกาส</span><span class="lp-mini-badge lk">🔒 อีก 3 รายการ</span></div></div>
+      <div class="pips"><div class="pip on"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+    </div></div>
+    <div class="card"><div class="card-top"></div><div class="card-body">
+      <div class="cn"><span>02 / 06</span><div class="cn-dot"></div></div>
+      <div class="ey">01. ความพร้อมของแบรนด์</div>
+      <div class="ct">ชื่อ โทน วิชวล. <span class="red">ให้คะแนนตามมาตรฐานอินโดนีเซีย.</span></div>
+      <div class="sbars">
+        <div class="sbi"><div class="sbi-head"><span class="sbi-name">ความเหมาะสมของชื่อ</span><span class="sbi-val">82</span></div><div class="sbi-track"><div class="sbi-fill" style="width:82%"></div></div></div>
+        <div class="sbi"><div class="sbi-head"><span class="sbi-name">เอกลักษณ์ทางวิชวล</span><span class="sbi-val">74</span></div><div class="sbi-track"><div class="sbi-fill" style="width:74%"></div></div></div>
+        <div class="sbi"><div class="sbi-head"><span class="sbi-name">โทนของข้อความ</span><span class="sbi-val">68</span></div><div class="sbi-track"><div class="sbi-fill" style="width:68%"></div></div></div>
+      </div>
+      <div class="insight"><p>สิ่งที่ดูพรีเมียมในกรุงเทพฯ <b>อาจให้ความรู้สึกเย็นชาในสุราบายา</b> คะแนนนี้แสดงให้เห็นความแตกต่างอย่างชัดเจน</p></div>
+      <div class="pips"><div class="pip on"></div><div class="pip on"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+    </div></div>
+    <div class="card"><div class="card-top"></div><div class="card-body">
+      <div class="cn"><span>03 / 06</span><div class="cn-dot"></div></div>
+      <div class="ey">02. โอกาสทางตลาด</div>
+      <div class="ct">เวลาเข้าตลาด. ลำดับเมือง. <span class="red">แต่ละหมวดหมู่.</span></div>
+      <div class="cb" style="margin-bottom:14px">กลุ่มที่เติบโตเร็วอาจ <b>อิ่มตัวแล้วในระดับราคาของคุณ</b> วัดก่อนที่จะเคลื่อนไหว</div>
+      <div class="tiers">
+        <div class="tier"><div class="tier-dot t1"></div><div><div class="tier-name">ระดับ 1. จาการ์ตา. สุราบายา.</div><div class="tier-desc">การเจาะตลาดสูง. แข่งขันสูง. พรีเมียมเป็นไปได้.</div></div></div>
+        <div class="tier"><div class="tier-dot t2"></div><div><div class="tier-name">ระดับ 2. บันดุง. เมดัน. บาหลี.</div><div class="tier-desc">เติบโตเร็วที่สุด. CPM ต่ำ. โอกาสสูง.</div></div></div>
+        <div class="tier"><div class="tier-dot t3"></div><div><div class="tier-name">ระดับ 3. เกาะนอก.</div><div class="tier-desc">ความได้เปรียบของผู้บุกเบิก. ทริกเกอร์การซื้อต่างกัน.</div></div></div>
+      </div>
+      <div class="pips"><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+    </div></div>
+    <div class="card"><div class="card-top"></div><div class="card-body">
+      <div class="cn"><span>04 / 06</span><div class="cn-dot"></div></div>
+      <div class="ey">03. การแมปเพอร์โซนา</div>
+      <div class="ct">ผู้ซื้อที่เป็นไปได้มากที่สุด <span class="red">สองคน</span> ที่นี่.</div>
+      <div class="cb" style="margin-bottom:14px">พฤติกรรมผู้บริโภคเปลี่ยนแปลงอย่างรวดเร็วระหว่างระดับเมือง โปรไฟล์ที่ Conversion ในจาการ์ตากลาง <b>อาจไม่มีอยู่ในระยะ 90 นาที</b></div>
+      <div class="personas">
+        <div class="persona"><div class="p-tier">ระดับ 1. เมือง.</div><div class="p-name">มืออาชีพในเมือง</div><div class="p-age">26-34 ปี. จาการ์ตา.</div><div class="p-tags"><span class="p-tag">TikTok ก่อน</span><span class="p-tag">รับรู้แบรนด์</span><span class="p-tag">Shopee</span></div></div>
+        <div class="persona lk"><div class="p-tier">ระดับ 2. กำลังเติบโต.</div><div class="p-name">ตลาดกลาง</div><div class="p-age">22-35 ปี. ระดับ 2.</div><div class="p-tags"><span class="p-tag">มุ่งเน้นคุณค่า</span><span class="p-tag">KOL นำ</span></div></div>
+      </div>
+      <div class="pips"><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip"></div><div class="pip"></div></div>
+    </div></div>
+    <div class="card"><div class="card-top"></div><div class="card-body">
+      <div class="cn"><span>05 / 06</span><div class="cn-dot"></div></div>
+      <div class="ey">04 + 05. GTM + งบประมาณ</div>
+      <div class="ct">แผน 90 วัน. <span class="red">ต้นทุนจริง.</span></div>
+      <div class="gtm" style="margin-top:14px">
+        <div class="gp"><div class="gd on"><span>M1</span></div><div class="gc"><div class="gm">เดือนที่ 1</div><div class="ga">เปิดตัวที่จาการ์ตา</div><div class="gs">KOL Seeding. ตั้ง TikTok Shop. เข้า Shopee.</div></div></div>
+        <div class="gp"><div class="gd on"><span>M2</span></div><div class="gc"><div class="gm">เดือนที่ 2</div><div class="ga">ขยายสู่ระดับ 2</div><div class="gs">ครีเอทีฟเฉพาะเมือง. บันดุง-สุราบายา.</div></div></div>
+        <div class="gp"><div class="gd"><span>M3</span></div><div class="gc"><div class="gm">เดือนที่ 3</div><div class="ga">Scale Up และ Retargeting</div><div class="gs">Performance Loop. กลยุทธ์ครองหมวดหมู่.</div></div></div>
+      </div>
+      <div class="pips"><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip"></div></div>
+    </div></div>
+    <div class="card card-red"><div class="card-top"></div><div class="c6-bg">IDW</div><div class="card-body">
+      <div class="cn"><span>06 / 06</span><div class="cn-dot"></div></div>
+      <div class="c6-logo">IDEOWORKS</div>
+      <div class="c6-hl">บรีฟอินโดนีเซีย. ฟรี.</div>
+      <div class="c6-clients"><span class="c6-cl">Calvin Klein</span><span class="c6-cl">HSBC</span><span class="c6-cl">GoPro</span><span class="c6-cl">Park Hyatt</span></div>
+      <div class="c6-btn">รับบรีฟอินโดนีเซีย</div>
+      <div class="c6-url">ฟรี · ส่งภายใน 90 วินาที</div>
+      <div class="pips"><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div><div class="pip on"></div></div>
+    </div></div>
+  </div>
+</div>
+<script>
+const tw=document.getElementById('tw');
+let dn=false,sx,sl;
+tw.addEventListener('mousedown',e=>{dn=true;tw.style.cursor='grabbing';sx=e.pageX-tw.offsetLeft;sl=tw.scrollLeft;});
+tw.addEventListener('mouseleave',()=>{dn=false;tw.style.cursor='grab';});
+tw.addEventListener('mouseup',()=>{dn=false;tw.style.cursor='grab';});
+tw.addEventListener('mousemove',e=>{if(!dn)return;e.preventDefault();tw.scrollLeft=sl-(e.pageX-tw.offsetLeft-sx);});
+</script>
+</body>
+</html>

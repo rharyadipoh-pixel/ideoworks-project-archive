@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reel A · Indonesia Market Entry · Ideoworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8192C;--navy:#0D1B2A;--white:#FFFFFF;--bg:#F7F5F0;--muted:rgba(13,27,42,.5);--muted2:rgba(13,27,42,.3);--lp-bg:#0A0D14;--lp-rule:#2D2A3A;--fd:'Space Grotesk',sans-serif;--fm:'JetBrains Mono',monospace;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#060608;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:14px;padding:40px 20px}
+  .fmt{font-family:var(--fm);font-size:10px;color:#5C5867;letter-spacing:.2em;text-transform:uppercase}
+  .ad{width:405px;height:720px;background:var(--bg);position:relative;overflow:hidden;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.5),0 0 0 1px rgba(0,0,0,.08)}
+  .red-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);z-index:20}
+  .logo{position:absolute;top:20px;left:24px;z-index:20;font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--navy)}
+  .logo b{color:var(--red)}
+  .progress{position:absolute;bottom:40px;left:0;height:2px;background:var(--red);z-index:20;width:0}
+  /* Bottom strip — persistent anchor on all scenes */
+  .strip{position:absolute;bottom:0;left:0;right:0;height:40px;background:var(--navy);display:flex;align-items:center;padding:0 24px;z-index:15;gap:8px}
+  .strip-url{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.45);letter-spacing:.1em;flex:1}
+  .strip-cta{font-family:var(--fm);font-size:8px;color:rgba(232,25,44,.7);letter-spacing:.1em;text-transform:uppercase}
+  .scene{position:absolute;inset:0;bottom:40px;z-index:10;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:52px 32px 28px;opacity:0;pointer-events:none;transition:opacity .5s ease}
+  .scene.active{opacity:1;pointer-events:auto}
+  /* Ghost background filler */
+  .ghost{position:absolute;bottom:-10px;right:-8px;font-family:var(--fm);font-size:220px;color:rgba(13,27,42,.04);line-height:1;pointer-events:none;letter-spacing:-.04em}
+  /* S1 */
+  .s1-eyebrow{font-family:var(--fm);font-size:9px;color:var(--red);letter-spacing:.22em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+  .s1-eyebrow::before{content:'';width:20px;height:2px;background:var(--red);display:block}
+  .s1-hl{font-family:var(--fd);font-size:54px;font-weight:700;line-height:.98;letter-spacing:-.03em;color:var(--navy);margin-bottom:24px}
+  .s1-hl .red{color:var(--red)}
+  .s1-hl .word{display:inline-block;overflow:hidden}
+  .s1-hl .word span{display:block;animation:slideUp .5s cubic-bezier(.16,1,.3,1) both}
+  @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+  .s1-sub{font-family:var(--fd);font-size:13px;color:var(--muted);line-height:1.65;max-width:26ch;opacity:0;animation:fadeup .6s ease 1.2s forwards}
+  @keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .s1-stat-row{display:flex;gap:24px;margin-top:auto;padding-top:16px;border-top:1px solid rgba(13,27,42,.1)}
+  .s1-stat-val{font-family:var(--fm);font-size:18px;color:var(--navy);letter-spacing:-.02em;font-weight:500}
+  .s1-stat-val b{color:var(--red)}
+  .s1-stat-lbl{font-family:var(--fm);font-size:7px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+  /* S2 */
+  .s2{background:var(--bg)}
+  .s2-label{font-family:var(--fm);font-size:9px;color:var(--muted2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px}
+  .s2-sub{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--navy);line-height:1.2;letter-spacing:-.02em;margin-bottom:20px;max-width:20ch}
+  .s2-sub span{color:var(--red)}
+  .lp-preview{width:100%;background:var(--lp-bg);border-radius:8px;padding:20px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15)}
+  .lp-preview::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.022;pointer-events:none}
+  .lp-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .lp-eyebrow{font-family:var(--fm);font-size:7px;color:rgba(232,25,44,.7);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+  .lp-input{background:rgba(255,255,255,.04);border:1px solid var(--lp-rule);padding:10px 12px;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+  .lp-proto{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.25)}
+  .lp-url{font-family:var(--fm);font-size:11px;color:#F2F0EC}
+  .lp-cursor{display:inline-block;width:1px;height:11px;background:var(--red);animation:blink .75s step-end infinite;vertical-align:bottom}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .lp-btn{width:100%;padding:11px;background:var(--red);color:#fff;font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.04em;text-align:center}
+  .lp-hint{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.2);text-align:center;margin-top:8px;letter-spacing:.08em}
+  .s2-proof{display:flex;gap:20px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(13,27,42,.1)}
+  .s2-pv{font-family:var(--fm);font-size:16px;color:var(--navy);letter-spacing:-.02em}
+  .s2-pv b{color:var(--red)}
+  .s2-pl{font-family:var(--fm);font-size:7px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+  /* S3 */
+  .s3-domain{font-family:var(--fm);font-size:9px;color:var(--muted2);letter-spacing:.1em;margin-bottom:10px}
+  .s3-lp{width:100%;background:var(--lp-bg);border-radius:8px;padding:22px 22px 18px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15);margin-bottom:18px}
+  .s3-lp::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.022;pointer-events:none}
+  .s3-lp-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .s3-score-row{display:flex;align-items:baseline;gap:6px;margin-bottom:18px}
+  .s3-num{font-family:var(--fm);font-size:96px;color:#F2F0EC;letter-spacing:-.04em;line-height:1}
+  .s3-den{font-family:var(--fm);font-size:28px;color:rgba(255,255,255,.3)}
+  .s3-bars{display:flex;flex-direction:column;gap:10px}
+  .s3-bar{display:flex;flex-direction:column;gap:4px;opacity:0;transform:translateY(5px)}
+  .s3-bar.show{animation:bin .35s ease forwards}
+  @keyframes bin{to{opacity:1;transform:translateY(0)}}
+  .s3-bh{display:flex;justify-content:space-between}
+  .s3-bn{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+  .s3-bv{font-family:var(--fm);font-size:8px;color:#F2F0EC}
+  .s3-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+  .s3-fill{height:100%;background:linear-gradient(90deg,var(--red),#FFB347);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+  .s3-fill.go{transform:scaleX(1)}
+  .s3-label{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--navy);line-height:1.35}
+  .s3-label span{color:var(--red)}
+  /* S4 */
+  .s4-lp{width:100%;background:var(--lp-bg);border-radius:8px;padding:18px 20px;position:relative;overflow:hidden;border:1px solid rgba(232,25,44,.15);margin-bottom:18px}
+  .s4-lp::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,242,245,.5) 1px,transparent 1px);background-size:20px 20px;opacity:.02;pointer-events:none}
+  .s4-lp-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),#FFB347)}
+  .s4-lp-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+  .s4-score-mini{font-family:var(--fm);font-size:52px;color:#F2F0EC;letter-spacing:-.04em;line-height:1}
+  .s4-score-mini span{font-size:17px;color:rgba(255,255,255,.3);vertical-align:super}
+  .s4-domain{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.25);align-self:flex-end;margin-bottom:4px}
+  .s4-rows{display:flex;flex-direction:column;gap:7px}
+  .s4-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(232,25,44,.05);border:1px solid rgba(232,25,44,.12)}
+  .s4-name{font-family:var(--fm);font-size:8.5px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase}
+  .s4-ico{font-size:10px;opacity:.35}
+  .s4-hl{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:6px}
+  .s4-hl b{color:var(--red)}
+  .s4-sub{font-family:var(--fd);font-size:12px;color:var(--muted);line-height:1.65}
+  /* S5 CTA — red */
+  .s5{background:var(--red);bottom:0}
+  .s5-ghost{position:absolute;bottom:-20px;right:-10px;font-family:var(--fm);font-size:140px;color:rgba(255,255,255,.07);line-height:1;pointer-events:none}
+  .s5>*:not(.s5-ghost){position:relative;z-index:1}
+  .s5-kicker{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.22em;text-transform:uppercase;margin-bottom:16px}
+  .s5-hl{font-family:var(--fd);font-size:40px;font-weight:700;color:var(--white);line-height:1.0;letter-spacing:-.02em;margin-bottom:20px}
+  .s5-creds{display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
+  .s5-cred{font-family:var(--fd);font-size:13px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:8px;line-height:1.4}
+  .s5-cred::before{content:'';width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.6);flex-shrink:0}
+  .s5-btn{padding:15px 32px;background:var(--white);color:var(--red);font-family:var(--fd);font-weight:700;font-size:14px;letter-spacing:.04em;display:inline-flex;align-items:center;gap:8px}
+  .s5-url{font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.45);margin-top:14px;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="fmt">REELS · STORIES · 9:16 · ANGLE A · IDEOWORKS BRAND</div>
+<div class="ad" id="ad">
+  <div class="red-bar"></div>
+  <div class="logo">IDEO<b>WORKS</b></div>
+  <div class="strip">
+    <span class="strip-cta">Free · No Signup</span>
+  </div>
+
+  <div class="scene active" id="s1">
+    <div class="ghost">A</div>
+    <div class="s1-eyebrow">Indonesia Market Entry</div>
+    <h1 class="s1-hl">
+      <div class="word"><span style="animation-delay:.05s">Indonesia</span></div>
+      <div class="word"><span style="animation-delay:.2s">doesn't</span></div>
+      <div class="word"><span style="animation-delay:.35s">wait for</span></div>
+      <div class="word red"><span style="animation-delay:.5s">your</span></div>
+      <div class="word red"><span style="animation-delay:.65s">brand.</span></div>
+    </h1>
+    <p class="s1-sub">We've led international brands into Indonesia since 2010. See where you actually stand.</p>
+    <div class="s1-stat-row">
+      <div><div class="s1-stat-val">15<b>+</b></div><div class="s1-stat-lbl">Years in market</div></div>
+      <div><div class="s1-stat-val"><b>270M</b></div><div class="s1-stat-lbl">Consumer market</div></div>
+      <div><div class="s1-stat-val"><b>Free</b></div><div class="s1-stat-lbl">No signup</div></div>
+    </div>
+  </div>
+
+  <div class="scene s2" id="s2">
+    <div class="ghost">↗</div>
+    <div class="s2-label">Indonesia Brand Intelligence</div>
+    <div class="s2-sub">Check your brand position. <span>60 seconds.</span></div>
+    <div class="lp-preview">
+      <div class="lp-bar"></div>
+      <div class="lp-input"><span class="lp-proto">https://</span><span class="lp-url" id="typeUrl"></span><span class="lp-cursor"></span></div>
+      <div class="lp-btn">See Where I Stand</div>
+      <div class="lp-hint">Real-time score · No signup required</div>
+    </div>
+    <div class="s2-proof">
+      <div><div class="s2-pv"><b>74</b>/100</div><div class="s2-pl">Your score</div></div>
+      <div><div class="s2-pv">60<b>s</b></div><div class="s2-pl">Instant</div></div>
+      <div><div class="s2-pv"><b>Free</b></div><div class="s2-pl">No cost</div></div>
+    </div>
+  </div>
+
+  <div class="scene" id="s3">
+    <div class="ghost">74</div>
+    <div class="s3-domain">yourbrand.com</div>
+    <div class="s3-lp">
+      <div class="s3-lp-bar"></div>
+      <div class="s3-score-row"><div class="s3-num" id="scoreNum">0</div><div class="s3-den">/100</div></div>
+      <div class="s3-bars">
+        <div class="s3-bar" id="bar1"><div class="s3-bh"><span class="s3-bn">Brand Readiness</span><span class="s3-bv">78</span></div><div class="s3-track"><div class="s3-fill" style="width:78%" id="fill1"></div></div></div>
+        <div class="s3-bar" id="bar2"><div class="s3-bh"><span class="s3-bn">Indonesia Opportunity</span><span class="s3-bv">85</span></div><div class="s3-track"><div class="s3-fill" style="width:85%" id="fill2"></div></div></div>
+        <div class="s3-bar" id="bar3"><div class="s3-bh"><span class="s3-bn">Competitive Position</span><span class="s3-bv">72</span></div><div class="s3-track"><div class="s3-fill" style="width:72%" id="fill3"></div></div></div>
+      </div>
+    </div>
+    <div class="s3-label">Your brand. Full Indonesia analysis.<br><span>In 60 seconds.</span></div>
+  </div>
+
+  <div class="scene" id="s4">
+    <div class="ghost">🔒</div>
+    <div class="s4-lp">
+      <div class="s4-lp-bar"></div>
+      <div class="s4-lp-top"><div class="s4-score-mini">74<span>/100</span></div><div class="s4-domain">yourbrand.com</div></div>
+      <div class="s4-rows">
+        <div class="s4-row"><span class="s4-name">Persona Mapping</span><span class="s4-ico">🔒</span></div>
+        <div class="s4-row"><span class="s4-name">GTM Strategy</span><span class="s4-ico">🔒</span></div>
+        <div class="s4-row"><span class="s4-name">Budget Framework</span><span class="s4-ico">🔒</span></div>
+      </div>
+    </div>
+    <div class="s4-hl">The full picture<br>is yours. <b>Free.</b></div>
+    <div class="s4-sub">Persona map, GTM blueprint, real Indonesia budget tiers. Delivered in 90 seconds.</div>
+  </div>
+
+  <div class="scene s5" id="s5">
+    <div class="s5-ghost">IDW</div>
+    <div class="s5-kicker">Operating in Indonesia since 2010</div>
+    <h2 class="s5-hl">15 years in<br>this market.</h2>
+    <div class="s5-creds">
+      <div class="s5-cred">Calvin Klein, HSBC, GoPro, Park Hyatt</div>
+      <div class="s5-cred">Every city tier. Every major channel.</div>
+      <div class="s5-cred">Free briefing. Delivered in 90 seconds.</div>
+    </div>
+    <div class="s5-btn">Get My Free Score</div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+</div>
+<script>
+const SC=['s1','s2','s3','s4','s5'],DUR=[3200,3500,5000,3000,3500],TOT=DUR.reduce((a,b)=>a+b,0);
+let cur=0,ls=performance.now();
+function show(i){SC.forEach((id,x)=>document.getElementById(id).classList.toggle('active',x===i));if(i===1)startType();if(i===2)startScore();}
+function next(){setTimeout(()=>{cur=(cur+1)%SC.length;if(!cur)ls=performance.now();show(cur);next();},DUR[cur]);}
+function animN(el,a,b,d){const s=performance.now();(function t(n){const p=Math.min((n-s)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(a+(b-a)*e);if(p<1)requestAnimationFrame(t);})(s);}
+const URL_TXT='yourbrand.com';let tt;
+function startType(){const el=document.getElementById('typeUrl');el.textContent='';clearInterval(tt);let i=0;tt=setInterval(()=>{el.textContent+=URL_TXT[i++];if(i>=URL_TXT.length)clearInterval(tt);},80);}
+function startScore(){document.getElementById('scoreNum').textContent='0';setTimeout(()=>animN(document.getElementById('scoreNum'),0,74,1800),200);[1,2,3].forEach((n,i)=>setTimeout(()=>{document.getElementById('bar'+n).classList.add('show');setTimeout(()=>document.getElementById('fill'+n).classList.add('go'),60);},i*350+600));}
+(function tick(){document.getElementById('progress').style.width=Math.min(((performance.now()-ls)/TOT)*100,100)+'%';requestAnimationFrame(tick);})();
+show(0);next();
+</script>
+</body>
+</html>

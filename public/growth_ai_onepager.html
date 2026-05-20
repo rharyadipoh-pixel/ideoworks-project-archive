@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth Team · AI Initiative & Strategy | Ideoworks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:      #E63027;
+  --red2:     #B91C1C;
+  --red-lite: #FEF2F2;
+  --red-mid:  #FECACA;
+  --charcoal: #1E2B4A;
+  --grey-dk:  #334155;
+  --grey-md:  #64748B;
+  --grey-lt:  #F1F5F9;
+  --grey-ln:  #CBD5E1;
+  --white:    #FFFFFF;
+  --green:    #15803D;
+  --green-lt: #F0FDF4;
+  --amber:    #D97706;
+  --amber-lt: #FFFBEB;
+  --teal:     #0E7490;
+  --teal-lt:  #F0FDFF;
+  --shadow:   0 2px 12px rgba(0,0,0,.07);
+  --fh: 'Plus Jakarta Sans', sans-serif;
+  --fb: 'Inter', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--fb);
+  background: #F8F9FA;
+  color: var(--charcoal);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ── WRAPPER ── */
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  background: var(--white);
+  box-shadow: 0 4px 40px rgba(0,0,0,.10);
+}
+
+/* ── HEADER ── */
+.page-header {
+  background: var(--red);
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+}
+.header-main {
+  flex: 1;
+  padding: 28px 36px 24px;
+}
+.header-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 6px;
+}
+.header-title {
+  font-family: var(--fh);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+.header-title span { color: rgba(255,255,255,.7); }
+.header-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.8);
+  margin-top: 8px;
+  font-weight: 400;
+}
+.header-meta {
+  background: rgba(0,0,0,.18);
+  width: 220px;
+  flex-shrink: 0;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.meta-item { }
+.meta-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 2px;
+}
+.meta-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* ── BODY ── */
+.body { padding: 28px 36px; display: flex; flex-direction: column; gap: 24px; }
+
+/* ── SECTION TITLE ── */
+.sec-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.sec-title-bar {
+  width: 4px;
+  height: 20px;
+  background: var(--red);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.sec-title h2 {
+  font-family: var(--fh);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--charcoal);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.sec-title span {
+  font-size: 11px;
+  color: var(--grey-md);
+  font-weight: 400;
+}
+
+/* ── TOOL CARDS ── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.tool-card {
+  background: var(--grey-lt);
+  border-radius: 6px;
+  padding: 16px 14px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .15s, box-shadow .15s;
+}
+a.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(230,48,39,.13);
+  cursor: pointer;
+}
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--red);
+}
+.tool-card.wip::before { background: var(--grey-md); }
+.tool-card.inprog::before { background: var(--amber); }
+.tool-name {
+  font-family: var(--fh);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--charcoal);
+  line-height: 1.3;
+}
+.tool-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.badge-live { background: var(--red); color: var(--white); }
+.badge-inprog { background: var(--amber-lt); color: var(--amber); border: 1px solid #FDE68A; }
+.badge-dev { background: var(--grey-lt); color: var(--grey-md); border: 1px solid var(--grey-ln); }
+.tool-desc {
+  font-size: 10.5px;
+  color: var(--grey-md);
+  line-height: 1.55;
+  flex: 1;
+}
+.tool-tag {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--red);
+}
+.tool-card.wip .tool-tag { color: var(--grey-md); }
+.tool-card.inprog .tool-tag { color: var(--amber); }
+
+/* ── MINI QUOTE ── */
+.mini-quote {
+  background: var(--grey-lt);
+  border-left: 3px solid var(--red);
+  border-radius: 0 4px 4px 0;
+  padding: 10px 14px;
+  margin-top: 4px;
+}
+.mini-quote-text {
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--grey-dk);
+  line-height: 1.5;
+  font-family: var(--fh);
+  font-weight: 600;
+}
+.mini-quote-source {
+  font-size: 9.5px;
+  color: var(--grey-md);
+  margin-top: 4px;
+}
+
+/* ── ANDI QUOTE ── */
+.quote-bar {
+  background: var(--charcoal);
+  border-radius: 6px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.quote-icon {
+  font-size: 28px;
+  line-height: 1;
+  color: var(--red);
+  flex-shrink: 0;
+  font-family: Georgia, serif;
+  margin-top: -4px;
+}
+.quote-text {
+  font-family: var(--fh);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.5;
+  flex: 1;
+}
+.quote-source {
+  font-size: 10px;
+  color: rgba(255,255,255,.45);
+  margin-top: 5px;
+}
+
+/* ── TWO COLUMNS ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+/* ── VALUE ADD CARDS ── */
+.va-card {
+  background: var(--grey-lt);
+  border-radius: 6px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.va-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.va-card.v1::before { background: var(--red); }
+.va-card.v2::before { background: var(--teal); }
+.va-card.v3::before { background: var(--green); }
+.va-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 15px;
+}
+.va-card.v1 .va-card-icon { background: var(--red-lite); }
+.va-card.v2 .va-card-icon { background: var(--teal-lt); }
+.va-card.v3 .va-card-icon { background: var(--green-lt); }
+.va-card-title {
+  font-family: var(--fh);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--charcoal);
+}
+.va-card-subtitle {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+.va-card.v1 .va-card-subtitle { color: var(--red); }
+.va-card.v2 .va-card-subtitle { color: var(--teal); }
+.va-card.v3 .va-card-subtitle { color: var(--green); }
+.va-card-body {
+  font-size: 11.5px;
+  color: var(--grey-md);
+  line-height: 1.6;
+}
+.va-card ul {
+  list-style: none;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.va-card ul li {
+  font-size: 11px;
+  color: var(--grey-md);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+.va-card ul li::before { content: "›"; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+.va-card.v2 ul li::before { color: var(--teal); }
+.va-card.v3 ul li::before { color: var(--green); }
+
+/* ── TOOL PILL ── */
+.tool-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--grey-ln); }
+.tool-pill {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--white);
+  color: var(--grey-md);
+  border: 1px solid var(--grey-ln);
+}
+.va-metric {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--grey-ln);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.va-metric-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--grey-md);
+  flex-shrink: 0;
+}
+.va-metric-val {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+/* ── STRATEGY PANELS ── */
+.strategy-panel {
+  border-radius: 6px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.strategy-panel.retention { background: var(--red-lite); border: 1px solid var(--red-mid); }
+.strategy-panel.acquisition { background: #EFF6FF; border: 1px solid #BFDBFE; }
+.sp-title {
+  font-family: var(--fh);
+  font-size: 13px;
+  font-weight: 800;
+}
+.strategy-panel.retention .sp-title { color: var(--red2); }
+.strategy-panel.acquisition .sp-title { color: #1D4ED8; }
+.sp-body { display: flex; flex-direction: column; gap: 8px; }
+.sp-row {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.sp-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.strategy-panel.retention .sp-num { background: var(--red); color: var(--white); }
+.strategy-panel.acquisition .sp-num { background: #1D4ED8; color: var(--white); }
+.sp-content { flex: 1; }
+.sp-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 2px;
+}
+.sp-text { font-size: 10.5px; color: var(--grey-md); line-height: 1.5; }
+.sp-pill {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+.strategy-panel.retention .sp-pill { background: var(--red-mid); color: var(--red2); }
+.strategy-panel.acquisition .sp-pill { background: #DBEAFE; color: #1E40AF; }
+
+/* ── DISTRIBUTION MODEL ── */
+.dist-section {
+  background: var(--charcoal);
+  border-radius: 6px;
+  padding: 22px 24px;
+}
+.dist-title {
+  font-family: var(--fh);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.dist-sub { font-size: 11px; color: rgba(255,255,255,.5); margin-bottom: 18px; }
+.dist-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.dist-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 5px;
+  padding: 14px;
+}
+.dist-step {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.dist-card-title {
+  font-family: var(--fh);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.dist-card-text { font-size: 10.5px; color: rgba(255,255,255,.5); line-height: 1.55; }
+.dist-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.2);
+  font-size: 18px;
+  margin-top: 32px;
+}
+.dist-callout {
+  margin-top: 16px;
+  background: var(--red);
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+  font-family: var(--fh);
+}
+
+/* ── FOOTER ── */
+.page-footer {
+  background: var(--grey-lt);
+  border-top: 1px solid var(--grey-ln);
+  padding: 12px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-brand {
+  font-family: var(--fh);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--charcoal);
+}
+.footer-note { font-size: 10px; color: var(--grey-md); }
+
+/* ── PRINT ── */
+.print-btn {
+  position: fixed;
+  top: 16px; right: 16px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--fb);
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.print-btn:hover { background: var(--red2); }
+
+@media print {
+  body { background: white; }
+  .print-btn { display: none; }
+  .page { box-shadow: none; max-width: 100%; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-main">
+      <div class="header-eyebrow">Ideoworks · Growth Team</div>
+      <div class="header-title">Value Add Services · <span>Retention &amp; New Client Plan</span></div>
+      <div class="header-sub">Strategi pertumbuhan berbasis AI tools yang sudah dibangun sendiri</div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item"><div class="meta-label">Prepared for</div><div class="meta-val">Arianto Bigman, MD</div></div>
+      <div class="meta-item"><div class="meta-label">Date</div><div class="meta-val">8 May 2026</div></div>
+      <div class="meta-item"><div class="meta-label">Aligned with</div><div class="meta-val">MOM 4 Mei 2026</div></div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- ANDI QUOTE -->
+    <div class="quote-bar">
+      <div class="quote-icon">"</div>
+      <div>
+        <div class="quote-text">Kalau kamu tahu cara jualannya, kamu tidak perlu minta izin cara promosinya. Cukup minta izin jadi channel. IDW naik kelas dari vendor jadi partner yang drive revenue.</div>
+        <div class="quote-source">Andi S. Boediman (Chairman) · MOM Performance Review, 4 Mei 2026</div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: VALUE ADD -->
+    <div>
+      <div class="sec-title">
+        <div class="sec-title-bar"></div>
+        <h2>Value Add Services</h2>
+        <span>Tiga layanan baru dari tools yang sudah ada</span>
+      </div>
+      <div class="three-col">
+
+        <div class="va-card v1">
+          <div class="va-card-icon">📊</div>
+          <div class="va-card-subtitle">AI Reporting</div>
+          <div class="va-card-title">Automated Performance Reports</div>
+          <div class="va-card-body">Channel data masuk, branded deck keluar dalam menit. Tim tidak lagi habis waktu di formatting.</div>
+          <ul>
+            <li>Monthly, weekly, mid-campaign · semua otomatis</li>
+            <li>Tim fokus ke insight, bukan prep</li>
+            <li>Masih iterasi · belum di-pitch ke klien</li>
+          </ul>
+          <div class="tool-pills">
+            <span class="tool-pill">Report Generator</span>
+          </div>
+          <div class="va-metric">
+            <span class="va-metric-label">Metric</span>
+            <span class="va-metric-val">Waktu prep report per klien</span>
+          </div>
+        </div>
+
+        <div class="va-card v2">
+          <div class="va-card-icon">🎯</div>
+          <div class="va-card-subtitle">Mid-Funnel · IDW-Owned</div>
+          <div class="va-card-title">Controlled Campaign Page + GamifyLP</div>
+          <div class="va-card-body">IDW bangun halaman distribusinya sendiri, bukan pakai website klien. Dibangun cepat dengan GamifyLP · lengkap dengan mid-funnel activities, psychological hook, dan scoring.</div>
+          <ul>
+            <li>Lead masuk ke CRM IDW dulu · bukan langsung ke klien</li>
+            <li>Relevan saat klien tidak bagi akses analytics</li>
+            <li>IDW punya data dan attribution penuh</li>
+          </ul>
+          <div class="tool-pills">
+            <span class="tool-pill">GamifyLP</span>
+            <span class="tool-pill">Global Landing Page</span>
+            <span class="tool-pill">CRM</span>
+          </div>
+          <div class="va-metric">
+            <span class="va-metric-label">Metric</span>
+            <span class="va-metric-val">% leads qualified sebelum ke klien</span>
+          </div>
+        </div>
+
+        <div class="va-card v3">
+          <div class="va-card-icon">🔍</div>
+          <div class="va-card-subtitle">B2B Lead Pipeline</div>
+          <div class="va-card-title">LinkedIn Pitch Scanner</div>
+          <div class="va-card-body">Inbound B2B pitches di-score otomatis. Tim hanya follow up yang sudah qualified · tidak ada waktu habis untuk leads yang tidak relevan.</div>
+          <ul>
+            <li>Brands internasional masuk ASEAN = target utama</li>
+            <li>Scoring otomatis · no manual screening</li>
+            <li>Sudah live · bisa demo langsung di pitch meeting</li>
+          </ul>
+          <div class="tool-pills">
+            <span class="tool-pill">LinkedIn Pitch Scanner</span>
+          </div>
+          <div class="va-metric">
+            <span class="va-metric-label">Metric</span>
+            <span class="va-metric-val">Qualified leads per bulan dari inbound</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 2: RETENTION + ACQUISITION -->
+    <div>
+      <div class="sec-title">
+        <div class="sec-title-bar"></div>
+        <h2>Retention &amp; New Client Strategy</h2>
+        <span>Existing clients dijaga · new clients dimenangkan · pakai stack yang sama</span>
+      </div>
+      <div class="two-col">
+
+        <div class="strategy-panel retention">
+          <div class="sp-title">Retention · Existing Clients</div>
+          <div class="sp-body">
+            <div class="sp-row">
+              <div class="sp-num">1</div>
+              <div class="sp-content">
+                <div class="sp-label">Threads · Organic Reach Masih Terbuka Lebar</div>
+                <div class="sp-text">Algoritma Threads belum di-throttle. Distribusi organik masih penuh · konten bisa jangkau audiens luas tanpa bayar. Ini peluang yang bisa langsung ditawarkan ke semua existing client sekarang.</div>
+                <div class="mini-quote"><div class="mini-quote-text">"Organic-nya Threads sekarang bagus banget. Mumpung belum banyak yang masuk."</div><div class="mini-quote-source">Andi S. Boediman · MOM 4 Mei 2026</div></div>
+                <span class="sp-pill">Semua Existing Clients</span>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-num">2</div>
+              <div class="sp-content">
+                <div class="sp-label">AI Reporting · Speed Up Delivery</div>
+                <div class="sp-text">Report Generator dipakai internal dulu · percepat prep, tingkatkan konsistensi. Fondasi sebelum jadi layanan berbayar.</div>
+                <span class="sp-pill">Report Generator</span>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-num">3</div>
+              <div class="sp-content">
+                <div class="sp-label">GamifyLP untuk Klien yang Butuh Distribusi</div>
+                <div class="sp-text">Klien yang kesulitan lead quality atau tidak punya akses analytics: propose GamifyLP sebagai mid-funnel layer. IDW bangun, IDW jalankan, IDW yang punya datanya.</div>
+                <span class="sp-pill">GamifyLP · CRM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="strategy-panel acquisition">
+          <div class="sp-title">New Client Strategy</div>
+          <div class="sp-body">
+            <div class="sp-row">
+              <div class="sp-num">1</div>
+              <div class="sp-content">
+                <div class="sp-label">LinkedIn Pitch Scanner · Pipeline Otomatis</div>
+                <div class="sp-text">Inbound B2B leads di-score otomatis. Brands internasional masuk ASEAN = prioritas. Tim follow up hanya yang sudah qualified.</div>
+                <span class="sp-pill">LinkedIn Pitch Scanner</span>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-num">2</div>
+              <div class="sp-content">
+                <div class="sp-label">Model Distribusi · Bukan Retainer</div>
+                <div class="sp-text">Untuk klien yang cocok: IDW propose sebagai distribution partner. Tidak minta retainer · dibayar per konversi. Klien tidak ada ruginya.</div>
+                <span class="sp-pill">GamifyLP · Global LP · CRM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 3: HOW GAMIFYLP WORKS -->
+    <div class="dist-section">
+      <div class="dist-title">GamifyLP · Cara Kerjanya</div>
+      <div class="dist-sub">Mid-funnel distribution tool · psychological hook · score-based routing</div>
+      <div class="dist-grid">
+
+        <div class="dist-card">
+          <div class="dist-step">Step 01 · Hook</div>
+          <div class="dist-card-title">Psychological Trigger</div>
+          <div class="dist-card-text">IDW bangun halaman dengan hook yang orang mau engage sendiri. Bukan form pendaftaran. Contoh: "Seberapa siap bisnis kamu masuk pasar Indonesia?" · user engage karena relevan ke dirinya.</div>
+        </div>
+
+        <div class="dist-card">
+          <div class="dist-step">Step 02 · Score</div>
+          <div class="dist-card-title">Mid-Funnel Capture</div>
+          <div class="dist-card-text">Jawaban user masuk ke scoring model. IDW duduk di mid-funnel · dapat data, profil, dan intent signal. Semua ini sebelum ada manusia yang terlibat.</div>
+        </div>
+
+        <div class="dist-card">
+          <div class="dist-step">Step 03 · Route</div>
+          <div class="dist-card-title">Qualified Handoff</div>
+          <div class="dist-card-text">Skor tinggi di-route ke klien atau tim IDW. Skor rendah di-nurture. IDW bukan cuma kirim traffic · IDW yang kontrol kualitas konversi dan punya attributionnya.</div>
+        </div>
+
+      </div>
+      <div class="dist-callout">
+        IDW tidak lagi nunggu brief. IDW yang bangun channel-nya sendiri.
+      </div>
+    </div>
+
+    <!-- SECTION 4: AI STACK (PROOF) -->
+    <div>
+      <div class="sec-title">
+        <div class="sec-title-bar"></div>
+        <h2>AI Stack · Built In-House</div>
+        <span>Semua dibangun sendiri oleh Growth Team · no external vendor</span>
+      </div>
+      <div class="tools-grid">
+
+        <a class="tool-card" href="https://script.google.com/a/macros/ideoworks.co.id/s/AKfycbwaPCrEe9uWf0PRH7tmsHd4qTym8r5KkvFwSdMfu261RApp9vA9K5PfFW1Fo1-0u8b7KQ/exec" target="_blank">
+          <div class="tool-tag">Automation</div>
+          <div class="tool-name">LinkedIn Pitch Scanner</div>
+          <span class="tool-badge badge-live">Live ↗</span>
+          <div class="tool-desc">Scores inbound B2B pitches, flags priority leads for BD.</div>
+        </a>
+
+        <a class="tool-card inprog" href="report-generator.html" target="_blank">
+          <div class="tool-tag">Reporting</div>
+          <div class="tool-name">Report Generator</div>
+          <span class="tool-badge badge-inprog">Iterating</span>
+          <div class="tool-desc">Channel data (Meta, Google, TikTok) → branded performance deck. Masih ada iterasi.</div>
+        </a>
+
+        <a class="tool-card inprog" href="https://web-production-0e5e0.up.railway.app/" target="_blank">
+          <div class="tool-tag">Web · Distribution</div>
+          <div class="tool-name">Global Landing Page</div>
+          <span class="tool-badge badge-inprog">Deploying</span>
+          <div class="tool-desc">IDW-controlled, CRM-connected, multilingual · 4 bahasa, 24 variasi kreatif.</div>
+        </a>
+
+        <a class="tool-card inprog" href="ideoworks-crm/PANDUAN_AM.html" target="_blank">
+          <div class="tool-tag">Sales</div>
+          <div class="tool-name">Ideoworks CRM</div>
+          <span class="tool-badge badge-inprog">In Progress</span>
+          <div class="tool-desc">Sales hub untuk tim. Lead otomatis dari Global Landing Page, plus input manual dari AM dan BD. Satu tempat, semua pipeline.</div>
+        </a>
+
+        <a class="tool-card wip" href="gamified-landing-builder/index.html" target="_blank">
+          <div class="tool-tag">Mid-Funnel · Web Builder</div>
+          <div class="tool-name">GamifyLP</div>
+          <span class="tool-badge badge-dev">In Dev</span>
+          <div class="tool-desc">Rapid builder untuk generate mid-funnel activities · gamified content, scoring, interactive hooks yang keep prospects engaged sebelum convert. Tanpa dev dari nol.</div>
+        </a>
+
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <div class="footer-brand">IDEOWORKS</div>
+    <div class="footer-note">Growth Team · AI Initiative · Confidential · 8 May 2026</div>
+    <div class="footer-note">Ryan Haryadi · account@ideoworks.co.id</div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

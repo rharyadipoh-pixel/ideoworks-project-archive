@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Campaign Budget Planner</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2744;--navy-l:#263a5e;--blue:#3b82f6;--blue-bg:#dbeafe;--green:#10b981;--green-bg:#d1fae5;--yellow:#f59e0b;--yellow-bg:#fef3c7;--red:#ef4444;--red-bg:#fee2e2;--purple:#7c3aed;--purple-bg:#ede9fe;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--g50);color:var(--g800);min-height:100vh}
+.hdr{background:linear-gradient(135deg,var(--navy),var(--navy-l));color:#fff;padding:16px 28px;display:flex;align-items:center;justify-content:space-between}
+.hdr h1{font-size:18px;font-weight:700}.hdr p{font-size:11px;opacity:.65;margin-top:2px}
+.hdr-actions{display:flex;gap:6px}
+.wrap{max-width:1320px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid var(--g200);margin-bottom:14px;overflow:hidden}
+.card-h{padding:12px 16px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between}
+.card-h h2{font-size:14px;font-weight:600}.card-b{padding:16px}
+.row{display:grid;gap:12px;margin-bottom:12px}.r2{grid-template-columns:1fr 1fr}.r3{grid-template-columns:1fr 1fr 1fr}.r4{grid-template-columns:1fr 1fr 1fr 1fr}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:10px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.5px}
+.fg input,.fg select{padding:8px 10px;border:1px solid var(--g200);border-radius:7px;font-size:12px;outline:none;background:#fff;transition:border .2s}
+.fg input:focus,.fg select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.btn{padding:7px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.btn-p{background:var(--blue);color:#fff}.btn-p:hover{background:#2563eb}
+.btn-s{background:var(--green);color:#fff}.btn-s:hover{background:#059669}
+.btn-o{background:transparent;color:var(--g600);border:1px solid var(--g300)}.btn-o:hover{background:var(--g100)}
+.btn-d{background:transparent;color:var(--red);border:1px solid var(--red)}.btn-d:hover{background:var(--red-bg)}
+.btn-w{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}.btn-w:hover{background:rgba(255,255,255,.25)}
+.btn-sm{padding:4px 8px;font-size:10px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.st{background:#fff;border-radius:10px;padding:14px 16px;border:1px solid var(--g200)}
+.st-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:3px}
+.st-v{font-size:20px;font-weight:700;color:var(--g900)}.st-s{font-size:10px;color:var(--g400);margin-top:2px}
+.tabs{display:flex;gap:2px;background:var(--g200);border-radius:9px;padding:3px;margin-bottom:14px}
+.tab{flex:1;padding:8px;text-align:center;font-size:11px;font-weight:600;border-radius:7px;cursor:pointer;transition:all .2s;color:var(--g500)}
+.tab.on{background:#fff;color:var(--g800);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.alloc-bar{height:8px;background:var(--g200);border-radius:4px;overflow:hidden;display:flex;margin-bottom:14px}
+.alloc-seg{height:100%;transition:width .3s}
+.phase-s{margin-bottom:10px;border:1px solid var(--g200);border-radius:9px;overflow:hidden}
+.phase-hd{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.phase-hd.aw{background:var(--blue-bg);border-left:4px solid var(--blue)}
+.phase-hd.re{background:var(--green-bg);border-left:4px solid var(--green)}
+.phase-hd.co{background:var(--yellow-bg);border-left:4px solid var(--yellow)}
+.phase-hd.cu{background:var(--g100);border-left:4px solid var(--g500)}
+.ph-t{font-weight:700;font-size:13px}.ph-m{display:flex;gap:12px;align-items:center;font-size:11px;color:var(--g600)}
+.ph-m strong{color:var(--g800)}
+.phase-bd{padding:14px;background:#fff}
+.ch-box{border:1px solid var(--g200);border-radius:7px;padding:10px;margin-bottom:8px;background:var(--g50)}
+.ch-top{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:8px}
+.mg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.mi{display:flex;flex-direction:column;gap:2px}
+.mi label{font-size:9px;color:var(--g500);font-weight:600}
+.mi input{padding:5px 7px;border:1px solid var(--g200);border-radius:5px;font-size:11px;outline:none;width:100%}
+.mi input:focus{border-color:var(--blue)}
+.kpi-val{background:var(--blue-bg);color:var(--blue);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+.cost-tag{padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;display:inline-flex;align-items:center}
+.cost-tag.cpm{background:var(--purple-bg);color:var(--purple)}
+.cost-tag.cpc{background:var(--blue-bg);color:var(--blue)}
+.cost-tag.cpl{background:var(--yellow-bg);color:#d97706}
+.del{background:none;border:none;cursor:pointer;color:var(--g400);padding:2px;border-radius:3px}.del:hover{color:var(--red);background:var(--red-bg)}
+.ifx{display:flex;align-items:center;gap:5px}
+.empty{text-align:center;padding:30px;color:var(--g400);font-size:12px}
+/* Scorecard */
+.sc{background:linear-gradient(135deg,var(--navy),var(--navy-l));color:#fff;border-radius:12px;padding:24px;text-align:center}
+.sc-l{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;opacity:.7}
+.sc-v{font-size:38px;font-weight:800;margin:6px 0}.sc-s{font-size:12px;opacity:.55}
+/* Funnel */
+.fn-c{display:flex;flex-direction:column;align-items:center;gap:3px;padding:16px}
+.fn-s{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;padding:12px 0;border-radius:5px;text-align:center}
+.fn-s .fn-d{font-size:10px;font-weight:400;opacity:.85;margin-top:2px}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+/* Summary table */
+.stb{width:100%;border-collapse:collapse}
+.stb th{text-align:left;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff;padding:9px 10px;background:var(--navy)}
+.stb th:first-child{border-radius:7px 0 0 0}.stb th:last-child{border-radius:0 7px 0 0}
+.stb td{padding:9px 10px;border-bottom:1px solid var(--g100);font-size:11px}
+.stb tr:nth-child(even){background:var(--g50)}
+.stb .tot{background:var(--navy)!important;color:#fff;font-weight:700}.stb .tot td{border-bottom:none}
+.badge{display:inline-block;padding:2px 8px;border-radius:16px;font-size:9px;font-weight:700}
+.badge-aw{background:var(--blue-bg);color:var(--blue)}.badge-re{background:var(--green-bg);color:var(--green)}
+.badge-co{background:var(--yellow-bg);color:var(--yellow)}.badge-cu{background:var(--g100);color:var(--g600)}
+/* Tips */
+.tip{padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:8px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.tip-good{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46}
+.tip-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.tip-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}
+.tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+/* Scenario */
+.scen-tabs{display:flex;gap:4px;margin-bottom:10px}
+.scen-tab{padding:6px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--g300);background:#fff;color:var(--g600)}
+.scen-tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* Save */
+.save-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.save-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--g50);border:1px solid var(--g200);border-radius:7px;font-size:12px}
+.save-item .save-name{font-weight:600;color:var(--g800)}.save-item .save-date{font-size:10px;color:var(--g400)}
+@media(max-width:900px){.stats{grid-template-columns:1fr 1fr}.row.r2,.row.r3,.row.r4{grid-template-columns:1fr}.sg{grid-template-columns:1fr}.mg{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const{useState,useCallback,useMemo,useEffect}=React;
+
+const PHASE_PRESETS=[
+{name:'Awareness',objective:'Reach',cc:'aw',alloc:40,metrics:['impressions','reach','frequency'],rates:{impressions:5,reach:8}},
+{name:'Relevance',objective:'Traffic',cc:'re',alloc:40,metrics:['clicks','ctr','landingPageViews'],rates:{clicks:0.5,landingPageViews:0.8}},
+{name:'Consideration',objective:'Leads',cc:'co',alloc:20,metrics:['leads','downloads'],rates:{leads:50,downloads:25}},
+];
+const CH_OPTS=['Meta','LinkedIn','Google - SEM','Google - Display','YouTube','TikTok','Twitter/X','Programmatic','Other'];
+const OBJ_OPTS=['Reach','Traffic','Clicks','Leads','Conversions','Engagement','Video Views','App Installs','Brand Awareness','Downloads'];
+const CUR_OPTS=['USD','IDR','SGD','EUR','GBP'];
+const MET={
+impressions:{l:'Impressions',ct:'CPM',per1k:true,group:'awareness'},
+reach:{l:'Reach',ct:'CPM',per1k:true,group:'awareness'},
+frequency:{l:'Frequency',ct:null,per1k:false,group:'awareness'},
+clicks:{l:'Clicks',ct:'CPC',per1k:false,group:'traffic'},
+ctr:{l:'CTR (%)',ct:null,per1k:false,group:'traffic'},
+landingPageViews:{l:'LP Views',ct:'CPLPV',per1k:false,group:'traffic'},
+videoViews:{l:'Video Views',ct:'CPV',per1k:false,group:'traffic'},
+leads:{l:'Leads',ct:'CPL',per1k:false,group:'conversion'},
+downloads:{l:'Downloads',ct:'CPD',per1k:false,group:'conversion'},
+formFills:{l:'Form Fills',ct:'CPFF',per1k:false,group:'conversion'},
+conversions:{l:'Conversions',ct:'CPA',per1k:false,group:'conversion'},
+engagement:{l:'Engagements',ct:'CPE',per1k:false,group:'engagement'},
+};
+function uid(){return Math.random().toString(36).substr(2,9)}
+function fc(v,c){if(!v&&v!==0)return'-';const n=Number(v);if(isNaN(n))return'-';const s={USD:'$',IDR:'Rp ',SGD:'S$',EUR:'\u20AC',GBP:'\u00A3'};const l=c==='IDR'?'id-ID':'en-US';const d=c==='IDR'?0:2;return(s[c]||'')+n.toLocaleString(l,{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fn(v){if(!v&&v!==0)return'-';return Number(v).toLocaleString()}
+// Calculate KPI from budget and rate
+function calcKPI(budget,mk,rate){
+  const r=parseFloat(rate)||0;if(r===0||budget===0)return 0;
+  const info=MET[mk];if(!info||!info.ct)return 0;
+  if(info.per1k)return Math.round((budget/r)*1000);
+  return Math.round(budget/r);
+}
+// Calculate cost from budget and KPI
+function calcCost(budget,mk,kpi){
+  const v=parseFloat(kpi)||0;if(v===0||budget===0)return null;
+  const info=MET[mk];if(!info||!info.ct)return null;
+  if(info.per1k)return{type:info.ct,value:(budget/v)*1000};
+  return{type:info.ct,value:budget/v};
+}
+
+function genTips(phases,budgetNum,currency){
+  const tips=[];if(budgetNum===0)return tips;
+  // Find best/worst CPM
+  let allCosts=[];
+  phases.forEach(ph=>{
+    const pB=budgetNum*((parseFloat(ph.alloc)||0)/100);
+    const tS=ph.channels.reduce((s,c)=>s+(parseFloat(c.split)||0),0);
+    ph.channels.forEach(ch=>{
+      const cB=pB*((parseFloat(ch.split)||0)/(tS||1));
+      const mks=ph.metrics||[];
+      mks.forEach(mk=>{
+        const info=MET[mk];if(!info||!info.ct)return;
+        const rate=parseFloat(ch.rates?.[mk])||0;
+        if(rate>0)allCosts.push({phase:ph.name,channel:ch.name,metric:mk,type:info.ct,rate,budget:cB,kpi:calcKPI(cB,mk,rate)});
+      });
+    });
+  });
+  // CPM comparison
+  const cpms=allCosts.filter(c=>c.type==='CPM');
+  if(cpms.length>=2){
+    cpms.sort((a,b)=>a.rate-b.rate);
+    const best=cpms[0],worst=cpms[cpms.length-1];
+    if(worst.rate>best.rate*2){
+      tips.push({type:'warn',text:`${worst.channel} (${worst.phase}) has a CPM of ${fc(worst.rate,currency)} \u2014 ${(worst.rate/best.rate).toFixed(1)}x higher than ${best.channel} (${fc(best.rate,currency)}). Consider shifting budget to the more efficient channel.`});
+    }
+  }
+  // CPC comparison
+  const cpcs=allCosts.filter(c=>c.type==='CPC');
+  if(cpcs.length>=2){
+    cpcs.sort((a,b)=>a.rate-b.rate);
+    const best=cpcs[0],worst=cpcs[cpcs.length-1];
+    if(worst.rate>best.rate*2){
+      tips.push({type:'warn',text:`${worst.channel} (${worst.phase}) CPC of ${fc(worst.rate,currency)} is ${(worst.rate/best.rate).toFixed(1)}x more expensive than ${best.channel}. Consider reallocating for better click efficiency.`});
+    }
+  }
+  // Total allocation check
+  const totA=phases.reduce((s,p)=>s+(parseFloat(p.alloc)||0),0);
+  if(totA>100)tips.push({type:'warn',text:`Total allocation is ${totA}% \u2014 exceeds 100%. Reduce phase allocations to balance the budget.`});
+  if(totA<100&&totA>0)tips.push({type:'info',text:`${100-totA}% of budget (${fc(budgetNum*(100-totA)/100,currency)}) is unallocated. Assign it to maximize campaign reach.`});
+  // High CPL warning
+  const cpls=allCosts.filter(c=>c.type==='CPL');
+  cpls.forEach(c=>{if(c.rate>100)tips.push({type:'info',text:`${c.channel} (${c.phase}) has a CPL of ${fc(c.rate,currency)}. Consider A/B testing ad creatives or landing pages to reduce lead costs.`});});
+  // Balanced allocation tip
+  if(totA===100&&phases.length>=2)tips.push({type:'good',text:'Budget is fully allocated across all phases. Review the KPI projections below to ensure targets align with campaign goals.'});
+  // Efficiency winners
+  const highKPI=allCosts.filter(c=>c.kpi>0).sort((a,b)=>b.kpi-a.kpi);
+  if(highKPI.length>0){
+    const top=highKPI[0];
+    tips.push({type:'good',text:`Best projected performance: ${top.channel} (${top.phase}) with ${fn(top.kpi)} ${MET[top.metric].l} at ${fc(top.rate,currency)} ${MET[top.metric].ct}.`});
+  }
+  return tips;
+}
+
+function App(){
+  const[tab,setTab]=useState('builder');
+  const[client,setClient]=useState('');
+  const[campaign,setCampaign]=useState('');
+  const[budget,setBudget]=useState('');
+  const[cur,setCur]=useState('USD');
+  const[phases,setPhases]=useState([]);
+  const[exp,setExp]=useState({});
+  const[scenario,setScenario]=useState(0);
+  const[scenarios,setScenarios]=useState([{name:'Base',budgetMod:1}]);
+  const[saves,setSaves]=useState([]);
+  const[showSave,setShowSave]=useState(false);
+  const[saveName,setSaveName]=useState('');
+
+  const bNum=useMemo(()=>parseFloat(budget)||0,[budget]);
+  const totA=useMemo(()=>phases.reduce((s,p)=>s+(parseFloat(p.alloc)||0),0),[phases]);
+
+  // Load saves from localStorage
+  useEffect(()=>{try{const d=localStorage.getItem('cbp_saves');if(d)setSaves(JSON.parse(d));}catch(e){}},[]);
+
+  const loadPreset=useCallback(()=>{
+    const ps=PHASE_PRESETS.map(p=>({id:uid(),name:p.name,objective:p.objective,cc:p.cc,alloc:p.alloc,metrics:p.metrics,
+      channels:[{id:uid(),name:'Meta',split:50,rates:{...p.rates}},{id:uid(),name:'LinkedIn',split:50,rates:{...p.rates}}]}));
+    setPhases(ps);const e={};ps.forEach(p=>e[p.id]=true);setExp(e);
+  },[]);
+
+  const scenBudget=useMemo(()=>bNum*(scenarios[scenario]?.budgetMod||1),[bNum,scenario,scenarios]);
+
+  const summaryRows=useMemo(()=>{
+    const rows=[];
+    phases.forEach(ph=>{
+      const pA=(parseFloat(ph.alloc)||0)/100;const pB=scenBudget*pA;
+      const tS=ph.channels.reduce((s,c)=>s+(parseFloat(c.split)||0),0);
+      ph.channels.forEach(ch=>{
+        const cS=(parseFloat(ch.split)||0)/(tS||1);const cB=pB*cS;const cAlloc=pA*cS*100;
+        let pm='-',pv=0,ct=null,cv=0;
+        const mks=ph.metrics||[];
+        const metricDetails=[];
+        for(const mk of mks){
+          const info=MET[mk];if(!info||!info.ct)continue;
+          const rate=parseFloat(ch.rates?.[mk])||0;
+          if(rate>0){
+            const kpi=calcKPI(cB,mk,rate);
+            metricDetails.push({metric:info.l,kpi,costType:info.ct,rate});
+            if(!ct){pm=info.l;pv=kpi;ct=info.ct;cv=rate;}
+          }
+        }
+        rows.push({phase:ph.name,cc:ph.cc,channel:ch.name,objective:ph.objective,allocPct:cAlloc,budget:cB,pm,pv,ct,cv,metricDetails});
+      });
+    });
+    return{rows};
+  },[phases,scenBudget]);
+
+  const tips=useMemo(()=>genTips(phases,scenBudget,cur),[phases,scenBudget,cur]);
+
+  // CRUD
+  const addPhase=()=>{const n=uid();setPhases(p=>[...p,{id:n,name:'New Phase',objective:'Reach',cc:'cu',alloc:0,metrics:['impressions','reach'],channels:[{id:uid(),name:'Meta',split:100,rates:{}}]}]);setExp(e=>({...e,[n]:true}));};
+  const rmPhase=pid=>setPhases(p=>p.filter(x=>x.id!==pid));
+  const upPhase=(pid,f,v)=>setPhases(p=>p.map(x=>x.id===pid?{...x,[f]:v}:x));
+  const addCh=pid=>setPhases(p=>p.map(x=>x.id===pid?{...x,channels:[...x.channels,{id:uid(),name:'LinkedIn',split:50,rates:{}}]}:x));
+  const rmCh=(pid,cid)=>setPhases(p=>p.map(x=>x.id===pid?{...x,channels:x.channels.filter(c=>c.id!==cid)}:x));
+  const upCh=(pid,cid,f,v)=>setPhases(p=>p.map(x=>x.id===pid?{...x,channels:x.channels.map(c=>c.id===cid?{...c,[f]:v}:c)}:x));
+  const upRate=(pid,cid,mk,v)=>setPhases(p=>p.map(x=>x.id===pid?{...x,channels:x.channels.map(c=>c.id===cid?{...c,rates:{...c.rates,[mk]:v}}:c)}:x));
+  const togMet=(pid,mk)=>setPhases(p=>p.map(x=>{if(x.id!==pid)return x;const c=x.metrics||[];return{...x,metrics:c.includes(mk)?c.filter(m=>m!==mk):[...c,mk]};}));
+  const togExp=pid=>setExp(e=>({...e,[pid]:!e[pid]}));
+
+  // Scenarios
+  const addScenario=()=>{setScenarios(s=>[...s,{name:'Scenario '+(s.length+1),budgetMod:1}]);setScenario(scenarios.length);};
+  const upScen=(i,f,v)=>setScenarios(s=>s.map((x,j)=>j===i?{...x,[f]:v}:x));
+  const rmScen=i=>{if(scenarios.length<=1)return;setScenarios(s=>s.filter((_,j)=>j!==i));if(scenario>=i&&scenario>0)setScenario(scenario-1);};
+
+  // Save/Load
+  const savePlan=()=>{
+    const data={client,campaign,budget,cur,phases,scenarios,savedAt:new Date().toISOString(),name:saveName||('Plan '+(saves.length+1))};
+    const ns=[...saves,data];setSaves(ns);try{localStorage.setItem('cbp_saves',JSON.stringify(ns));}catch(e){}
+    setSaveName('');setShowSave(false);
+  };
+  const loadPlan=(i)=>{
+    const d=saves[i];if(!d)return;
+    setClient(d.client||'');setCampaign(d.campaign||'');setBudget(d.budget||'');setCur(d.cur||'USD');
+    setPhases(d.phases||[]);setScenarios(d.scenarios||[{name:'Base',budgetMod:1}]);setScenario(0);
+    const e={};(d.phases||[]).forEach(p=>e[p.id]=true);setExp(e);
+  };
+  const rmSave=(i)=>{const ns=saves.filter((_,j)=>j!==i);setSaves(ns);try{localStorage.setItem('cbp_saves',JSON.stringify(ns));}catch(e){}};
+
+  const exportCSV=()=>{
+    const h=['Funnel','Channel','Objective','Alloc%','Budget','KPI Metric','KPI Target','Cost Type','Rate'];
+    const rows=[h.join(',')];
+    summaryRows.rows.forEach(r=>rows.push([r.phase,r.channel,r.objective,r.allocPct.toFixed(1)+'%',r.budget.toFixed(2),r.pm,r.pv||'',r.ct||'',r.cv?r.cv.toFixed(4):''].join(',')));
+    const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(client||'campaign')+'-budget.csv';a.click();
+  };
+
+  const totCh=phases.reduce((s,p)=>s+p.channels.length,0);
+  const cMap={aw:'var(--blue)',re:'var(--green)',co:'var(--yellow)',cu:'var(--g500)'};
+  const cHex={aw:'#3b82f6',re:'#10b981',co:'#f59e0b',cu:'#6b7280'};
+  const bMap={aw:'badge-aw',re:'badge-re',co:'badge-co',cu:'badge-cu'};
+
+  return React.createElement('div',null,
+    // Header
+    React.createElement('div',{className:'hdr'},
+      React.createElement('div',null,React.createElement('h1',null,'\u26A1 Campaign Budget Planner'),React.createElement('p',null,'Rate-based planning with auto-calculated KPIs')),
+      React.createElement('div',{className:'hdr-actions'},
+        phases.length===0&&React.createElement('button',{className:'btn btn-w',onClick:loadPreset},'Load Template'),
+        React.createElement('button',{className:'btn btn-w',onClick:()=>setShowSave(true)},'Save'),
+        React.createElement('button',{className:'btn btn-w',onClick:exportCSV},'Export CSV')
+      )
+    ),
+    React.createElement('div',{className:'wrap'},
+      // Tabs
+      React.createElement('div',{className:'tabs'},
+        ['builder','summary','scenarios','saved'].map(t=>React.createElement('div',{key:t,className:'tab'+(tab===t?' on':''),onClick:()=>setTab(t)},
+          t==='builder'?'Builder':t==='summary'?'Summary & Charts':t==='scenarios'?'Scenarios':'Saved Plans'))
+      ),
+      // Stats
+      React.createElement('div',{className:'stats'},
+        React.createElement('div',{className:'st'},React.createElement('div',{className:'st-l'},'Budget'+(scenario>0?' ('+scenarios[scenario].name+')':'')),React.createElement('div',{className:'st-v'},scenBudget>0?fc(scenBudget,cur):'-'),React.createElement('div',{className:'st-s'},cur)),
+        React.createElement('div',{className:'st'},React.createElement('div',{className:'st-l'},'Phases'),React.createElement('div',{className:'st-v'},phases.length),React.createElement('div',{className:'st-s'},'funnel stages')),
+        React.createElement('div',{className:'st'},React.createElement('div',{className:'st-l'},'Channels'),React.createElement('div',{className:'st-v'},totCh),React.createElement('div',{className:'st-s'},'placements')),
+        React.createElement('div',{className:'st'},React.createElement('div',{className:'st-l'},'Allocation'),React.createElement('div',{className:'st-v',style:{color:totA===100?'var(--green)':totA>100?'var(--red)':'var(--yellow)'}},totA+'%'),React.createElement('div',{className:'st-s'},totA===100?'Balanced':totA>100?'Over-allocated':'Under-allocated'))
+      ),
+      phases.length>0&&React.createElement('div',{className:'alloc-bar'},phases.map(p=>React.createElement('div',{key:p.id,className:'alloc-seg',style:{width:(p.alloc||0)+'%',background:cMap[p.cc]},title:p.name+': '+p.alloc+'%'}))),
+
+      // === BUILDER ===
+      tab==='builder'&&React.createElement('div',null,
+        React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Campaign Details')),
+          React.createElement('div',{className:'card-b'},
+            React.createElement('div',{className:'row r3'},
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'Client'),React.createElement('input',{placeholder:'e.g. Mayo Clinic',value:client,onChange:e=>setClient(e.target.value)})),
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'Campaign'),React.createElement('input',{placeholder:'e.g. Digital Strategy 2024',value:campaign,onChange:e=>setCampaign(e.target.value)})),
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'Currency'),React.createElement('select',{value:cur,onChange:e=>setCur(e.target.value)},CUR_OPTS.map(c=>React.createElement('option',{key:c},c))))
+            ),
+            React.createElement('div',{className:'row r2'},
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'Total Budget'),React.createElement('input',{type:'number',placeholder:'207900',value:budget,onChange:e=>setBudget(e.target.value)})),
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'\u00A0'),React.createElement('div',{style:{padding:'8px 0',fontSize:12,color:'var(--g500)'}},bNum>0?fc(bNum,cur):'Enter budget'))
+            )
+          )
+        ),
+        // Optimization Tips
+        tips.length>0&&React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'\u{1F4A1} Optimization Tips')),
+          React.createElement('div',{className:'card-b'},
+            tips.map((t,i)=>React.createElement('div',{key:i,className:'tip tip-'+t.type},
+              React.createElement('span',{className:'tip-icon'},t.type==='good'?'\u2705':t.type==='warn'?'\u26A0\uFE0F':'\u{1F4CA}'),
+              React.createElement('span',null,t.text)
+            ))
+          )
+        ),
+        // Phases
+        React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Funnel Phases & Channels'),
+            React.createElement('div',{className:'ifx'},phases.length===0&&React.createElement('button',{className:'btn btn-o btn-sm',onClick:loadPreset},'Load Template'),React.createElement('button',{className:'btn btn-p btn-sm',onClick:addPhase},'+ Add Phase'))
+          ),
+          React.createElement('div',{className:'card-b'},
+            phases.length===0&&React.createElement('div',{className:'empty'},'Click "Load Template" for a standard funnel or "Add Phase" to start fresh.'),
+            phases.map(ph=>{
+              const pB=scenBudget*((parseFloat(ph.alloc)||0)/100);
+              const isE=exp[ph.id];const mks=ph.metrics||[];
+              return React.createElement('div',{key:ph.id,className:'phase-s'},
+                React.createElement('div',{className:'phase-hd '+ph.cc,onClick:()=>togExp(ph.id)},
+                  React.createElement('div',{className:'ifx'},React.createElement('span',{style:{fontSize:12}},isE?'\u25BC':'\u25B6'),React.createElement('span',{className:'ph-t'},ph.name)),
+                  React.createElement('div',{className:'ph-m'},
+                    React.createElement('strong',null,ph.alloc+'%'),
+                    React.createElement('span',null,fc(pB,cur)),
+                    React.createElement('span',null,ph.channels.length+' ch'),
+                    React.createElement('button',{className:'del',onClick:e=>{e.stopPropagation();rmPhase(ph.id)}},'\u2715')
+                  )
+                ),
+                isE&&React.createElement('div',{className:'phase-bd'},
+                  React.createElement('div',{className:'row r3',style:{marginBottom:10}},
+                    React.createElement('div',{className:'fg'},React.createElement('label',null,'Phase Name'),React.createElement('input',{value:ph.name,onChange:e=>upPhase(ph.id,'name',e.target.value)})),
+                    React.createElement('div',{className:'fg'},React.createElement('label',null,'Objective'),React.createElement('select',{value:ph.objective,onChange:e=>upPhase(ph.id,'objective',e.target.value)},OBJ_OPTS.map(o=>React.createElement('option',{key:o},o)))),
+                    React.createElement('div',{className:'fg'},React.createElement('label',null,'Allocation (%)'),React.createElement('input',{type:'number',min:0,max:100,value:ph.alloc,onChange:e=>upPhase(ph.id,'alloc',parseFloat(e.target.value)||0)}))
+                  ),
+                  React.createElement('div',{style:{marginBottom:12}},
+                    React.createElement('label',{style:{fontSize:10,fontWeight:700,color:'var(--g500)',textTransform:'uppercase',letterSpacing:.5,display:'block',marginBottom:5}},'KPI Metrics'),
+                    React.createElement('div',{style:{display:'flex',flexWrap:'wrap',gap:4}},
+                      Object.entries(MET).map(([mk,info])=>{
+                        const sel=mks.includes(mk);
+                        return React.createElement('button',{key:mk,className:'btn btn-sm',style:{background:sel?'var(--blue)':'var(--g100)',color:sel?'#fff':'var(--g600)',border:'none',fontSize:10},onClick:()=>togMet(ph.id,mk)},
+                          info.l,info.ct&&React.createElement('span',{style:{opacity:.7,marginLeft:2,fontSize:8}},'('+info.ct+')'));
+                      })
+                    )
+                  ),
+                  ph.channels.map(ch=>{
+                    const tS=ph.channels.reduce((s,c)=>s+(parseFloat(c.split)||0),0);
+                    const cB=pB*((parseFloat(ch.split)||0)/(tS||1));
+                    return React.createElement('div',{key:ch.id,className:'ch-box'},
+                      React.createElement('div',{className:'ch-top'},
+                        React.createElement('div',{className:'fg',style:{flex:1,minWidth:130}},React.createElement('label',null,'Channel'),React.createElement('select',{value:ch.name,onChange:e=>upCh(ph.id,ch.id,'name',e.target.value)},CH_OPTS.map(o=>React.createElement('option',{key:o},o)))),
+                        React.createElement('div',{className:'fg',style:{width:80}},React.createElement('label',null,'Split (%)'),React.createElement('input',{type:'number',min:0,value:ch.split,onChange:e=>upCh(ph.id,ch.id,'split',e.target.value)})),
+                        React.createElement('div',{style:{padding:'8px 0',fontSize:13,fontWeight:700,color:'var(--g700)',minWidth:100}},fc(cB,cur)),
+                        ph.channels.length>1&&React.createElement('button',{className:'del',onClick:()=>rmCh(ph.id,ch.id)},'\u2715')
+                      ),
+                      mks.length>0&&React.createElement('div',{className:'mg'},
+                        mks.map(mk=>{
+                          const info=MET[mk];const rate=ch.rates?.[mk]||'';
+                          const kpi=info.ct?calcKPI(cB,mk,rate):0;
+                          return React.createElement('div',{key:mk,className:'mi'},
+                            React.createElement('label',null,info.ct?info.ct+' Rate':'Value'),
+                            React.createElement('input',{type:'number',step:'0.01',placeholder:info.ct?'e.g. '+(info.per1k?'5.00':'0.50'):'e.g. 3.2',value:rate,onChange:e=>upRate(ph.id,ch.id,mk,e.target.value)}),
+                            info.ct&&kpi>0&&React.createElement('div',{style:{marginTop:3}},
+                              React.createElement('span',{className:'kpi-val'},info.l+': '+fn(kpi)),
+                              React.createElement('span',{className:'cost-tag '+(info.ct==='CPM'?'cpm':info.ct==='CPC'?'cpc':'cpl'),style:{marginLeft:4}},info.ct+': '+fc(parseFloat(rate),cur))
+                            ),
+                            !info.ct&&React.createElement('div',{style:{marginTop:3,fontSize:10,color:'var(--g400)'}},info.l+(rate?' = '+rate:''))
+                          );
+                        })
+                      )
+                    );
+                  }),
+                  React.createElement('button',{className:'btn btn-o btn-sm',onClick:()=>addCh(ph.id),style:{marginTop:4}},'+ Add Channel')
+                )
+              );
+            })
+          )
+        )
+      ),
+
+      // === SUMMARY ===
+      tab==='summary'&&React.createElement('div',null,
+        React.createElement('div',{className:'sg'},
+          React.createElement('div',{className:'card'},
+            React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Budget Scorecard')),
+            React.createElement('div',{className:'card-b',style:{padding:0}},
+              React.createElement('div',{className:'sc'},
+                React.createElement('div',{className:'sc-l'},'Total Campaign Budget'),
+                React.createElement('div',{className:'sc-v'},scenBudget>0?fc(scenBudget,cur):'-'),
+                React.createElement('div',{className:'sc-s'},(client||'Client')+' | '+(campaign||'Campaign')+' | '+cur)
+              ),
+              React.createElement('div',{style:{padding:12,display:'flex',gap:6}},
+                phases.map(p=>{const pB=scenBudget*((parseFloat(p.alloc)||0)/100);return React.createElement('div',{key:p.id,style:{flex:1,textAlign:'center',padding:'8px 4px',borderRadius:7,background:'var(--g50)',border:'1px solid var(--g200)'}},
+                  React.createElement('div',{style:{width:8,height:8,borderRadius:'50%',background:cMap[p.cc],display:'inline-block',marginRight:3}}),
+                  React.createElement('span',{style:{fontSize:10,fontWeight:700}},p.name),
+                  React.createElement('div',{style:{fontSize:14,fontWeight:800,marginTop:3}},fc(pB,cur)),
+                  React.createElement('div',{style:{fontSize:9,color:'var(--g400)'}},p.alloc+'%')
+                );})
+              )
+            )
+          ),
+          React.createElement('div',{className:'card'},
+            React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Campaign Funnel')),
+            React.createElement('div',{className:'card-b'},
+              phases.length===0?React.createElement('div',{className:'empty'},'Add phases in Builder.'):
+              React.createElement('div',{className:'fn-c'},
+                phases.map((p,i)=>{
+                  const maxW=100,minW=40;const ratio=phases.length>1?1-(i/(phases.length-1))*((maxW-minW)/maxW):1;const w=maxW*ratio;
+                  const pB=scenBudget*((parseFloat(p.alloc)||0)/100);
+                  return React.createElement('div',{key:p.id,className:'fn-s',style:{width:w+'%',background:cHex[p.cc]||'#6b7280'}},
+                    React.createElement('div',null,p.name.toUpperCase()+' ('+p.alloc+'%)',React.createElement('div',{className:'fn-d'},p.objective+' | '+fc(pB,cur)))
+                  );
+                })
+              )
+            )
+          )
+        ),
+        // Tips
+        tips.length>0&&React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'\u{1F4A1} Optimization Tips')),
+          React.createElement('div',{className:'card-b'},tips.map((t,i)=>React.createElement('div',{key:i,className:'tip tip-'+t.type},React.createElement('span',{className:'tip-icon'},t.type==='good'?'\u2705':t.type==='warn'?'\u26A0\uFE0F':'\u{1F4CA}'),React.createElement('span',null,t.text))))
+        ),
+        // Table
+        React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Budget Allocation Detail'),React.createElement('button',{className:'btn btn-o btn-sm',onClick:exportCSV},'CSV')),
+          React.createElement('div',{className:'card-b',style:{overflowX:'auto'}},
+            summaryRows.rows.length===0?React.createElement('div',{className:'empty'},'Add phases & channels in Builder.'):
+            React.createElement('table',{className:'stb'},
+              React.createElement('thead',null,React.createElement('tr',null,['Funnel','Channel','Objective','Alloc %','Budget','KPI Metric','Projected KPI','Cost Type','Rate'].map(h=>React.createElement('th',{key:h},h)))),
+              React.createElement('tbody',null,
+                summaryRows.rows.map((r,i)=>React.createElement('tr',{key:i},
+                  React.createElement('td',null,React.createElement('span',{className:'badge '+bMap[r.cc]},r.phase)),
+                  React.createElement('td',null,r.channel),React.createElement('td',null,r.objective),
+                  React.createElement('td',null,r.allocPct.toFixed(1)+'%'),
+                  React.createElement('td',{style:{fontWeight:700}},fc(r.budget,cur)),
+                  React.createElement('td',null,r.pm),
+                  React.createElement('td',null,r.pv?React.createElement('span',{className:'kpi-val'},fn(r.pv)):'-'),
+                  React.createElement('td',null,r.ct?React.createElement('span',{className:'cost-tag '+(r.ct==='CPM'?'cpm':r.ct==='CPC'?'cpc':'cpl')},r.ct):'-'),
+                  React.createElement('td',{style:{fontWeight:600}},r.cv?fc(r.cv,cur):'-')
+                )),
+                React.createElement('tr',{className:'tot'},
+                  React.createElement('td',null,'TOTAL'),React.createElement('td'),React.createElement('td'),
+                  React.createElement('td',null,totA+'%'),React.createElement('td',null,fc(scenBudget,cur)),
+                  React.createElement('td'),React.createElement('td'),React.createElement('td'),React.createElement('td')
+                )
+              )
+            ),
+            // Expanded metrics per channel
+            summaryRows.rows.length>0&&React.createElement('div',{style:{marginTop:14}},
+              React.createElement('h3',{style:{fontSize:13,fontWeight:600,marginBottom:8,color:'var(--g700)'}},'All Projected KPIs'),
+              summaryRows.rows.map((r,i)=>r.metricDetails.length>0&&React.createElement('div',{key:i,style:{marginBottom:6,padding:'8px 10px',background:'var(--g50)',borderRadius:6,border:'1px solid var(--g200)'}},
+                React.createElement('div',{style:{fontSize:11,fontWeight:700,marginBottom:4}},React.createElement('span',{className:'badge '+bMap[r.cc],style:{marginRight:4}},r.phase),r.channel+' \u2014 '+fc(r.budget,cur)),
+                React.createElement('div',{style:{display:'flex',flexWrap:'wrap',gap:8}},
+                  r.metricDetails.map((m,j)=>React.createElement('div',{key:j,style:{display:'flex',alignItems:'center',gap:4}},
+                    React.createElement('span',{className:'kpi-val'},m.metric+': '+fn(m.kpi)),
+                    React.createElement('span',{className:'cost-tag '+(m.costType==='CPM'?'cpm':m.costType==='CPC'?'cpc':'cpl')},m.costType+': '+fc(m.rate,cur))
+                  ))
+                )
+              ))
+            ),
+            React.createElement('div',{style:{marginTop:10,fontSize:10,color:'var(--g400)',fontStyle:'italic'}},'* Projections based on entered rates. Actual results may vary.')
+          )
+        )
+      ),
+
+      // === SCENARIOS ===
+      tab==='scenarios'&&React.createElement('div',null,
+        React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Budget Scenarios'),React.createElement('button',{className:'btn btn-p btn-sm',onClick:addScenario},'+ Add Scenario')),
+          React.createElement('div',{className:'card-b'},
+            React.createElement('div',{className:'scen-tabs'},scenarios.map((s,i)=>React.createElement('div',{key:i,className:'scen-tab'+(scenario===i?' on':''),onClick:()=>setScenario(i)},s.name))),
+            React.createElement('div',{className:'row r3'},
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'Scenario Name'),React.createElement('input',{value:scenarios[scenario]?.name||'',onChange:e=>upScen(scenario,'name',e.target.value)})),
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'Budget Multiplier'),React.createElement('input',{type:'number',step:'0.1',min:0.1,value:scenarios[scenario]?.budgetMod||1,onChange:e=>upScen(scenario,'budgetMod',parseFloat(e.target.value)||1)})),
+              React.createElement('div',{className:'fg'},React.createElement('label',null,'Effective Budget'),React.createElement('div',{style:{padding:'8px 0',fontSize:14,fontWeight:700,color:'var(--g700)'}},fc(bNum*(scenarios[scenario]?.budgetMod||1),cur)))
+            ),
+            scenarios.length>1&&scenario>0&&React.createElement('button',{className:'btn btn-d btn-sm',onClick:()=>rmScen(scenario),style:{marginTop:8}},'Remove This Scenario')
+          )
+        ),
+        // Comparison table
+        scenarios.length>1&&React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Scenario Comparison')),
+          React.createElement('div',{className:'card-b',style:{overflowX:'auto'}},
+            React.createElement('table',{className:'stb'},
+              React.createElement('thead',null,React.createElement('tr',null,
+                React.createElement('th',null,''),
+                scenarios.map((s,i)=>React.createElement('th',{key:i,style:{textAlign:'center'}},s.name))
+              )),
+              React.createElement('tbody',null,
+                React.createElement('tr',null,
+                  React.createElement('td',{style:{fontWeight:700}},'Total Budget'),
+                  scenarios.map((s,i)=>React.createElement('td',{key:i,style:{textAlign:'center',fontWeight:700}},fc(bNum*(s.budgetMod||1),cur)))
+                ),
+                React.createElement('tr',null,
+                  React.createElement('td',{style:{fontWeight:700}},'Multiplier'),
+                  scenarios.map((s,i)=>React.createElement('td',{key:i,style:{textAlign:'center'}},s.budgetMod+'x'))
+                ),
+                phases.map(ph=>React.createElement('tr',{key:ph.id},
+                  React.createElement('td',null,React.createElement('span',{className:'badge '+bMap[ph.cc]},ph.name)),
+                  scenarios.map((s,i)=>{const sb=bNum*(s.budgetMod||1)*((parseFloat(ph.alloc)||0)/100);return React.createElement('td',{key:i,style:{textAlign:'center'}},fc(sb,cur));})
+                )),
+                // Projected KPIs per scenario
+                phases.map(ph=>{
+                  const mks=(ph.metrics||[]).filter(mk=>MET[mk]?.ct);
+                  if(mks.length===0)return null;
+                  return mks.map(mk=>{
+                    const info=MET[mk];
+                    return React.createElement('tr',{key:ph.id+mk},
+                      React.createElement('td',{style:{paddingLeft:20,fontSize:10,color:'var(--g500)'}},ph.name+' \u2192 '+info.l),
+                      scenarios.map((s,i)=>{
+                        const sb=bNum*(s.budgetMod||1)*((parseFloat(ph.alloc)||0)/100);
+                        const tS=ph.channels.reduce((sum,c)=>sum+(parseFloat(c.split)||0),0);
+                        let totKPI=0;
+                        ph.channels.forEach(ch=>{const cB=sb*((parseFloat(ch.split)||0)/(tS||1));const rate=parseFloat(ch.rates?.[mk])||0;totKPI+=calcKPI(cB,mk,rate);});
+                        return React.createElement('td',{key:i,style:{textAlign:'center'}},React.createElement('span',{className:'kpi-val'},fn(totKPI)));
+                      })
+                    );
+                  });
+                })
+              )
+            )
+          )
+        )
+      ),
+
+      // === SAVED PLANS ===
+      tab==='saved'&&React.createElement('div',null,
+        React.createElement('div',{className:'card'},
+          React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Saved Plans'),React.createElement('button',{className:'btn btn-p btn-sm',onClick:()=>setShowSave(true)},'Save Current')),
+          React.createElement('div',{className:'card-b'},
+            saves.length===0?React.createElement('div',{className:'empty'},'No saved plans yet. Build a campaign and click "Save Current".'):
+            React.createElement('div',{className:'save-list'},
+              saves.map((s,i)=>React.createElement('div',{key:i,className:'save-item'},
+                React.createElement('div',null,
+                  React.createElement('div',{className:'save-name'},s.name),
+                  React.createElement('div',{className:'save-date'},(s.client||'Client')+' \u2014 '+new Date(s.savedAt).toLocaleDateString())
+                ),
+                React.createElement('div',{className:'ifx'},
+                  React.createElement('button',{className:'btn btn-p btn-sm',onClick:()=>{loadPlan(i);setTab('builder')}},'Load'),
+                  React.createElement('button',{className:'btn btn-d btn-sm',onClick:()=>rmSave(i)},'Delete')
+                )
+              ))
+            )
+          )
+        )
+      ),
+
+      // Save Modal
+      showSave&&React.createElement('div',{style:{position:'fixed',top:0,left:0,right:0,bottom:0,background:'rgba(0,0,0,.4)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000},onClick:()=>setShowSave(false)},
+        React.createElement('div',{style:{background:'#fff',borderRadius:12,padding:24,width:360,maxWidth:'90vw'},onClick:e=>e.stopPropagation()},
+          React.createElement('h3',{style:{fontSize:15,fontWeight:700,marginBottom:12}},'Save Campaign Plan'),
+          React.createElement('div',{className:'fg',style:{marginBottom:14}},
+            React.createElement('label',null,'Plan Name'),
+            React.createElement('input',{placeholder:'e.g. Mayo Clinic v1',value:saveName,onChange:e=>setSaveName(e.target.value),autoFocus:true})
+          ),
+          React.createElement('div',{className:'ifx',style:{justifyContent:'flex-end',gap:8}},
+            React.createElement('button',{className:'btn btn-o',onClick:()=>setShowSave(false)},'Cancel'),
+            React.createElement('button',{className:'btn btn-p',onClick:savePlan},'Save')
+          )
+        )
+      )
+    )
+  );
+}
+
+ReactDOM.render(React.createElement(App),document.getElementById('root'));
+</script>
+</body>
+</html>
