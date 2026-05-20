@@ -7,35 +7,23 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --red: #E5002B;
-    --red-light: #FFF0F3;
-    --gray-100: #F8F8F8;
-    --gray-200: #EEEEEE;
-    --gray-400: #AAAAAA;
-    --gray-600: #666666;
-    --gray-800: #222222;
+    --red: #E5002B; --red-light: #FFF0F3;
+    --gray-100: #F8F8F8; --gray-200: #EEEEEE;
+    --gray-400: #AAAAAA; --gray-600: #666666; --gray-800: #222222;
     --font: 'Inter', system-ui, -apple-system, sans-serif;
   }
   body { font-family: var(--font); background: #fff; color: var(--gray-800); min-height: 100vh; }
 
   .header {
-    background: #fff;
-    border-bottom: 3px solid var(--red);
-    padding: 24px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: #fff; border-bottom: 3px solid var(--red);
+    padding: 22px 40px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
   }
   .header-left { display: flex; align-items: center; gap: 14px; }
   .logo-mark {
-    width: 36px; height: 36px;
-    background: var(--red);
-    border-radius: 8px;
+    width: 36px; height: 36px; background: var(--red); border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    color: #fff; font-weight: 900; font-size: 15px; letter-spacing: -1px;
+    color: #fff; font-weight: 900; font-size: 14px; letter-spacing: -0.5px;
   }
   .header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
   .header h1 span { color: var(--red); }
@@ -44,18 +32,15 @@
   .header-right strong { color: var(--gray-800); display: block; font-size: 13px; }
 
   .stats-bar {
-    background: var(--gray-100);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 14px 40px;
-    display: flex; gap: 32px; flex-wrap: wrap;
+    background: var(--gray-100); border-bottom: 1px solid var(--gray-200);
+    padding: 14px 40px; display: flex; gap: 32px; flex-wrap: wrap;
   }
   .stat { text-align: center; }
   .stat-num { font-size: 22px; font-weight: 800; color: var(--red); }
   .stat-label { font-size: 11px; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
 
   .controls {
-    padding: 20px 40px;
-    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    padding: 18px 40px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
     border-bottom: 1px solid var(--gray-200); background: #fff;
   }
   .search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 340px; }
@@ -78,17 +63,14 @@
   .count-label { margin-left: auto; font-size: 12px; color: var(--gray-400); white-space: nowrap; }
 
   .grid-wrap { padding: 28px 40px; }
+  .section { margin-bottom: 8px; }
   .section-label {
     font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
     color: var(--gray-400); font-weight: 700; margin-bottom: 14px; margin-top: 28px;
     padding-bottom: 6px; border-bottom: 1px solid var(--gray-200);
   }
-  .section-label:first-child { margin-top: 0; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-    gap: 16px;
-  }
+  .section:first-child .section-label { margin-top: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
 
   .card {
     border: 1.5px solid var(--gray-200); border-radius: 12px; padding: 18px;
@@ -103,10 +85,10 @@
     font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px;
     text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
   }
-  .badge-app    { background: #E8F5FF; color: #0066CC; }
-  .badge-html   { background: #FFF3E0; color: #E65100; }
+  .badge-app      { background: #E8F5FF; color: #0066CC; }
+  .badge-html     { background: #FFF3E0; color: #E65100; }
   .badge-campaign { background: var(--red-light); color: var(--red); }
-  .badge-tool   { background: #F3FFE8; color: #2E7D32; }
+  .badge-tool     { background: #F3FFE8; color: #2E7D32; }
 
   .card-name { font-size: 14px; font-weight: 700; line-height: 1.3; }
   .card-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; flex: 1; }
@@ -118,7 +100,7 @@
   }
   .card-link:hover { background: var(--red); color: #fff; }
 
-  .sub-links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: -2px; }
+  .sub-links { display: flex; gap: 6px; flex-wrap: wrap; }
   .sub-link {
     font-size: 10px; font-weight: 600; color: var(--gray-600); text-decoration: none;
     padding: 3px 8px; border: 1px solid var(--gray-200); border-radius: 4px; transition: all 0.15s;
@@ -129,8 +111,7 @@
   .empty-state p { font-size: 14px; margin-top: 12px; }
 
   .footer {
-    margin-top: 40px; padding: 20px 40px;
-    border-top: 1px solid var(--gray-200);
+    margin-top: 40px; padding: 20px 40px; border-top: 1px solid var(--gray-200);
     display: flex; justify-content: space-between; align-items: center;
   }
   .footer-left { font-size: 12px; color: var(--gray-400); }
@@ -155,16 +136,16 @@
   </div>
   <div class="header-right">
     <strong>account@ideoworks.co.id</strong>
-    Updated: May 20, 2026
+    <span id="last-updated">Loading…</span>
   </div>
 </header>
 
 <div class="stats-bar">
-  <div class="stat"><div class="stat-num" id="total-count">0</div><div class="stat-label">Total Projects</div></div>
-  <div class="stat"><div class="stat-num" id="app-count">0</div><div class="stat-label">Apps</div></div>
-  <div class="stat"><div class="stat-num" id="html-count">0</div><div class="stat-label">HTML Tools</div></div>
-  <div class="stat"><div class="stat-num" id="campaign-count">0</div><div class="stat-label">Campaign</div></div>
-  <div class="stat"><div class="stat-num" id="tool-count">0</div><div class="stat-label">Tools</div></div>
+  <div class="stat"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total</div></div>
+  <div class="stat"><div class="stat-num" id="stat-app">—</div><div class="stat-label">Apps</div></div>
+  <div class="stat"><div class="stat-num" id="stat-html">—</div><div class="stat-label">HTML</div></div>
+  <div class="stat"><div class="stat-num" id="stat-campaign">—</div><div class="stat-label">Campaign</div></div>
+  <div class="stat"><div class="stat-num" id="stat-tool">—</div><div class="stat-label">Tools</div></div>
 </div>
 
 <div class="controls">
@@ -175,356 +156,143 @@
   <div class="filters">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="app">Apps</button>
-    <button class="filter-btn" data-filter="html">HTML Tools</button>
+    <button class="filter-btn" data-filter="html">HTML</button>
     <button class="filter-btn" data-filter="campaign">Campaign</button>
-    <button class="filter-btn" data-filter="tool">Tools & Guides</button>
+    <button class="filter-btn" data-filter="tool">Tools</button>
   </div>
   <div class="count-label" id="count-label"></div>
 </div>
 
-<div class="grid-wrap">
+<div class="grid-wrap" id="grid-wrap"></div>
 
-  <!-- APPS -->
-  <div class="section-label" id="lbl-apps">Apps & Builders</div>
-  <div class="grid" id="grid-apps">
-
-    <div class="card" data-type="app" data-tags="gamify landing score voucher attribution idw lead routing">
-      <div class="card-top"><span class="card-icon">🎯</span><span class="badge badge-app">App</span></div>
-      <div class="card-name">GamifyLP</div>
-      <div class="card-desc">Mid-funnel gamified landing builder. Score-based lead routing, voucher/trial offers, IDW attribution. 90+ backlog items across 15 dimensions.</div>
-      <div class="card-footer">
-        <span class="card-date">May 6, 2026</span>
-        <a href="/gamified-landing-builder/" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="app" data-tags="proposal generator casa framework communicate amplify socialize analyze">
-      <div class="card-top"><span class="card-icon">📝</span><span class="badge badge-app">App</span></div>
-      <div class="card-name">Proposal Generator</div>
-      <div class="card-desc">CASA-framework proposal builder for client pitches — Communicate, Amplify, Socialize, Analyze. Structured output for Ideoworks decks.</div>
-      <div class="card-footer">
-        <span class="card-date">Apr 30, 2026</span>
-        <a href="/ideoworks-proposal-generator/" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="app" data-tags="report generator wink client advertising performance">
-      <div class="card-top"><span class="card-icon">📋</span><span class="badge badge-app">App</span></div>
-      <div class="card-name">Report Generator</div>
-      <div class="card-desc">Client advertising performance report builder. Wink Dec 2025 format as baseline. Standard Ideoworks monthly reporting tool.</div>
-      <div class="card-footer">
-        <span class="card-date">May 4, 2026</span>
-        <a href="/report-generator.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="app" data-tags="campaign budget planner meta ads">
-      <div class="card-top"><span class="card-icon">💰</span><span class="badge badge-app">App</span></div>
-      <div class="card-name">Campaign Budget Planner</div>
-      <div class="card-desc">HTML tool for Meta Ads campaign budget planning. Built for Ideoworks client planning and media allocation sessions.</div>
-      <div class="card-footer">
-        <span class="card-date">Apr 1, 2026</span>
-        <a href="/campaign-budget-planner.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- HTML TOOLS -->
-  <div class="section-label" id="lbl-html">HTML Deliverables</div>
-  <div class="grid" id="grid-html">
-
-    <div class="card" data-type="html" data-tags="authority strategy content thought leadership positioning">
-      <div class="card-top"><span class="card-icon">🏆</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">Authority Strategy</div>
-      <div class="card-desc">Ideoworks brand authority and thought leadership positioning framework. Content strategy and platform presence plan.</div>
-      <div class="card-footer">
-        <span class="card-date">May 20, 2026</span>
-        <a href="/ideoworks-authority-strategy/" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="html" data-tags="growth ai onepager arianto ceo retention value add new client">
-      <div class="card-top"><span class="card-icon">🤖</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">Growth Team AI One-Pager</div>
-      <div class="card-desc">Value-add/retention/new-client one-pager for CEO Arianto Bigman. AI tool statuses and framing for Growth Division pitch.</div>
-      <div class="card-footer">
-        <span class="card-date">May 7, 2026</span>
-        <a href="/growth_ai_onepager.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="html" data-tags="growth team shareholder deck bcg presentation html">
-      <div class="card-top"><span class="card-icon">🖥️</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">Growth Team Shareholder Deck</div>
-      <div class="card-desc">BCG-style shareholder presentation for Ideoworks Growth Division. HTML version of the stakeholder-facing deck.</div>
-      <div class="card-footer">
-        <span class="card-date">May 5, 2026</span>
-        <a href="/growth_team_shareholder.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="html" data-tags="idw action plan rationalization strategic">
-      <div class="card-top"><span class="card-icon">⚡</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">IDW Action Plan Rationalization</div>
-      <div class="card-desc">Ideoworks strategic action plan rationalization document. Resource allocation and initiative prioritization framework.</div>
-      <div class="card-footer">
-        <span class="card-date">May 12, 2026</span>
-        <a href="/idw-action-plan-rationalization.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="html" data-tags="social strategy platform instagram tiktok linkedin threads">
-      <div class="card-top"><span class="card-icon">📱</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">Social Strategy 2026</div>
-      <div class="card-desc">Platform-specific social media strategy for Ideoworks brand channels. Content calendar, tone, and channel execution plan.</div>
-      <div class="card-footer">
-        <span class="card-date">May 11, 2026</span>
-        <a href="/ideoworks-social-strategy/" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="html" data-tags="global landing mockup multi-market id ko ms th">
-      <div class="card-top"><span class="card-icon">🌐</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">Global Landing Mockup</div>
-      <div class="card-desc">Ideoworks global landing page mockup. Multi-market prototype for ID/KO/MS/TH markets. Campaign funnel entry point design.</div>
-      <div class="card-footer">
-        <span class="card-date">May 11, 2026</span>
-        <a href="/global-campaign/ideoworks-global-landing-mockup.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="html" data-tags="campaign system blueprint architecture meta crm">
-      <div class="card-top"><span class="card-icon">🗺️</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">Campaign System Blueprint</div>
-      <div class="card-desc">Global campaign system architecture. Meta Ads + CRM integration blueprint for Ideoworks multi-market campaigns.</div>
-      <div class="card-footer">
-        <span class="card-date">May 11, 2026</span>
-        <a href="/global-campaign/campaign-system-blueprint.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="html" data-tags="meta crm playbook leads retargeting global">
-      <div class="card-top"><span class="card-icon">📘</span><span class="badge badge-html">HTML</span></div>
-      <div class="card-name">Meta CRM Playbook</div>
-      <div class="card-desc">Meta Ads + CRM integration playbook. Lead flow, retargeting logic, and pipeline management for Ideoworks global campaign.</div>
-      <div class="card-footer">
-        <span class="card-date">May 11, 2026</span>
-        <a href="/global-campaign/meta-crm-playbook.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- CAMPAIGN -->
-  <div class="section-label" id="lbl-campaign">Meta Ads Creatives</div>
-  <div class="grid" id="grid-campaign">
-
-    <div class="card" data-type="campaign" data-tags="meta ads indonesia id reel carousel static">
-      <div class="card-top"><span class="card-icon">🇮🇩</span><span class="badge badge-campaign">Campaign</span></div>
-      <div class="card-name">Meta Ads — Indonesia (ID)</div>
-      <div class="card-desc">Full creative set for Indonesia market: reel A/B/C, carousel A, static awareness + retargeting.</div>
-      <div class="card-footer">
-        <span class="card-date">May 4, 2026</span>
-        <a href="/meta-ads/" class="card-link">Index →</a>
-      </div>
-      <div class="sub-links">
-        <a href="/meta-ads/reel-a.html" class="sub-link">Reel A</a>
-        <a href="/meta-ads/reel-b.html" class="sub-link">Reel B</a>
-        <a href="/meta-ads/reel-c.html" class="sub-link">Reel C</a>
-        <a href="/meta-ads/carousel-a.html" class="sub-link">Carousel</a>
-        <a href="/meta-ads/static-awareness.html" class="sub-link">Static Awareness</a>
-        <a href="/meta-ads/static-retargeting.html" class="sub-link">Static Retargeting</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="campaign" data-tags="meta ads korea ko reel carousel static">
-      <div class="card-top"><span class="card-icon">🇰🇷</span><span class="badge badge-campaign">Campaign</span></div>
-      <div class="card-name">Meta Ads — Korea (KO)</div>
-      <div class="card-desc">Full creative set for Korea market: reel A/B/C, carousel A, static awareness + retargeting.</div>
-      <div class="card-footer">
-        <span class="card-date">May 4, 2026</span>
-        <a href="/meta-ads/ko/" class="card-link">Index →</a>
-      </div>
-      <div class="sub-links">
-        <a href="/meta-ads/ko/reel-a.html" class="sub-link">Reel A</a>
-        <a href="/meta-ads/ko/reel-b.html" class="sub-link">Reel B</a>
-        <a href="/meta-ads/ko/reel-c.html" class="sub-link">Reel C</a>
-        <a href="/meta-ads/ko/carousel-a.html" class="sub-link">Carousel</a>
-        <a href="/meta-ads/ko/static-awareness.html" class="sub-link">Static Awareness</a>
-        <a href="/meta-ads/ko/static-retargeting.html" class="sub-link">Static Retargeting</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="campaign" data-tags="meta ads malaysia ms reel carousel static">
-      <div class="card-top"><span class="card-icon">🇲🇾</span><span class="badge badge-campaign">Campaign</span></div>
-      <div class="card-name">Meta Ads — Malaysia (MS)</div>
-      <div class="card-desc">Full creative set for Malaysia market: reel A/B/C, carousel A, static awareness + retargeting.</div>
-      <div class="card-footer">
-        <span class="card-date">May 4, 2026</span>
-        <a href="/meta-ads/ms/" class="card-link">Index →</a>
-      </div>
-      <div class="sub-links">
-        <a href="/meta-ads/ms/reel-a.html" class="sub-link">Reel A</a>
-        <a href="/meta-ads/ms/reel-b.html" class="sub-link">Reel B</a>
-        <a href="/meta-ads/ms/reel-c.html" class="sub-link">Reel C</a>
-        <a href="/meta-ads/ms/carousel-a.html" class="sub-link">Carousel</a>
-        <a href="/meta-ads/ms/static-awareness.html" class="sub-link">Static Awareness</a>
-        <a href="/meta-ads/ms/static-retargeting.html" class="sub-link">Static Retargeting</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="campaign" data-tags="meta ads thailand th reel carousel static">
-      <div class="card-top"><span class="card-icon">🇹🇭</span><span class="badge badge-campaign">Campaign</span></div>
-      <div class="card-name">Meta Ads — Thailand (TH)</div>
-      <div class="card-desc">Full creative set for Thailand market: reel A/B/C, carousel A, static awareness + retargeting.</div>
-      <div class="card-footer">
-        <span class="card-date">May 4, 2026</span>
-        <a href="/meta-ads/th/" class="card-link">Index →</a>
-      </div>
-      <div class="sub-links">
-        <a href="/meta-ads/th/reel-a.html" class="sub-link">Reel A</a>
-        <a href="/meta-ads/th/reel-b.html" class="sub-link">Reel B</a>
-        <a href="/meta-ads/th/reel-c.html" class="sub-link">Reel C</a>
-        <a href="/meta-ads/th/carousel-a.html" class="sub-link">Carousel</a>
-        <a href="/meta-ads/th/static-awareness.html" class="sub-link">Static Awareness</a>
-        <a href="/meta-ads/th/static-retargeting.html" class="sub-link">Static Retargeting</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- TOOLS & GUIDES -->
-  <div class="section-label" id="lbl-tool">Tools & Guides</div>
-  <div class="grid" id="grid-tool">
-
-    <div class="card" data-type="tool" data-tags="crm panduan am account manager guide">
-      <div class="card-top"><span class="card-icon">🗂️</span><span class="badge badge-tool">Guide</span></div>
-      <div class="card-name">CRM Panduan AM</div>
-      <div class="card-desc">Account Manager guide for Ideoworks CRM in Google Sheets. SOP for leads, accounts, deals pipeline management.</div>
-      <div class="card-footer">
-        <span class="card-date">May 13, 2026</span>
-        <a href="/ideoworks-crm/PANDUAN_AM_v2.html" class="card-link">Open →</a>
-      </div>
-      <div class="sub-links">
-        <a href="/ideoworks-crm/PANDUAN_CRM_v2.html" class="sub-link">CRM Guide v2</a>
-        <a href="/ideoworks-crm/PANDUAN_AM.html" class="sub-link">AM Guide v1</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="tool" data-tags="linkedin pitch scanner dashboard google sheets">
-      <div class="card-top"><span class="card-icon">🔍</span><span class="badge badge-tool">Tool</span></div>
-      <div class="card-name">LinkedIn Pitch Scanner</div>
-      <div class="card-desc">Dashboard for tracking LinkedIn pitch performance. Python scanner + Google Apps Script backend for Ideoworks BD outreach.</div>
-      <div class="card-footer">
-        <span class="card-date">May 11, 2026</span>
-        <a href="/linkedin-pitch-scanner/" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="tool" data-tags="campaign system lean global simplified">
-      <div class="card-top"><span class="card-icon">⚙️</span><span class="badge badge-tool">Tool</span></div>
-      <div class="card-name">Campaign System (Lean)</div>
-      <div class="card-desc">Simplified version of the global campaign system architecture. Lean execution framework for Ideoworks multi-market rollout.</div>
-      <div class="card-footer">
-        <span class="card-date">May 11, 2026</span>
-        <a href="/global-campaign/campaign-system-lean.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-    <div class="card" data-type="tool" data-tags="ideoworks crm html web view leads">
-      <div class="card-top"><span class="card-icon">📊</span><span class="badge badge-tool">Tool</span></div>
-      <div class="card-name">CRM Web View</div>
-      <div class="card-desc">HTML web view of the Ideoworks CRM. Visual pipeline and leads dashboard for quick reference outside Google Sheets.</div>
-      <div class="card-footer">
-        <span class="card-date">May 11, 2026</span>
-        <a href="/global-campaign/ideoworks-crm.html" class="card-link">Open →</a>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="empty-state" id="empty-state">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <p>No projects match your search.</p>
-  </div>
-
+<div class="empty-state" id="empty-state">
+  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  <p>No projects match your search.</p>
 </div>
 
 <footer class="footer">
-  <div class="footer-left">Ideoworks Project Archive · Claude Code Sessions · account@ideoworks.co.id · May 2026</div>
+  <div class="footer-left">Ideoworks Project Archive · Claude Code Sessions · account@ideoworks.co.id</div>
   <div class="footer-logo">Ideoworks — Creativity is Everywhere</div>
 </footer>
 
 <script>
-  const cards = document.querySelectorAll('.card');
-  const searchInput = document.getElementById('search');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const countLabel = document.getElementById('count-label');
-  const emptyState = document.getElementById('empty-state');
+const SECTIONS = {
+  app:      'Apps & Builders',
+  html:     'HTML Deliverables',
+  campaign: 'Meta Ads Creatives',
+  tool:     'Tools & Guides'
+};
 
-  let activeFilter = 'all';
+const BADGE_LABELS = { app: 'App', html: 'HTML', campaign: 'Campaign', tool: 'Guide' };
 
-  function applyFilters() {
-    const term = searchInput.value.trim().toLowerCase();
-    let visible = 0;
+let allProjects = [];
+let activeFilter = 'all';
 
-    cards.forEach(card => {
-      const type = card.dataset.type;
-      const searchable = [
-        card.dataset.tags || '',
-        card.querySelector('.card-name').textContent,
-        card.querySelector('.card-desc').textContent
-      ].join(' ').toLowerCase();
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
 
-      const matchFilter = activeFilter === 'all' || type === activeFilter;
-      const matchSearch = !term || searchable.includes(term);
+function buildCard(p) {
+  const sublinksHtml = p.sublinks
+    ? `<div class="sub-links">${p.sublinks.map(s => `<a href="${s.url}" class="sub-link">${s.label}</a>`).join('')}</div>`
+    : '';
 
-      if (matchFilter && matchSearch) {
-        card.classList.remove('hidden');
-        visible++;
-      } else {
-        card.classList.add('hidden');
-      }
-    });
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.dataset.type = p.type;
+  el.dataset.tags = (p.tags || []).join(' ') + ' ' + p.name + ' ' + p.desc;
+  el.innerHTML = `
+    <div class="card-top">
+      <span class="card-icon">${p.icon}</span>
+      <span class="badge badge-${p.type}">${BADGE_LABELS[p.type] || p.type}</span>
+    </div>
+    <div class="card-name">${p.name}</div>
+    <div class="card-desc">${p.desc}</div>
+    <div class="card-footer">
+      <span class="card-date">${formatDate(p.date)}</span>
+      <a href="${p.url}" class="card-link">Open →</a>
+    </div>
+    ${sublinksHtml}
+  `;
+  return el;
+}
 
-    // Toggle section visibility
-    ['apps','html','campaign','tool'].forEach(id => {
-      const grid = document.getElementById('grid-' + id);
-      const lbl = document.getElementById('lbl-' + id);
-      const hasVisible = grid && grid.querySelectorAll('.card:not(.hidden)').length > 0;
-      if (grid) grid.style.display = hasVisible ? '' : 'none';
-      if (lbl) lbl.style.display = hasVisible ? '' : 'none';
-    });
+function render() {
+  const term = document.getElementById('search').value.trim().toLowerCase();
+  const wrap = document.getElementById('grid-wrap');
+  wrap.innerHTML = '';
 
-    emptyState.style.display = visible === 0 ? 'block' : 'none';
-    countLabel.textContent = visible === cards.length
-      ? `${cards.length} projects`
-      : `${visible} of ${cards.length}`;
-  }
+  const grouped = {};
+  let visible = 0;
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeFilter = btn.dataset.filter;
-      applyFilters();
-    });
+  allProjects.forEach(p => {
+    const matchFilter = activeFilter === 'all' || p.type === activeFilter;
+    const searchable = (p.tags || []).join(' ') + ' ' + p.name + ' ' + p.desc;
+    const matchSearch = !term || searchable.toLowerCase().includes(term);
+    if (!matchFilter || !matchSearch) return;
+
+    if (!grouped[p.type]) grouped[p.type] = [];
+    grouped[p.type].push(p);
+    visible++;
   });
 
-  searchInput.addEventListener('input', applyFilters);
+  const order = ['app', 'html', 'campaign', 'tool'];
+  order.forEach(type => {
+    if (!grouped[type]) return;
+    const section = document.createElement('div');
+    section.className = 'section';
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = SECTIONS[type] || type;
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    grouped[type].forEach(p => grid.appendChild(buildCard(p)));
+    section.appendChild(label);
+    section.appendChild(grid);
+    wrap.appendChild(section);
+  });
 
-  // Stats
-  function initStats() {
-    document.getElementById('total-count').textContent = cards.length;
-    document.getElementById('app-count').textContent = document.querySelectorAll('[data-type="app"]').length;
-    document.getElementById('html-count').textContent = document.querySelectorAll('[data-type="html"]').length;
-    document.getElementById('campaign-count').textContent = document.querySelectorAll('[data-type="campaign"]').length;
-    document.getElementById('tool-count').textContent = document.querySelectorAll('[data-type="tool"]').length;
-    countLabel.textContent = `${cards.length} projects`;
+  document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+  document.getElementById('count-label').textContent =
+    visible === allProjects.length ? `${allProjects.length} projects` : `${visible} of ${allProjects.length}`;
+}
+
+function updateStats() {
+  const count = t => allProjects.filter(p => p.type === t).length;
+  document.getElementById('stat-total').textContent = allProjects.length;
+  document.getElementById('stat-app').textContent = count('app');
+  document.getElementById('stat-html').textContent = count('html');
+  document.getElementById('stat-campaign').textContent = count('campaign');
+  document.getElementById('stat-tool').textContent = count('tool');
+
+  const latest = allProjects.map(p => p.date).sort().pop();
+  if (latest) {
+    document.getElementById('last-updated').textContent = 'Updated: ' + formatDate(latest);
   }
+}
 
-  initStats();
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+document.getElementById('search').addEventListener('input', render);
+
+fetch('/api/projects')
+  .then(r => r.json())
+  .then(data => {
+    allProjects = data.sort((a, b) => b.date.localeCompare(a.date));
+    updateStats();
+    render();
+  })
+  .catch(() => {
+    document.getElementById('grid-wrap').innerHTML =
+      '<p style="color:#aaa;padding:40px;text-align:center">Failed to load projects.</p>';
+  });
 </script>
 </body>
 </html>
