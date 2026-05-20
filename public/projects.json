@@ -1,0 +1,238 @@
+[
+  {
+    "id": "gamified-landing-builder",
+    "name": "GamifyLP",
+    "desc": "Mid-funnel gamified landing builder. Score-based lead routing, voucher/trial offers, IDW attribution. 90+ backlog items across 15 dimensions.",
+    "icon": "🎯",
+    "type": "app",
+    "date": "2026-05-06",
+    "url": "/gamified-landing-builder/",
+    "tags": ["gamify", "landing", "score", "voucher", "attribution", "idw", "lead routing"]
+  },
+  {
+    "id": "ideoworks-proposal-generator",
+    "name": "Proposal Generator",
+    "desc": "CASA-framework proposal builder for client pitches — Communicate, Amplify, Socialize, Analyze. Structured output for Ideoworks decks.",
+    "icon": "📝",
+    "type": "app",
+    "date": "2026-04-30",
+    "url": "/ideoworks-proposal-generator/",
+    "tags": ["proposal", "generator", "casa", "communicate", "amplify", "socialize", "analyze"]
+  },
+  {
+    "id": "report-generator",
+    "name": "Report Generator",
+    "desc": "Client advertising performance report builder. Wink Dec 2025 format as baseline. Standard Ideoworks monthly reporting tool.",
+    "icon": "📋",
+    "type": "app",
+    "date": "2026-05-04",
+    "url": "/report-generator.html",
+    "tags": ["report", "generator", "wink", "client", "advertising", "performance"]
+  },
+  {
+    "id": "campaign-budget-planner",
+    "name": "Campaign Budget Planner",
+    "desc": "HTML tool for Meta Ads campaign budget planning. Built for Ideoworks client planning and media allocation sessions.",
+    "icon": "💰",
+    "type": "app",
+    "date": "2026-04-01",
+    "url": "/campaign-budget-planner.html",
+    "tags": ["campaign", "budget", "planner", "meta", "ads"]
+  },
+  {
+    "id": "ideoworks-authority-strategy",
+    "name": "Authority Strategy",
+    "desc": "Ideoworks brand authority and thought leadership positioning framework. Content strategy and platform presence plan.",
+    "icon": "🏆",
+    "type": "html",
+    "date": "2026-05-20",
+    "url": "/ideoworks-authority-strategy/",
+    "tags": ["authority", "strategy", "content", "thought leadership", "positioning"]
+  },
+  {
+    "id": "growth-ai-onepager",
+    "name": "Growth Team AI One-Pager",
+    "desc": "Value-add/retention/new-client one-pager for CEO Arianto Bigman. AI tool statuses and framing for Growth Division pitch.",
+    "icon": "🤖",
+    "type": "html",
+    "date": "2026-05-07",
+    "url": "/growth_ai_onepager.html",
+    "tags": ["growth", "ai", "onepager", "arianto", "ceo", "retention", "value add", "new client"]
+  },
+  {
+    "id": "growth-team-shareholder",
+    "name": "Growth Team Shareholder Deck",
+    "desc": "BCG-style shareholder presentation for Ideoworks Growth Division. HTML version of the stakeholder-facing deck.",
+    "icon": "🖥️",
+    "type": "html",
+    "date": "2026-05-05",
+    "url": "/growth_team_shareholder.html",
+    "tags": ["growth", "team", "shareholder", "deck", "bcg", "presentation"]
+  },
+  {
+    "id": "idw-action-plan",
+    "name": "IDW Action Plan Rationalization",
+    "desc": "Ideoworks strategic action plan rationalization document. Resource allocation and initiative prioritization framework.",
+    "icon": "⚡",
+    "type": "html",
+    "date": "2026-05-12",
+    "url": "/idw-action-plan-rationalization.html",
+    "tags": ["idw", "action", "plan", "rationalization", "strategic"]
+  },
+  {
+    "id": "ideoworks-social-strategy",
+    "name": "Social Strategy 2026",
+    "desc": "Platform-specific social media strategy for Ideoworks brand channels. Content calendar, tone, and channel execution plan.",
+    "icon": "📱",
+    "type": "html",
+    "date": "2026-05-11",
+    "url": "/ideoworks-social-strategy/",
+    "tags": ["social", "strategy", "instagram", "tiktok", "linkedin", "threads", "platform"]
+  },
+  {
+    "id": "global-landing-mockup",
+    "name": "Global Landing Mockup",
+    "desc": "Ideoworks global landing page mockup. Multi-market prototype for ID/KO/MS/TH markets. Campaign funnel entry point design.",
+    "icon": "🌐",
+    "type": "html",
+    "date": "2026-05-11",
+    "url": "/global-campaign/ideoworks-global-landing-mockup.html",
+    "tags": ["global", "landing", "mockup", "multi-market", "id", "ko", "ms", "th"]
+  },
+  {
+    "id": "campaign-system-blueprint",
+    "name": "Campaign System Blueprint",
+    "desc": "Global campaign system architecture. Meta Ads + CRM integration blueprint for Ideoworks multi-market campaigns.",
+    "icon": "🗺️",
+    "type": "html",
+    "date": "2026-05-11",
+    "url": "/global-campaign/campaign-system-blueprint.html",
+    "tags": ["campaign", "system", "blueprint", "architecture", "meta", "crm", "global"]
+  },
+  {
+    "id": "meta-crm-playbook",
+    "name": "Meta CRM Playbook",
+    "desc": "Meta Ads + CRM integration playbook. Lead flow, retargeting logic, and pipeline management for Ideoworks global campaign.",
+    "icon": "📘",
+    "type": "html",
+    "date": "2026-05-11",
+    "url": "/global-campaign/meta-crm-playbook.html",
+    "tags": ["meta", "crm", "playbook", "leads", "retargeting", "global"]
+  },
+  {
+    "id": "meta-ads-id",
+    "name": "Meta Ads — Indonesia (ID)",
+    "desc": "Full creative set for Indonesia market: reel A/B/C, carousel A, static awareness + retargeting.",
+    "icon": "🇮🇩",
+    "type": "campaign",
+    "date": "2026-05-04",
+    "url": "/meta-ads/",
+    "tags": ["meta", "ads", "indonesia", "id", "reel", "carousel", "static"],
+    "sublinks": [
+      { "label": "Reel A", "url": "/meta-ads/reel-a.html" },
+      { "label": "Reel B", "url": "/meta-ads/reel-b.html" },
+      { "label": "Reel C", "url": "/meta-ads/reel-c.html" },
+      { "label": "Carousel", "url": "/meta-ads/carousel-a.html" },
+      { "label": "Static Awareness", "url": "/meta-ads/static-awareness.html" },
+      { "label": "Static Retargeting", "url": "/meta-ads/static-retargeting.html" }
+    ]
+  },
+  {
+    "id": "meta-ads-ko",
+    "name": "Meta Ads — Korea (KO)",
+    "desc": "Full creative set for Korea market: reel A/B/C, carousel A, static awareness + retargeting.",
+    "icon": "🇰🇷",
+    "type": "campaign",
+    "date": "2026-05-04",
+    "url": "/meta-ads/ko/",
+    "tags": ["meta", "ads", "korea", "ko", "reel", "carousel", "static"],
+    "sublinks": [
+      { "label": "Reel A", "url": "/meta-ads/ko/reel-a.html" },
+      { "label": "Reel B", "url": "/meta-ads/ko/reel-b.html" },
+      { "label": "Reel C", "url": "/meta-ads/ko/reel-c.html" },
+      { "label": "Carousel", "url": "/meta-ads/ko/carousel-a.html" },
+      { "label": "Static Awareness", "url": "/meta-ads/ko/static-awareness.html" },
+      { "label": "Static Retargeting", "url": "/meta-ads/ko/static-retargeting.html" }
+    ]
+  },
+  {
+    "id": "meta-ads-ms",
+    "name": "Meta Ads — Malaysia (MS)",
+    "desc": "Full creative set for Malaysia market: reel A/B/C, carousel A, static awareness + retargeting.",
+    "icon": "🇲🇾",
+    "type": "campaign",
+    "date": "2026-05-04",
+    "url": "/meta-ads/ms/",
+    "tags": ["meta", "ads", "malaysia", "ms", "reel", "carousel", "static"],
+    "sublinks": [
+      { "label": "Reel A", "url": "/meta-ads/ms/reel-a.html" },
+      { "label": "Reel B", "url": "/meta-ads/ms/reel-b.html" },
+      { "label": "Reel C", "url": "/meta-ads/ms/reel-c.html" },
+      { "label": "Carousel", "url": "/meta-ads/ms/carousel-a.html" },
+      { "label": "Static Awareness", "url": "/meta-ads/ms/static-awareness.html" },
+      { "label": "Static Retargeting", "url": "/meta-ads/ms/static-retargeting.html" }
+    ]
+  },
+  {
+    "id": "meta-ads-th",
+    "name": "Meta Ads — Thailand (TH)",
+    "desc": "Full creative set for Thailand market: reel A/B/C, carousel A, static awareness + retargeting.",
+    "icon": "🇹🇭",
+    "type": "campaign",
+    "date": "2026-05-04",
+    "url": "/meta-ads/th/",
+    "tags": ["meta", "ads", "thailand", "th", "reel", "carousel", "static"],
+    "sublinks": [
+      { "label": "Reel A", "url": "/meta-ads/th/reel-a.html" },
+      { "label": "Reel B", "url": "/meta-ads/th/reel-b.html" },
+      { "label": "Reel C", "url": "/meta-ads/th/reel-c.html" },
+      { "label": "Carousel", "url": "/meta-ads/th/carousel-a.html" },
+      { "label": "Static Awareness", "url": "/meta-ads/th/static-awareness.html" },
+      { "label": "Static Retargeting", "url": "/meta-ads/th/static-retargeting.html" }
+    ]
+  },
+  {
+    "id": "panduan-am",
+    "name": "CRM Panduan AM",
+    "desc": "Account Manager guide for Ideoworks CRM in Google Sheets. SOP for leads, accounts, deals pipeline management.",
+    "icon": "🗂️",
+    "type": "tool",
+    "date": "2026-05-13",
+    "url": "/ideoworks-crm/PANDUAN_AM_v2.html",
+    "tags": ["crm", "panduan", "am", "account manager", "guide", "sop", "leads"],
+    "sublinks": [
+      { "label": "CRM Guide v2", "url": "/ideoworks-crm/PANDUAN_CRM_v2.html" },
+      { "label": "AM Guide v1", "url": "/ideoworks-crm/PANDUAN_AM.html" }
+    ]
+  },
+  {
+    "id": "linkedin-pitch-scanner",
+    "name": "LinkedIn Pitch Scanner",
+    "desc": "Dashboard for tracking LinkedIn pitch performance. Python scanner + Google Apps Script backend for Ideoworks BD outreach.",
+    "icon": "🔍",
+    "type": "tool",
+    "date": "2026-05-11",
+    "url": "/linkedin-pitch-scanner/",
+    "tags": ["linkedin", "pitch", "scanner", "dashboard", "google sheets", "bd", "outreach"]
+  },
+  {
+    "id": "campaign-system-lean",
+    "name": "Campaign System (Lean)",
+    "desc": "Simplified version of the global campaign system architecture. Lean execution framework for Ideoworks multi-market rollout.",
+    "icon": "⚙️",
+    "type": "tool",
+    "date": "2026-05-11",
+    "url": "/global-campaign/campaign-system-lean.html",
+    "tags": ["campaign", "system", "lean", "global", "simplified", "framework"]
+  },
+  {
+    "id": "ideoworks-crm-web",
+    "name": "CRM Web View",
+    "desc": "HTML web view of the Ideoworks CRM. Visual pipeline and leads dashboard for quick reference outside Google Sheets.",
+    "icon": "📊",
+    "type": "tool",
+    "date": "2026-05-11",
+    "url": "/global-campaign/ideoworks-crm.html",
+    "tags": ["ideoworks", "crm", "web", "view", "leads", "pipeline"]
+  }
+]

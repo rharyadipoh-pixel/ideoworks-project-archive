@@ -282,7 +282,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 document.getElementById('search').addEventListener('input', render);
 
-fetch('/api/projects')
+fetch('/projects.json')
   .then(r => r.json())
   .then(data => {
     allProjects = data.sort((a, b) => b.date.localeCompare(a.date));
