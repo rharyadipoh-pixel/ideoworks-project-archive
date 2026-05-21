@@ -100,6 +100,17 @@
   }
   .card-link:hover { background: var(--red); color: #fff; }
 
+  .card-intel {
+    background: var(--gray-100); border-radius: 8px; padding: 10px 12px;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .intel-row { display: flex; gap: 6px; align-items: flex-start; font-size: 11px; line-height: 1.4; }
+  .intel-label {
+    font-weight: 700; color: var(--red); white-space: nowrap; flex-shrink: 0;
+    text-transform: uppercase; font-size: 9px; letter-spacing: 0.5px; padding-top: 1px;
+  }
+  .intel-value { color: var(--gray-600); }
+
   .sub-links { display: flex; gap: 6px; flex-wrap: wrap; }
   .sub-link {
     font-size: 10px; font-weight: 600; color: var(--gray-600); text-decoration: none;
@@ -198,6 +209,12 @@ function buildCard(p) {
     ? `<div class="sub-links">${p.sublinks.map(s => `<a href="${s.url}" class="sub-link">${s.label}</a>`).join('')}</div>`
     : '';
 
+  const intelHtml = (p.bestFor || p.needs) ? `
+    <div class="card-intel">
+      ${p.bestFor ? `<div class="intel-row"><span class="intel-label">Best for</span><span class="intel-value">${p.bestFor}</span></div>` : ''}
+      ${p.needs ? `<div class="intel-row"><span class="intel-label">Needs</span><span class="intel-value">${p.needs}</span></div>` : ''}
+    </div>` : '';
+
   const el = document.createElement('div');
   el.className = 'card';
   el.dataset.type = p.type;
@@ -209,6 +226,7 @@ function buildCard(p) {
     </div>
     <div class="card-name">${p.name}</div>
     <div class="card-desc">${p.desc}</div>
+    ${intelHtml}
     <div class="card-footer">
       <span class="card-date">${formatDate(p.date)}</span>
       <a href="${p.url}" class="card-link">Open →</a>

@@ -2,12 +2,14 @@
   {
     "id": "brand-checker",
     "name": "Brand Checker",
-    "desc": "Brand compliance scoring tool for Ideoworks global campaigns. React + Node.js app with scoring engine and CRM leads integration. Live at brand.ideoworks.id.",
+    "desc": "Brand compliance scoring tool for Ideoworks global campaigns. React + Node.js app with scoring engine and CRM leads integration.",
     "icon": "🔎",
     "type": "app",
     "date": "2026-05-10",
     "url": "https://brand.ideoworks.id",
-    "tags": ["brand", "checker", "scoring", "crm", "leads", "global", "react", "compliance"]
+    "tags": ["brand", "checker", "scoring", "crm", "leads", "global", "react", "compliance"],
+    "bestFor": "Validating client brand assets before multi-market campaign launch",
+    "needs": "Brand name, target market (ID/KO/MS/TH), asset files or URLs to check"
   },
   {
     "id": "gamified-landing-builder",
@@ -17,7 +19,9 @@
     "type": "app",
     "date": "2026-05-06",
     "url": "/gamified-landing-builder/",
-    "tags": ["gamify", "landing", "score", "voucher", "attribution", "idw", "lead routing"]
+    "tags": ["gamify", "landing", "score", "voucher", "attribution", "idw", "lead routing"],
+    "bestFor": "Mid-funnel client campaigns that need lead qualification before handoff to sales",
+    "needs": "Client name, offer type (voucher/trial/demo), target demographic, IDW attribution code"
   },
   {
     "id": "ideoworks-proposal-generator",
@@ -27,7 +31,9 @@
     "type": "app",
     "date": "2026-04-30",
     "url": "/ideoworks-proposal-generator/",
-    "tags": ["proposal", "generator", "casa", "communicate", "amplify", "socialize", "analyze"]
+    "tags": ["proposal", "generator", "casa", "communicate", "amplify", "socialize", "analyze"],
+    "bestFor": "First-meeting proposals and RFP responses for new client pitches",
+    "needs": "Client name, industry/category, campaign objective, budget range, which CASA pillar to lead"
   },
   {
     "id": "report-generator",
@@ -37,7 +43,9 @@
     "type": "app",
     "date": "2026-05-04",
     "url": "/report-generator.html",
-    "tags": ["report", "generator", "wink", "client", "advertising", "performance"]
+    "tags": ["report", "generator", "wink", "client", "advertising", "performance"],
+    "bestFor": "Monthly client performance reports across Meta, Google, or TikTok campaigns",
+    "needs": "Client name, reporting period, platform, and key metrics (spend, impressions, clicks, conversions, ROAS)"
   },
   {
     "id": "campaign-budget-planner",
@@ -47,7 +55,9 @@
     "type": "app",
     "date": "2026-04-01",
     "url": "/campaign-budget-planner.html",
-    "tags": ["campaign", "budget", "planner", "meta", "ads"]
+    "tags": ["campaign", "budget", "planner", "meta", "ads"],
+    "bestFor": "Client budget allocation meetings — splitting spend across placements, markets, and objectives",
+    "needs": "Total campaign budget, flight dates, target markets, objectives (awareness vs. conversion ratio)"
   },
   {
     "id": "ideoworks-authority-strategy",
@@ -57,7 +67,9 @@
     "type": "html",
     "date": "2026-05-20",
     "url": "/ideoworks-authority-strategy/",
-    "tags": ["authority", "strategy", "content", "thought leadership", "positioning"]
+    "tags": ["authority", "strategy", "content", "thought leadership", "positioning"],
+    "bestFor": "Pitching Ideoworks as the strategic partner, not just an execution vendor",
+    "needs": "Prospect's industry, their current pain point, and which CASA pillar to open with"
   },
   {
     "id": "growth-ai-onepager",
@@ -67,7 +79,9 @@
     "type": "html",
     "date": "2026-05-07",
     "url": "/growth_ai_onepager.html",
-    "tags": ["growth", "ai", "onepager", "arianto", "ceo", "retention", "value add", "new client"]
+    "tags": ["growth", "ai", "onepager", "arianto", "ceo", "retention", "value add", "new client"],
+    "bestFor": "Internal leadership updates on AI tool rollout status and Growth Division positioning",
+    "needs": "No customization — present as-is in CEO or leadership meetings"
   },
   {
     "id": "growth-team-shareholder",
@@ -77,7 +91,9 @@
     "type": "html",
     "date": "2026-05-05",
     "url": "/growth_team_shareholder.html",
-    "tags": ["growth", "team", "shareholder", "deck", "bcg", "presentation"]
+    "tags": ["growth", "team", "shareholder", "deck", "bcg", "presentation"],
+    "bestFor": "Board-level or shareholder presentations on Growth Division performance and direction",
+    "needs": "Current quarter results and which initiative to spotlight in the deck"
   },
   {
     "id": "idw-action-plan",
@@ -87,7 +103,9 @@
     "type": "html",
     "date": "2026-05-12",
     "url": "/idw-action-plan-rationalization.html",
-    "tags": ["idw", "action", "plan", "rationalization", "strategic"]
+    "tags": ["idw", "action", "plan", "rationalization", "strategic"],
+    "bestFor": "Quarterly planning when you need to cut or reprioritize initiatives due to resource constraints",
+    "needs": "List of active projects, current team capacity per division, and top 2–3 strategic priorities"
   },
   {
     "id": "ideoworks-social-strategy",
@@ -97,7 +115,9 @@
     "type": "html",
     "date": "2026-05-11",
     "url": "/ideoworks-social-strategy/",
-    "tags": ["social", "strategy", "instagram", "tiktok", "linkedin", "threads", "platform"]
+    "tags": ["social", "strategy", "instagram", "tiktok", "linkedin", "threads", "platform"],
+    "bestFor": "Briefing the content team on Ideoworks' own channel strategy and platform tone",
+    "needs": "Current quarter campaign focus and any upcoming brand moments to align content around"
   },
   {
     "id": "global-landing-mockup",
@@ -107,7 +127,9 @@
     "type": "html",
     "date": "2026-05-11",
     "url": "/global-campaign/ideoworks-global-landing-mockup.html",
-    "tags": ["global", "landing", "mockup", "multi-market", "id", "ko", "ms", "th"]
+    "tags": ["global", "landing", "mockup", "multi-market", "id", "ko", "ms", "th"],
+    "bestFor": "Showing clients a working prototype of their multi-market campaign landing page before dev build",
+    "needs": "Client name, primary markets, and the main offer or CTA to feature"
   },
   {
     "id": "campaign-system-blueprint",
@@ -117,7 +139,9 @@
     "type": "html",
     "date": "2026-05-11",
     "url": "/global-campaign/campaign-system-blueprint.html",
-    "tags": ["campaign", "system", "blueprint", "architecture", "meta", "crm", "global"]
+    "tags": ["campaign", "system", "blueprint", "architecture", "meta", "crm", "global"],
+    "bestFor": "Client-facing architecture presentation to explain how Meta Ads and CRM connect end-to-end",
+    "needs": "Client's CRM tool, active markets, and campaign phase (awareness/lead gen/retargeting)"
   },
   {
     "id": "meta-crm-playbook",
@@ -127,7 +151,9 @@
     "type": "html",
     "date": "2026-05-11",
     "url": "/global-campaign/meta-crm-playbook.html",
-    "tags": ["meta", "crm", "playbook", "leads", "retargeting", "global"]
+    "tags": ["meta", "crm", "playbook", "leads", "retargeting", "global"],
+    "bestFor": "Onboarding AM teams on lead flow logic and retargeting setup for global campaigns",
+    "needs": "Which CRM the client uses, lead qualification criteria, and retargeting window agreed with client"
   },
   {
     "id": "meta-ads-id",
@@ -138,6 +164,8 @@
     "date": "2026-05-04",
     "url": "/meta-ads/",
     "tags": ["meta", "ads", "indonesia", "id", "reel", "carousel", "static"],
+    "bestFor": "Reference when briefing the creative team or presenting campaign concepts to Indonesian market clients",
+    "needs": "Campaign phase (awareness/retargeting) and the product or service being advertised",
     "sublinks": [
       { "label": "Reel A", "url": "/meta-ads/reel-a.html" },
       { "label": "Reel B", "url": "/meta-ads/reel-b.html" },
@@ -156,6 +184,8 @@
     "date": "2026-05-04",
     "url": "/meta-ads/ko/",
     "tags": ["meta", "ads", "korea", "ko", "reel", "carousel", "static"],
+    "bestFor": "Reference when briefing creative or presenting to Korean market clients",
+    "needs": "Campaign phase and product being advertised in the Korean market",
     "sublinks": [
       { "label": "Reel A", "url": "/meta-ads/ko/reel-a.html" },
       { "label": "Reel B", "url": "/meta-ads/ko/reel-b.html" },
@@ -174,6 +204,8 @@
     "date": "2026-05-04",
     "url": "/meta-ads/ms/",
     "tags": ["meta", "ads", "malaysia", "ms", "reel", "carousel", "static"],
+    "bestFor": "Reference when briefing creative or presenting to Malaysian market clients",
+    "needs": "Campaign phase and product being advertised in the Malaysian market",
     "sublinks": [
       { "label": "Reel A", "url": "/meta-ads/ms/reel-a.html" },
       { "label": "Reel B", "url": "/meta-ads/ms/reel-b.html" },
@@ -192,6 +224,8 @@
     "date": "2026-05-04",
     "url": "/meta-ads/th/",
     "tags": ["meta", "ads", "thailand", "th", "reel", "carousel", "static"],
+    "bestFor": "Reference when briefing creative or presenting to Thai market clients",
+    "needs": "Campaign phase and product being advertised in the Thai market",
     "sublinks": [
       { "label": "Reel A", "url": "/meta-ads/th/reel-a.html" },
       { "label": "Reel B", "url": "/meta-ads/th/reel-b.html" },
@@ -210,6 +244,8 @@
     "date": "2026-05-13",
     "url": "/ideoworks-crm/PANDUAN_AM_v2.html",
     "tags": ["crm", "panduan", "am", "account manager", "guide", "sop", "leads"],
+    "bestFor": "Onboarding new AMs or refreshing the team on CRM pipeline discipline",
+    "needs": "No customization — send the link directly or walk through it in a team session",
     "sublinks": [
       { "label": "CRM Guide v2", "url": "/ideoworks-crm/PANDUAN_CRM_v2.html" },
       { "label": "AM Guide v1", "url": "/ideoworks-crm/PANDUAN_AM.html" }
@@ -223,7 +259,9 @@
     "type": "tool",
     "date": "2026-05-11",
     "url": "/linkedin-pitch-scanner/",
-    "tags": ["linkedin", "pitch", "scanner", "dashboard", "google sheets", "bd", "outreach"]
+    "tags": ["linkedin", "pitch", "scanner", "dashboard", "google sheets", "bd", "outreach"],
+    "bestFor": "Tracking and optimizing BD outreach performance on LinkedIn week-over-week",
+    "needs": "LinkedIn account access, Google Sheets CRM connected, and an active prospect list to scan"
   },
   {
     "id": "campaign-system-lean",
@@ -233,7 +271,9 @@
     "type": "tool",
     "date": "2026-05-11",
     "url": "/global-campaign/campaign-system-lean.html",
-    "tags": ["campaign", "system", "lean", "global", "simplified", "framework"]
+    "tags": ["campaign", "system", "lean", "global", "simplified", "framework"],
+    "bestFor": "Quick campaign setup when you don't have time for full system architecture — sprint execution",
+    "needs": "Campaign objective, available channels, and team headcount for the sprint"
   },
   {
     "id": "ideoworks-crm-web",
@@ -243,6 +283,8 @@
     "type": "tool",
     "date": "2026-05-11",
     "url": "/global-campaign/ideoworks-crm.html",
-    "tags": ["ideoworks", "crm", "web", "view", "leads", "pipeline"]
+    "tags": ["ideoworks", "crm", "web", "view", "leads", "pipeline"],
+    "bestFor": "Quick pipeline snapshot during meetings without opening Google Sheets",
+    "needs": "No setup — data reflects the last CRM export; refresh the sheet to update"
   }
 ]
