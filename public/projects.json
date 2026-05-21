@@ -1,5 +1,15 @@
 [
   {
+    "id": "brand-checker",
+    "name": "Brand Checker",
+    "desc": "Brand compliance scoring tool for Ideoworks global campaigns. React + Node.js app with scoring engine and CRM leads integration. Live at brand.ideoworks.id.",
+    "icon": "🔎",
+    "type": "app",
+    "date": "2026-05-10",
+    "url": "https://brand.ideoworks.id",
+    "tags": ["brand", "checker", "scoring", "crm", "leads", "global", "react", "compliance"]
+  },
+  {
     "id": "gamified-landing-builder",
     "name": "GamifyLP",
     "desc": "Mid-funnel gamified landing builder. Score-based lead routing, voucher/trial offers, IDW attribution. 90+ backlog items across 15 dimensions.",
